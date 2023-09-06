@@ -6,7 +6,6 @@ dotenv.config();
 const app = express();
 const db = require('./models');
 const PORT = process.env.PORT;
-// const PORT = 8000;
 
 app.set('view engine', 'ejs');
 app.set('/views', 'view');
