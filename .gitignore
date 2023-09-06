@@ -22,6 +22,3 @@ Procfile.lock
 
 # MySQL 관련
 *.sql
-
-# Config 관련
-config/config.json
