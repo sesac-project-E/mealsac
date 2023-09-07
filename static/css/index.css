@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+}
+.menu-icons {
+  background-color: #a5e467; /* 연두색 */
+  display: flex;
+  gap: 20px;
+  padding: 10px 0; /* 패딩을 추가하여 배경색 영역을 조금 더 넓혀줍니다. */
+}
+.menu-icons div {
+  text-align: center;
+  cursor: pointer;
+}
+.card {
+  width: 25%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
