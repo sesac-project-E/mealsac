@@ -7,7 +7,7 @@ dotenv.config();
 const app = express();
 const db = require('./src/models');
 const PORT = process.env.PORT;
-const indexRouter = require('./src/routes');
+// const indexRouter = require('./src/routes');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
@@ -28,11 +28,10 @@ app.use(
   }),
 );
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
+// app.use('/', indexRouter);
 
-app.use('/', indexRouter);
+const userRouter = require('./src/routes/user');
+app.use('/', userRouter);
 
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {
