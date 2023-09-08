@@ -36,11 +36,16 @@ exports.postRegister = async (req, res) => {
   try {
     const { password: password, user_name, user_id } = req.body;
     // Step1. 아이디를 찾아서 사용자 존재 유무 체크
-    const user = await User.findOne({
+    const userid = await User.findOne({
       where: { user_id },
     });
-    if (user) {
-      res.json({ result: true, message: '이미 존재하는 아이디 입니다.' });
+    const username = await User.findOne({
+      where: { user_name },
+    });
+    if (userid) {
+      res.json({ result: true, message: '아이디 중복체크를 해주세요' });
+    } else if (username) {
+      res.json({ result: true, message: '닉네임 중복체크를 해주세요' });
     } else {
       const hash = await bcryptPassword(password); // 비밀번호 암호화하여 저장
       // console.log(password, hash);
@@ -49,7 +54,10 @@ exports.postRegister = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.send('Internal Server Error');
+    res.status(400).json({
+      status: 'error',
+      message: '회원가입 중 오류가 발생했습니다.',
+    });
   }
 };
 
