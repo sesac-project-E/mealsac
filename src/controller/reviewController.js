@@ -47,3 +47,48 @@ exports.getAllReviews = async (req, res) => {
     });
   }
 };
+
+exports.postReview = async (req, res) => {
+  const { restaurant_id } = req.params;
+  const { title, content, rating, user_id } = req.body;
+
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || !userInfo.userId) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  try {
+    const newReview = await Review.create({
+      title,
+      content,
+      rating,
+      user_id,
+      restaurant_id,
+    });
+
+    const imagePromises = (req.files || []).map(file => {
+      const filePath = path.join('/static/reviewImage', file.filename);
+      return ReviewImage.create({
+        review_id: newReview.review_id,
+        image_url: filePath,
+      });
+    });
+
+    await Promise.all(imagePromises);
+
+    res.status(201).json({
+      status: 'success',
+      message: '성공적으로 리뷰를 등록했습니다.',
+    });
+  } catch (error) {
+    console.error('에러 정보: ', error);
+    res.status(500).json({
+      status: 'error',
+      message: '리뷰를 등록하는 동안 오류가 발생했습니다.',
+    });
+  }
+};
