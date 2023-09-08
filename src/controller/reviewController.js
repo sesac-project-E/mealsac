@@ -222,3 +222,53 @@ exports.editReview = async (req, res) => {
     });
   }
 };
+
+exports.deleteReview = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || (!userInfo.userId && !userInfo.isAdmin)) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.userId;
+  const { review_id } = req.params;
+
+  try {
+    const review = await Review.findOne({
+      where: { review_id },
+    });
+
+    if (!review) {
+      return res.status(404).json({
+        status: 'error',
+        message: '해당 리뷰를 찾을 수 없습니다.',
+      });
+    }
+
+    // 리뷰 작성자 또는 관리자만 리뷰를 삭제할 수 있도록 함
+    if (review.user_id !== user_id && !userInfo.isAdmin) {
+      return res.status(403).json({
+        status: 'error',
+        message: '리뷰를 삭제할 권한이 없습니다.',
+      });
+    }
+
+    await ReviewUsefulness.destroy({ where: { review_id } });
+    await ReviewImage.destroy({ where: { review_id } });
+    await review.destroy();
+
+    res.json({
+      status: 'success',
+      message: '리뷰가 성공적으로 삭제되었습니다.',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: 'error',
+      message: '리뷰를 삭제하는 동안 오류가 발생했습니다.',
+    });
+  }
+};
