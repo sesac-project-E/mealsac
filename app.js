@@ -16,6 +16,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'src', 'static')));
 app.use(express.json());
 
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      maxAge: 60 * 1000, // 1분
+    },
+  }),
+);
+
 app.get('/', (req, res) => {
   res.render('index');
 });
