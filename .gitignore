@@ -16,6 +16,7 @@ Thumbs.db
 # 빌드/배포 관련
 dist/
 .build/
+config/
 
 # Heroku 관련
 Procfile.lock
