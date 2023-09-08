@@ -43,20 +43,27 @@ exports.postRegister = async (req, res) => {
       where: { user_name },
     });
     if (userid) {
-      res.json({ result: true, message: '아이디 중복체크를 해주세요' });
+      res.json({ result: false, message: '아이디 중복체크를 해주세요' });
+      // return res.status(400).json({
+      //   status: 'error',
+      //   message: 'The ID that already exists.',
+      // });
     } else if (username) {
-      res.json({ result: true, message: '닉네임 중복체크를 해주세요' });
+      res.json({ result: false, message: '닉네임 중복체크를 해주세요' });
+      // return res.status(400).json({
+      //   status: 'error',
+      //   message: 'This nickname already exists.',
+      // });
     } else {
       const hash = await bcryptPassword(password); // 비밀번호 암호화하여 저장
       // console.log(password, hash);
       await User.create({ user_id, user_name, password: hash });
-      res.json({ result: false });
+      res.json({ result: true });
     }
   } catch (err) {
-    console.error(err);
-    res.status(400).json({
+    res.status(500).json({
       status: 'error',
-      message: '회원가입 중 오류가 발생했습니다.',
+      message: 'An error occurred while register.',
     });
   }
 };
@@ -82,8 +89,11 @@ exports.postLogin = async (req, res) => {
       res.json({ result: false, message: '존재하는 사용자가 없습니다' });
     }
   } catch (err) {
-    console.error(err);
-    res.send('Internal Server Error');
+    console.error('에러 정보: ', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while login.',
+    });
   }
 };
 
@@ -94,8 +104,11 @@ exports.patchProfile = async (req, res) => {
 
     res.json({ result: true });
   } catch (err) {
-    console.error(err);
-    res.send('Internal Sever Error');
+    console.error('에러 정보: ', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while change profile.',
+    });
   }
 };
 
@@ -113,7 +126,10 @@ exports.deleteUser = async (req, res) => {
       res.json({ result: true });
     }); // 세션 삭제
   } catch (err) {
-    console.error(err);
-    res.send('Internal Sever Error');
+    console.error('에러 정보: ', error);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while delete user.',
+    });
   }
 };

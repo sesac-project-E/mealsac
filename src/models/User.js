@@ -1,5 +1,5 @@
-const User = function (Sequelize, DataTypes) {
-  const model = Sequelize.define(
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
     'user',
     {
       id: {
@@ -20,14 +20,16 @@ const User = function (Sequelize, DataTypes) {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      // is_admin: {
+      //   type: DataTypes.Boolean,
+      //   allowNull: true,
+      // },
     },
     {
       freezeTableName: true,
       timestamps: false,
-    }
+    },
   );
 
-  return model;
+  return User;
 };
-
-module.exports = User;
