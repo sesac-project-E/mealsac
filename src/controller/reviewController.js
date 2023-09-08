@@ -72,7 +72,7 @@ exports.postReview = async (req, res) => {
     });
 
     const imagePromises = (req.files || []).map(file => {
-      const filePath = path.join('/static/reviewImage', file.filename);
+      const filePath = path.join('/static/images/reviewImages', file.filename);
       return ReviewImage.create({
         review_id: newReview.review_id,
         image_url: filePath,
