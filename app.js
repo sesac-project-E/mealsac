@@ -21,6 +21,10 @@ app.get('/register', (req, res) => {
   res.render('register/index');
 });
 
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
 app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });
