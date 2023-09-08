@@ -1,8 +1,7 @@
 const msg = document.querySelector('#loginMsg');
 const form = document.forms['login'];
 
-const doLogin = async event => {
-  //   event.preventDefault();
+const doLogin = async () => {
   try {
     const res = await axios({
       url: '/user/login',
