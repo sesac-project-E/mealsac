@@ -2,14 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const config = require(__dirname + '/../config/config.json')['development'];
+const dotenv = require('dotenv');
+dotenv.config();
 const db = {};
 
 const sequelize = new Sequelize(
-  config.database,
-  config.username,
-  config.password,
-  config,
+  process.env.DB_DATABASE_NAME,
+  process.env.DB_USER_NAME,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+  },
 );
 
 fs.readdirSync(__dirname)
