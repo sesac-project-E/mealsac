@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'user',
+    'User',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      // is_admin: {
-      //   type: DataTypes.Boolean,
-      //   allowNull: true,
-      // },
+      is_admin: {
+        type: DataTypes.TYNYINT(1),
+        allowNull: true,
+      },
     },
     {
       freezeTableName: true,
