@@ -176,3 +176,49 @@ exports.getMyReviews = async (req, res) => {
     });
   }
 };
+
+exports.editReview = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || !userInfo.userId) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.userId;
+  const { review_id } = req.params;
+  const { title, content, rating } = req.body;
+
+  try {
+    const review = await Review.findOne({
+      where: { review_id, user_id },
+    });
+
+    if (!review) {
+      return res.status(404).json({
+        status: 'error',
+        message: '해당 리뷰를 찾을 수 없거나 사용자가 작성한 리뷰가 아닙니다.',
+      });
+    }
+
+    review.title = title;
+    review.content = content;
+    review.rating = rating;
+
+    await review.save();
+
+    res.json({
+      status: 'success',
+      message: '리뷰가 성공적으로 업데이트되었습니다.',
+      data: review,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: 'error',
+      message: '리뷰를 업데이트하는 동안 오류가 발생했습니다.',
+    });
+  }
+};
