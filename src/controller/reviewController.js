@@ -1,3 +1,4 @@
+const path = require('path');
 const { Review, ReviewImage, ReviewUsefulness } = require('../models');
 
 exports.getAllReviews = async (req, res) => {
@@ -131,5 +132,47 @@ exports.recommendReview = async (req, res) => {
     res
       .status(500)
       .json({ message: '해당 리뷰를 추천하는 것에 오류가 발생했습니다.' });
+  }
+};
+
+exports.getMyReviews = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || !userInfo.userId) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.userId;
+
+  try {
+    const reviews = await Review.findAll({
+      where: { user_id },
+      include: [
+        {
+          model: ReviewImage,
+          attributes: ['image_url'],
+          as: 'images',
+        },
+      ],
+    });
+
+    if (reviews.length === 0) {
+      return res.json({
+        status: 'success',
+        message: '사용자가 작성한 리뷰가 없습니다.',
+        data: [],
+      });
+    }
+
+    res.json({ status: 'success', data: reviews });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: 'error',
+      message: '리뷰를 가져오는 동안 오류가 발생했습니다.',
+    });
   }
 };
