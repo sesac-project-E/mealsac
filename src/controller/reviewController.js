@@ -92,3 +92,44 @@ exports.postReview = async (req, res) => {
     });
   }
 };
+
+exports.recommendReview = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || !userInfo.userId) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.userId;
+  const { review_id } = req.params;
+
+  try {
+    const existingUsefulness = await ReviewUsefulness.findOne({
+      where: {
+        review_id,
+        user_id,
+      },
+    });
+
+    if (existingUsefulness) {
+      return res.json({
+        isSuccess: false,
+        message: '이미 해당 리뷰에 추천을 하셨습니다.',
+      });
+    }
+
+    await ReviewUsefulness.create({
+      review_id,
+      user_id,
+    });
+
+    res.json({ message: '성공적으로 리뷰를 추천하셨습니다.' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: '해당 리뷰를 추천하는 것에 오류가 발생했습니다.' });
+  }
+};
