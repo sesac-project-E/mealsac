@@ -1,21 +1,98 @@
+/* 전체 페이지의 기본 스타일 */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .header {
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 50px;
+  padding: 20px 60px 20px 60px;
 }
-.menu-icons {
-  background-color: #a5e467; /* 연두색 */
+
+.header img {
+  height: 40px;
+}
+button {
+  border-radius: 30px;
+  border: none;
+  background: #a5e467;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+  height: 30px;
+  width: 100px;
+  font-size: medium;
+}
+
+/* 메뉴 아이콘들을 중앙 정렬하고 각 아이템 간격 조절 */
+.menuIcons {
+  justify-content: space-between;
+  background-color: #a5e467;
   display: flex;
-  gap: 20px;
-  padding: 10px 0; /* 패딩을 추가하여 배경색 영역을 조금 더 넓혀줍니다. */
+  align-items: center;
+  padding: 0 120px;
+  height: 20vh;
 }
-.menu-icons div {
-  text-align: center;
-  cursor: pointer;
+.menuIcons img {
+  width: 40px; /* 아이콘의 폭 설정 */
+  height: 40px; /* 아이콘의 높이 설정 */
 }
+.menuIcons div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.menuIcons p {
+  margin: 16px 0 0 0;
+}
+
+.restaurants {
+  display: flex;
+  flex-direction: column; /* h3 태그를 위로 올립니다. */
+  padding: 0 60px;
+  align-items: center;
+}
+
+.restaurants h3 {
+  align-self: flex-start; /* h3 태그를 왼쪽 정렬 */
+  margin-bottom: 20px; /* h3 태그 아래에 간격 추가 */
+}
+
+.restaurants .card-container {
+  display: flex;
+  flex-direction: row; /* 카드들을 가로로 배열 */
+  justify-content: space-between;
+  flex-wrap: wrap; /* 카드가 너무 많으면 다음 줄로 넘깁니다 */
+  width: 100%; /* container의 너비 설정 */
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .card {
-  width: 25%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 10px;
+  flex-basis: calc(25% - 20px);
+  margin: 0 10px;
+  /* 다른 스타일들 */
+}
+/* 식당 카드들의 스타일 */
+
+footer {
+  background-color: #f7f7f7;
+  text-align: center;
+  height: 220px;
+}
+
+footer p .contact {
+  font-size: large;
+}
+
+footer p {
+  font-size: small;
 }

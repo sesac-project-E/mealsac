@@ -4,40 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>mainPage</title>
-  <link rel="stylesheet" type="text/css" href="../static/index.css" />
+  <link rel="stylesheet" href="/static/css/index.css" />
 </head>
 <body>
   <!-- Header -->
   <div class="header">
-    <img src="#" alt="로고">
+    <img src="/static/image/logo2.png" alt="로고">
     <div>
-        <button>로그인</button>
-        <button>회원가입</button>
-        <button>로그아웃</button>
-        <button>마이페이지</button>
+        <button>로 그 인</button>
+        <button>회 원 가 입</button>
+        <!-- 로그인 후 -->
+        <button>로 그 아 웃</button>
+        <button>마 이 페 이 지</button>
     </div>
 </div>
 
 <!-- Menu Icons -->
 <div class="menuIcons">
     <div>
-        <img src="#" alt="랜덤 메뉴 아이콘">
+        <img src="/static/image/random.png" alt="랜덤 메뉴 아이콘">
         <p>랜덤 메뉴</p>
     </div>
     <div>
-      <img src="#" alt="카테고리 아이콘">
+      <img src="/static/image/hashtag.png" alt="카테고리 아이콘">
       <p>카테고리</p>
     </div>
     <div>
-      <img src="#" alt="게시판 아이콘">
+      <img src="/static/image/chat.png" alt="게시판 아이콘">
       <p>게시판</p>
     </div>
     <div>
-      <img src="#" alt="주변식당 아이콘">
+      <img src="/static/image/place.png" alt="주변식당 아이콘">
       <p>주변 식당</p>
     </div>
     <div>
-      <img src="#" alt="키워드 검색 아이콘">
+      <img src="/static/image/search.png" alt="키워드 검색 아이콘">
       <p>키워드 검색</p>
     </div>
 </div>
@@ -45,110 +46,136 @@
 <!-- Popular Restaurants -->
 <div class="restaurants">
     <h3>인기식당</h3>
-    <div class="card">
+    <div class="card-container">
+      <div class="card">
         <img src="#" alt="Restaurant 1">
         <p>식당 이름</p>
         <p>카테고리</p>
-        <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+        <p>평점 <img src="#" alt="Rating"> 4.5</p>
         <!-- ... (리뷰 아이콘 등 추가) -->
     </div>
-    <div class="card">
+  </div>
+    <div class="card-container">
+      <div class="card">
        <img src="#" alt="Restaurant 2">
        <p>식당 이름</p>
        <p>카테고리</p>
-       <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+       <p>평점 <img src="#" alt="Rating"> 4.5</p>
        <!-- ... (리뷰 아이콘 등 추가) -->
     </div>
-    <div class="card">
+  </div>
+    <div class="card-container">
+      <div class="card">
        <img src="#" alt="Restaurant 3">
        <p>식당 이름</p>
        <p>카테고리</p>
-       <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+       <p>평점 <img src="#" alt="Rating"> 4.5</p>
        <!-- ... (리뷰 아이콘 등 추가) -->
     </div>
-    <div class="card">
+  </div>
+    <div class="card-container">
+      <div class="card">
        <img src="#" alt="Restaurant 4">
        <p>식당 이름</p>
        <p>카테고리</p>
-       <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+       <p>평점 <img src="#" alt="Rating"> 4.5</p>
        <!-- ... (리뷰 아이콘 등 추가) -->
     </div>
+  </div>
 </div>
 
 <!-- New Restaurants -->
 <div class="restaurants">
     <h3>신규식당</h3>
-    <div class="card">
+    <div class="card-container">
+      <div class="card">
       <img src="#" alt="Restaurant 1">
       <p>식당 이름</p>
       <p>카테고리</p>
-      <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+      <p>평점 <img src="#" alt="Rating"> 4.5</p>
       <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
-  <div class="card">
+</div>
+  <div class="card-container">
+    <div class="card">
      <img src="#" alt="Restaurant 2">
      <p>식당 이름</p>
      <p>카테고리</p>
-     <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+     <p>평점 <img src="#" alt="Rating"> 4.5</p>
      <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
-  <div class="card">
+</div>
+  <div class="card-container">
+    <div class="card">
      <img src="#" alt="Restaurant 3">
      <p>식당 이름</p>
      <p>카테고리</p>
-     <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+     <p>평점 <img src="#" alt="Rating"> 4.5</p>
      <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
-  <div class="card">
+</div>
+  <div class="card-container">
+    <div class="card">
      <img src="#" alt="Restaurant 4">
      <p>식당 이름</p>
      <p>카테고리</p>
-     <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+     <p>평점 <img src="#" alt="Rating"> 4.5</p>
      <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
+</div>
 </div>
 
 <!-- User's Favorites (if log in) -->
 <div class="restaurants">
     <h3>찜한 식당</h3>
-    <div class="card">
+    <div class="card-container">
+      <div class="card">
       <img src="#" alt="Restaurant 1">
       <p>식당 이름</p>
       <p>카테고리</p>
-      <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+      <p>평점 <img src="#" alt="Rating"> 4.5</p>
       <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
-  <div class="card">
+</div>
+  <div class="card-container">
+    <div class="card">
      <img src="#" alt="Restaurant 2">
      <p>식당 이름</p>
      <p>카테고리</p>
-     <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+     <p>평점 <img src="#" alt="Rating"> 4.5</p>
      <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
-  <div class="card">
+</div>
+  <div class="card-container">
+    <div class="card">
      <img src="#" alt="Restaurant 3">
      <p>식당 이름</p>
      <p>카테고리</p>
-     <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+     <p>평점 <img src="#" alt="Rating"> 4.5</p>
      <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
-  <div class="card">
+</div>
+  <div class="card-container">
+    <div class="card">
      <img src="#" alt="Restaurant 4">
      <p>식당 이름</p>
      <p>카테고리</p>
-     <p>평점 <img src="rating-icon.png" alt="Rating"> 4.5</p>
+     <p>평점 <img src="#" alt="Rating"> 4.5</p>
      <!-- ... (리뷰 아이콘 등 추가) -->
   </div>
+</div>
 </div>
 
 <!-- Footer -->
 <footer>
-    <p>Copyright 2023 by 맛집 웹사이트</p>
+  <br>
+    <p class="contact">| GITHUB || CONTACT |</p>
+    <br>
+    
     <p>이 프로젝트는 포트폴리오 목적으로 제작되었습니다.</p>
-    <br>
     <p>상업적인 용도로 사용하지 않을 것입니다. 이 프로젝트의 목적은 개인적인 학습과 기술 데모를 위한 것입니다.</p>
-    <br>
     <p>원작자가 아닌 다른 소스로부터 자료를 가져왔음을 밝힙니다.</p>
+    <br>
 </footer>
 </body>
 </html>
