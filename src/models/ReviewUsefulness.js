@@ -5,43 +5,43 @@ module.exports = (sequelize, DataTypes) => {
       review_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
-          model: 'review',
+          model: 'Review',
           key: 'review_id',
         },
-        unique: 'compositeIndex',
       },
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'user',
-          key: 'user_id',
+          model: 'User',
+          key: 'id',
         },
-        unique: 'compositeIndex',
-      },
-      is_useful: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
       },
     },
     {
-      tableName: 'review_usefulness',
-      underscored: true,
       timestamps: false,
+      freezeTableName: true,
+      tableName: 'review_usefulness',
+      indexes: [
+        {
+          unique: true,
+          fields: ['review_id', 'user_id'],
+        },
+      ],
+      hasTrigger: true,
     },
   );
 
   ReviewUsefulness.associate = function (models) {
     ReviewUsefulness.belongsTo(models.Review, {
       foreignKey: 'review_id',
-      as: 'review',
+      as: 'Review',
     });
-
     ReviewUsefulness.belongsTo(models.User, {
       foreignKey: 'user_id',
-      as: 'user',
+      as: 'User',
     });
   };
 

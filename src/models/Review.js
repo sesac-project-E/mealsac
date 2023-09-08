@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'restaurant',
+          model: 'Restaurant',
           key: 'restaurants_id',
         },
       },
@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'user',
-          key: 'user_id',
+          model: 'User',
+          key: 'id',
         },
       },
       title: {
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Review.hasMany(models.ReviewUsefulness, {
       foreignKey: 'review_id',
-      as: 'usefulnessFlags',
+      as: 'ReviewUsefulness',
     });
   };
 

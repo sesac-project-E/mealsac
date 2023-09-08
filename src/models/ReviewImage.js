@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'reviews',
+          model: 'review',
           key: 'review_id',
         },
       },
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
       underscored: true,
       tableName: 'review_images',
+      freezeTableName: true,
     },
   );
 
