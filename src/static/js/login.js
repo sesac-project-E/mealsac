@@ -15,7 +15,6 @@ const doLogin = async () => {
       document.location.href = '/';
     } else {
       loginMsg.textContent = `아이디 또는 비밀번호를 잘못 입력했습니다.`;
-      document.location.reload();
     }
   } catch (error) {
     console.log(error);

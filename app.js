@@ -41,7 +41,7 @@ app.use(
 );
 
 app.get('/register', (req, res) => {
-  res.render('register/index');
+  res.render('register');
 });
 
 app.get('/login', (req, res) => {
