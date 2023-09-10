@@ -4,13 +4,14 @@
     <%- include('../common/commonHead.ejs') %>
     <title>MealSac | 식당 목록</title>
     <link rel="stylesheet" href="/static/css/restaurantList.css" />
-    <script defer src="../../static/js/restaurantList.js"></script>
+    <script defer src="/static/js/restaurantList.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"></script>
   </head>
   <body>
     <%- include('../common/header.ejs') %>
     <main class="container-fluid itemContainer">
       <div class="row">
-        <section class="map col-lg-9 col-md-8 col-sm-7">지도 삽입 예정</section>
+        <section class="map col-lg-9 col-md-8 col-sm-7">지도</section>
         <section class="restaurantList col-lg-3 col-md-4 col-sm-5">
           <section class="search">
             <form action="/" method="get">
@@ -41,137 +42,31 @@
                 </section>
               </div>
             </div>
-            <article class="restaurantContainer">
-              <img
-                src="../../static/images/food.jpeg"
-                alt="유미카츠 이미지"
-                class="restaurantImg"
-              />
-              <div class="restaurantInfo">
-                <div>
-                  <h3 class="restaurantName">유미카츠</h3>
-                  <img
-                    src="../../static/images/heart.png"
-                    alt="찜 아이콘"
-                    class="heart"
-                  />
+            <% restaurants.forEach((restaurant) => { %>
+              <article class="restaurantContainer">
+                <img src="../../static/images/food.jpeg" alt="<%= restaurant.restaurantName %> 이미지" class="restaurantImg" />
+                <div class="restaurantInfo">
+                  <div>
+                    <h3 class="restaurantName"><%= restaurant.restaurantName %></h3>
+                    <img src="../../static/images/heart.png" alt="찜 아이콘" class="heart" />
+                  </div>
+                  <p class="type"><%= restaurant.restaurantStyle %></p>
+                  <p class="adress"><%= restaurant.restaurantAddress %></p>
+                  <div>
+                    <img src="../../static/images/star.png" alt="평점 아이콘" class="rating" />
+                    <p class="rate">4.5</p>
+                    <img src="../../static/images/speech-bubble.png" alt="댓글 아이콘" class="comment" />
+                    <p class="review">15</p>
+                  </div>
                 </div>
-                <p class="type">일식</p>
-                <div>
-                  <img
-                    src="../../static/images/star.png"
-                    alt="평점 아이콘"
-                    class="rating"
-                  />
-                  <p class="rate">4.8</p>
-                  <img
-                    src="../../static/images/speech-bubble.png"
-                    alt="댓글 아이콘"
-                    class="comment"
-                  />
-                  <p class="review">15</p>
-                </div>
-              </div>
-            </article>
-            <article class="restaurantContainer">
-              <img
-                src="../../static/images/food.jpeg"
-                alt="유미카츠 이미지"
-                class="restaurantImg"
-              />
-              <div class="restaurantInfo">
-                <div>
-                  <h3 class="restaurantName">유미카츠</h3>
-                  <img
-                    src="../../static/images/heart.png"
-                    alt="찜 아이콘"
-                    class="heart"
-                  />
-                </div>
-                <p class="type">일식</p>
-                <div>
-                  <img
-                    src="../../static/images/star.png"
-                    alt="평점 아이콘"
-                    class="rating"
-                  />
-                  <p class="rate">4.8</p>
-                  <img
-                    src="../../static/images/speech-bubble.png"
-                    alt="댓글 아이콘"
-                    class="comment"
-                  />
-                  <p class="review">15</p>
-                </div>
-              </div>
-            </article>
-            <article class="restaurantContainer">
-              <img
-                src="../../static/images/food.jpeg"
-                alt="유미카츠 이미지"
-                class="restaurantImg"
-              />
-              <div class="restaurantInfo">
-                <div>
-                  <h3 class="restaurantName">유미카츠</h3>
-                  <img
-                    src="../../static/images/heart.png"
-                    alt="찜 아이콘"
-                    class="heart"
-                  />
-                </div>
-                <p class="type">일식</p>
-                <div>
-                  <img
-                    src="../../static/images/star.png"
-                    alt="평점 아이콘"
-                    class="rating"
-                  />
-                  <p class="rate">4.8</p>
-                  <img
-                    src="../../static/images/speech-bubble.png"
-                    alt="댓글 아이콘"
-                    class="comment"
-                  />
-                  <p class="review">15</p>
-                </div>
-              </div>
-            </article>
-            <article class="restaurantContainer">
-              <img
-                src="../../static/images/food.jpeg"
-                alt="유미카츠 이미지"
-                class="restaurantImg"
-              />
-              <div class="restaurantInfo">
-                <div>
-                  <h3 class="restaurantName">유미카츠</h3>
-                  <img
-                    src="../../static/images/heart.png"
-                    alt="찜 아이콘"
-                    class="heart"
-                  />
-                </div>
-                <p class="type">일식</p>
-                <div>
-                  <img
-                    src="../../static/images/star.png"
-                    alt="평점 아이콘"
-                    class="rating"
-                  />
-                  <p class="rate">4.8</p>
-                  <img
-                    src="../../static/images/speech-bubble.png"
-                    alt="댓글 아이콘"
-                    class="comment"
-                  />
-                  <p class="review">15</p>
-                </div>
-              </div>
-            </article>
+              </article>
+            <% }); %>            
         </section>
       </div>
     </main>
     <%- include('../common/footer.ejs') %>
+    <script>
+      const restaurants = <%- JSON.stringify(restaurants) %>;
+    </script>    
   </body>
 </html>
