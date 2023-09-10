@@ -54,6 +54,10 @@ app.get('/profile', (req, res) => {
 
 app.use('/', indexRouter);
 
+app.get('*', (req, res) => {
+  res.render('404');
+});
+
 // const userRouter = require('./src/routes/user');
 // app.use('/', userRouter);
 
