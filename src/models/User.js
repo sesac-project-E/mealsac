@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       is_admin: {
-        type: DataTypes.TYNYINT(1),
+        type: DataTypes.BOOLEAN,
         allowNull: true,
       },
     },
