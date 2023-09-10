@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: {
           model: 'Restaurant',
-          key: 'restaurants_id',
+          key: 'restaurant_id',
         },
       },
       user_id: {

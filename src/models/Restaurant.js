@@ -1,4 +1,4 @@
-const RestaurantModel = (sequelize, Datatypes) => {
+module.exports = (sequelize, Datatypes) => {
   const Restaurant = sequelize.define("Restaurant", {
     restaurant_id : {
       type : Datatypes.INTEGER,
@@ -10,10 +10,10 @@ const RestaurantModel = (sequelize, Datatypes) => {
       type : Datatypes.STRING(256),
       allowNull : false,
     },
-    restaurant_likes : {
-      type : Datatypes.INTEGER,
-      default : 0,
-    },
+    // restaurant_likes : {
+    //   type : Datatypes.INTEGER,
+    //   default : 0,
+    // },
     restaurant_phone : {
       type : Datatypes.STRING(256),
     },
@@ -32,7 +32,26 @@ const RestaurantModel = (sequelize, Datatypes) => {
     charset : "utf8",
     collate : "utf8_general_ci",
     timestamps : false
-  });
+  })
+
+  Restaurant.associate = function(models) {
+    // Restaurant.hasMany(models.Review, {
+    //   foreignKey : 'review_id',
+    //   as : "review"
+    // });
+    Restaurant.hasMany(models.Tag, {
+      foreignKey : "tag_id",
+      as : "tag"
+    });
+    // Restaurant.hasMany(models.RestaurantImage, {
+    //   foreignKey : "restaurant_image_id",
+    //   as : "restaurant_image"
+    // });
+    Restaurant.hasOne(models.RestaurantType, {
+      as : "restaurant_type",
+      foreignKey : "restaurant_type_id",
+      
+    })
+  }
   return Restaurant;
 };
-module.exports = RestaurantModel;
