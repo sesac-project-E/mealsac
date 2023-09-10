@@ -48,6 +48,10 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/profile', (req, res) => {
+  res.render('profile');
+});
+
 app.use('/', indexRouter);
 
 // const userRouter = require('./src/routes/user');

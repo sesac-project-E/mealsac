@@ -64,17 +64,19 @@ const doRegister = async () => {
       },
     });
     if (form.checkedId.value === 'Y' || form.checkedName.value === 'Y') {
-      if (res.data.result) {
-        alert('회원가입 성공!');
-        document.location.href = '/';
-      } else {
-        if (!pwPattern.test(inputPw)) {
-          pwMsg.textContent =
-            '비밀번호는 8자 이상 영문 + 숫자를 혼합하여야 합니다.';
-        } else if (inputPw !== confirmPw) {
-          pwMsg.textContent = '비밀번호가 일치하지 않습니다.';
+      if (pwPattern.test(inputPw)) {
+        if (res.data.result) {
+          alert('회원가입 성공!');
+          document.location.href = '/';
         }
+      } else if (!pwPattern.test(inputPw)) {
+        pwMsg.textContent =
+          '비밀번호는 8자 이상 영문 + 숫자를 혼합하여야 합니다.';
+      } else if (inputPw !== confirmPw) {
+        pwMsg.textContent = '비밀번호가 일치하지 않습니다.';
       }
+    } else {
+      alert('중복확인 검사가 필요합니다.');
     }
   } catch (error) {
     console.log(error);
