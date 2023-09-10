@@ -2,23 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const ReviewUsefulness = sequelize.define(
     'ReviewUsefulness',
     {
-      review_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        references: {
-          model: 'Review',
-          key: 'review_id',
-        },
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'User',
-          key: 'id',
-        },
-      },
+      review_usefulness_id : {
+        type : DataTypes.INTEGER,
+        allowNull : false,
+        primaryKey: true
+      }
     },
     {
       timestamps: false,

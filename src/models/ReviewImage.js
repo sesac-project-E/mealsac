@@ -8,14 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      review_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'review',
-          key: 'review_id',
-        },
-      },
       image_url: {
         type: DataTypes.STRING(1024),
         allowNull: true,
@@ -32,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
   ReviewImage.associate = models => {
     ReviewImage.belongsTo(models.Review, {
       foreignKey: 'review_id',
-      as: 'review',
+      targetKey : 'review_id',
+      onDelete : 'CASCADE'
     });
   };
 

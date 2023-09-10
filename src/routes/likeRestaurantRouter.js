@@ -1,10 +1,10 @@
 const express = require("express")
 const likeRestaurantRouter = express.Router()
-const likeRestaurantController = require("../controllers/likeController.js")
+const likeRestaurantController = require("../controllers/likeRestaurantController.js")
 
 
-likeRestaurantRouter.post("/like", likeRestaurantController.postLike)
-likeRestaurantRouter.delete("/like", likeRestaurantController.deleteLike)
+likeRestaurantRouter.post("", likeRestaurantController.postLike)
+likeRestaurantRouter.delete("", likeRestaurantController.deleteLike)
 
 
 

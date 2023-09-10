@@ -1,19 +1,20 @@
-const {userModels, likeModels} = require("../models")
+const {userModels, LikeRestaurant} = require("../models")
 
 exports.postLike = (req, res) => {
   const {user_id, restaurant_id} = req.body
-  likeModels.create({
+  LikeRestaurant.create({
    restaurant_id : restaurant_id,
-   user_id : user_id
+   id : user_id
   })
   .then(() => {
     res.status(201).send()
   })
-  
 }
+
+
 exports.deleteLike = (req, res) => {
   const {userId, restaurantId} = req.body
-  likeModels.destroy({
+  LikeRestaurant.destroy({
     where : {user_id : userId, restaurant_id : restaurantId}
   })
   .then(() => {

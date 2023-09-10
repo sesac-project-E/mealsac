@@ -1,3 +1,5 @@
+
+
 module.exports = (sequelize, Datatypes) => {
   const LikeRestaurant = sequelize.define("LikeRestaurant", {
     like_restaurant_id : {
@@ -13,5 +15,15 @@ module.exports = (sequelize, Datatypes) => {
     collate : "utf8_general_ci",
     timestamps : false
   })
-  return LikeRestaurant
+  LikeRestaurant.associate = function(models) {
+    LikeRestaurant.belongsTo(models.User, {
+      foreignKey : "id",
+      onDelete : "CASCADE"
+    })
+    LikeRestaurant.belongsTo(models.Restaurant, {
+      foreignKey : "restaurant_id",
+      onDelete : "CASCADE"
+    })
+  }
+    return LikeRestaurant
 };
