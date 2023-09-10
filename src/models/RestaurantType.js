@@ -22,8 +22,6 @@ module.exports = (sequelize, Datatypes) => {
     collate : "utf8_general_ci",
     timestamps : false
   })
-
-
   return RestaurantType
 }
 

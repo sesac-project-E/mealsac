@@ -10,14 +10,16 @@ module.exports = (sequelize, Datatypes) => {
       type : Datatypes.STRING(256),
       allowNull : false,
     },
-    // restaurant_likes : {
-    //   type : Datatypes.INTEGER,
-    //   default : 0,
-    // },
     restaurant_phone : {
       type : Datatypes.STRING(256),
     },
     restaurant_address: {
+      type : Datatypes.STRING(256),
+    },
+    restaurant_location_X : {
+      type : Datatypes.STRING(256),
+    },
+    restaurant_location_Y : {
       type : Datatypes.STRING(256),
     },
     restaurant_kakao : {
@@ -35,22 +37,23 @@ module.exports = (sequelize, Datatypes) => {
   })
 
   Restaurant.associate = function(models) {
-    // Restaurant.hasMany(models.Review, {
-    //   foreignKey : 'review_id',
-    //   as : "review"
+    Restaurant.hasMany(models.Review, {
+      foreignKey : 'restaurant_id'
+    })
+    // Restaurant.hasMany(models.Tag, {
+    //   foreignKey : "tag_id",
     // });
-    Restaurant.hasMany(models.Tag, {
-      foreignKey : "tag_id",
-      as : "tag"
-    });
     // Restaurant.hasMany(models.RestaurantImage, {
     //   foreignKey : "restaurant_image_id",
     //   as : "restaurant_image"
     // });
-    Restaurant.hasOne(models.RestaurantType, {
-      as : "restaurant_type",
+    Restaurant.belongsTo(models.RestaurantType, {
       foreignKey : "restaurant_type_id",
-      
+      as : "restaurant_type"
+    });
+    Restaurant.belongsToMany(models.User, {
+      through : "LikeRestaurant",
+      foreignKey : "restaurant_id",
     })
   }
   return Restaurant;

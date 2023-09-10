@@ -30,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-
+  User.associate = function(models) {
+    User.belongsToMany(models.Restaurant, {
+      through : "LikeRestaurant",
+      foreignKey : "id",
+    })
+    User.hasMany(models.ReviewUsefulness, {
+        foreignKey : "user_id",
+        targetKey : "user_id",
+        onDelete : "CASCADE",
+    })
+  }
   return User;
 };
