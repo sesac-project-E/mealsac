@@ -1,0 +1,10 @@
+@server = http://localhost:8000
+
+### 한식
+GET {{server}}/restaurant_type/korean
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-const {RestaurantModel, MenuModel, LikeModel} = require("../models")
+const {Restaurant} = require("../models")
 
 exports.getIndex = (req, res) => {
   res.render("index")
@@ -6,26 +6,26 @@ exports.getIndex = (req, res) => {
 
 exports.getRestaurant = (req, res) => {
   const {restaurant_id} = req.params
-  RestaurantModel.findOne({
+  Restaurant.findOne({
     where : {restaurant_id : restaurant_id}
   })
   .then((restaurant) => {
-    MenuModel.findAll({
-      where : {restaurant_id : restaurant_id}
-    })
-    .then((menu) => {
+    // MenuModel.findAll({
+    //   where : {restaurant_id : restaurant_id}
+    // })
+    // .then((menu) => {
       
-    })
-    .then(() => {
-      LikeModel
-    })
-    res.render("restaurantDetail", {restaurant : restaurant, menu : menu})
+    // })
+    // .then(() => {
+    //   LikeModel
+    // })
+    // res.render("restaurantDetail", {restaurant : restaurant, menu : menu})
   })
 }
 
 exports.createRestaurant = (req, res) => {
   const {restaurant_name} = req.body
-  restaurantModels.create({
+  restaurant.create({
     restaurant_name : restaurant_name
   })
   .then(() => {
@@ -35,7 +35,7 @@ exports.createRestaurant = (req, res) => {
 
 exports.deleteRestaurant = (req, res) => {
   const {restaurant_id} = req.body
-  restaurantModels.destroy({
+  restaurant.destroy({
     where : {restaurant_id : restaurant_id}
   })
   .then(() => {

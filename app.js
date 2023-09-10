@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const db = require('./src/models');
 const PORT = process.env.PORT;
-// const indexRouter = require('./src/routes');
+const indexRouter = require('./src/routes/index.js');
 
 const reviewDirectory = path.join(
   __dirname,
@@ -40,10 +40,10 @@ app.use(
   }),
 );
 
-// app.use('/', indexRouter);
+app.use('/', indexRouter);
 
-const userRouter = require('./src/routes/user');
-app.use('/', userRouter);
+// const userRouter = require('./src/routes/user');
+// app.use('/', userRouter);
 
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {

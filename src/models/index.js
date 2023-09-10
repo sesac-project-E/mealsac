@@ -17,16 +17,17 @@ const sequelize = new Sequelize(
   },
 );
 
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
 fs.readdirSync(__dirname)
   .filter(
     file =>
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js',
   )
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(
-      sequelize,
-      Sequelize.DataTypes,
-    );
+    console.log(file)
+    const model = require(`./${file}`)(sequelize, Sequelize);
     db[model.name] = model;
   });
 
@@ -36,8 +37,16 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
-db.User = require('./User')(sequelize, Sequelize);
+
+
+
+
+// db.User = require('./User')(sequelize, Sequelize);
+// db.RestaurantType = require("./RestaurantType")(sequelize, Sequelize);
+// db.Restaurant = require("./Restaurant")(sequelize, Sequelize);
+// db.LikeRestaurant = require("./LikeRestaurant")(sequelize, Sequelize);
+// db.Review = require("./Review")(sequelize, Sequelize);
+
+
 
 module.exports = db;
