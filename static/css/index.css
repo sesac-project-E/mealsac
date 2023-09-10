@@ -36,8 +36,8 @@ button {
   height: 20vh;
 }
 .menuIcons img {
-  width: 40px; /* 아이콘의 폭 설정 */
-  height: 40px; /* 아이콘의 높이 설정 */
+  width: 60px; /* 아이콘의 폭 설정 */
+  height: 60px; /* 아이콘의 높이 설정 */
 }
 .menuIcons div {
   display: flex;
@@ -73,7 +73,7 @@ h3 {
   align-self: flex-start; /* h3 태그를 왼쪽 정렬 */
   margin-bottom: 20px; /* h3 태그 아래에 간격 추가 */
 }
-
+/* 카드 가로 정렬 */
 .cardMenu {
   display: flex;
   flex-direction: row;
@@ -83,11 +83,72 @@ h3 {
 }
 
 .card {
+  width: 200px;
+  height: 250px;
   flex-basis: calc(25% - 20px);
   margin: 0 10px;
-  /* 다른 스타일들 */
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* 테두리 둥글게 */
+  background-color: #f7f7f7; /* 카드 배경색 */
+  display: flex;
+  flex-direction: column;
 }
-/* 식당 카드들의 스타일 */
+
+.restaurantName {
+  text-align: left;
+}
+
+.categoryRating {
+  display: flex;
+  justify-content: space-between; /* 카테고리와 평점 사이의 간격을 최대로 설정 */
+  align-items: center;
+}
+
+.category,
+.rating {
+  margin: 0; /* 기본 여백 제거 */
+  font-size: small; /* 글꼴 크기를 조금 작게 설정 */
+}
+
+.category {
+  text-align: left;
+}
+
+.rating {
+  text-align: end;
+}
+
+.ratingReview {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.rating,
+.review {
+  margin: 0; /* 만약 마진 때문에 간격이 크면 조정하세요. */
+}
+
+.card img {
+  width: 100%; /* 카드의 너비에 맞게 이미지 크기 조절 */
+  height: 60%;
+  border-radius: 10px; /* 이미지에 둥근 모서리 추가 (선택사항) */
+}
+
+.card p {
+  margin-top: 10px;
+}
+
+.rating img {
+  width: 15px;
+  height: 15px;
+}
+
+.review img {
+  width: 15px;
+  height: 15px;
+}
 
 footer {
   background-color: #f7f7f7;
