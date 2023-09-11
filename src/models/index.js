@@ -26,7 +26,7 @@ fs.readdirSync(__dirname)
       file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js',
   )
   .forEach(file => {
-    console.log(file)
+    console.log(file);
     const model = require(`./${file}`)(sequelize, Sequelize);
     db[model.name] = model;
   });
@@ -37,16 +37,10 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-
-
-
-
 // db.User = require('./User')(sequelize, Sequelize);
 // db.RestaurantType = require("./RestaurantType")(sequelize, Sequelize);
 // db.Restaurant = require("./Restaurant")(sequelize, Sequelize);
 // db.LikeRestaurant = require("./LikeRestaurant")(sequelize, Sequelize);
 // db.Review = require("./Review")(sequelize, Sequelize);
-
-
 
 module.exports = db;

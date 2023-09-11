@@ -89,7 +89,7 @@ exports.postLogin = async (req, res) => {
       res.json({ result: false, message: '존재하는 사용자가 없습니다' });
     }
   } catch (err) {
-    console.error('에러 정보: ', error);
+    console.error('에러 정보: ', err);
     res.status(500).json({
       status: 'error',
       message: 'An error occurred while login.',

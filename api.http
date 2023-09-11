@@ -13,7 +13,7 @@ GET {{server}}/login
 GET {{server}}/users
 
 ### 회원가입 요청
-POST {{server}}/register
+POST {{server}}/user/register
 Content-Type: application/json; charset=UTF-8
 
 {
@@ -25,7 +25,7 @@ Content-Type: application/json; charset=UTF-8
 }
 
 ### 로그인 요청
-POST {{server}}/login
+POST {{server}}/user/login
 Content-Type: application/json; charset=UTF-8
 
 {
