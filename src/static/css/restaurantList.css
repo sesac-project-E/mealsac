@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .map {
   height: calc(100vh - 7vh);
 }
@@ -174,6 +179,19 @@
 
 .hamburgerIcon {
   display: none;
+}
+
+.pagination {
+  padding: 0 25%;
+}
+
+.pagination a {
+  padding: 2px 5px;
+}
+
+.pagination .active {
+  background-color: #89d83f;
+  border-radius: 25%;
 }
 
 /* 뷰포트가 576px 이하인 경우 */
