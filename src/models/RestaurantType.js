@@ -22,6 +22,11 @@ module.exports = (sequelize, Datatypes) => {
     collate : "utf8_general_ci",
     timestamps : false
   })
+  RestaurantType.associate = function(models) {
+    RestaurantType.hasMany(models.Restaurant, {
+      foreignKey : "restaurant_type_id"
+    })
+  }
   return RestaurantType
 }
 

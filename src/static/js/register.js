@@ -6,7 +6,7 @@ const nameMsg = document.querySelector('#nameMsg');
 const overlapId = async () => {
   try {
     const res = await axios({
-      url: '/user/register',
+      url: '/api/user/overlapid',
       method: 'POST',
       data: {
         user_id: form.inputId.value,
@@ -29,7 +29,7 @@ const overlapId = async () => {
 const overlapName = async () => {
   try {
     const res = await axios({
-      url: '/user/register',
+      url: '/api/user/overlapname',
       method: 'POST',
       data: {
         user_name: form.inputName.value,
@@ -54,29 +54,32 @@ const doRegister = async () => {
   const pwPattern = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
   try {
-    const res = await axios({
-      url: '/user/register',
-      method: 'POST',
-      data: {
-        user_id: form.inputId.value,
-        user_name: form.inputName.value,
-        password: form.inputPw.value,
-      },
-    });
-    if (form.checkedId.value === 'Y' || form.checkedName.value === 'Y') {
-      if (pwPattern.test(inputPw)) {
-        if (res.data.result) {
-          alert('회원가입 성공!');
-          document.location.href = '/';
-        }
-      } else if (!pwPattern.test(inputPw)) {
-        pwMsg.textContent =
-          '비밀번호는 8자 이상 영문 + 숫자를 혼합하여야 합니다.';
-      } else if (inputPw !== confirmPw) {
-        pwMsg.textContent = '비밀번호가 일치하지 않습니다.';
+    if (inputPw !== confirmPw) {
+      pwMsg.textContent = '비밀번호가 일치하지 않습니다.';
+    }
+
+    if (form.checkedId.value !== 'Y' && form.checkedName.value !== 'Y') {
+      alert('중복 확인을 다시 해주세요.');
+      throw new Error('중복 확인 오류');
+    }
+
+    if (pwPattern.test(inputPw)) {
+      const res = await axios({
+        url: '/api/user/register',
+        method: 'POST',
+        data: {
+          user_id: form.inputId.value,
+          user_name: form.inputName.value,
+          password: form.inputPw.value,
+        },
+      });
+      if (res.data.result) {
+        alert('회원가입 성공!');
+        document.location.href = '/';
       }
     } else {
-      alert('중복확인 검사가 필요합니다.');
+      pwMsg.textContent =
+        '비밀번호는 8자 이상 영문 + 숫자를 혼합하여야 합니다.';
     }
   } catch (error) {
     console.log(error);
