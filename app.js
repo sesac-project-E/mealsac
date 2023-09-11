@@ -3,7 +3,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const fs = require('fs');
-const { swaggerUi, specs } = require("./src/swagger")
+const { swaggerUi, specs } = require('./src/swagger');
 
 dotenv.config();
 
@@ -16,20 +16,21 @@ const reviewDirectory = path.join(
   __dirname,
   'src',
   'static',
-  'images',
+  'img',
   'reviewImage',
 );
 if (!fs.existsSync(reviewDirectory)) {
   fs.mkdirSync(reviewDirectory, { recursive: true });
 }
 
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs))
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'src', 'static')));
 app.use(express.json());
+app.use('/static', express.static(__dirname + '/static'));
 
 app.use(
   session({
@@ -44,21 +45,26 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-  fs.readFile('./restaurant.json', 'utf8', (err, data) => {
-    if (err) {
-      console.log('File read failed:', err);
-      return;
-    }
+  res.render('index');
+});
 
-    const restaurants = JSON.parse(data);
-    res.render('restaurantList/index', {
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-      restaurants: restaurants,
-    });
-  });
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.get('/profile', (req, res) => {
+  res.render('profile');
 });
 
 app.use('/', indexRouter);
+
+app.get('*', (req, res) => {
+  res.render('404');
+});
 
 // const userRouter = require('./src/routes/user');
 // app.use('/', userRouter);

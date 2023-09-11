@@ -5,7 +5,7 @@ const controller = require('../controllers/userController.js');
  * @swagger
  * /api/user/user?user_id={user_id}:
  * /user/profile:
- * 
+
  *  get:
  *    summary: "세션 프로필 조회 방식"
  *    description: "요청 경로를 보낸다.."
@@ -23,12 +23,15 @@ const controller = require('../controllers/userController.js');
  *                users:
  *                  type: object
  *                  example: [{ "id": 1, "user_name": "유저1", "password" : "", "user_id" : "", "is_admin" : "" }]
+ *
+ * 프론트엔드랑 소통하기 위해서 만듦
  */
+
 router.get('/', controller.index);
 router.get('/users', controller.getUsers);
 
-router.get('/register', controller.getRegister);
-router.post('/register', controller.postRegister);
+router.get('/user/register', controller.getRegister);
+router.post('/user/register', controller.postRegister);
 
 router.get('/login', controller.getLogin);
 router.post('/login', controller.postLogin);

@@ -13,23 +13,22 @@ GET {{server}}/login
 GET {{server}}/users
 
 ### 회원가입 요청
-POST {{server}}/register
+POST {{server}}/user/register
 Content-Type: application/json; charset=UTF-8
 
 {
-  "id":null,
-  "user_id": "mos",
+
+  "user_id": "mo123",
   "password": "1234",
-  "user_name": "moss",
-  "is_admin": null,
+  "user_name": "moss"
 }
 
 ### 로그인 요청
-POST {{server}}/login
+POST {{server}}/user/login
 Content-Type: application/json; charset=UTF-8
 
 {
-  "user_id": "cosmos",
+  "user_id": "orange",
   "password": "1234"
 }
 
