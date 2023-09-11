@@ -72,6 +72,8 @@ exports.postLogin = async (req, res) => {
   try {
     // Step1. 아이디를 찾아서 사용자 존재 유무 체크
     const { user_id, password } = req.body;
+    console.log('ftgfgfg', user_id, password);
+    console.log(req.body);
     const user = await User.findOne({
       where: { user_id },
     });

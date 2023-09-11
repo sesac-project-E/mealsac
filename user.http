@@ -17,14 +17,13 @@ POST {{server}}/user/register
 Content-Type: application/json; charset=UTF-8
 
 {
-
   "user_id": "mo123",
   "password": "1234",
   "user_name": "moss"
 }
 
 ### 로그인 요청
-POST {{server}}/user/login
+POST {{server}}/api/user/login
 Content-Type: application/json; charset=UTF-8
 
 {
