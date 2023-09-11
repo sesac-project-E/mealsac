@@ -3,6 +3,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const fs = require('fs');
+const { swaggerUi, specs } = require("./src/swagger")
+
 dotenv.config();
 
 const app = express();
@@ -21,6 +23,7 @@ if (!fs.existsSync(reviewDirectory)) {
   fs.mkdirSync(reviewDirectory, { recursive: true });
 }
 
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs))
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
 
