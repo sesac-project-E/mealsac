@@ -24,7 +24,7 @@ Content-Type: application/json; charset=UTF-8
 }
 
 ### 로그인 요청
-POST {{server}}/login
+POST {{server}}/user/login
 Content-Type: application/json; charset=UTF-8
 
 {
