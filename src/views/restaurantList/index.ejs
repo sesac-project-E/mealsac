@@ -46,24 +46,8 @@
               </div>
             </div>
             <% restaurants.forEach((restaurant) => { %>
-              <article class="restaurantContainer">
-                <img src="../../static/img/food.jpeg" alt="<%= restaurant.restaurantName %> 이미지" class="restaurantImg" />
-                <div class="restaurantInfo">
-                  <div>
-                    <h3 class="restaurantName"><%= restaurant.restaurantName %></h3>
-                    <img src="../../static/img/heart.png" alt="찜 아이콘" class="heart" />
-                  </div>
-                  <p class="type"><%= restaurant.restaurantStyle %></p>
-                  <p class="address"><%= restaurant.restaurantAddress %></p>
-                  <div>
-                    <img src="../../static/img/star.png" alt="평점 아이콘" class="rating" />
-                    <p class="rate">4.5</p>
-                    <img src="../../static/img/speech-bubble.png" alt="댓글 아이콘" class="comment" />
-                    <p class="review">15</p>
-                  </div>
-                </div>
-              </article>
-            <% }); %>  
+              <%- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %>
+            <% }); %>
             <div class="pagination">
               <% let currentPage = 1; %>
               <a href="#" id="prevPage">&laquo;</a>
