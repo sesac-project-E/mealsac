@@ -5,7 +5,7 @@ const controller = require('../controllers/userController.js');
  * @swagger
  * /api/user/user?user_id={user_id}:
  * /user/profile:
- *
+
  *  get:
  *    summary: "세션 프로필 조회 방식"
  *    description: "요청 경로를 보낸다.."
