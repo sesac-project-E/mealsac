@@ -1,4 +1,5 @@
 const express = require('express');
+
 const path = require('path');
 const dotenv = require('dotenv');
 const session = require('express-session');
@@ -69,9 +70,6 @@ app.use('/', indexRouter);
 app.get('*', (req, res) => {
   res.render('404');
 });
-
-// const userRouter = require('./src/routes/user');
-// app.use('/', userRouter);
 
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {

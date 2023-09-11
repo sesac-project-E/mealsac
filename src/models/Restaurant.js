@@ -43,10 +43,9 @@ module.exports = (sequelize, Datatypes) => {
     // Restaurant.hasMany(models.Tag, {
     //   foreignKey : "tag_id",
     // });
-    // Restaurant.hasMany(models.RestaurantImage, {
-    //   foreignKey : "restaurant_image_id",
-    //   as : "restaurant_image"
-    // });
+    Restaurant.hasMany(models.RestaurantImage, {
+      foreignKey : "restaurant_id",
+    });
     Restaurant.hasMany(models.Menu, {
       foreignKey : "restaurant_id"
     }) 
