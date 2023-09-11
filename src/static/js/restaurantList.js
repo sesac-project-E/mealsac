@@ -25,6 +25,15 @@ document.addEventListener('click', function (e) {
     sortType.classList.remove('active');
     article.classList.remove('active');
   }
+
+  const tag = e.target.closest('.tag');
+  if (tag) {
+    if (tag.classList.contains('tagActive')) {
+      tag.classList.remove('tagActive');
+    } else {
+      tag.classList.add('tagActive');
+    }
+  }
 });
 
 let map;

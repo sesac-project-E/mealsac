@@ -23,7 +23,7 @@
   border: 1px solid #989898;
   border-radius: 15px;
 
-  background-image: url(../images/search.png);
+  background-image: url(../img/search.png);
   background-position: 5px 7px;
   background-repeat: no-repeat;
 
@@ -61,14 +61,8 @@
   border-radius: 25px;
 } */
 
-input[type='radio'] {
-  appearance: none;
-  border: none;
-  outline: none;
-  display: none;
-}
-
-input[type='radio'] + label {
+.tag {
+  display: inline-block;
   cursor: pointer;
   height: 27px;
   padding: 0 10px;
@@ -78,7 +72,7 @@ input[type='radio'] + label {
   border-radius: 25px;
 }
 
-input[type='radio']:checked + label {
+.tagActive {
   background-color: #e0f0d1;
   border: 2px solid #89d83f;
   border-radius: 25px;
