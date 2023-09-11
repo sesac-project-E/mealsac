@@ -8,6 +8,7 @@ const likeRestaurantRouter = require('./likeRestaurantRouter.js')
 const menuRouter = require('./menuRouter.js')
 const tagRouter = require('./tagRouter.js')
 
+
 router.use('/user', userRouter)
 router.use('/restaurant', restaurantRouter)
 router.use('/restaurant_type', restaurantTypeRouter)
