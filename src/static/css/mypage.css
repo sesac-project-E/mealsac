@@ -1,0 +1,70 @@
+html {
+  margin: 0px 20px 0px 20px;
+}
+
+body {
+  text-align: center;
+}
+
+.header {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header img {
+  height: 40px;
+}
+
+hr {
+  width: 70vw;
+  margin: auto;
+}
+
+#profile,
+#logout {
+  border-radius: 30px;
+  border: 1px solid #a5e467;
+  background: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  width: 120px;
+}
+
+h1 {
+  margin-top: 10%;
+}
+
+.userInfo {
+  width: 70vw;
+  height: 30vh;
+  margin: auto;
+}
+.userRestaurant {
+  width: 70vw;
+  height: 8vh;
+  margin: auto;
+}
+
+#myLike,
+#myReview {
+  width: 30vw;
+  height: 8vh;
+  border: none;
+  background-color: transparent;
+}
+
+h1 {
+  font-weight: 900;
+}
+
+span {
+  font-size: 20px;
+}
+
+#userName {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4dda67;
+}
