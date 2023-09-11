@@ -44,7 +44,27 @@ app.use(
   }),
 );
 
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.get('/profile', (req, res) => {
+  res.render('profile');
+});
+
 app.use('/', indexRouter);
+
+app.get('*', (req, res) => {
+  res.render('404');
+});
 
 // const userRouter = require('./src/routes/user');
 // app.use('/', userRouter);
