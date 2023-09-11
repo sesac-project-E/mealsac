@@ -1,5 +1,3 @@
-
-
 module.exports = (sequelize, Datatypes) => {
   const LikeRestaurant = sequelize.define("LikeRestaurant", {
     like_restaurant_id : {
@@ -25,5 +23,5 @@ module.exports = (sequelize, Datatypes) => {
       onDelete : "CASCADE"
     })
   }
-    return LikeRestaurant
+  return LikeRestaurant
 };
