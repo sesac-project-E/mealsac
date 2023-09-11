@@ -7,7 +7,9 @@ const reviewRouter = require('./reviewRouter.js')
 const likeRestaurantRouter = require('./likeRestaurantRouter.js')
 const menuRouter = require('./menuRouter.js')
 const tagRouter = require('./tagRouter.js')
+const restaurantImageRouter = require('./restaurantImageRouter.js')
 const indexRouter = require('./indexRouter.js')
+
 
 router.use('/api/user', userRouter)
 router.use('/api/restaurant', restaurantRouter)
@@ -16,6 +18,8 @@ router.use('/api/review', reviewRouter)
 router.use('/api/like', likeRestaurantRouter)
 router.use('/api/menu', menuRouter)
 router.use('/api/tag', tagRouter)
+router.use('/api/restaurant_image', restaurantImageRouter)
+
 router.use('/', indexRouter)
 
 module.exports = router;
