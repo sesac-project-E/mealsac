@@ -17,7 +17,7 @@ const reviewDirectory = path.join(
   __dirname,
   'src',
   'static',
-  'images',
+  'img',
   'reviewImage',
 );
 if (!fs.existsSync(reviewDirectory)) {
@@ -40,7 +40,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      maxAge: 60 * 1000, // 1분
+      maxAge: 24 * 60 * 60 * 1000, // 1D
     },
   }),
 );
