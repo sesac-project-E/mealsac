@@ -47,6 +47,9 @@ module.exports = (sequelize, Datatypes) => {
     //   foreignKey : "restaurant_image_id",
     //   as : "restaurant_image"
     // });
+    Restaurant.hasMany(models.Menu, {
+      foreignKey : "restaurant_id"
+    }) 
     Restaurant.belongsTo(models.RestaurantType, {
       foreignKey : "restaurant_type_id",
       as : "restaurant_type"

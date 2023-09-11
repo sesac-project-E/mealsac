@@ -7,8 +7,9 @@ exports.getIndex = (req, res) => {
     where : {restaurant_type_eng : restaurant_type_eng}
   })
   .then((restaurantTypeRecord) => {
+    console.log(restaurantTypeRecord)
     Restaurant.findAll({
-      where : {restaurant_type : restaurantTypeRecord. restaurant_type_id}
+      where : {restaurant_type : restaurantTypeRecord.restaurant_type_id}
     })
     .then((response) => {
       res.send(response)
