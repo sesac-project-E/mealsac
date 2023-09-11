@@ -11,18 +11,41 @@
     <%- include('../common/header.ejs') %>
     <main class="container-fluid itemContainer">
       <div class="row">
-        <section class="map col-lg-9 col-md-8 col-sm-7">지도</section>
-        <section class="restaurantList col-lg-3 col-md-4 col-sm-5">
+        <section class="map col-lg-7 col-md-7 col-sm-6">지도</section>
+        <section class="restaurantList col-lg-5 col-md-5 col-sm-6">
+            <img src="../../static/images/hamburger.png" alt="" class="hamburgerIcon">
           <section class="search">
             <form action="/" method="get">
               <input type="text" placeholder="매장명" />
               <button>검색</button>
             </form>
             <section class="tags">
-              <div class="filterIcon">
+              <!-- 필터 아이콘 -->
+              <!-- <div class="filterIcon">
                 <img src="../../static/images/filter.png" alt="필터 아이콘" />
+              </div> -->
+              <!-- <div class="tag tagActive"># 주변식당</div>
+              <div class="tag"># 분위기 좋은</div>
+              <div class="tag"># 가성비</div> -->
+              <div class="tagRadio">
+                <input type="radio" name="tag" id="tag1" class="tagRadioInput" checked>
+                <label for="tag1" class="tag"># 주변식당</label>
+                
+                <input type="radio" name="tag" id="tag2" class="tagRadioInput">
+                <label for="tag2" class="tag"># 분위기 좋은</label>
+                
+                <input type="radio" name="tag" id="tag3" class="tagRadioInput">
+                <label for="tag3" class="tag"># 가성비</label>
+
+                <input type="radio" name="tag" id="tag4" class="tagRadioInput">
+                <label for="tag4" class="tag"># 가성비</label>
+
+                <input type="radio" name="tag" id="tag5" class="tagRadioInput">
+                <label for="tag5" class="tag"># 가성비</label>
+
+                <input type="radio" name="tag" id="tag6" class="tagRadioInput">
+                <label for="tag6" class="tag"># 가성비</label>
               </div>
-              <div class="tag">#주변식당</div>
             </section>
           </section>
           <section class="result">
@@ -51,7 +74,7 @@
                     <img src="../../static/images/heart.png" alt="찜 아이콘" class="heart" />
                   </div>
                   <p class="type"><%= restaurant.restaurantStyle %></p>
-                  <p class="adress"><%= restaurant.restaurantAddress %></p>
+                  <p class="address"><%= restaurant.restaurantAddress %></p>
                   <div>
                     <img src="../../static/images/star.png" alt="평점 아이콘" class="rating" />
                     <p class="rate">4.5</p>

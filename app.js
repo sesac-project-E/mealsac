@@ -40,6 +40,21 @@ app.use(
   }),
 );
 
+app.get('/', (req, res) => {
+  fs.readFile('./restaurant.json', 'utf8', (err, data) => {
+    if (err) {
+      console.log('File read failed:', err);
+      return;
+    }
+
+    const restaurants = JSON.parse(data);
+    res.render('restaurantList/index', {
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+      restaurants: restaurants,
+    });
+  });
+});
+
 app.use('/', indexRouter);
 
 // const userRouter = require('./src/routes/user');

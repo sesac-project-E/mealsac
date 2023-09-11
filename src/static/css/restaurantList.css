@@ -16,7 +16,7 @@
   padding: 10px 10px 0 10px;
 }
 
-.search input {
+.search > form > input {
   height: 40px;
   width: 75%;
   padding-left: 38px;
@@ -41,7 +41,7 @@
 }
 
 .tags {
-  padding: 10px 0;
+  padding: 10px 0 5px 0;
   border-bottom: 1px solid #989898;
 
   & img {
@@ -50,7 +50,7 @@
   }
 }
 
-.filterIcon {
+/* .filterIcon {
   width: 30px;
   height: 27px;
   display: inline-block;
@@ -59,13 +59,26 @@
   background-color: #e0f0d1;
   border: 2px solid #89d83f;
   border-radius: 25px;
+} */
+
+input[type='radio'] {
+  appearance: none;
+  border: none;
+  outline: none;
+  display: none;
 }
 
-.tag {
-  display: inline-block;
+input[type='radio'] + label {
+  cursor: pointer;
   height: 27px;
   padding: 0 10px;
+  margin-bottom: 5px;
 
+  border: 2px solid #989898;
+  border-radius: 25px;
+}
+
+input[type='radio']:checked + label {
   background-color: #e0f0d1;
   border: 2px solid #89d83f;
   border-radius: 25px;
@@ -130,20 +143,26 @@
   z-index: 1;
 }
 
-.restaurantInfo > div {
+.restaurantInfo > div:first-child {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.restaurantInfo > div:nth-child(3) {
-  margin-top: 80%;
+.restaurantInfo > div:nth-child(4) {
+  margin-top: 40px;
+}
+
+.restaurantInfo > div:last-child > * {
+  display: inline-block;
 }
 
 .restaurantInfo h3 {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
-
+.restaurantInfo .address {
+  font-size: 0.7rem;
+}
 .heart {
   width: 23px;
   height: 25px;
@@ -159,6 +178,10 @@
   font-size: 0.8rem;
 }
 
+.hamburgerIcon {
+  display: none;
+}
+
 /* 뷰포트가 576px 이하인 경우 */
 @media (max-width: 576px) {
   .container-fluid {
@@ -171,5 +194,18 @@
 
   .restaurantList {
     height: 60vh;
+    padding-top: 10px;
+    border: 1px solid #989898;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .hamburgerIcon {
+    display: block;
+    width: 15px;
+    height: 15px;
   }
 }

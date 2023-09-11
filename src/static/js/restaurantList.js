@@ -27,17 +27,6 @@ document.addEventListener('click', function (e) {
   }
 });
 
-document.querySelector('.sort').addEventListener('click', function (e) {
-  if (e.target.classList.contains('sortingMethod')) {
-    document.querySelector('.sorting').textContent = e.target.textContent;
-    sortType.classList.remove('active');
-    article.classList.remove('active');
-    return;
-  }
-  sortType.classList.toggle('active');
-  article.classList.toggle('active');
-});
-
 let map;
 
 function initMap() {
@@ -76,3 +65,22 @@ function initMap() {
     );
   });
 }
+
+document.querySelector('.sort').addEventListener('click', function (e) {
+  if (e.target.classList.contains('sortingMethod')) {
+    document.querySelector('.sorting').textContent = e.target.textContent;
+    sortType.classList.remove('active');
+    article.classList.remove('active');
+    return;
+  }
+  sortType.classList.toggle('active');
+  article.classList.toggle('active');
+});
+
+// 찜버튼
+const heartElements = document.querySelectorAll('.heart');
+heartElements.forEach(heartElement => {
+  heartElement.addEventListener('click', e => {
+    e.target.setAttribute('src', '../../static/images/heart-filled.png');
+  });
+});
