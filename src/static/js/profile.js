@@ -2,7 +2,7 @@ const form = document.forms['profile'];
 const edit = async () => {
   axios({
     method: 'PATCH',
-    url: '/user/profile',
+    url: '/api/user/profile',
     data: {
       user_id: form.userId.value,
       user_name: form.userName.value,
