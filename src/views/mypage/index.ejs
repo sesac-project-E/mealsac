@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 마이페이지</title>
+  </head>
+  <body>
+    <%- include('../common/header') %>
+    <h1>MY PAGE</h1>
+    <span>userName</span>
+    <span>님, 반갑습니다!</span>
+    <br />
+    <button type="button" id="profile" onclick="clickProfile()">
+      회원정보
+    </button>
+    <button type="button" id="logout" onclick="clickLogout()">로그아웃</button>
+    <br /><br />
+    <hr />
+    <button type="button" id="myLike" onclick="myLike()">나의 찜</button>
+    <button type="button" id="myReview" onclick="myReview()">리뷰관리</button>
+    <hr />
+    <div></div>
+  </body>
+</html>
