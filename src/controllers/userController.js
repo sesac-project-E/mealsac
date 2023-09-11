@@ -32,6 +32,52 @@ exports.getProfile = async (req, res) => {
   res.render('profile', { data: result });
 };
 
+exports.postOverLapId = async (req, res) => {
+  try {
+    // Step1. 아이디 존재 유무 체크
+    const { user_id } = req.body;
+    const user = await User.findOne({
+      where: { user_id },
+    });
+
+    // Step2. 기존 데이터와 아이디 비교
+    if (user) {
+      res.json({ result: false }); //중복될 경우
+    } else {
+      res.json({ result: true }); //신규 아이디 일 경우
+    }
+  } catch (err) {
+    console.error('에러 정보: ', err);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while duplicateTest.',
+    });
+  }
+};
+
+exports.postOverLapName = async (req, res) => {
+  try {
+    // Step1. 닉네임 DB 존재 유무 체크
+    const { user_name } = req.body;
+    const user = await User.findOne({
+      where: { user_name },
+    });
+
+    // Step2. 기존 데이터와 닉네임 비교
+    if (user) {
+      res.json({ result: false }); //중복될 경우
+    } else {
+      res.json({ result: true }); //신규 닉네임일 경우
+    }
+  } catch (err) {
+    console.error('에러 정보: ', err);
+    res.status(500).json({
+      status: 'error',
+      message: 'An error occurred while duplicateTest.',
+    });
+  }
+};
+
 exports.postRegister = async (req, res) => {
   try {
     const { password: password, user_name, user_id } = req.body;

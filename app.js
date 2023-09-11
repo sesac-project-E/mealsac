@@ -40,7 +40,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      maxAge: 60 * 1000, // 1분
+      maxAge: 24 * 60 * 60 * 1000, // 1D
     },
   }),
 );
