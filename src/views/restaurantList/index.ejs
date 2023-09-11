@@ -63,7 +63,15 @@
                   </div>
                 </div>
               </article>
-            <% }); %>            
+            <% }); %>  
+            <div class="pagination">
+              <% let currentPage = 1; %>
+              <a href="#" id="prevPage">&laquo;</a>
+              <% for (let i = 1; i <= 5; i++) { %>
+                <a href="#" class="<%= i === currentPage ? 'active' : '' %>" onclick="changePage(<%= i %>)"><%= i %></a>
+              <% } %>
+              <a href="#" id="nextPage">&raquo;</a>
+            </div>
         </section>
       </div>
     </main>
