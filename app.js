@@ -17,7 +17,7 @@ const reviewDirectory = path.join(
   __dirname,
   'src',
   'static',
-  'images',
+  'img',
   'reviewImage',
 );
 if (!fs.existsSync(reviewDirectory)) {
