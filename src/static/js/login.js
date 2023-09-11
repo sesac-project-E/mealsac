@@ -4,7 +4,7 @@ const form = document.forms['login'];
 const doLogin = async () => {
   try {
     const res = await axios({
-      url: '/user/login',
+      url: '/api/user/login',
       method: 'POST',
       data: {
         user_id: form.inputId.value,

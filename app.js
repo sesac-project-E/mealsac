@@ -31,6 +31,7 @@ app.set('views', path.join(__dirname, 'src', 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use('/static', express.static(path.join(__dirname, 'src', 'static')));
 app.use(express.json());
+app.use('/static', express.static(__dirname + '/static'));
 
 app.use(
   session({
