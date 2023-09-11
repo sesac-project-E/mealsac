@@ -93,3 +93,27 @@ heartElements.forEach(heartElement => {
     e.target.setAttribute('src', '../../static/images/heart-filled.png');
   });
 });
+
+const changePage = newPage => {
+  document.querySelector(`.pagination a.active`).classList.remove('active');
+  document
+    .querySelector(`.pagination a:nth-child(${newPage + 1})`)
+    .classList.add('active');
+
+  currentPage = newPage;
+
+  // 서버 요청 코드
+};
+
+// &laquo; 클릭 이벤트 핸들러
+document.querySelector('#prevPage').addEventListener('click', () => {
+  if (currentPage > 1) {
+    changePage(currentPage - 1);
+  }
+});
+
+document.querySelector('#nextPage').addEventListener('click', () => {
+  if (currentPage < 5) {
+    changePage(currentPage + 1);
+  }
+});
