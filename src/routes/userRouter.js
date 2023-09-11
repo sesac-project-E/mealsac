@@ -33,6 +33,9 @@ router.get('/users', controller.getUsers);
 router.get('/register', controller.getRegister);
 router.post('/register', controller.postRegister);
 
+router.post('/overlapid', controller.postOverLapId);
+router.post('/overlapname', controller.postOverLapName);
+
 router.get('/login', controller.getLogin);
 router.post('/login', controller.postLogin);
 

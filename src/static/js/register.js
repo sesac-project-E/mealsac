@@ -6,7 +6,7 @@ const nameMsg = document.querySelector('#nameMsg');
 const overlapId = async () => {
   try {
     const res = await axios({
-      url: '/api/user/register',
+      url: '/api/user/overlapid',
       method: 'POST',
       data: {
         user_id: form.inputId.value,
@@ -29,7 +29,7 @@ const overlapId = async () => {
 const overlapName = async () => {
   try {
     const res = await axios({
-      url: '/api/user/register',
+      url: '/api/user/overlapname',
       method: 'POST',
       data: {
         user_name: form.inputName.value,
