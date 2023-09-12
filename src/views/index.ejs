@@ -1,48 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('./common/commonHead.ejs') %>
   <title>mainPage</title>
   <link rel="stylesheet" href="/static/css/index.css" />
 </head>
 <body>
   <!-- Header -->
-  <div class="header">
-    <img src="/static/image/logo2.png" alt="로고">
-    <div>
-        <button class="login">로 그 인</button>
-        <button class="register">회 원 가 입</button>
-        <!-- 로그인 후 -->
-        <button class="logout">로 그 아 웃</button>
-        <button class="mypage">마 이 페 이 지</button>
-    </div>
-</div>
+<%- include('./common/header.ejs') %>
 
 <!-- Menu Icons -->
 <div class="menuIcons">
     <div class="button">
-        <img src="/static/image/random.png" alt="랜덤 메뉴 아이콘">
+        <img src="../static/img/random.png" alt="랜덤 메뉴 아이콘">
         <p>랜덤 메뉴</p>
     </div>
     <div class="button">
-      <img src="/static/image/hashtag.png" alt="카테고리 아이콘">
+      <img src="../static/img/hashtag.png" alt="카테고리 아이콘">
       <p>카테고리</p>
     </div>
     <div class="button">
-      <img src="/static/image/chat.png" alt="게시판 아이콘">
+      <img src="../static/img/chat.png" alt="게시판 아이콘">
       <p>게시판</p>
     </div>
     <div class="button">
-      <img src="/static/image/place.png" alt="주변식당 아이콘">
+      <img src="../static/img/place.png" alt="주변식당 아이콘">
       <p>주변 식당</p>
     </div>
     <div class="button">
-      <img src="/static/image/search.png" alt="키워드 검색 아이콘">
+      <img src="../static/img/search.png" alt="키워드 검색 아이콘">
       <p>키워드 검색</p>
     </div>
 </div>
-
+<br>
 <!-- Popular Restaurants -->
 <div class="restaurants">
     <h3>인기식당</h3>
@@ -57,8 +47,8 @@
 
           <p class="category">카테고리</p>
           <div class="ratingReview">
-          <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-          <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+          <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p type="button" class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
         </div>
         </div>
       
@@ -71,8 +61,8 @@
        <div class="categoryRating">
        <p class="category">카테고리</p>
        <div class="ratingReview">
-        <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-        <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
       </div>
       </div>
 
@@ -86,8 +76,8 @@
 
          <p class="category">카테고리</p>
          <div class="ratingReview">
-          <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-          <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+          <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
         </div>
         </div>
     
@@ -101,8 +91,8 @@
 
          <p class="category">카테고리</p>
          <div class="ratingReview">
-          <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-          <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+          <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
         </div>
         </div>
       
@@ -112,7 +102,7 @@
 </div>
 <button class="slide-btn next">&gt;</button>
 </div>
-
+<br>
 <!-- New Restaurants -->
 <div class="restaurants">
     <h3>신규식당</h3>
@@ -127,8 +117,8 @@
 
         <p class="category">카테고리</p>
         <div class="ratingReview">
-          <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-          <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+          <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
         </div>
       </div>
   </div>
@@ -141,8 +131,8 @@
 
        <p class="category">카테고리</p>
        <div class="ratingReview">
-        <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-        <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
       </div>
       </div>
   </div>
@@ -155,8 +145,8 @@
 
        <p class="category">카테고리</p>
        <div class="ratingReview">
-        <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-        <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
       </div>
       </div>
   </div>
@@ -169,8 +159,8 @@
 
        <p class="category">카테고리</p>
        <div class="ratingReview">
-        <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-        <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
       </div>
       </div>
   </div>
@@ -179,6 +169,7 @@
 </div>
 <button class="slide-btn next">&gt;</button>
 </div>
+<br>
 <!-- User's Favorites (if log in) -->
 <div class="restaurants">
     <h3>찜한 식당</h3>
@@ -193,8 +184,8 @@
 
         <p class="category">카테고리</p>
         <div class="ratingReview">
-          <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-          <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+          <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
         </div>
       </div>
   </div>
@@ -207,8 +198,8 @@
 
       <p class="category">카테고리</p>
        <div class="ratingReview">
-          <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-          <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+        <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
         </div>
       </div>
   </div>
@@ -221,8 +212,8 @@
 
        <p class="category">카테고리</p>
        <div class="ratingReview">
-        <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-        <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
       </div>
       </div>
   </div>
@@ -235,8 +226,8 @@
 
        <p class="category">카테고리</p>
        <div class="ratingReview">
-        <p class="rating"> <img src="/static/image/rating.png" alt="Rating"> 4.5</p>
-        <p class="review"> <img src="/static/image/speechBalloon.png" alt="Review"> </p>
+        <p class="rating"> <img src="../static/img/rating.png" alt="Rating"> 4.5</p>
+          <p class="review"> <img src="../static/img/speechBalloon.png" alt="Review"> </p>
       </div> 
       </div>
   </div>
@@ -247,15 +238,7 @@
 </div>
 <br>
 <!-- Footer -->
-<footer>
-  <br>
-    <p class="contact">| GITHUB || CONTACT |</p>
-    <br>
-    
-    <p>이 프로젝트는 포트폴리오 목적으로 제작되었습니다.</p>
-    <p>상업적인 용도로 사용하지 않을 것입니다. 이 프로젝트의 목적은 개인적인 학습과 기술 데모를 위한 것입니다.</p>
-    <p>원작자가 아닌 다른 소스로부터 자료를 가져왔음을 밝힙니다.</p>
-    <br>
-</footer>
+<%- include('./common/footer.ejs') %>
+
 </body>
 </html>
