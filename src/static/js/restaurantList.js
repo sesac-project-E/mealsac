@@ -25,6 +25,15 @@ document.addEventListener('click', function (e) {
     sortType.classList.remove('active');
     article.classList.remove('active');
   }
+
+  const tag = e.target.closest('.tag');
+  if (tag) {
+    if (tag.classList.contains('tagActive')) {
+      tag.classList.remove('tagActive');
+    } else {
+      tag.classList.add('tagActive');
+    }
+  }
 });
 
 let map;
@@ -83,4 +92,28 @@ heartElements.forEach(heartElement => {
   heartElement.addEventListener('click', e => {
     e.target.setAttribute('src', '../../static/images/heart-filled.png');
   });
+});
+
+const changePage = newPage => {
+  document.querySelector(`.pagination a.active`).classList.remove('active');
+  document
+    .querySelector(`.pagination a:nth-child(${newPage + 1})`)
+    .classList.add('active');
+
+  currentPage = newPage;
+
+  // 서버 요청 코드
+};
+
+// &laquo; 클릭 이벤트 핸들러
+document.querySelector('#prevPage').addEventListener('click', () => {
+  if (currentPage > 1) {
+    changePage(currentPage - 1);
+  }
+});
+
+document.querySelector('#nextPage').addEventListener('click', () => {
+  if (currentPage < 5) {
+    changePage(currentPage + 1);
+  }
 });

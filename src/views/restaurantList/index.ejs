@@ -16,7 +16,7 @@
             <img src="../../static/img/hamburger.png" alt="" class="hamburgerIcon">
           <section class="search">
             <form action="/" method="get">
-              <input type="text" placeholder="매장명" />
+              <input type="text" placeholder="매장명, 메뉴명" />
               <button>검색</button>
             </form>
             <section class="tags">
@@ -24,28 +24,9 @@
               <!-- <div class="filterIcon">
                 <img src="../../static/img/filter.png" alt="필터 아이콘" />
               </div> -->
-              <!-- <div class="tag tagActive"># 주변식당</div>
+              <div class="tag tagActive"># 주변식당</div>
               <div class="tag"># 분위기 좋은</div>
-              <div class="tag"># 가성비</div> -->
-              <div class="tagRadio">
-                <input type="radio" name="tag" id="tag1" class="tagRadioInput" checked>
-                <label for="tag1" class="tag"># 주변식당</label>
-                
-                <input type="radio" name="tag" id="tag2" class="tagRadioInput">
-                <label for="tag2" class="tag"># 분위기 좋은</label>
-                
-                <input type="radio" name="tag" id="tag3" class="tagRadioInput">
-                <label for="tag3" class="tag"># 가성비</label>
-
-                <input type="radio" name="tag" id="tag4" class="tagRadioInput">
-                <label for="tag4" class="tag"># 가성비</label>
-
-                <input type="radio" name="tag" id="tag5" class="tagRadioInput">
-                <label for="tag5" class="tag"># 가성비</label>
-
-                <input type="radio" name="tag" id="tag6" class="tagRadioInput">
-                <label for="tag6" class="tag"># 가성비</label>
-              </div>
+              <div class="tag"># 가성비</div> 
             </section>
           </section>
           <section class="result">
@@ -55,35 +36,26 @@
                 <img src="../../static/img/sorting.png" alt="정렬 아이콘" />
                 <section class="sort">
                   <article class="sortArticle">
-                    <div class="sorting">거리순</div>
+                    <div class="sorting">인기순</div>
                     <ul class="sortType">
-                      <li class="sortingMethod active">거리순</li>
-                      <li class="sortingMethod">인기순</li>
-                      <li class="sortingMethod">정확도순</li>
+                      <li class="sortingMethod active">인기순</li>
+                      <li class="sortingMethod">최신 등록순</li>
                     </ul>
                   </article>
                 </section>
               </div>
             </div>
             <% restaurants.forEach((restaurant) => { %>
-              <article class="restaurantContainer">
-                <img src="../../static/img/food.jpeg" alt="<%= restaurant.restaurantName %> 이미지" class="restaurantImg" />
-                <div class="restaurantInfo">
-                  <div>
-                    <h3 class="restaurantName"><%= restaurant.restaurantName %></h3>
-                    <img src="../../static/img/heart.png" alt="찜 아이콘" class="heart" />
-                  </div>
-                  <p class="type"><%= restaurant.restaurantStyle %></p>
-                  <p class="address"><%= restaurant.restaurantAddress %></p>
-                  <div>
-                    <img src="../../static/img/star.png" alt="평점 아이콘" class="rating" />
-                    <p class="rate">4.5</p>
-                    <img src="../../static/img/speech-bubble.png" alt="댓글 아이콘" class="comment" />
-                    <p class="review">15</p>
-                  </div>
-                </div>
-              </article>
-            <% }); %>            
+              <%- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %>
+            <% }); %>
+            <div class="pagination">
+              <% let currentPage = 1; %>
+              <a href="#" id="prevPage">&laquo;</a>
+              <% for (let i = 1; i <= 5; i++) { %>
+                <a href="#" class="<%= i === currentPage ? 'active' : '' %>" onclick="changePage(<%= i %>)"><%= i %></a>
+              <% } %>
+              <a href="#" id="nextPage">&raquo;</a>
+            </div>
         </section>
       </div>
     </main>

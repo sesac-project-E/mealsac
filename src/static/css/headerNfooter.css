@@ -50,6 +50,12 @@
   font-size: medium;
 }
 
+/* 로그인 후 버튼은 기본적으로 숨깁니다. */
+.logout,
+.mypage {
+  display: none;
+}
+
 /* 폰트 */
 * {
   font-family: Inter;
