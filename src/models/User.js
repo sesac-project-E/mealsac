@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Restaurant, {
       through : "LikeRestaurant",
       foreignKey : "id",
+      onDelete : "CASCADE"
     })
     User.hasMany(models.ReviewUsefulness, {
         foreignKey : "user_id",

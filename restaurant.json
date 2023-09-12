@@ -1,0 +1,78 @@
+[
+  {
+    "restaurantName": "장수식당",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "0226331870",
+    "restaurantAddress": "서울특별시 영등포구 문래동2가 2-0번지 "
+  },
+  {
+    "restaurantName": "하나식당",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "0206778678",
+    "restaurantAddress": "서울특별시 영등포구 문래동3가 54-30번지 "
+  },
+  {
+    "restaurantName": "대영각",
+    "restaurantStyle": "중식",
+    "restaurantPhone": "02 5478913",
+    "restaurantAddress": "서울특별시 영등포구 문래동3가 54-5번지 "
+  },
+  {
+    "restaurantName": "영일분식",
+    "restaurantStyle": "분식",
+    "restaurantPhone": "",
+    "restaurantAddress": "서울특별시 영등포구 문래동4가 8-26 "
+  },
+  {
+    "restaurantName": "남성호프",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "0226341005",
+    "restaurantAddress": "서울특별시 영등포구 문래동2가 35번지 남성아파트 상가 1층 3호"
+  },
+  {
+    "restaurantName": "쟁반집",
+    "restaurantStyle": "분식",
+    "restaurantPhone": "0206342628",
+    "restaurantAddress": "서울특별시 영등포구 문래동4가 9-6 1층 "
+  },
+  {
+    "restaurantName": "이씨네",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "02  26760998",
+    "restaurantAddress": "서울특별시 영등포구 문래동2가 20-8"
+  },
+  {
+    "restaurantName": "흑돼지생고기",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "02  26329242",
+    "restaurantAddress": "서울특별시 영등포구 문래동4가 8-18번지 "
+  },
+  {
+    "restaurantName": "한신장",
+    "restaurantStyle": "중식",
+    "restaurantPhone": "0226781677",
+    "restaurantAddress": "서울특별시 영등포구 문래동6가 43-0번지 "
+  },
+  {
+    "restaurantName": "가평식당",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "0236673055",
+    "restaurantAddress": "서울특별시 영등포구 문래동2가 19-1",
+    "restaurantLocation": {
+      "x": "190594.32859635",
+      "y": "445681.949831722"
+    }
+  },
+  {
+    "restaurantName": "이화식당",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "0226332155",
+    "restaurantAddress": "서울특별시 영등포구 문래동1가 72-12번지 "
+  },
+  {
+    "restaurantName": "서진식당",
+    "restaurantStyle": "한식",
+    "restaurantPhone": "0226331379",
+    "restaurantAddress": "서울특별시 영등포구 문래동1가 96-1번지 "
+  }
+]
