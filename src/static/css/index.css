@@ -1,64 +1,11 @@
 /* 전체 페이지의 기본 스타일 */
 * {
-  font-family: 'Gugi', cursive;
-  font-family: 'Inter', sans-serif;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: Inter;
 }
 
 body {
   margin: 0;
   padding: 0;
-}
-
-.header {
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 60px 20px 60px;
-}
-
-.header img {
-  height: 40px;
-}
-
-.login {
-  background-color: #f7f7f7;
-  border-radius: 30px;
-  border: none;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
-  height: 30px;
-  width: 100px;
-  font-size: medium;
-}
-.logout {
-  background-color: #f7f7f7;
-  border-radius: 30px;
-  border: none;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
-  height: 30px;
-  width: 100px;
-  font-size: medium;
-}
-
-.register {
-  background-color: #a5e467;
-  border-radius: 30px;
-  border: none;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
-  height: 30px;
-  width: 100px;
-  font-size: medium;
-}
-
-.mypage {
-  background-color: #a5e467;
-  border-radius: 30px;
-  border: none;
-  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
-  height: 30px;
-  width: 100px;
-  font-size: medium;
 }
 
 /* 메뉴 아이콘들을 중앙 정렬하고 각 아이템 간격 조절 */
@@ -106,9 +53,23 @@ h3 {
 }
 
 .restaurants h3 {
-  align-self: flex-start; /* h3 태그를 왼쪽 정렬 */
+  align-self: flex-start;
+  display: flex;
+  justify-content: left; /* 가로 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
   margin-bottom: 20px; /* h3 태그 아래에 간격 추가 */
+  width: 80px;
+  height: 25px;
 }
+
+input .review {
+  background: url('../img/speechBalloon.png') no-repeat;
+  border: none;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
 /* 카드 가로 정렬 */
 .cardMenu {
   display: flex;
