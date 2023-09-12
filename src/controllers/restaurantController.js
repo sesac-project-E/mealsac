@@ -1,4 +1,4 @@
-const {Restaurant} = require("../models")
+const {User, Restaurant} = require("../models")
 
 exports.getIndex = (req, res) => {
   res.render("index")
@@ -7,9 +7,15 @@ exports.getIndex = (req, res) => {
 exports.getRestaurant = (req, res) => {
   const {restaurant_id} = req.params
   Restaurant.findOne({
-    where : {restaurant_id : restaurant_id}
+    where : {restaurant_id : restaurant_id},
+    include : [
+      { 
+        models : User
+      }
+    ]
   })
   .then((restaurant) => {
+    res.send(restaurant)
     // MenuModel.findAll({
     //   where : {restaurant_id : restaurant_id}
     // })
