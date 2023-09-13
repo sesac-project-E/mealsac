@@ -50,7 +50,6 @@ module.exports = (sequelize, DataTypes) => {
     });
     Review.hasMany(models.ReviewImage, {
       foreignKey: 'image_id',
-      as: 'image_id',
     });
     Review.hasMany(models.ReviewUsefulness, {
       foreignKey: 'review_id',
