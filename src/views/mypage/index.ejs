@@ -9,31 +9,40 @@
     <%- include('../common/header') %>
     <div class="container">
       <div class="userInfo">
-      <h1>MY PAGE</h1>
-      <span id="userName">userName</span>
-      <span>님, 반갑습니다!</span>
-      <br /><br /><br>
-      
-        <button type="button" id="profile" onclick="clickProfile()">
+        <h1>MY PAGE</h1>
+        <span id="userName"><%= data.user_name %></span>
+        <span>님, 반갑습니다!</span>
+        <br /><br /><br />
+
+        <button type="button" id="profile" onclick="location.href='profile'">
           회원정보
         </button>
-        <button type="button" id="logout" onclick="clickLogout()">
+        <button type="button" id="logout" onclick="location.href='index.ejs'">
           로그아웃
         </button>
       </div>
-      </div>
+    </div>
 
-      <hr />
+    <hr />
 
-      <div class="userRestaurant">
-        <button type="button" id="myLike" onclick="myLike()">나의 찜</button>
-        <button type="button" id="myReview" onclick="myReview()">
-          리뷰관리
-        </button>
-      </div>
-      <hr />
+    <div class="userRestaurant">
+      <button type="button" name="myLike" id="myLike" onclick="likeList()">
+        나의 찜
+      </button>
+      <button
+        type="button"
+        name="myReview"
+        id="myReview"
+        onclick="reviewList()"
+      >
+        리뷰관리
+      </button>
+    </div>
+    <hr />
 
-      <div class="list"></div>
+    <div class="list">
+      <!-- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %> -->
     </div>
   </body>
+  <script src="../../static/js/mypage.js"></script>
 </html>
