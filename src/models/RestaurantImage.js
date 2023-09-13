@@ -19,6 +19,7 @@ module.exports = (sequelize, Datatypes) => {
   RestaurantImage.associate = function(models) {
     RestaurantImage.belongsTo(models.Restaurant, {
       foreignKey : "restaurant_id",
+      allowNull : false,
       onDelete : "CASCADE"
     })
   }

@@ -24,7 +24,8 @@ module.exports = (sequelize, Datatypes) => {
   })
   RestaurantType.associate = function(models) {
     RestaurantType.hasMany(models.Restaurant, {
-      foreignKey : "restaurant_type_id"
+      foreignKey : "restaurant_type_id",
+      allowNull : false
     })
   }
   return RestaurantType

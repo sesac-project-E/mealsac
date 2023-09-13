@@ -37,6 +37,11 @@ module.exports = (sequelize, Datatypes) => {
       type : Datatypes.INTEGER,
       allowNull: false,
       defaultValue: '0'
+    },
+    ratings : {
+      type : Datatypes.INTEGER,
+      allowNull: false,
+      defaultValue: '0'
     }
   }, {
     tableName : "Restaurant",
@@ -48,31 +53,42 @@ module.exports = (sequelize, Datatypes) => {
 
   Restaurant.associate = function(models) {
     Restaurant.hasMany(models.Review, {
-      foreignKey : 'restaurant_id'
+      foreignKey : 'restaurant_id',
+      allowNull : false
     })
     Restaurant.belongsToMany(models.Tag, {
       through : "TagRestaurant",
-      foreignKey : "restaurant_id"
+      foreignKey : "restaurant_id",
+      allowNull : false
     })
     Restaurant.belongsToMany(models.User, {
       through : "LikeRestaurant",
-      foreignKey : "restaurant_id"
+      foreignKey : "restaurant_id",
+      allowNull : false
     })
     Restaurant.hasMany(models.RestaurantImage, {
       foreignKey : "restaurant_id",
+      allowNull : false
     });
     Restaurant.hasMany(models.Menu, {
-      foreignKey : "restaurant_id"
+      foreignKey : "restaurant_id",
+      allowNull : false
     }) 
     Restaurant.belongsTo(models.RestaurantType, {
       foreignKey : "restaurant_type_id",
+      allowNull : false,
       as : "restaurant_type"
     });
     Restaurant.belongsToMany(models.User, {
       through : "LikeRestaurant",
+      allowNull : false,
       foreignKey : "restaurant_id",
       timestamps : false,
       onDelete : "CASCADE",
+    });
+    Restaurant.hasMany(models.Review, {
+      foreignKey : "restaurant_id",
+      allowNull : false
     })
   }
   return Restaurant;
