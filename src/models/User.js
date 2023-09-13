@@ -41,6 +41,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey : "user_id",
         onDelete : "CASCADE",
     })
+    User.belongsToMany(models.Restaurant, {
+      through : "LikeRestaurant",
+      as : "restaurants",
+      foreignKey : "id",
+    })
   }
   return User;
 };
