@@ -67,7 +67,7 @@ exports.postReview = async (req, res) => {
       where : {restaurant_id : restaurant_id}
     });
     let reviews_count = restaurant.dataValues.reviews_count;
-    let restaurantRating = restaurant.dataValues.rating
+    let restaurantRating = restaurant.dataValues.rating;
     const newReview = await Review.create({
       content : content,
       rating : rating,
@@ -117,6 +117,8 @@ exports.recommendReview = async (req, res) => {
   const { review_id } = req.params;
 
   try {
+
+
     const existingUsefulness = await ReviewUsefulness.findOne({
       where: {
         review_id,
@@ -266,16 +268,23 @@ exports.deleteReview = async (req, res) => {
     }
     
     const restaurant_id = review.restaurant_id
+    const currRating = review.rating
+    
     await ReviewUsefulness.destroy({ where: { review_id } });
     await ReviewImage.destroy({ where: { review_id } });
     await review.destroy();
-    let reviews_count = await Restaurant.findOne({
-      attributes : ["reviews_count"],
+    let restaurant = await Restaurant.findOne({
+      attributes : ['reviews_count', 'rating'],
       where : {restaurant_id : restaurant_id}
     });
-    reviews_count = reviews_count.dataValues.reviews_count;
+    let reviews_count = restaurant.dataValues.reviews_count;
+    let restaurantRating = restaurant.dataValues.rating;
+
     await Restaurant.update(
-      { reviews_count :  reviews_count - 1},
+      { 
+        reviews_count :  reviews_count - 1,
+        rating : (restaurantRating * reviews_count - currRating) / (reviews_count - 1)
+      },
       {where : {restaurant_id  : restaurant_id}}
     )
     res.json({
