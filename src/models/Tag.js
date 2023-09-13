@@ -18,6 +18,12 @@ const Tag = (sequelize, dataTypes) => {
     collate : "utf8_general_ci",
     timestamps : false
   })
+  Tag.associate = function(models) {
+    Tag.belongsToMany(models.Restaurant, {
+      through : "TagRestaurant",
+      foreignKey : "tag_id"
+    })
+  }
   return Tag
 }
 
