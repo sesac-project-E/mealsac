@@ -1,3 +1,5 @@
+
+
 module.exports = (sequelize, Datatypes) => {
   const LikeRestaurant = sequelize.define("LikeRestaurant", {
   }, {
@@ -7,3 +9,4 @@ module.exports = (sequelize, Datatypes) => {
 
   return LikeRestaurant
 }
+
