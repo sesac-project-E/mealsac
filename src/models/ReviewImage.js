@@ -5,8 +5,17 @@ module.exports = (sequelize, DataTypes) => {
       image_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
+      },
+      review_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'Review',
+          key: 'review_id',
+        },
       },
       image_url: {
         type: DataTypes.STRING(1024),
@@ -16,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: false,
       underscored: true,
-      tableName: 'ReviewImages',
+      tableName: 'ReviewImage',
       freezeTableName: true,
     },
   );
@@ -24,8 +33,8 @@ module.exports = (sequelize, DataTypes) => {
   ReviewImage.associate = models => {
     ReviewImage.belongsTo(models.Review, {
       foreignKey: 'review_id',
-      targetKey : 'review_id',
-      onDelete : 'CASCADE'
+      targetKey: 'review_id',
+      onDelete: 'CASCADE',
     });
   };
 

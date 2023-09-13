@@ -2,34 +2,46 @@ module.exports = (sequelize, DataTypes) => {
   const ReviewUsefulness = sequelize.define(
     'ReviewUsefulness',
     {
-      review_usefulness_id : {
-        type : DataTypes.INTEGER,
-        allowNull : false,
-        primaryKey: true
-      }
+      review_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Review',
+          key: 'review_id',
+        },
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+      },
     },
     {
       timestamps: false,
       freezeTableName: true,
-      tableName: 'review_usefulness',
+      tableName: 'ReviewUsefulness',
       indexes: [
         {
           unique: true,
-          fields: ['review_id', 'user_id'],
+          fields: ['user_id', 'review_id'],
         },
       ],
-      hasTrigger: true,
     },
   );
 
   ReviewUsefulness.associate = function (models) {
-    ReviewUsefulness.belongsTo(models.Review, {
-      foreignKey: 'review_id',
-      as: 'Review',
-    });
     ReviewUsefulness.belongsTo(models.User, {
       foreignKey: 'user_id',
-      as: 'User',
+      targetKey: 'id',
+      onDelete: 'CASCADE',
+    });
+    ReviewUsefulness.belongsTo(models.Review, {
+      foreignKey: 'review_id',
+      targetKey: 'review_id',
+      onDelete: 'CASCADE',
     });
   };
 
