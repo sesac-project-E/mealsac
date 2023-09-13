@@ -5,16 +5,17 @@ module.exports = (sequelize, DataTypes) => {
       image_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
       },
       review_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
         references: {
           model: 'Review',
           key: 'review_id',
         },
-        primaryKey: true,
       },
       image_url: {
         type: DataTypes.STRING(1024),

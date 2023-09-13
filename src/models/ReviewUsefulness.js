@@ -2,24 +2,27 @@ module.exports = (sequelize, DataTypes) => {
   const ReviewUsefulness = sequelize.define(
     'ReviewUsefulness',
     {
-      user_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'User',
-          key: 'id',
-        },
-        primaryKey: true,
-      },
       review_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
           model: 'Review',
           key: 'review_id',
         },
-        primaryKey: true,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
       },
     },
     {
+      timestamps: false,
+      freezeTableName: true,
+      tableName: 'ReviewUsefulness',
       indexes: [
         {
           unique: true,

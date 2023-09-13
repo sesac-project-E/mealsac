@@ -23,7 +23,7 @@ document.getElementById('submitbtn').addEventListener('click', async e => {
 
   const formData = new FormData(reviewForm);
   // const restaurant_id = formData.get('restaurantId');
-  const title = formData.get('title');
+  // const title = formData.get('title');
   const content = formData.get('content');
   const rating = formData.get('rating');
   const imageFiles = formData.getAll('image');

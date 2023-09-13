@@ -24,10 +24,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
-      title: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-      },
       content: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -53,12 +49,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'restaurant_id',
     });
     Review.hasMany(models.ReviewImage, {
-      foreignKey: 'review_id',
-      // as: 'images',
+      foreignKey: 'image_id',
     });
     Review.hasMany(models.ReviewUsefulness, {
       foreignKey: 'review_id',
-      as: 'reviewUsefulness',
+      as: 'ReviewUsefulness',
     });
   };
 
