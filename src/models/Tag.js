@@ -21,7 +21,8 @@ const Tag = (sequelize, dataTypes) => {
   Tag.associate = function(models) {
     Tag.belongsToMany(models.Restaurant, {
       through : "TagRestaurant",
-      foreignKey : "tag_id"
+      foreignKey : "tag_id",
+      allowNull : false
     })
   }
   return Tag

@@ -72,7 +72,9 @@ exports.deleteLike = async (req, res) => {
         Restaurant.update(
           {likes_count : likes_count - 1},
           {where : {restaurant_id  : restaurant_id}}
-        )}
+          )
+        res.send("성공적으로 제거하였습니다.")
+        }
       )
       .catch(() => {
         res.status(500).send("알 수 없는 에러")
