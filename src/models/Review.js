@@ -8,14 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // restaurant_id: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'Restaurant',
-      //     key: 'restaurant_id',
-      //   },
-      // },
+      restaurant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Restaurant',
+          key: 'restaurant_id',
+        },
+      },
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -23,10 +23,6 @@ module.exports = (sequelize, DataTypes) => {
           model: 'User',
           key: 'id',
         },
-      },
-      title: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
       },
       content: {
         type: DataTypes.TEXT,
@@ -44,22 +40,22 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: 'review',
+      tableName: 'Review',
     },
   );
 
   Review.associate = function (models) {
     Review.belongsTo(models.Restaurant, {
-      foreignKey : "restaurant_id",
+      foreignKey: 'restaurant_id',
     });
     Review.hasMany(models.ReviewImage, {
       foreignKey: 'image_id',
-      as : 'image_id'
+      as: 'image_id',
     });
-    // Review.hasMany(models.ReviewUsefulness, {
-    //   foreignKey: 'review_id',
-    //   as: 'ReviewUsefulness',
-    // });
+    Review.hasMany(models.ReviewUsefulness, {
+      foreignKey: 'review_id',
+      as: 'ReviewUsefulness',
+    });
   };
 
   return Review;
