@@ -44,13 +44,16 @@ module.exports = (sequelize, DataTypes) => {
     {
       timestamps: true,
       underscored: true,
-      tableName: 'review',
+      tableName: 'Review',
     },
   );
 
   Review.associate = function (models) {
     Review.belongsTo(models.Restaurant, {
       foreignKey : "restaurant_id",
+      through : "LikeRestaurant",
+      onDelete : "CASCADE",
+      timestamps : false,
     });
     Review.hasMany(models.ReviewImage, {
       foreignKey: 'image_id',
