@@ -202,3 +202,86 @@ footer p .contact {
 footer p {
   font-size: small;
 }
+
+/* 태블릿 뷰 (920px) */
+@media only screen and (max-width: 920px) {
+  .header {
+    padding: 20px 30px;
+  }
+  .menuIcons {
+    padding: 0 60px;
+  }
+  .restaurants {
+    padding: 0 30px;
+  }
+  .card-container {
+    flex: 0 0 50%; /* 3개의 카드를 보여주기 위해 33.33%의 너비로 설정 */
+  }
+}
+
+/* 모바일 뷰 (480px) */
+@media only screen and (min-width: 280px) and (max-width: 480px) {
+  .header {
+    padding: 15px 20px;
+  }
+  .menuIcons {
+    padding: 0 20px;
+  }
+  .menuIcons img {
+    width: 40px; /* 아이콘 크기 줄임 */
+    height: 40px;
+  }
+  .restaurants {
+    padding: 0 20px;
+  }
+  .card-container {
+    flex: 0 0 50%; /* 모바일에서는 카드 2개를 보여주기 */
+  }
+  .card {
+    width: 90%; /* 각 카드의 너비를 조금 줄여 양쪽에 약간의 여백을 주기 위해 */
+    margin: 0 auto 20px; /* 중앙 정렬 및 아래 마진 추가 */
+    padding: 10px 0;
+  }
+}
+
+@media only screen and (max-width: 280px) {
+  /* 메뉴 아이콘 크기 조정 */
+  .menuIcons img {
+    width: 20px; /* 아이콘의 폭 줄이기 */
+    height: 20px; /* 아이콘의 높이 줄이기 */
+  }
+
+  /* 메뉴 아이콘 사이의 패딩 조정 */
+  .menuIcons {
+    height: 10vh;
+    padding: 0 20px;
+  }
+  /* 메뉴 아이콘의 폰트사이즈 조정 */
+  .menuIcons p {
+    font-size: x-small;
+  }
+
+  /* 식당 이름 h3 조정 */
+  .restaurants h3 {
+    font-size: x-small;
+    height: 2.5vh;
+    width: 8vh;
+    padding-left: 4%;
+    padding-bottom: 1.5%;
+  }
+  /* 식당 카드 크기 조정 */
+  .card {
+    width: 75%; /* 카드의 폭 줄이기 */
+    height: 75%; /* 카드의 높이 줄이기 */
+  }
+
+  /* 카드 내 이미지 크기 조절 */
+  .card img {
+    height: 100%; /* 이미지의 높이 줄이기 */
+  }
+
+  /* 카드 내 텍스트 사이즈 조절 */
+  .card p {
+    font-size: x-small; /* 텍스트 크기 줄이기 */
+  }
+}
