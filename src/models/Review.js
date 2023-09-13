@@ -8,14 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // restaurant_id: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: 'Restaurant',
-      //     key: 'restaurant_id',
-      //   },
-      // },
+      restaurant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Restaurant',
+          key: 'restaurant_id',
+        },
+      },
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
