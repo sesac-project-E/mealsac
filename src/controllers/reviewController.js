@@ -62,6 +62,12 @@ exports.postReview = async (req, res) => {
   }
 
   try {
+    let restaurant = await Restaurant.findOne({
+      attributes : ['reviews_count', 'rating'],
+      where : {restaurant_id : restaurant_id}
+    });
+    let reviews_count = restaurant.dataValues.reviews_count;
+    let restaurantRating = restaurant.dataValues.rating
     const newReview = await Review.create({
       content : content,
       rating : rating,
@@ -76,15 +82,12 @@ exports.postReview = async (req, res) => {
         image_url: filePath,
       });
     });
-  
     await Promise.all(imagePromises);
-    let reviews_count = await Restaurant.findOne({
-      attributes : ["reviews_count"],
-      where : {restaurant_id : restaurant_id}
-    });
-    reviews_count = reviews_count.dataValues.reviews_count;
     await Restaurant.update(
-      { reviews_count :  reviews_count + 1},
+      { 
+        reviews_count :  reviews_count + 1,
+        rating : (restaurantRating * reviews_count + rating) / (reviews_count + 1)
+      },
       {where : {restaurant_id  : restaurant_id}}
     )
     res.status(201).json({

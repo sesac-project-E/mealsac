@@ -38,8 +38,8 @@ module.exports = (sequelize, Datatypes) => {
       allowNull: false,
       defaultValue: '0'
     },
-    ratings: {
-      type : Datatypes.INTEGER,
+    rating: {
+      type : Datatypes.FLOAT,
       allowNull: false,
       defaultValue: '0'
     }
