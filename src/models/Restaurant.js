@@ -27,6 +27,16 @@ module.exports = (sequelize, Datatypes) => {
     },
     restaurant_naver : {
       type : Datatypes.STRING(1024)
+    },
+    likes_count : {
+      type : Datatypes.INTEGER,
+      allowNull: false,
+      defaultValue: '0'
+    },
+    reviews_count : {
+      type : Datatypes.INTEGER,
+      allowNull: false,
+      defaultValue: '0'
     }
   }, {
     tableName : "Restaurant",
