@@ -93,8 +93,9 @@ input .review {
   font-size: 1.5em;
   cursor: pointer;
   z-index: 1;
-  width: 30px; /* 너비를 조정했습니다. */
-  height: 30px; /* 높이를 추가했습니다. */
+  width: 30px;
+  height: 30px;
+  padding: 30px;
 }
 
 .slide-btn.left {
