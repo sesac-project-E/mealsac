@@ -1,25 +1,41 @@
-const {Restaurant} = require("../models")
 
-exports.getIndex = (req, res) => {
-  res.render("index")
-}
+const {ReviewUsefulness, ReviewImage, RestaurantType, Menu, Review, Tag, User, Restaurant} = require("../models")
 
 exports.getRestaurant = (req, res) => {
   const {restaurant_id} = req.params
   Restaurant.findOne({
-    where : {restaurant_id : restaurant_id}
+    include : [
+    {
+      model : User,
+      attributes : ["user_name"]
+    },
+    {
+      model : Tag,
+      attributes : ["tag_id", "tag_name"]
+    },
+    {
+      model : Review,
+      attributes : ["review_id", "user_id", "rating", "title", "updatedAt"],
+      order: [
+        ['updatedAt', 'DESC']
+      ],
+      include : [
+        {
+          model : ReviewImage,
+          as : "image_id",
+          limit : 1
+        },
+      ]
+    },
+    {
+      model : Menu,
+      attributes : ["menu_name", "menu_price"]
+    }
+  ],
+    where : {restaurant_id : restaurant_id},
   })
   .then((restaurant) => {
-    // MenuModel.findAll({
-    //   where : {restaurant_id : restaurant_id}
-    // })
-    // .then((menu) => {
-      
-    // })
-    // .then(() => {
-    //   LikeModel
-    // })
-    // res.render("restaurantDetail", {restaurant : restaurant, menu : menu})
+    res.send(restaurant)
   })
 }
 

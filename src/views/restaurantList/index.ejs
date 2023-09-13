@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 식당 목록</title>
+    <link rel="stylesheet" href="/static/css/restaurantList.css" />
+    <script defer src="/static/js/restaurantList.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"></script>
+  </head>
+  <body>
+    <%- include('../common/header.ejs') %>
+    <main class="container-fluid itemContainer">
+      <div class="row">
+        <section class="map col-lg-7 col-md-7 col-sm-6">지도</section>
+        <section class="restaurantList col-lg-5 col-md-5 col-sm-6">
+            <img src="../../static/img/hamburger.png" alt="" class="hamburgerIcon">
+          <section class="search">
+            <form action="/" method="get">
+              <input type="text" placeholder="매장명, 메뉴명" />
+              <button>검색</button>
+            </form>
+            <section class="tags">
+              <!-- 필터 아이콘 -->
+              <!-- <div class="filterIcon">
+                <img src="../../static/img/filter.png" alt="필터 아이콘" />
+              </div> -->
+              <div class="tag tagActive"># 주변식당</div>
+              <div class="tag"># 분위기 좋은</div>
+              <div class="tag"># 가성비</div> 
+            </section>
+          </section>
+          <section class="result">
+            <div>
+              <p>100개의 매장</p>
+              <div class="sortContainer">
+                <img src="../../static/img/sorting.png" alt="정렬 아이콘" />
+                <section class="sort">
+                  <article class="sortArticle">
+                    <div class="sorting">인기순</div>
+                    <ul class="sortType">
+                      <li class="sortingMethod active">인기순</li>
+                      <li class="sortingMethod">최신 등록순</li>
+                    </ul>
+                  </article>
+                </section>
+              </div>
+            </div>
+            <% restaurants.forEach((restaurant) => { %>
+              <%- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %>
+            <% }); %>
+            <div class="pagination">
+              <% let currentPage = 1; %>
+              <a href="#" id="prevPage">&laquo;</a>
+              <% for (let i = 1; i <= 5; i++) { %>
+                <a href="#" class="<%= i === currentPage ? 'active' : '' %>" onclick="changePage(<%= i %>)"><%= i %></a>
+              <% } %>
+              <a href="#" id="nextPage">&raquo;</a>
+            </div>
+        </section>
+      </div>
+    </main>
+    <%- include('../common/footer.ejs') %>
+    <script>
+      const restaurants = <%- JSON.stringify(restaurants) %>;
+    </script>    
+  </body>
+</html>

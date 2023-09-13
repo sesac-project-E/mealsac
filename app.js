@@ -1,4 +1,5 @@
 const express = require('express');
+
 const path = require('path');
 const dotenv = require('dotenv');
 const session = require('express-session');
@@ -16,7 +17,7 @@ const reviewDirectory = path.join(
   __dirname,
   'src',
   'static',
-  'images',
+  'img',
   'reviewImage',
 );
 if (!fs.existsSync(reviewDirectory)) {
@@ -39,7 +40,7 @@ app.use(
     saveUninitialized: true,
     cookie: {
       httpOnly: true,
-      maxAge: 60 * 1000, // 1분
+      maxAge: 24 * 60 * 60 * 1000, // 1D
     },
   }),
 );
@@ -53,9 +54,6 @@ app.use('/', indexRouter);
 app.get('*', (req, res) => {
   res.render('404');
 });
-
-// const userRouter = require('./src/routes/user');
-// app.use('/', userRouter);
 
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {

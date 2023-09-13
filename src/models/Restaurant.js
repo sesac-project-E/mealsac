@@ -40,13 +40,17 @@ module.exports = (sequelize, Datatypes) => {
     Restaurant.hasMany(models.Review, {
       foreignKey : 'restaurant_id'
     })
-    // Restaurant.hasMany(models.Tag, {
-    //   foreignKey : "tag_id",
-    // });
-    // Restaurant.hasMany(models.RestaurantImage, {
-    //   foreignKey : "restaurant_image_id",
-    //   as : "restaurant_image"
-    // });
+    Restaurant.belongsToMany(models.Tag, {
+      through : "TagRestaurant",
+      foreignKey : "restaurant_id"
+    })
+    Restaurant.belongsToMany(models.User, {
+      through : "LikeRestaurant",
+      foreignKey : "restaurant_id"
+    })
+    Restaurant.hasMany(models.RestaurantImage, {
+      foreignKey : "restaurant_id",
+    });
     Restaurant.hasMany(models.Menu, {
       foreignKey : "restaurant_id"
     }) 
@@ -57,6 +61,8 @@ module.exports = (sequelize, Datatypes) => {
     Restaurant.belongsToMany(models.User, {
       through : "LikeRestaurant",
       foreignKey : "restaurant_id",
+      timestamps : false,
+      onDelete : "CASCADE",
     })
   }
   return Restaurant;

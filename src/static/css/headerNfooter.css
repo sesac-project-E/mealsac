@@ -4,11 +4,55 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 60px 20px 60px;
 }
 
 .header img {
   height: 40px;
+}
+
+.login {
+  background-color: #f7f7f7;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+  height: 30px;
+  width: 100px;
+  font-size: medium;
+}
+.logout {
+  background-color: #f7f7f7;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+  height: 30px;
+  width: 100px;
+  font-size: medium;
+}
+
+.register {
+  background-color: #a5e467;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+  height: 30px;
+  width: 100px;
+  font-size: medium;
+}
+
+.mypage {
+  background-color: #a5e467;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+  height: 30px;
+  width: 100px;
+  font-size: medium;
+}
+
+/* 로그인 후 버튼은 기본적으로 숨깁니다. */
+.logout,
+.mypage {
+  display: none;
 }
 
 /* 폰트 */

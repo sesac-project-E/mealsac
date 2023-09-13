@@ -12,18 +12,19 @@ exports.getAllReviews = async (req, res) => {
         {
           model: ReviewImage,
           attributes: ['image_url'],
-          as: 'images',
         },
         {
           model: ReviewUsefulness,
           attributes: ['review_id', 'user_id'],
-          as: 'ReviewUsefulness',
+          as: 'reviewUsefulness',
         },
       ],
     });
 
     const reviewsWithUsefulness = reviews.map(review => {
-      const totalRecommendations = review.ReviewUsefulness.length;
+      const totalRecommendations = review.ReviewUsefulness
+        ? review.ReviewUsefulness.length
+        : 0;
       let didIRecommend = false;
 
       if (user_id) {
@@ -51,7 +52,7 @@ exports.getAllReviews = async (req, res) => {
 
 exports.postReview = async (req, res) => {
   const { restaurant_id } = req.params;
-  const { title, content, rating, user_id } = req.body;
+  const { title, content, rating } = req.body;
 
   const userInfo = req.session ? req.session.userInfo : null;
 
@@ -72,7 +73,7 @@ exports.postReview = async (req, res) => {
     });
 
     const imagePromises = (req.files || []).map(file => {
-      const filePath = path.join('/static/images/reviewImages', file.filename);
+      const filePath = path.join('/static/img/reviewImage', file.filename);
       return ReviewImage.create({
         review_id: newReview.review_id,
         image_url: filePath,
