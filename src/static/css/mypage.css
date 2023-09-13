@@ -38,19 +38,19 @@ h1 {
 
 .userInfo {
   width: 70vw;
-  height: 30vh;
+  height: 25vh;
   margin: auto;
 }
 .userRestaurant {
   width: 70vw;
-  height: 8vh;
+  height: 7vh;
   margin: auto;
 }
 
 #myLike,
 #myReview {
   width: 30vw;
-  height: 8vh;
+  height: 7vh;
   border: none;
   background-color: transparent;
 }
@@ -67,4 +67,9 @@ span {
   font-size: 22px;
   font-weight: 700;
   color: #4dda67;
+}
+
+.clicked {
+  font-weight: bold;
+  color: #a5e467;
 }
