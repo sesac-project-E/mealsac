@@ -1,12 +1,15 @@
 const {Restaurant, Menu} = require('../models')
 const {Op} = require('sequelize')
 
-exports.index = (req, res) => {
-  res.send("1")
-}
 exports.searchMenu = (req, res) => {
-  const {key} = req.params
+  const { key } = req.params
   Menu.findAll({
+    include : [
+      {
+        model : Restaurant,
+        attributes : ["restaurant_name"]
+      }
+    ],
     where : {
       menu_name : {
         [Op.like] : `%${key}%`
@@ -14,7 +17,7 @@ exports.searchMenu = (req, res) => {
     }
   })
   .then((response) => {
-    res.send(response)
+    res.json({data : response})
   })
 }
 
