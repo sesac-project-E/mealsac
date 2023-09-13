@@ -76,4 +76,128 @@ span {
   padding: 10px 10px;
 }
 
-/* ////////////////// */
+.container {
+  margin-bottom: 4vh;
+}
+
+/* width: 360~768 */
+@media (min-width: 361px) and (max-width: 768px) {
+  html {
+    margin: 0;
+  }
+
+  body {
+    background-color: #4dda67;
+  }
+
+  .container {
+    scale: 90%;
+  }
+  .list {
+    width: 100%;
+    border-radius: 50px 50px 0px 0px;
+    background-color: #fff;
+  }
+
+  #likeStore {
+    border-radius: initial;
+    box-shadow: none;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  hr {
+    width: 70vw;
+    border: none;
+  }
+
+  #myLike,
+  #myReview {
+    width: 32vw;
+    height: 7vh;
+    border: none;
+    background-color: transparent;
+  }
+
+  .clicked {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  span,
+  h1,
+  #userName {
+    color: #fff;
+  }
+
+  #myLikes {
+    scale: 80%;
+    position: relative;
+    top: -50px;
+  }
+}
+
+/* width: ~360 */
+@media (max-width: 360px) {
+  html {
+    margin: 0;
+  }
+
+  body {
+    background-color: #4dda67;
+  }
+
+  .container {
+    scale: 90%;
+  }
+  .list {
+    width: 100%;
+    border-radius: 50px 50px 0px 0px;
+    background-color: #fff;
+  }
+
+  #likeStore {
+    border-radius: initial;
+    box-shadow: none;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  hr {
+    width: 70vw;
+    border: none;
+  }
+
+  .userRestaurant {
+    height: 5vh;
+  }
+
+  #myLike,
+  #myReview {
+    width: 32vw;
+    height: 5vh;
+    border: none;
+    background-color: transparent;
+  }
+
+  .clicked {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  span,
+  h1,
+  #userName {
+    color: #fff;
+  }
+
+  #myLikes {
+    scale: 80%;
+    position: relative;
+    top: -50px;
+  }
+
+  br {
+    height: 2px;
+  }
+}
