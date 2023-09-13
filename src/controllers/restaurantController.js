@@ -1,4 +1,4 @@
-const {Restaurant} = require("../models")
+const {User, Restaurant} = require("../models")
 
 exports.getIndex = (req, res) => {
   res.render("index")
@@ -7,19 +7,14 @@ exports.getIndex = (req, res) => {
 exports.getRestaurant = (req, res) => {
   const {restaurant_id} = req.params
   Restaurant.findOne({
-    where : {restaurant_id : restaurant_id}
+    include : [{
+      model : User,
+      attributes : ["user_name"]
+      }],
+    where : {restaurant_id : restaurant_id},
   })
   .then((restaurant) => {
-    // MenuModel.findAll({
-    //   where : {restaurant_id : restaurant_id}
-    // })
-    // .then((menu) => {
-      
-    // })
-    // .then(() => {
-    //   LikeModel
-    // })
-    // res.render("restaurantDetail", {restaurant : restaurant, menu : menu})
+    res.send(restaurant)
   })
 }
 
