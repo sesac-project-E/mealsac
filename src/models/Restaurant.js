@@ -38,7 +38,7 @@ module.exports = (sequelize, Datatypes) => {
       allowNull: false,
       defaultValue: '0'
     },
-    ratings : {
+    ratings: {
       type : Datatypes.INTEGER,
       allowNull: false,
       defaultValue: '0'
@@ -77,7 +77,8 @@ module.exports = (sequelize, Datatypes) => {
     Restaurant.belongsTo(models.RestaurantType, {
       foreignKey : "restaurant_type_id",
       allowNull : false,
-      as : "restaurant_type"
+      as : "restaurant_type",
+      allowNull : false
     });
     Restaurant.belongsToMany(models.User, {
       through : "LikeRestaurant",

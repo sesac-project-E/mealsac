@@ -67,8 +67,6 @@ const restaurantController = require("../controllers/restaurantController.js")
  *                  example : [{"menu_name": "칼국수", "menu_price": 8000},{"menu_name": "소면","menu_price": 8000},{"menu_name": "칼비빔국수","menu_price": 8000},{"menu_name": "소면비빔국수","menu_price": 8000},{"menu_name": "만두","menu_price": 7000}]
  *     404:
  *      description : 존재하지 않는 pk값일 경우 404로 렌더링 됩니다.
- *      content:
- *        html:
  * 
  * 
  * */
