@@ -13,7 +13,8 @@ const doLogin = async () => {
     });
     if (res.data.result === true) {
       console.log(res.data.result);
-      document.location.href = '/';
+      alert(`${res.data.data.user_id}님, 로그인 성공!`);
+      document.location.href = '/api/user/profile';
     } else {
       console.log(res.data.result);
       loginMsg.textContent = `아이디 또는 비밀번호를 잘못 입력했습니다.`;

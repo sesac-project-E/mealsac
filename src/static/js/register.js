@@ -75,7 +75,7 @@ const doRegister = async () => {
       });
       if (res.data.result) {
         alert('회원가입 성공!');
-        document.location.href = '/';
+        document.location.href = '/api/user/login';
       }
     } else {
       pwMsg.textContent =
