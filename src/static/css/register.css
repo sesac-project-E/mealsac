@@ -84,7 +84,7 @@ label {
   background: #a5e467;
   font-size: 25px;
   font-weight: 500;
-  width: 398px;
+  width: 100%;
   height: 45px;
 }
 
@@ -104,4 +104,24 @@ a {
 #nameMsg {
   color: red;
   font-size: 12px;
+}
+
+@media (min-width: 381px) and (max-width: 480px) {
+  .container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    width: 80%;
+  }
+
+  .overlap::after {
+    width: 20vw;
+  }
+  input,
+  button {
+    font-size: 50%;
+  }
 }

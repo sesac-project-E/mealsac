@@ -15,7 +15,7 @@ const overlapId = async () => {
 
     if (res.data.result) {
       console.log('ok');
-      idMsg.textContent = '사용 가능한 아이디입니다.';
+      idMsg.innerHTML = '<p style="color:green">사용 가능한 아이디입니다.</p>';
       form.checkedId.value = 'Y';
     } else {
       idMsg.textContent = '중복된 아이디입니다.';
@@ -37,7 +37,8 @@ const overlapName = async () => {
     });
 
     if (res.data.result) {
-      nameMsg.textContent = '사용 가능한 닉네임입니다.';
+      nameMsg.innerHTML =
+        '<p style="color:green">사용 가능한 닉네임입니다.</p>';
       form.checkedName.value = 'Y';
     } else {
       nameMsg.textContent = '중복된 닉네임입니다.';
