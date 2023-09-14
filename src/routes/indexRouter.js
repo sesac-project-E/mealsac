@@ -1,9 +1,8 @@
 const express = require('express');
 const indexRouter = express.Router();
+const indexController = require('../controllers/indexController.js')
 
-indexRouter.get('/', (req, res) => {
-  res.render('index');
-});
+indexRouter.get('/', indexController.indexPage);
 
 indexRouter.get('/badpage', (req, res) => {
   res.render('404');
