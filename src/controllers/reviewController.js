@@ -1,5 +1,10 @@
 const path = require('path');
-const { Review, ReviewImage, ReviewUsefulness, Restaurant } = require('../models');
+const {
+  Review,
+  ReviewImage,
+  ReviewUsefulness,
+  Restaurant,
+} = require('../models');
 
 exports.getAllReviews = async (req, res) => {
   const user_id = req.session ? req.session.userId : null;
@@ -63,16 +68,16 @@ exports.postReview = async (req, res) => {
 
   try {
     let restaurant = await Restaurant.findOne({
-      attributes : ['reviews_count', 'rating'],
-      where : {restaurant_id : restaurant_id}
+      attributes: ['reviews_count', 'rating'],
+      where: { restaurant_id: restaurant_id },
     });
     let reviews_count = restaurant.dataValues.reviews_count;
     let restaurantRating = restaurant.dataValues.rating;
     const newReview = await Review.create({
-      content : content,
-      rating : rating,
-      user_id : userInfo.id,
-      restaurant_id : Number(restaurant_id)
+      content: content,
+      rating: rating,
+      user_id: userInfo.id,
+      restaurant_id: Number(restaurant_id),
     });
 
     const imagePromises = (req.files || []).map(file => {
@@ -84,12 +89,13 @@ exports.postReview = async (req, res) => {
     });
     await Promise.all(imagePromises);
     await Restaurant.update(
-      { 
-        reviews_count :  reviews_count + 1,
-        rating : (restaurantRating * reviews_count + rating) / (reviews_count + 1)
+      {
+        reviews_count: reviews_count + 1,
+        rating:
+          (restaurantRating * reviews_count + rating) / (reviews_count + 1),
       },
-      {where : {restaurant_id  : restaurant_id}}
-    )
+      { where: { restaurant_id: restaurant_id } },
+    );
     res.status(201).json({
       status: 'success',
       message: '성공적으로 리뷰를 등록했습니다.',
@@ -117,8 +123,6 @@ exports.recommendReview = async (req, res) => {
   const { review_id } = req.params;
 
   try {
-
-
     const existingUsefulness = await ReviewUsefulness.findOne({
       where: {
         review_id,
@@ -132,7 +136,7 @@ exports.recommendReview = async (req, res) => {
         message: '이미 해당 리뷰에 추천을 하셨습니다.',
       });
     }
-    
+
     await ReviewUsefulness.create({
       review_id,
       user_id,
@@ -214,7 +218,6 @@ exports.editReview = async (req, res) => {
       });
     }
 
-
     review.content = content;
     review.rating = rating;
 
@@ -266,27 +269,28 @@ exports.deleteReview = async (req, res) => {
         message: '리뷰를 삭제할 권한이 없습니다.',
       });
     }
-    
-    const restaurant_id = review.restaurant_id
-    const currRating = review.rating
-    
+
+    const restaurant_id = review.restaurant_id;
+    const currRating = review.rating;
+
     await ReviewUsefulness.destroy({ where: { review_id } });
     await ReviewImage.destroy({ where: { review_id } });
     await review.destroy();
     let restaurant = await Restaurant.findOne({
-      attributes : ['reviews_count', 'rating'],
-      where : {restaurant_id : restaurant_id}
+      attributes: ['reviews_count', 'rating'],
+      where: { restaurant_id: restaurant_id },
     });
     let reviews_count = restaurant.dataValues.reviews_count;
     let restaurantRating = restaurant.dataValues.rating;
 
     await Restaurant.update(
-      { 
-        reviews_count :  reviews_count - 1,
-        rating : (restaurantRating * reviews_count - currRating) / (reviews_count - 1)
+      {
+        reviews_count: reviews_count - 1,
+        rating:
+          (restaurantRating * reviews_count - currRating) / (reviews_count - 1),
       },
-      {where : {restaurant_id  : restaurant_id}}
-    )
+      { where: { restaurant_id: restaurant_id } },
+    );
     res.json({
       status: 'success',
       message: '리뷰가 성공적으로 삭제되었습니다.',

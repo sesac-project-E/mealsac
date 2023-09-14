@@ -4,8 +4,7 @@
 }
 
 .logo {
-  height: 120px;
-  width: 400px;
+  height: 20vh;
   margin: auto;
   display: flex;
   align-items: center;
@@ -21,7 +20,8 @@
   margin: auto;
 }
 
-.container div {
+.container div,
+.container button {
   width: 100%;
 }
 
@@ -62,7 +62,7 @@ label {
   background: #a5e467;
   font-size: 25px;
   font-weight: 500;
-  width: 398px;
+
   height: 45px;
 }
 
@@ -80,4 +80,17 @@ a {
 #loginMsg {
   color: red;
   font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .logo {
+    height: 20vh;
+  }
+  .container {
+    width: 80vw;
+  }
+
+  .already {
+    font-size: 80%;
+  }
 }
