@@ -1,22 +1,30 @@
 let isLoggedIn = false;
 
 const updateButtonVisibility = () => {
+  const loginBtn = document.querySelector('.login');
+  const registerBtn = document.querySelector('.register');
+  const logoutBtn = document.querySelector('.logout');
+  const mypageBtn = document.querySelector('.mypage');
+  const hamburgerMenu = document.querySelector('.hamburger');
+
   if (isLoggedIn) {
-    // 로그인 후 버튼 표시
-    document.querySelector('.logout').style.display = 'inline-block';
-    document.querySelector('.mypage').style.display = 'inline-block';
+    // 로그인 후 버튼 및 아이콘 표시
+    logoutBtn.style.display = 'inline-block';
+    mypageBtn.style.display = 'inline-block';
+    hamburgerMenu.style.display = 'inline-block'; // 햄버거 메뉴 보이기
 
     // 로그인 전 버튼 숨기기
-    document.querySelector('.login').style.display = 'none';
-    document.querySelector('.register').style.display = 'none';
+    loginBtn.style.display = 'none';
+    registerBtn.style.display = 'none';
   } else {
-    // 로그인 전 버튼 표시
-    document.querySelector('.login').style.display = 'inline-block';
-    document.querySelector('.register').style.display = 'inline-block';
+    // 로그인 전 버튼 및 아이콘 표시
+    loginBtn.style.display = 'inline-block';
+    registerBtn.style.display = 'inline-block';
+    hamburgerMenu.style.display = 'none'; // 햄버거 메뉴 숨기기
 
     // 로그인 후 버튼 숨기기
-    document.querySelector('.logout').style.display = 'none';
-    document.querySelector('.mypage').style.display = 'none';
+    logoutBtn.style.display = 'none';
+    mypageBtn.style.display = 'none';
   }
 };
 
@@ -32,4 +40,13 @@ document.querySelector('.login').addEventListener('click', () => {
 document.querySelector('.logout').addEventListener('click', () => {
   isLoggedIn = false;
   updateButtonVisibility();
+});
+
+document.querySelector('.hamburger').addEventListener('click', () => {
+  const dropdown = document.querySelector('.dropdown-content');
+  if (dropdown.style.display === 'block') {
+    dropdown.style.display = 'none';
+  } else {
+    dropdown.style.display = 'block';
+  }
 });

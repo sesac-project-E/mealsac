@@ -1,12 +1,13 @@
-
-
 module.exports = (sequelize, Datatypes) => {
-  const LikeRestaurant = sequelize.define("LikeRestaurant", {
-  }, {
-    freezeTableName : true,
-    timestamps : false
-  })
+  const LikeRestaurant = sequelize.define(
+    'LikeRestaurant',
+    {},
+    {
+      freezeTableName: true,
+      allowNull: false,
+      timestamps: false,
+    },
+  );
 
-  return LikeRestaurant
-}
-
+  return LikeRestaurant;
+};

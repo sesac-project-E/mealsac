@@ -5,13 +5,13 @@ const dotenv = require('dotenv');
 const session = require('express-session');
 const fs = require('fs');
 const { swaggerUi, specs } = require('./src/swagger');
+const indexRouter = require('./src/routes/index.js');
 
 dotenv.config();
 
 const app = express();
 const db = require('./src/models');
 const PORT = process.env.PORT;
-const indexRouter = require('./src/routes/index.js');
 
 const reviewDirectory = path.join(
   __dirname,
@@ -39,21 +39,14 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      httpOnly: true,
+      httpOnly : false,
       maxAge: 24 * 60 * 60 * 1000, // 1D
     },
   }),
 );
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
 app.use('/', indexRouter);
 
-app.get('*', (req, res) => {
-  res.render('404');
-});
 
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {

@@ -1,15 +1,55 @@
 <!-- Header -->
 <div class="header">
-  <img src="../../static/img/logo2.png" alt="로고" />
-  <div>
-    <button class="login" onclick="location.href='../views/login/index.ejs';">
+  <!-- Desktop Logo -->
+  <img class="desktop-logo" src="../../static/img/logo2.png" alt="로고" />
+  <!-- Mobile Logo -->
+  <img class="mobile-logo" src="../../static/img/logo1.png" alt="모바일로고" />
+
+  <!-- 로그인 전 -->
+  <div class="logged-out">
+    <button class="login" onclick="document.location.href='/api/user/login'">
       로 그 인
     </button>
-    <button class="register">회 원 가 입</button>
-    <!-- 로그인 후 -->
-    <button class="logout">로 그 아 웃</button>
-    <button class="mypage">마 이 페 이 지</button>
-  </div>
-</div>
+    <button
+      class="register"
+      onclick="document.location.href='/api/user/register'"
+    >
+      회 원 가 입
+    </button>
+    <!-- 모바일 화면 -->
+    <div>
+      <button
+        class="mobile-login"
+        onclick="document.location.href='/api/user/login'"
+      >
+        로 그 인
+      </button>
+    </div>
+    
+    </div>
 
-<script src="path/to/header.js"></script>
+  <!-- 로그인 후 -->
+    <div class="logged-in">
+      <button class="logout" onclick="document.location.href='/api/user/index'">
+        로 그 아 웃
+      </button>
+      <button
+        class="mypage"
+        onclick="document.location.href='/api/user/profile'"
+      >
+        마 이 페 이 지
+      </button>
+      <!-- 모바일 화면 -->
+      <i class="fas fa-bars hamburger"></i>
+      <div class="dropdown-content">
+        <a href="/profile">이 름</a>
+        <a href="/mypage">마 이 페 이 지</a>
+        <a href="/">내 찜 목 록</a>
+        <a href="/index">로 그 아 웃</a>
+        <!-- 다른 메뉴 아이템 필요한거 추가 가능 -->
+      </div>
+    </div>
+  </div>
+
+  <script src="path/to/header.js"></script>
+</div>
