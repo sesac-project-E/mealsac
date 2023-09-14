@@ -49,6 +49,14 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/profile', (req, res) => {
+  res.render('profile');
+});
+
+app.get('/mypage', (req, res) => {
+  res.render('mypage');
+});
+
 app.use('/', indexRouter);
 
 app.get('*', (req, res) => {
