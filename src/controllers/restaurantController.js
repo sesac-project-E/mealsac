@@ -38,6 +38,10 @@ exports.getRestaurant = (req, res) => {
         model: Menu,
         attributes: ['menu_name', 'menu_price'],
       },
+      {
+        model: RestaurantType,
+        attributes: [" restaurant_type"]
+      }
     ],
     where: { restaurant_id: restaurant_id },
   }).then(restaurant => {

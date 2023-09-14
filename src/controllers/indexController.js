@@ -1,9 +1,9 @@
-const {Restaurant, LikeRestaurant, User, RestaurantImage} = require("../models")
+const {Restaurant, User, RestaurantImage} = require("../models")
 const {Op} = require('sequelize')
-exports.indexPage = async (req, res) => {
 
+exports.indexPage = async (req, res) => {
   const {id} = (req.session && req.session.userInfo) ? req.session.userInfo : 0
-  let userPickRestaurants;
+  let userLikeRestaurants
   const recentRestaurants = await Restaurant.findAll({
     where : {restaurant_type_id : {[Op.not] : 14}},
     order : [['restaurant_id', 'DESC']],
@@ -16,7 +16,7 @@ exports.indexPage = async (req, res) => {
     limit : 8
   })
   const popularRestaurants = await Restaurant.findAll({
-    order : [['likes_count', 'ASC']],
+    order : [['likes_count', 'DESC']],
     attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
     include : [{
       model : RestaurantImage,
@@ -26,7 +26,7 @@ exports.indexPage = async (req, res) => {
     limit : 8
   }) 
   if (id > 0) {
-    userPickRestaurants = await User.findAll({
+    userLikeRestaurants = await User.findAll({
       where : {id : id},
       attributes : ["id"],
       include : [{
@@ -41,9 +41,13 @@ exports.indexPage = async (req, res) => {
       limit : 8
     })
   }
-  res.render("index", {
-    recentRestaurants : recentRestaurants, 
-    popularRestaurants : popularRestaurants, 
-    userPickRestaurants : userPickRestaurants ? userPickRestaurants.Restaurants : ""}
-  )
+  try {
+    res.render("index", {
+      recentRestaurants : recentRestaurants, 
+      popularRestaurants : popularRestaurants, 
+      userPickRestaurants : userPickRestaurants ? userPickRestaurants.Restaurants : ""}
+    )
+  } catch (error) {
+    res.status(500).send("알 수 없는 에러", {error : error})
+  }
 }
