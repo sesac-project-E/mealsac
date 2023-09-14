@@ -19,8 +19,8 @@ const restaurantController = require("../controllers/restaurantController.js")
  *   tags : [Restaurant]
  *   responses:
  *     200:
- *      description : 식당 디테일 페이지 데이터 조회
- *      content:
+ *       description: 식당 디테일 페이지 데이터
+ *       content:
  *        application/json:
  *          schema:
  *            type: array
@@ -50,7 +50,7 @@ const restaurantController = require("../controllers/restaurantController.js")
  *                restaurant_naver:
  *                  type: string
  *                  example: "https://pcmap.place.naver.com/place/11721719?from=map&fromPanelNum=2&x=126.889675&y=37.5162833&timestamp=202309081056"
- *                restaurant_type:
+ *                restaurant_type_id:
  *                  type: int
  *                  example: 3
  *                Users:
@@ -65,10 +65,12 @@ const restaurantController = require("../controllers/restaurantController.js")
  *                Menus:
  *                  type: array  
  *                  example : [{"menu_name": "칼국수", "menu_price": 8000},{"menu_name": "소면","menu_price": 8000},{"menu_name": "칼비빔국수","menu_price": 8000},{"menu_name": "소면비빔국수","menu_price": 8000},{"menu_name": "만두","menu_price": 7000}]
- *     404:
- *      description : 존재하지 않는 pk값일 경우 404로 렌더링 됩니다.
+ *                restaurant_type:
+ *                  type: json 
+ *                  example : {"restaurant_type": "분식"}
  * 
- * 
+ *       500:
+ *         description: 알 수 없는 오류의 경우 500이 전송됩니다.
  * */
  
 restaurantRouter.get('/:restaurant_id', restaurantController.getRestaurant)

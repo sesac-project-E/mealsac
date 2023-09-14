@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
 const {
   ReviewUsefulness,
   ReviewImage,
@@ -20,7 +21,7 @@ exports.getRestaurant = (req, res) => {
       },
       {
         model: Tag,
-        attributes: ['tag_id', 'tag_name'],
+        attributes: ['tag_id', 'tag_name']
       },
       {
         model: Review,
@@ -38,6 +39,11 @@ exports.getRestaurant = (req, res) => {
         model: Menu,
         attributes: ['menu_name', 'menu_price'],
       },
+      {
+        model: RestaurantType,
+        attributes: ["restaurant_type"],
+        as : "restaurant_type"
+      }
     ],
     where: { restaurant_id: restaurant_id },
   }).then(restaurant => {
