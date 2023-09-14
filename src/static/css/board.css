@@ -1,0 +1,117 @@
+body {
+  margin: 0px 20px 0px 20px;
+}
+
+.container {
+  padding: 0;
+}
+
+.topBox {
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  padding-top: 5vh;
+}
+
+h1 {
+  font-weight: 900;
+}
+
+#freeBoard,
+#noticeBoard {
+  width: 100px;
+  height: 5vh;
+  border: none;
+  background-color: transparent;
+  vertical-align: top;
+}
+
+.clicked {
+  font-weight: bold;
+  color: #4dda67;
+}
+
+table {
+  font-size: 90%;
+  border-collapse: collapse;
+  vertical-align: middle;
+}
+
+table thead th {
+  border-bottom: 2px solid rgb(104, 104, 104);
+  border-top: 2px solid rgb(104, 104, 104);
+}
+
+table .idx {
+  width: 50px;
+  height: 45px;
+}
+
+table .title {
+  width: 50vw;
+}
+
+.idx,
+.writer,
+.date {
+  text-align: center;
+}
+
+table .writer {
+  width: 10vw;
+}
+
+table .date {
+  width: 18vw;
+}
+
+.pagenation {
+  margin: 50px auto;
+}
+
+.pagenation p {
+  text-align: center;
+  font-size: 15px;
+}
+
+/* 반응형 */
+@media (max-width: 766) {
+  #freeBoard,
+  #noticeBoard {
+    width: 20vw;
+  }
+}
+
+@media only screen and (min-width: 280px) and (max-width: 480px) {
+  .header {
+    padding: 15px 0px 15px 0px; /* 기존 헤더 패딩 줄이기 */
+  }
+}
+
+@media (max-width: 555px) {
+  table {
+    font-size: 80%;
+  }
+
+  table .title {
+    width: 30vw;
+  }
+
+  table tbody .date {
+    font-size: 60%;
+  }
+}
+
+@media (max-width: 380px) {
+  table {
+    font-size: 60%;
+  }
+
+  table .title {
+    width: 15vw;
+  }
+
+  table tbody .date {
+    font-size: 60%;
+  }
+}

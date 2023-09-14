@@ -11,3 +11,10 @@ const reviewList = () => {
   document.getElementById('myReviews').style.display = 'block';
   document.getElementById('myLikes').style.display = 'none';
 };
+
+const heartElements = document.querySelectorAll('.heart');
+heartElements.forEach(heartElement => {
+  heartElement.addEventListener('click', e => {
+    e.target.setAttribute('src', '../../static/images/heart-filled.png');
+  });
+});
