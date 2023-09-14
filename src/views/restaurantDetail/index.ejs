@@ -5,6 +5,10 @@
     <title>MealSac | 식당 상세페이지</title>
     <link rel="stylesheet" href="/static/css/restaurantDetail.css" />
     <script defer src="/static/js/restaurantDetail.js"></script>
+    <script
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"
+    ></script>
   </head>
   <body>
     <%- include('../common/header.ejs') %>
@@ -16,56 +20,62 @@
       </div>
       <section class="buttonContainer">
         <!-- <div class="tag"># <%- restaurant.restaurant_type_id%></div> -->
-        <div class="button">
+        <div class="button" id="callButton">
           <img
-            src="../../static/img/phone-call.png"
-            alt="전화하기"
+            src="/static/img/phone-call.png"
+            alt="<%= restaurant.restaurant_phone %>"
             class="callIcon"
           />전화하기
         </div>
-        <div class="button">
+        <div
+          class="button"
+          onclick="document.location='<%= restaurant.restaurant_naver %>'"
+        >
           <img
-            src="../../static/img/naver-logo.png"
+            src="/static/img/naver-logo.png"
             alt="네이버 지도 길찾기"
             class="naverIcon"
           />길찾기
         </div>
-        <div class="button">
+        <div
+          class="button"
+          onclick="document.location='<%= restaurant.restaurant_kakao %>'"
+        >
           <img
-            src="../../static/img/kakao-logo.png"
+            src="/static/img/kakao-logo.png"
             alt="카카오 지도 길찾기"
             class="kakaoIcon"
           />길찾기
         </div>
       </section>
-      <nav>
+      <nav class="sticky-top">
         <ul class="tap">
-          <li>대표메뉴</li>
-          <li>후기</li>
-          <li>지도</li>
-          <li>상세정보</li>
+          <li><a href="#menu">대표메뉴</a></li>
+          <li><a href="#review">후기</a></li>
+          <li><a href="#mapTap">지도</a></li>
+          <li><a href="#restaurantInfo">상세정보</a></li>
         </ul>
       </nav>
 
       <article>
-        <section class="menu">
+        <section id="menu">
           <h3>대표메뉴</h3>
           <figure>
-            <img src="../../static/img/food.jpeg" alt="대표메뉴" />
+            <img src="/static/img/food.jpeg" alt="대표메뉴" />
             <div>
               <figcaption>로제 돈가스파게티</figcaption>
               <figcaption>15,000원</figcaption>
             </div>
           </figure>
           <figure>
-            <img src="../../static/img/food.jpeg" alt="대표메뉴" />
+            <img src="/static/img/food.jpeg" alt="대표메뉴" />
             <div>
               <figcaption>로제 돈가스파게티</figcaption>
               <figcaption>15,000원</figcaption>
             </div>
           </figure>
           <figure>
-            <img src="../../static/img/food.jpeg" alt="대표메뉴" />
+            <img src="/static/img/food.jpeg" alt="대표메뉴" />
             <div>
               <figcaption>로제 돈가스파게티</figcaption>
               <figcaption>15,000원</figcaption>
@@ -73,9 +83,9 @@
           </figure>
         </section>
 
-        <section class="review">
+        <section id="review">
           <div>
-            <h3>후기</h3>
+            <h3 class="noMargin">후기</h3>
             <button id="showReviewForm">후기 작성하기</button>
           </div>
           <form
@@ -91,7 +101,7 @@
               required
             /> -->
 
-            <div class="sorting">평점</div>
+            <div class="inputRating">평점</div>
             <select id="ratingList" name="rating" required>
               <% for (let i = 5; i >= 0.5; i -= 0.5) { %>
               <option value="<%- i %>"><%- i %></option>
@@ -113,36 +123,30 @@
 
             <input id="submitbtn" type="submit" value="후기 등록" />
           </form>
-          <article class="renderReviews">
-            <% if (restaurant.Reviews.length > 0) { %> <%
-            restaurant.Reviews.forEach(function(review) { %>
-            <p>Rating: <%= review.rating %></p>
-            <p><%= review.content %></p>
-            <p>작성일 : <%= formatDate(review.updatedAt) %></p>
-            <p><%= review.is_useful === false ? 0 : review.is_useful %></p>
+          <article class="renderReviews"></article>
 
-            <% review.ReviewImages.forEach((image) => { %>
-            <img src="<%= image.image_url %>" alt="Review Image" />
-            <% }); %> <% }); %> <% } else { %>
-            <p>후기가 없습니다.</p>
-            <% } %>
-          </article>
+          <section class="pageBtn">
+            <button id="prevPage">이전</button>
+            <button id="nextPage">다음</button>
+          </section>
         </section>
 
-        <section>
+        <section id="mapTap">
           <h3>지도</h3>
-          <div id="map"><%- restaurant.restaurantAddress %></div>
+          <div id="map"></div>
         </section>
 
-        <section>
+        <section id="restaurantInfo">
           <h3>상세정보</h3>
-          <address>주소 : <%- restaurant.restaurantAddress %></address>
-          <div>전화번호 : <%- restaurant.restaurantPhone %></div>
-          <div>종류 : <%- restaurant.restaurantStyle %></div>
+          <address>주소 : <%- restaurant.restaurant_address %></address>
+          <div>전화번호 : <%- restaurant.restaurant_phone %></div>
         </section>
       </article>
     </main>
 
-    <%- include('../common/footer.ejs') %>
+    <%- include('../common/footer.ejs') %> //
+    <script>
+      const restaurant = <%- JSON.stringify(restaurant) %>;
+    </script>
   </body>
 </html>
