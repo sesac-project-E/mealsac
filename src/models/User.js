@@ -30,23 +30,30 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.belongsToMany(models.Restaurant, {
-      through : "LikeRestaurant",
-      foreignKey : "id",
-      onDelete : "CASCADE",
-      timestamps : false,
-    })
+      through: 'LikeRestaurant',
+      foreignKey: 'id',
+      onDelete: 'CASCADE',
+      timestamps: false,
+    });
+    User.hasMany(models.Review, {
+      foreignKey: 'user_id',
+      sourceKey: 'id',
+      onDelete: 'CASCADE',
+      as: 'reviews',
+    });
     User.hasMany(models.ReviewUsefulness, {
-        foreignKey : "user_id",
-        targetKey : "user_id",
-        onDelete : "CASCADE",
-    })
+      foreignKey: 'user_id',
+      targetKey: 'user_id',
+      onDelete: 'CASCADE',
+      as: 'reviewUsefulness',
+    });
     User.belongsToMany(models.Restaurant, {
-      through : "LikeRestaurant",
-      as : "restaurants",
-      foreignKey : "id",
-    })
-  }
+      through: 'LikeRestaurant',
+      as: 'restaurants',
+      foreignKey: 'id',
+    });
+  };
   return User;
 };

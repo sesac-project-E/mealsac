@@ -45,16 +45,28 @@
                 </section>
               </div>
             </div>
-            <% restaurants.forEach((restaurant) => { %>
-              <%- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %>
-            <% }); %>
+            <% if (Array.isArray(restaurants)) { %>
+              <% restaurants.slice((currentPage - 1) * 20, currentPage * 20).forEach((restaurant) => { %>
+                <%- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %>
+              <% }); %>
+            <% } else if (restaurants) { %>
+              <%- include('../common/restaurantComponent.ejs', { restaurant: restaurants }) %>
+            <% } else { %>
+              <p>해당하는 식당이 없습니다.</p>
+            <% } %>
+            
             <div class="pagination">
+              <% let totalRestaurants = 100; %>
               <% let currentPage = 1; %>
-              <a href="#" id="prevPage">&laquo;</a>
-              <% for (let i = 1; i <= 5; i++) { %>
+              <% let totalPages = Math.ceil(totalRestaurants / 20); %>
+              
+              <a href="#" id="prevPage" onclick="changePage(currentPage - 1)">&laquo;</a>
+              
+              <% for (let i = 1; i <= totalPages; i++) { %>
                 <a href="#" class="<%= i === currentPage ? 'active' : '' %>" onclick="changePage(<%= i %>)"><%= i %></a>
               <% } %>
-              <a href="#" id="nextPage">&raquo;</a>
+              
+              <a href="#" id="nextPage" onclick="changePage(currentPage + 1)">&raquo;</a>
             </div>
         </section>
       </div>

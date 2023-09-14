@@ -52,12 +52,17 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       timestamps: false,
     });
+    Review.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      targetKey: 'id',
+      as: 'user',
+    });
     Review.hasMany(models.ReviewImage, {
       foreignKey: 'image_id',
     });
     Review.hasMany(models.ReviewUsefulness, {
       foreignKey: 'review_id',
-      as: 'ReviewUsefulness',
+      as: 'reviewUsefulness',
     });
   };
 
