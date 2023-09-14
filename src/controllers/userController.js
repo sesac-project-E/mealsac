@@ -26,10 +26,10 @@ exports.getUsers = async (req, res) => {
 };
 
 exports.getProfile = async (req, res) => {
-  // const result = await User.findOne({
-  //   where: { id: req.session.userInfo.id }, // 세션으로 아이디 꺼내와서 한 명 조회
-  // });
-  res.render('profile');
+  const result = await User.findOne({
+    where: { id: req.session.userInfo.id }, // 세션으로 아이디 꺼내와서 한 명 조회
+  });
+  res.render('profile', { data: result });
 };
 
 exports.postOverLapId = async (req, res) => {

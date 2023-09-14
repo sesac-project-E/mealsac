@@ -54,7 +54,7 @@ app.get('/profile', (req, res) => {
 });
 
 app.get('/mypage', (req, res) => {
-  res.render('mypage');
+  res.render('mypage', { restaurant });
 });
 
 app.use('/', indexRouter);
@@ -68,3 +68,13 @@ db.sequelize.sync({ force: false }).then(() => {
     console.log(`http://localhost:${PORT}`);
   });
 });
+
+const restaurant = {
+  restaurantName: '장수식당',
+  restaurantStyle: '한식',
+  restaurantPhone: '0226331870',
+  restaurantAddress: '서울특별시 영등포구 문래동2가 2-0번지',
+  restaurantImage: '../../static/img/food/jpeg',
+  restaurantRate: '4.5',
+  restaurantComment: '15',
+};
