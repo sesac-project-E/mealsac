@@ -150,6 +150,49 @@ exports.recommendReview = async (req, res) => {
   }
 };
 
+exports.unrecommendReview = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || !userInfo.id) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.id;
+  const { review_id } = req.params;
+
+  try {
+    const existingUsefulness = await ReviewUsefulness.findOne({
+      where: {
+        review_id,
+        user_id,
+      },
+    });
+
+    if (!existingUsefulness) {
+      return res.status(400).json({
+        isSuccess: false,
+        message: '해당 리뷰에 추천을 하지 않으셨습니다.',
+      });
+    }
+
+    await ReviewUsefulness.destroy({
+      where: {
+        review_id,
+        user_id,
+      },
+    });
+
+    res.json({ message: '성공적으로 리뷰 추천을 취소하셨습니다.' });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: '리뷰 추천을 취소하는 것에 오류가 발생했습니다.' });
+  }
+};
+
 exports.getMyReviews = async (req, res) => {
   const userInfo = req.session ? req.session.userInfo : null;
 
