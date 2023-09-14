@@ -115,20 +115,19 @@
           </form>
           <article class="renderReviews">
             <% if (reviews.data.length > 0) { %> <%
-            reviews.data.forEach(function(review) { %>
-            <p><%= review.title %></p>
+            reviews.data.forEach((review) => { %>
             <p>Rating: <%= review.rating %></p>
             <p><%= review.content %></p>
             <p>
               작성일 : <%= review.updatedAt.split('T')[0].replace(/-/g, '.'); %>
             </p>
-            <p><%= review.is_useful === false ? 0 : review.is_useful %></p>
+            <p>
+              추천 : <%= review.is_useful === false ? 0 : review.is_useful %>
+            </p>
 
-            <% review.ReviewImages.forEach(function(image) { %>
+            <% review.ReviewImages.forEach((image) => { %>
             <img src="<%= image.image_url %>" alt="Review Image" />
-            <% }); %>
-            <!-- ... -->
-            <% }); %> <% } else { %>
+            <% }); %> <% }); %> <% } else { %>
             <p>후기가 없습니다.</p>
             <% } %>
           </article>
