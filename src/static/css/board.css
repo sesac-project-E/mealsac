@@ -17,6 +17,11 @@ h1 {
   font-weight: 900;
 }
 
+.btnBox {
+  display: flex;
+  justify-content: space-between;
+}
+
 #freeBoard,
 #noticeBoard {
   width: 100px;
@@ -29,6 +34,14 @@ h1 {
 .clicked {
   font-weight: bold;
   color: #4dda67;
+}
+
+#write {
+  width: 100px;
+  margin: 7px;
+  border-radius: 30px;
+  border: none;
+  background-color: #ffe0b6;
 }
 
 table {
