@@ -17,17 +17,17 @@ indexRouter.get('/login', (req, res) => {
 });
 
 const restaurant = {
-  restaurantName: '장수식당',
-  restaurantStyle: '한식',
-  restaurantPhone: '0226331870',
-  restaurantAddress: '서울특별시 영등포구 문래동2가 2-0번지 ',
-  restaurantImage: '../../static/img/food/jpeg',
-  restaurantPhone: '02-0000-0000',
+  restaurant_name: '장수식당',
+  restaurant_style: '한식',
+  restaurant_phone: '0226331870',
+  restaurant_address: '서울특별시 영등포구 문래동2가 2-0번지 ',
+  restaurant_image: '/static/img/food/jpeg',
+  restaurant_phone: '02-0000-0000',
   restaurant_kakao: '#',
   restaurant_naver: '#',
-  restaurant_type_id: '가성비 좋은',
-  restaurantRate: '4.5',
-  restaurantComment: '15',
+  restaurant_type_id: '1',
+  rating: '4.5',
+  reviews_count: '15',
 };
 
 indexRouter.get('/mypage', (req, res) => {
