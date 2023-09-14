@@ -43,8 +43,8 @@ const restaurantController = require('../controllers/restaurantController.js');
  * */
 indexRouter.get('/', indexController.indexPage);
 
-indexRouter.get('/resister', (req, res) => {
-  res.render('resister/index');
+indexRouter.get('/register', (req, res) => {
+  res.render('register/index');
 });
 
 indexRouter.get('/login', (req, res) => {
