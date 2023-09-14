@@ -40,8 +40,6 @@ const restaurantController = require('../controllers/restaurantController.js');
  *                  example: [{"restaurant_id": 1,"restaurant_name": "장수식당","likes_count": 0,"reviews_count": 1,"rating": 1,"LikeRestaurant": {"restaurant_id": 1,"id": 8},"RestaurantImages": [{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMjEwMDVfMTc2/MDAxNjY0OTQxMzM5MDY1.2sPzJZWT5m0KsKIzJ7HfP1SnnbeSEXq9OcEDL9VyA-og.6ys9aq8CmRAspYi1RJ8ejlsL_BlZ4esTqRZPUtIrBXAg.JPEG.pigletjiayou/1664940699633%EF%BC%8D2.jpg?type=w800"}]},{"restaurant_id": 2,"restaurant_name": "하나식당","likes_count": 0,"reviews_count": 0,"rating": 0,"LikeRestaurant": {"restaurant_id": 2,"id": 8},"RestaurantImages": [{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDAzMjhfMjI4/MDAxNTg1MzU1MzEzMDIw.0_lGiZbqxarmfmwKka-NSM-I3w104Ph-pP04J0Cs8DEg.Pc6R4Wcwg35SrDlhwm-O2SmOJupgjL_BKfDRE5043i0g.JPEG.nidduguy/IMG_1102.JPG?type=w800"}]}]
  *     500:
  *      description : 알 수 없는 에러 발생
- * 
- * 
  * */
 indexRouter.get('/', indexController.indexPage);
 

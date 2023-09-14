@@ -3,7 +3,7 @@ const {Op} = require('sequelize')
 
 exports.indexPage = async (req, res) => {
   const {id} = (req.session && req.session.userInfo) ? req.session.userInfo : 0
-  let userLikeRestaurants
+  let userLikeRestaurants;
   const recentRestaurants = await Restaurant.findAll({
     where : {restaurant_type_id : {[Op.not] : 14}},
     order : [['restaurant_id', 'DESC']],
@@ -45,9 +45,10 @@ exports.indexPage = async (req, res) => {
     res.render("index", {
       recentRestaurants : recentRestaurants, 
       popularRestaurants : popularRestaurants, 
-      userPickRestaurants : userPickRestaurants ? userPickRestaurants.Restaurants : ""}
+      userLikeRestaurants : userLikeRestaurants ? userLikeRestaurants.Restaurants : ""}
     )
   } catch (error) {
-    res.status(500).send("알 수 없는 에러", {error : error})
+    console.log(error)
+    res.send(error)
   }
 }
