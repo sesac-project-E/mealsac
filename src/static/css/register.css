@@ -64,6 +64,10 @@ input {
   font-weight: 500;
 }
 
+.overlapMobile {
+  display: none;
+}
+
 h1 {
   font-weight: 900;
 }
@@ -109,19 +113,48 @@ a {
 @media (min-width: 381px) and (max-width: 480px) {
   .container {
     width: 80%;
+    margin-bottom: 20vh;
   }
 }
 
 @media (max-width: 380px) {
   .container {
     width: 80%;
+    margin-bottom: 20vh;
   }
 
-  .overlap::after {
-    width: 20vw;
+  .overlap {
+    display: none;
   }
-  input,
-  button {
-    font-size: 50%;
+
+  .overlapMobile {
+    display: block;
+    border-radius: 12px;
+    border: 1px solid #a5e467;
+    background: #a5e467;
+    font-size: 16px;
+    font-weight: 500;
+    width: 50px;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 5px;
+    margin: auto 0;
+  }
+
+  input {
+    font-size: 70%;
+    width: 60%;
+  }
+
+  .doRegister,
+  label,
+  #msg {
+    font-size: 100%;
+  }
+
+  .already {
+    font-size: 11px;
   }
 }
