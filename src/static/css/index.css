@@ -95,7 +95,7 @@ input .review {
   z-index: 1;
   width: 30px;
   height: 30px;
-  padding: 30px;
+  padding: 5px;
 }
 
 .slide-btn.left {
@@ -238,9 +238,14 @@ footer p {
     flex: 0 0 50%; /* 모바일에서는 카드 2개를 보여주기 */
   }
   .card {
-    width: 90%; /* 각 카드의 너비를 조금 줄여 양쪽에 약간의 여백을 주기 위해 */
+    width: 80%; /* 각 카드의 너비를 조금 줄여 양쪽에 약간의 여백을 주기 위해 */
+    height: 90%;
     margin: 0 auto 20px; /* 중앙 정렬 및 아래 마진 추가 */
     padding: 10px 0;
+  }
+  .slide-btn {
+    height: 5%;
+    width: 5%;
   }
 }
 
@@ -271,13 +276,13 @@ footer p {
   }
   /* 식당 카드 크기 조정 */
   .card {
-    width: 75%; /* 카드의 폭 줄이기 */
-    height: 75%; /* 카드의 높이 줄이기 */
+    width: 80%; /* 카드의 폭 줄이기 */
+    height: 80%; /* 카드의 높이 줄이기 */
   }
 
   /* 카드 내 이미지 크기 조절 */
   .card img {
-    height: 100%; /* 이미지의 높이 줄이기 */
+    height: 120%; /* 이미지의 높이 줄이기 */
   }
 
   /* 카드 내 텍스트 사이즈 조절 */

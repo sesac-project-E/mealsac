@@ -162,3 +162,37 @@ footer p .contact {
 footer p {
   font-size: small;
 }
+
+/* 모바일 뷰 (280px - 480px) */
+@media only screen and (min-width: 280px) and (max-width: 480px) {
+  .contact .github,
+  .contact .contact-link {
+    display: block;
+  }
+
+  .contact {
+    font-size: medium;
+  }
+
+  footer p {
+    font-size: x-small;
+    margin-bottom: 5px;
+  }
+}
+
+/* 갤럭시 폴드 폴드 상태 (280px 이하) */
+@media only screen and (max-width: 280px) {
+  .contact .github,
+  .contact .contact-link {
+    display: block;
+  }
+
+  .contact {
+    font-size: small;
+  }
+
+  footer p {
+    font-size: xx-small;
+    margin-bottom: 4px;
+  }
+}
