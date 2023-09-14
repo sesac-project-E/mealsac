@@ -28,7 +28,7 @@ const restaurantController = require('../controllers/restaurantController.js');
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                recentRestaurants:
  *                  type: array
  *                  example: [{"restaurant_id": 760,"restaurant_name": "제이스쿠키팩토리","likes_count": 0,"reviews_count": 0,"rating": 0,"RestaurantImages": []},{"restaurant_id": 759,"restaurant_name": "정직유부 문래점","likes_count": 0,"reviews_count": 0,"rating": 0,"RestaurantImages": []}]
@@ -51,19 +51,273 @@ indexRouter.get('/login', (req, res) => {
   res.render('login/index');
 });
 
-const restaurant = {
-  restaurant_name: '장수식당',
-  restaurant_style: '한식',
-  restaurant_phone: '0226331870',
-  restaurant_address: '서울특별시 영등포구 문래동2가 2-0번지 ',
-  restaurant_image: '/static/img/food/jpeg',
-  restaurant_phone: '02-0000-0000',
-  restaurant_kakao: '#',
-  restaurant_naver: '#',
-  restaurant_type_id: '1',
-  rating: '4.5',
-  reviews_count: '15',
-};
+const restaurant = [
+  {
+    restaurant_id: '1',
+    restaurant_name: '장수식당',
+    restaurant_style: '한식',
+    restaurant_phone: '02-0000-0000',
+    restaurant_address: '서울특별시 영등포구 문래동2가 2-0번지 ',
+    restaurant_image: '/static/img/food/jpeg',
+    restaurant_kakao: '#',
+    restaurant_naver: '#',
+    restaurant_type_id: '1',
+    rating: '4.5',
+    reviews_count: '15',
+    Reviews: [
+      {
+        review_id: 5,
+        user_id: 8,
+        rating: '1.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:49.000Z',
+        ReviewImages: [
+          {
+            image_id: 5,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
+          },
+        ],
+      },
+      {
+        review_id: 6,
+        user_id: 8,
+        rating: '2.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:53.000Z',
+        ReviewImages: [
+          {
+            image_id: 6,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
+          },
+        ],
+      },
+    ],
+    restaurant_type: { restaurant_type: '한식' },
+  },
+  {
+    restaurant_id: '2',
+    restaurant_name: '하나식당',
+    restaurant_style: '한식',
+    restaurant_phone: '02-0000-0000',
+    restaurant_address: '서울특별시 영등포구 문래동3가 54-30번지 ',
+    restaurant_image: '/static/img/food/jpeg',
+    restaurant_kakao: '#',
+    restaurant_naver: '#',
+    restaurant_type_id: '1',
+    rating: '4.5',
+    reviews_count: '15',
+    Reviews: [
+      {
+        review_id: 5,
+        user_id: 8,
+        rating: '1.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:49.000Z',
+        ReviewImages: [
+          {
+            image_id: 5,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
+          },
+        ],
+      },
+      {
+        review_id: 6,
+        user_id: 8,
+        rating: '2.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:53.000Z',
+        ReviewImages: [
+          {
+            image_id: 6,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
+          },
+        ],
+      },
+    ],
+    restaurant_type: { restaurant_type: '한식' },
+  },
+  {
+    restaurant_id: '3',
+    restaurant_name: '대영각',
+    restaurant_style: '한식',
+    restaurant_phone: '02-0000-0000',
+    restaurant_address: '서울특별시 영등포구 문래동3가 54-5번지 ',
+    restaurant_image: '/static/img/food/jpeg',
+    restaurant_kakao: '#',
+    restaurant_naver: '#',
+    restaurant_type_id: '1',
+    rating: '4.5',
+    reviews_count: '15',
+    Reviews: [
+      {
+        review_id: 5,
+        user_id: 8,
+        rating: '1.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:49.000Z',
+        ReviewImages: [
+          {
+            image_id: 5,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
+          },
+        ],
+      },
+      {
+        review_id: 6,
+        user_id: 8,
+        rating: '2.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:53.000Z',
+        ReviewImages: [
+          {
+            image_id: 6,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
+          },
+        ],
+      },
+    ],
+    restaurant_type: { restaurant_type: '한식' },
+  },
+  {
+    restaurant_id: '4',
+    restaurant_name: '영일분식',
+    restaurant_style: '한식',
+    restaurant_phone: '02-0000-0000',
+    restaurant_address: '서울특별시 영등포구 문래동4가 8-26 ',
+    restaurant_image: '/static/img/food/jpeg',
+    restaurant_kakao: '#',
+    restaurant_naver: '#',
+    restaurant_type_id: '1',
+    rating: '4.5',
+    reviews_count: '15',
+    Reviews: [
+      {
+        review_id: 5,
+        user_id: 8,
+        rating: '1.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:49.000Z',
+        ReviewImages: [
+          {
+            image_id: 5,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
+          },
+        ],
+      },
+      {
+        review_id: 6,
+        user_id: 8,
+        rating: '2.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:53.000Z',
+        ReviewImages: [
+          {
+            image_id: 6,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
+          },
+        ],
+      },
+    ],
+    restaurant_type: { restaurant_type: '한식' },
+  },
+  {
+    restaurant_id: '5',
+    restaurant_name: '남성호프',
+    restaurant_style: '한식',
+    restaurant_phone: '02-0000-0000',
+    restaurant_address:
+      '서울특별시 영등포구 문래동2가 35번지 남성아파트 상가 1층 3호',
+    restaurant_image: '/static/img/food/jpeg',
+    restaurant_kakao: '#',
+    restaurant_naver: '#',
+    restaurant_type_id: '1',
+    rating: '4.5',
+    reviews_count: '15',
+    Reviews: [
+      {
+        review_id: 5,
+        user_id: 8,
+        rating: '1.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:49.000Z',
+        ReviewImages: [
+          {
+            image_id: 5,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
+          },
+        ],
+      },
+      {
+        review_id: 6,
+        user_id: 8,
+        rating: '2.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:53.000Z',
+        ReviewImages: [
+          {
+            image_id: 6,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
+          },
+        ],
+      },
+    ],
+    restaurant_type: { restaurant_type: '한식' },
+  },
+  {
+    restaurant_id: '6',
+    restaurant_name: '쟁반집',
+    restaurant_style: '한식',
+    restaurant_phone: '02-0000-0000',
+    restaurant_address: '서울특별시 영등포구 문래동4가 9-6 1층 ',
+    restaurant_image: '/static/img/food/jpeg',
+    restaurant_kakao: '#',
+    restaurant_naver: '#',
+    restaurant_type_id: '1',
+    rating: '4.5',
+    reviews_count: '15',
+    Reviews: [
+      {
+        review_id: 5,
+        user_id: 8,
+        rating: '1.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:49.000Z',
+        ReviewImages: [
+          {
+            image_id: 5,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
+          },
+        ],
+      },
+      {
+        review_id: 6,
+        user_id: 8,
+        rating: '2.0',
+        content: 'ss2',
+        updatedAt: '2023-09-13T12:22:53.000Z',
+        ReviewImages: [
+          {
+            image_id: 6,
+            review_id: 16,
+            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
+          },
+        ],
+      },
+    ],
+    restaurant_type: { restaurant_type: '한식' },
+  },
+];
 
 indexRouter.get('/mypage', (req, res) => {
   res.render('mypage/index', { restaurant: restaurant });
