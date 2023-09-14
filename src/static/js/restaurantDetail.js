@@ -171,7 +171,6 @@ let geocoder;
 let map;
 
 function initMap() {
-  console.log('initMap is called');
   geocoder = new google.maps.Geocoder();
   const latlng = new google.maps.LatLng(-34.397, 150.644);
   const mapOptions = {
@@ -181,7 +180,6 @@ function initMap() {
 
   map = new google.maps.Map(document.querySelector('#map'), mapOptions);
   codeAddress();
-  console.log('initMap is called');
 }
 
 function codeAddress() {
