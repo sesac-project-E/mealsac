@@ -53,7 +53,7 @@ const doRegister = async () => {
   const inputPw = form.inputPw.value;
   const confirmPw = form.confirmPw.value;
   const pwPattern = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
-
+  event.preventDefault();
   if (!pwPattern.test(inputPw)) {
     pwMsg.textContent = '비밀번호는 8자 이상 영문 + 숫자를 혼합하여야 합니다.';
   } else if (inputPw !== confirmPw) {

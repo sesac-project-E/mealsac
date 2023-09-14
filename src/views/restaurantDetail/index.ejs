@@ -114,16 +114,12 @@
             <input id="submitbtn" type="submit" value="후기 등록" />
           </form>
           <article class="renderReviews">
-            <% if (reviews.data.length > 0) { %> <%
-            reviews.data.forEach((review) => { %>
+            <% if (restaurant.Reviews.length > 0) { %> <%
+            restaurant.Reviews.forEach(function(review) { %>
             <p>Rating: <%= review.rating %></p>
             <p><%= review.content %></p>
-            <p>
-              작성일 : <%= review.updatedAt.split('T')[0].replace(/-/g, '.'); %>
-            </p>
-            <p>
-              추천 : <%= review.is_useful === false ? 0 : review.is_useful %>
-            </p>
+            <p>작성일 : <%= formatDate(review.updatedAt) %></p>
+            <p><%= review.is_useful === false ? 0 : review.is_useful %></p>
 
             <% review.ReviewImages.forEach((image) => { %>
             <img src="<%= image.image_url %>" alt="Review Image" />

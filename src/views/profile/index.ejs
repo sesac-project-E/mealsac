@@ -46,7 +46,7 @@
           <p id="pwMsg"></p>
   
           <br /><br />
-          <label for="userName">닉네임</label><br />
+          <label for="userName">닉네임</label><br /><input type="hidden" name="checkedName" value="" /> <br />
           <div class="box">
             <input
               type="text"
@@ -65,10 +65,10 @@
           <p id="nameMsg"></p>
           <br /><br /><br />
   
-          <button type="submit" class="edit" onclick="edit()">
+          <button type="button" class="edit" onclick="edit()">
             수정
           </button>
-          <button type="submit" class="destroy" onclick="destroy()">
+          <button type="button" class="destroy" onclick="destroy()">
             탈퇴
           </button>
           

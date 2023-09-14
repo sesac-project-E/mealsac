@@ -40,6 +40,7 @@ router.get('/login', controller.getLogin);
 router.post('/login', controller.postLogin);
 
 router.get('/profile', controller.getProfile);
+router.patch('/patch', controller.patchProfile);
 router.delete('/destroy', controller.deleteUser);
 
 module.exports = router;
