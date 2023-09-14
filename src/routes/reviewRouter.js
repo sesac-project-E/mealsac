@@ -337,6 +337,7 @@ reviewRouter.delete('/myreview/:review_id', controller.deleteReview);
  *                 message: "해당 리뷰를 추천하는 것에 오류가 발생했습니다."
  */
 reviewRouter.post('/usefulness/:review_id', controller.recommendReview);
+reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
 
 /**
  * @swagger
