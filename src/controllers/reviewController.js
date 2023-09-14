@@ -112,14 +112,14 @@ exports.postReview = async (req, res) => {
 exports.recommendReview = async (req, res) => {
   const userInfo = req.session ? req.session.userInfo : null;
 
-  if (!userInfo || !userInfo.userId) {
+  if (!userInfo || !userInfo.id) {
     return res.status(400).json({
       status: 'error',
       message: '세션에서 사용자 정보를 찾을 수 없습니다.',
     });
   }
 
-  const user_id = userInfo.userId;
+  const user_id = userInfo.id;
   const { review_id } = req.params;
 
   try {
@@ -153,14 +153,14 @@ exports.recommendReview = async (req, res) => {
 exports.getMyReviews = async (req, res) => {
   const userInfo = req.session ? req.session.userInfo : null;
 
-  if (!userInfo || !userInfo.userId) {
+  if (!userInfo || !userInfo.id) {
     return res.status(400).json({
       status: 'error',
       message: '세션에서 사용자 정보를 찾을 수 없습니다.',
     });
   }
 
-  const user_id = userInfo.userId;
+  const user_id = userInfo.id;
 
   try {
     const reviews = await Review.findAll({
@@ -169,7 +169,6 @@ exports.getMyReviews = async (req, res) => {
         {
           model: ReviewImage,
           attributes: ['image_url'],
-          as: 'images',
         },
       ],
     });
