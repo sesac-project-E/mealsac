@@ -32,13 +32,13 @@ document.querySelector('.heart').addEventListener('click', async e => {
 
       if (response.status === 201) {
         alert('찜 목록에 추가되었습니다.');
-        e.target.setAttribute('src', '/static/img/heart-filled.png');
+        e.target.setAttribute('src', '/static/img/heartFilled.png');
       }
     } catch (error) {
       console.error('에러 정보:', error);
       alert('찜 목록에 추가하는 것을 실패했습니다.');
     }
-  } else if (currentSrc === '/static/img/heart-filled.png') {
+  } else if (currentSrc === '/static/img/heartFilled.png') {
     try {
       const response = await axios({
         method: 'DELETE',
