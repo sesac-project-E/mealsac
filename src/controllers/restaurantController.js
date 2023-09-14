@@ -40,7 +40,8 @@ exports.getRestaurant = (req, res) => {
       },
       {
         model: RestaurantType,
-        attributes: [" restaurant_type"]
+        attributes: ["restaurant_type"],
+        as : "restaurant_type"
       }
     ],
     where: { restaurant_id: restaurant_id },
