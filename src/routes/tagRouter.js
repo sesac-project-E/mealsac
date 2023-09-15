@@ -15,7 +15,7 @@ tagRouter.get('/all',tagController.getAllTags)
  * tags:
  *   name: Tag
  * 
- * /api/tag/search?tag1=""&tag2="":
+ * /api/tag/search?tag1=""&tag2=""&page=1:
  *  get:
  *   summary: 태그로 지정된 식당 가져오기. 만약 Users === []이면 로그인 되어 있지 않은 상태이거나 like를 누르지 않은 것입니다.
  *   tags : [Tag]
@@ -28,11 +28,14 @@ tagRouter.get('/all',tagController.getAllTags)
  *            type: array
  *            items:
  *              properties: 
- *                data:
+ *                count:
+ *                  type: int
+ *                  example : 27
+ *                rows:
  *                  type: array
- *                  example: [{"restaurant_id": 1,"restaurant_name": "장수식당","likes_count": 2,"reviews_count": 1,"rating": 1,"Tags": [{"tag_id": 1,"tag_name": "로맨틱한","TagRestaurant": {"restaurant_id": 1,"tag_id": 1}},{"tag_id": 3,"tag_name": "편안한","TagRestaurant": {"restaurant_id": 1,"tag_id": 3}}]},{"restaurant_id": 4,"restaurant_name": "영일분식","likes_count": 0,"reviews_count": 1,"rating": 4,"Tags": [{"tag_id": 1,"tag_name": "로맨틱한","TagRestaurant": {"restaurant_id": 4,"tag_id": 1}},{"tag_id": 3,"tag_name": "편안한","TagRestaurant": {"restaurant_id": 4,"tag_id": 3}}]},         "Users": [{"id": 8,"password": "$2b$11$zP3mW6mJOIkcDcAkSyDlEuw5F..pPE6VMDC43Oyq2YllsrVPLmEfO","user_name": "js","user_id": "js","is_admin": null,"LikeRestaurant": {"restaurant_id": 3,"id": 8}}]]
- *     404:
- *      description : 올바르지 않은 태그이름 일경우 404로 넘어갑니다.
+ *                  example: [{"restaurant_id": 4,"restaurant_name": "영일분식","likes_count": 0,"reviews_count": 1,"rating": 4,"Tags": [{"tag_id": 1,"tag_name": "로맨틱한","TagRestaurant": {"restaurant_id": 4,"tag_id": 1}},{"tag_id": 2,"tag_name": "가족과 오기 좋은","TagRestaurant": {"restaurant_id": 4,"tag_id": 2}}],"Users": []}]
+ *     400:
+ *      description : 올바르지 않은 태그이름 일 경우 400신호가 전송됩니다.
  *     500:
  *      description : 알 수 없는 에러
  *      content:
