@@ -13,7 +13,7 @@ const restaurantController = require("../controllers/restaurantController.js")
  * tags:
  *   name: Restaurant
  * @swagger
- * /api/restaurant/all/:page:
+ * /api/restaurant/all?page=1:
  *  get:
  *   summary: 모든 식당 20개 별로 가져오기 page(1~39)까지
  *   tags : [Restaurant]
@@ -35,13 +35,13 @@ const restaurantController = require("../controllers/restaurantController.js")
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/all/:page', restaurantController.getAllRestaurants)
+restaurantRouter.get('/all', restaurantController.getAllRestaurants)
 /**
  * @swagger
  * tags:
  *   name: Restaurant
  * @swagger
- * /api/restaurant/like/:page:
+ * /api/restaurant/like?page=1:
  *  get:
  *   summary: 찜한 순 내림차순 식당 20개 별로 가져오기 page(1~39)까지, 좋아요 -> 점수 -> 리뷰 수 -> pk 오름차순
  *   tags : [Restaurant]
@@ -63,14 +63,42 @@ restaurantRouter.get('/all/:page', restaurantController.getAllRestaurants)
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/like/:page', restaurantController.getLikeRestaurants)
+restaurantRouter.get('/like', restaurantController.getLikeRestaurants)
 
 /**
  * @swagger
  * tags:
  *   name: Restaurant
  * @swagger
- * /api/restaurant/rating/:page:
+ * /api/restaurant/search?page=1&q=피자:
+ *  get:
+ *   summary: 검색한 식당 20개 별로 가져오기.  점수 -> 찜한 수 -> 리뷰 수 -> pk 오름차순
+ *   tags : [Restaurant]
+ *   responses:
+ *     200:
+ *       description: 식당 데이터가 rows안에 들어오고 모든 식당의 개수는 count에 들어 있습니다. Users 데이터가 존재하면 찜 하기를 누른 식당입니다.
+ *       content:
+ *        application/json:
+ *          schema:
+ *            type: array
+ *            items:
+ *              properties: 
+ *                count:
+ *                  type: int
+ *                  example: 10
+ *                rows:
+ *                  type: array
+ *                  example: [{"restaurant_id": 237,"restaurant_name": "양키스피자","likes_count": 0,"reviews_count": 0,"rating": 0,"Users": []},         {"restaurant_id": 247,"restaurant_name": "꽃피자","likes_count": 0,"reviews_count": 0,"rating": 0,"Users": []}]
+ *       404:
+ *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
+ * */
+restaurantRouter.get('/search', restaurantController.getSearchRestaurantByName)
+/**
+ * @swagger
+ * tags:
+ *   name: Restaurant
+ * @swagger
+ * /api/restaurant/rating?page=1:
  *  get:
  *   summary: 평점 순 내림차순 식당 20개 별로 가져오기 page(1~39)까지, 점수 -> 좋아요 -> 리뷰 수 -> pk 오름차순
  *   tags : [Restaurant]
@@ -92,7 +120,7 @@ restaurantRouter.get('/like/:page', restaurantController.getLikeRestaurants)
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/rating/:page', restaurantController.getRatingRestaurants)
+restaurantRouter.get('/rating', restaurantController.getRatingRestaurants)
 
 
 
@@ -161,6 +189,8 @@ restaurantRouter.get('/rating/:page', restaurantController.getRatingRestaurants)
  *         description: 알 수 없는 오류의 경우 500이 전송됩니다.
  * */
  
+
+
 restaurantRouter.get('/:restaurant_id', restaurantController.getRestaurant)
 restaurantRouter.delete('/:restaurant_id', restaurantController.deleteRestaurant)
 
