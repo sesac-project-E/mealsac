@@ -1,75 +1,94 @@
 <style>
   .restaurantContainer {
-  display: flex;
-  padding: 10px 0;
-}
+    display: flex;
+    padding: 10px 0;
+  }
 
-.restaurantImg {
-  width: 170px;
-  height: 170px;
-  flex-grow: 0;
-  background-color: #89d83f;
-  border-radius: 10px;
-}
+  .restaurantImg {
+    width: 170px;
+    height: 170px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-color: #89d83f;
+    border-radius: 10px;
+  }
 
-.restaurantInfo {
-  padding-left: 5px;
-  padding-right: 5px;
-  width: auto;
-  flex-grow: 1;
-  z-index: 1;
-}
+  .restaurantInfo {
+    padding: 0 5px 0 5px;
+    width: 100%;
+  }
 
-.restaurantInfo > div:first-child {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
+  .restaurantInfo > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 
-.restaurantInfo > div:nth-child(4) {
-  margin-top: 40px;
-}
+  .restaurantInfo > div:nth-child(4) {
+    margin-top: 40px;
+  }
 
-.restaurantInfo > div:last-child > * {
-  display: inline-block;
-}
+  .restaurantInfo > div:last-child > * {
+    display: inline-block;
+  }
 
-.restaurantInfo h3 {
-  font-size: 1.2rem;
-}
-.restaurantInfo .address {
-  font-size: 0.7rem;
-}
-.heart {
-  width: 23px;
-  height: 25px;
-}
+  .restaurantInfo h3 {
+    font-size: 1.2rem;
+  }
+  .restaurantInfo .address {
+    font-size: 0.7rem;
+  }
+  .heart {
+    width: 23px;
+    height: 25px;
+  }
 
-.rating,
-.comment {
-  width: 18px;
-  height: 18px;
-}
+  .rating {
+    width: 15px;
+    height: 15px;
+  }
 
-.restaurantInfo > div p {
-  font-size: 0.8rem;
-}
+  .comment {
+    width: 18px;
+    height: 18px;
+  }
+
+  .restaurantInfo > div p {
+    font-size: 0.8rem;
+    transform: translateY(2px);
+  }
 </style>
 
-<article class="restaurantContainer">
-  <img src="../../static/img/food.jpeg" alt="<%= restaurant.restaurantName %> 이미지" class="restaurantImg" />
+<article
+  class="restaurantContainer"
+  data-id="<%= restaurant.restaurant_address %>"
+>
+  <img
+    src="<%= restaurant.restaurant_image %>"
+    alt="<%= restaurant.restaurant_name %> 이미지"
+    class="restaurantImg"
+  />
   <div class="restaurantInfo">
     <div>
-      <h3 class="restaurantName"><%= restaurant.restaurantName %></h3>
-      <img src="../../static/img/heart.png" alt="찜 아이콘" class="heart" />
+      <h3 class="restaurantName"><%= restaurant.restaurant_name %></h3>
+      <img
+        src="/static/img/heart.png"
+        alt="찜 아이콘"
+        class="heart"
+        id="<%= restaurant.restaurant_id %>"
+      />
     </div>
-    <p class="type"><%= restaurant.restaurantStyle %></p>
-    <p class="address"><%= restaurant.restaurantAddress %></p>
+    <p class="type"><%= restaurant.restaurant_type.restaurant_type %></p>
+    <p class="address"><%= restaurant.restaurant_address %></p>
     <div>
-      <img src="../../static/img/star.png" alt="평점 아이콘" class="rating" />
-      <p class="rate"><%= restaurant.restaurantRate %></p>
-      <img src="../../static/img/speech-bubble.png" alt="댓글 아이콘" class="comment" />
-      <p class="review"><%= restaurant.restaurantComment %></p>
+      <img src="/static/img/star.png" alt="평점 아이콘" class="rating" />
+      <p class="rate"><%= restaurant.rating %></p>
+      <img
+        src="/static/img/speechBalloon.png"
+        alt="댓글 아이콘"
+        class="comment"
+      />
+      <p class="review"><%= restaurant.Reviews.length %></p>
     </div>
   </div>
 </article>

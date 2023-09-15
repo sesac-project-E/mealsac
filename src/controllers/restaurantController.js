@@ -9,6 +9,8 @@ const {
   User,
   Restaurant,
 } = require('../models');
+const dotenv = require('dotenv');
+dotenv.config();
 const { formatDate } = require('../utils/formatDate');
 
 exports.getRestaurant = (req, res) => {
@@ -25,7 +27,7 @@ exports.getRestaurant = (req, res) => {
       },
       {
         model: Review,
-        attributes: ['review_id', 'user_id', 'rating', 'updatedAt'],
+        attributes: ['review_id', 'user_id', 'rating', 'content', 'updatedAt'],
         order: [['updatedAt', 'DESC']],
         include: [
           {
@@ -49,7 +51,7 @@ exports.getRestaurant = (req, res) => {
   }).then(restaurant => {
     res.render('restaurantDetail/index', {
       restaurant,
-      formatDate,
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     });
   });
 };

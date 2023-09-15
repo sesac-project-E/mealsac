@@ -17,6 +17,11 @@ address {
   border-radius: 25px;
 } */
 
+.restaurantContainer {
+  height: 180px;
+  margin-bottom: 10px;
+}
+
 .buttonContainer {
   display: flex;
   justify-content: end;
@@ -61,37 +66,44 @@ address {
   padding: 6px 0;
   border-top: 1px solid #989898;
   border-bottom: 1px solid #989898;
+  background-color: #fff;
 }
 
-.tap li {
+.tap a {
   width: 100%;
   text-align: center;
-
-  &:not(:last-child) {
-    border-right: 1px solid #989898;
-  }
+  color: black;
+  text-decoration: none;
 }
 
 section h3 {
-  margin: 10px 0 15px 0;
   font-size: 1.2rem;
+
+  &:not(.noMargin) {
+    margin: 20px 0 35px 0;
+  }
 }
 
-.menu figure {
+#menu figure {
   display: flex;
 }
 
-.menu img {
+#menu img {
   width: 130px;
   height: 130px;
   border-radius: 10px;
 }
 
-.menu div {
+#menu div {
   margin: auto 10px;
 }
 
-.menu figcaption:first-child {
+/* .menu img {
+  width: 170px;
+  height: 170px;
+} */
+
+#menu figcaption:first-child {
   margin-bottom: 20px;
 }
 
@@ -99,9 +111,9 @@ section h3 {
   background-color: pink;
 } */
 
-.review input:not(#imageFiles):not(#submitbtn),
-.review select,
-.review textarea {
+#review input:not(#imageFiles):not(#submitbtn),
+#review select,
+#review textarea {
   border: 1px solid #989898;
   border-radius: 10px;
 
@@ -114,15 +126,15 @@ section h3 {
   margin-bottom: 10px;
 }
 
-.review textarea {
+#review textarea {
   width: 100%;
   height: 80px;
   resize: none;
 }
 
-.sorting {
-  display: inline;
-  margin-left: 10px;
+.inputRating {
+  display: inline-block;
+  margin-bottom: 10px;
 }
 
 #showReviewForm,
@@ -131,6 +143,7 @@ section h3 {
   height: 32px;
   display: block;
   margin-left: auto;
+  margin-bottom: 20px;
   background-color: #e0f0d1;
   border: 2px solid #89d83f;
   border-radius: 25px;
@@ -139,10 +152,63 @@ section h3 {
 .review > div {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #showReviewForm {
   width: 130px;
+}
+
+.reviewContainer > div {
+  height: 30px;
+}
+
+.reviewContainer > div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reviewContainer > div:nth-child(2) > p {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.thumbsIcon,
+.starIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.reviewContainer:not(:last-child) {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #989898;
+}
+
+.pageBtn {
+  display: flex;
+  justify-content: space-around;
+
+  & button {
+    padding: 0 10px;
+    background-color: #fff;
+    border: 2px solid #89d83f;
+    border-radius: 25px;
+
+    &:hover {
+      background-color: #e0f0d1;
+    }
+  }
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+#restaurantInfo {
+  margin-bottom: 60px;
 }
 
 /* 뷰포트가 576px 이하인 경우 */
@@ -154,5 +220,33 @@ section h3 {
   .buttonContainer {
     width: 100%;
     font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 285px) {
+  main {
+    margin: 0 5px;
+  }
+
+  .restaurantContainer {
+    height: 150px;
+    margin-bottom: 10px;
+  }
+
+  .restaurantContainer .restaurantImg {
+    height: 130px;
+    width: 130px;
+  }
+
+  .restaurantContainer p {
+    margin: 0;
+  }
+
+  .restaurantInfo {
+    margin: 0;
+  }
+
+  .restaurantContainer .restaurantInfo > div:nth-child(4) {
+    margin-top: 10px;
   }
 }
