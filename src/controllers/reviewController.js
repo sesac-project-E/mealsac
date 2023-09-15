@@ -203,8 +203,14 @@ exports.getMyReviews = async (req, res) => {
   }
 
   const user_id = userInfo.id;
+  const page = Number(req.query.page) || 1;
+  const limit = 5;
+  const offset = (page - 1) * limit;
 
   try {
+    const totalReviews = await Review.count({ where: { user_id } });
+    const totalPages = Math.ceil(totalReviews / limit);
+
     const reviews = await Review.findAll({
       where: { user_id },
       include: [
@@ -213,6 +219,9 @@ exports.getMyReviews = async (req, res) => {
           attributes: ['image_url'],
         },
       ],
+      order: [['createdAt', 'DESC']],
+      limit,
+      offset,
     });
 
     if (reviews.length === 0) {
@@ -220,6 +229,7 @@ exports.getMyReviews = async (req, res) => {
         status: 'success',
         message: '사용자가 작성한 리뷰가 없습니다.',
         data: [],
+        totalPages: 0,
       });
     }
 
@@ -233,7 +243,7 @@ exports.getMyReviews = async (req, res) => {
       }),
     );
 
-    res.json({ status: 'success', data: reviewsWithUsefulness });
+    res.json({ status: 'success', data: reviewsWithUsefulness, totalPages });
   } catch (error) {
     console.error(error);
     res.status(500).json({
