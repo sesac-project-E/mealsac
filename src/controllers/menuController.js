@@ -2,23 +2,29 @@ const {Restaurant, Menu} = require('../models')
 const {Op} = require('sequelize')
 
 exports.searchMenu = (req, res) => {
-  const { key } = req.params
-  Menu.findAll({
-    include : [
-      {
-        model : Restaurant,
-        attributes : ["restaurant_name"]
+  try {
+    const { q, page } = req.query
+    Menu.findAndCountAll({
+      include : [
+        {
+          model : Restaurant,
+          attributes : ["restaurant_name", "likes_count", "reviews_count", "rating"],
+        }
+      ],
+      limit : 20,
+      offset : 20 * (page - 1),
+      where : {
+        menu_name : {
+          [Op.like] : `%${q}%`
+        }
       }
-    ],
-    where : {
-      menu_name : {
-        [Op.like] : `%${key}%`
-      }
-    }
-  })
-  .then((response) => {
-    res.json({data : response})
-  })
+    })
+    .then((response) => {
+      res.send(response)
+    })
+  } catch {
+    res.status(500).send()
+  }
 }
 
 exports.getRestaurantMenu = (req, res) => {

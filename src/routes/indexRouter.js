@@ -5,6 +5,8 @@ const indexRouter = express.Router();
 const indexController = require('../controllers/indexController.js');
 const userController = require('../controllers/userController.js');
 const restaurantController = require('../controllers/restaurantController.js');
+const likeRestaurantController = require('../controllers/likeRestaurantController.js');
+
 /**
  * @swagger
  * tags:
@@ -320,7 +322,13 @@ const restaurant = [
 ];
 
 indexRouter.get('/mypage', (req, res) => {
-  res.render('mypage/index', { restaurant: restaurant });
+  const userInfo = req.session.userInfo;
+
+  res.render('mypage/index', {
+    user_name: userInfo.user_name,
+    restaurant: likeRestaurantController.getUserLikes,
+  });
+  // res.render('mypage/index');
 });
 
 indexRouter.get('/profile', userController.getProfile);

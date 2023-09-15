@@ -15,6 +15,6 @@ const reviewList = () => {
 const heartElements = document.querySelectorAll('.heart');
 heartElements.forEach(heartElement => {
   heartElement.addEventListener('click', e => {
-    e.target.setAttribute('src', '../../static/images/heart-filled.png');
+    e.target.setAttribute('src', '../../static/img/heartFilled.png');
   });
 });

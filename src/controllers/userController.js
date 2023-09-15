@@ -94,7 +94,6 @@ exports.postRegister = async (req, res) => {
       //   status: 'error',
       //   message: 'The ID that already exists.',
       // });
-
     } else if (username) {
       res.json({ result: false, message: '닉네임 중복체크를 해주세요' });
       // return res.status(400).json({
@@ -107,7 +106,6 @@ exports.postRegister = async (req, res) => {
       await User.create({ user_id, user_name, password: hash });
       res.json({ result: true });
     }
-
   } catch (err) {
     res.status(500).json({
       status: 'error',
@@ -130,6 +128,8 @@ exports.postLogin = async (req, res) => {
       if (result) {
         req.session.userInfo = { user_name: user.user_name, id: user.id }; // 세션 생성
         res.json({ result: true, data: user });
+
+        console.log(req.session.userInfo);
       } else {
         res.json({ result: false, message: '비밀번호가 틀렸습니다.' });
       }
@@ -148,7 +148,9 @@ exports.postLogin = async (req, res) => {
 exports.patchProfile = async (req, res) => {
   try {
     const { user_name, password, id } = req.body;
-    await User.update({ user_name, password }, { where: { id } });
+    const hash = await bcryptPassword(password);
+
+    await User.update({ user_name, password: hash }, { where: { id } });
 
     res.json({ result: true });
   } catch (err) {
