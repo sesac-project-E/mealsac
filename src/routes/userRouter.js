@@ -24,7 +24,7 @@ const controller = require('../controllers/userController.js');
  *                  type: object
  *                  example: [{ "id": 1, "user_name": "유저1", "password" : "", "user_id" : "", "is_admin" : "" }]
  *
- * 프론트엔드랑 소통하기 위해서 만듦
+ * 
  */
 
 router.get('/', controller.index);

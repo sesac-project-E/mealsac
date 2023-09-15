@@ -1,4 +1,9 @@
-const { LikeRestaurant, User, Restaurant, RestaurantImage} = require('../models');
+const {
+  LikeRestaurant,
+  User,
+  Restaurant,
+  RestaurantImage,
+} = require('../models');
 
 exports.postLike = async (req, res) => {
   try {
@@ -96,24 +101,36 @@ exports.deleteLike = async (req, res) => {
   }
 };
 exports.getUserLikes = async (req, res) => {
-  const {id} = (req.session && req.session.userInfo) ? req.session.userInfo : -1
+  const { id, user_name } =
+    req.session && req.session.userInfo ? req.session.userInfo : -1;
   if (id > 0) {
     const response = await User.findAll({
-      where : {id : id},
-      attributes : ["id"],
-      include : [{
-        model : Restaurant,
-        attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
-        include : [{
-          model : RestaurantImage,
-          attributes : ["restaurant_image_url"],
-          limit : 1
-        }]
-      }]
-    })
-    res.send(response)
+      where: { id: id },
+      attributes: ['id'],
+      include: [
+        {
+          model: Restaurant,
+          attributes: [
+            'restaurant_id',
+            'restaurant_name',
+            'likes_count',
+            'reviews_count',
+            'rating',
+          ],
+          include: [
+            {
+              model: RestaurantImage,
+              attributes: ['restaurant_image_url'],
+              limit: 1,
+            },
+          ],
+        },
+      ],
+    });
+    //response 키 값에 userName넣어서 전송
+    response['userName'] = user_name;
+    res.send(response);
   } else {
-    res.send("session에 저장된 정보가 없습니다.").status(400)
+    res.send('session에 저장된 정보가 없습니다.').status(400);
   }
-    
-}
+};
