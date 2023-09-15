@@ -35,7 +35,7 @@ exports.getAllRestaurants = async (req, res) => {
     res.send(response)
   } catch (error) {
     console.log(error)
-    res.redirect('/badpage')
+    res.status(404).send()
   }
 }
 
@@ -65,7 +65,7 @@ exports.getLikeRestaurants = async (req, res) => {
     res.send(response)
   } catch (error) {
     console.log(error)
-    res.redirect('/badpage')
+    res.status(404).send()
   }
 }
 
@@ -94,7 +94,7 @@ exports.getRatingRestaurants = async (req, res) => {
     res.send(response)
   } catch (error) {
     console.log(error)
-    res.redirect('/badpage')
+    res.status(404).send()
   }
 }
 exports.getSearchRestaurantByName = async (req, res) => {
@@ -123,7 +123,7 @@ exports.getSearchRestaurantByName = async (req, res) => {
     res.send(response)
   } catch (error) {
     console.log(error)
-    res.redirect('/badpage')
+    res.status(404).send()
   }
 }
 
