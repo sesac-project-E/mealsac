@@ -223,7 +223,17 @@ exports.getMyReviews = async (req, res) => {
       });
     }
 
-    res.json({ status: 'success', data: reviews });
+    const reviewsWithUsefulness = await Promise.all(
+      reviews.map(async review => {
+        const reviewJSON = review.toJSON();
+        const usefulnessCount = await ReviewUsefulness.count({
+          where: { review_id: reviewJSON.review_id },
+        });
+        return { ...reviewJSON, usefulnessCount };
+      }),
+    );
+
+    res.json({ status: 'success', data: reviewsWithUsefulness });
   } catch (error) {
     console.error(error);
     res.status(500).json({
