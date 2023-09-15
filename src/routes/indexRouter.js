@@ -343,6 +343,9 @@ indexRouter.get(
   '/restaurant/:restaurant_id',
   restaurantController.getRestaurant,
 );
+indexRouter.get('/random', (req, res) => {
+  res.render('./random.ejs')
+})
 
 indexRouter.get('/badpage', (req, res) => {
   res.render('404');
