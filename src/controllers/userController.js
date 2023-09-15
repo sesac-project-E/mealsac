@@ -128,6 +128,8 @@ exports.postLogin = async (req, res) => {
       if (result) {
         req.session.userInfo = { user_name: user.user_name, id: user.id }; // 세션 생성
         res.json({ result: true, data: user });
+
+        console.log(req.session.userInfo);
       } else {
         res.json({ result: false, message: '비밀번호가 틀렸습니다.' });
       }

@@ -39,14 +39,17 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      httpOnly : false,
+      httpOnly: false,
       maxAge: 24 * 60 * 60 * 1000, // 1D
     },
   }),
 );
 
-app.use('/', indexRouter);
+// app.get('/test', (req, res) => {
+//   res.send(req.session);
+// });
 
+app.use('/', indexRouter);
 
 db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => {
