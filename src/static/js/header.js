@@ -28,17 +28,33 @@ const updateButtonVisibility = () => {
   }
 };
 
+function getLoginStatusFromCookie() {
+  let loginStatus = getCookie('loginStatus');
+  return loginStatus === 'loggedIn';
+}
+
+function getCookie(name) {
+  let value = '; ' + document.cookie;
+  let parts = value.split('; ' + name + '=');
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 // 초기 로딩 시 버튼 상태 업데이트
+isLoggedIn = getLoginStatusFromCookie();
 updateButtonVisibility();
 
 // 로그인 상태 변경 시
+// 로그인 상태 변경 시
 document.querySelector('.login').addEventListener('click', () => {
   isLoggedIn = true;
+  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600'; // 1시간 동안 유지
   updateButtonVisibility();
 });
 
 document.querySelector('.logout').addEventListener('click', () => {
   isLoggedIn = false;
+  document.cookie =
+    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   updateButtonVisibility();
 });
 
@@ -50,3 +66,5 @@ document.querySelector('.hamburger').addEventListener('click', () => {
     dropdown.style.display = 'block';
   }
 });
+
+console.log(updateButtonVisibility());

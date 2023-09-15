@@ -19,8 +19,8 @@ body {
   height: 20vh;
 }
 .menuIcons img {
-  width: 60px; /* 아이콘의 폭 설정 */
-  height: 60px; /* 아이콘의 높이 설정 */
+  width: 8vw; /* 아이콘의 폭 설정 */
+  height: 8vh; /* 아이콘의 높이 설정 */
   box-shadow: 0 0 10px #a5e467; /* 녹색 그림자 */
   border-radius: 10px; /* 모서리 라운딩 처리 */
 }
