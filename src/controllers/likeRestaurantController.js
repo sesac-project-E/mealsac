@@ -101,8 +101,10 @@ exports.deleteLike = async (req, res) => {
   }
 };
 exports.getUserLikes = async (req, res) => {
-  const { id, user_name } =
+  const { id } =
     req.session && req.session.userInfo ? req.session.userInfo : -1;
+  console.log('****************', req.session);
+
   if (id > 0) {
     const response = await User.findAll({
       where: { id: id },
@@ -128,9 +130,11 @@ exports.getUserLikes = async (req, res) => {
       ],
     });
     //response 키 값에 userName넣어서 전송
-    response['userName'] = user_name;
+    // response['userName'] = user_name;
+    console.log(response);
     res.send(response);
   } else {
     res.send('session에 저장된 정보가 없습니다.').status(400);
   }
+  res.send('tttt');
 };
