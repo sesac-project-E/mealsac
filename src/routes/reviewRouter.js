@@ -20,19 +20,12 @@ const uploadDetail = multer({
 /**
  * @swagger
  * tags:
- *   name: Review
- *   description: 리뷰 관련 엔드포인트
- */
-
-/**
- * @swagger
- * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
  *
- * /review/myreview/{review_id}:
+ * /api/review/myreview/{review_id}:
  *   patch:
- *     summary: 내 리뷰 수정하기
+ *     summary: 로그인 한 사용자의 리뷰 수정하기
  *     tags: [Review]
  *     parameters:
  *       - in: path
@@ -178,9 +171,9 @@ reviewRouter.patch('/myreview/:review_id', controller.editReview);
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
  *
- * /review/myreview/{review_id}:
+ * /api/review/myreview/{review_id}:
  *   delete:
- *     summary: 내 리뷰 삭제하기
+ *     summary: 로그인 한 작성자 본인의 리뷰 삭제하기
  *     tags: [Review]
  *     parameters:
  *       - in: path
@@ -279,9 +272,9 @@ reviewRouter.delete('/myreview/:review_id', controller.deleteReview);
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
  *
- * /review/{review_id}/usefulness:
+ * /api/review/{review_id}/usefulness:
  *   post:
- *     summary: 리뷰 추천
+ *     summary: 로그인 한 사용자가 특정 리뷰 추천
  *     tags: [Review]
  *     parameters:
  *       - in: path
@@ -337,6 +330,59 @@ reviewRouter.delete('/myreview/:review_id', controller.deleteReview);
  *                 message: "해당 리뷰를 추천하는 것에 오류가 발생했습니다."
  */
 reviewRouter.post('/usefulness/:review_id', controller.recommendReview);
+
+/**
+ * @swagger
+ * tags:
+ *   - name: Review
+ *     description: 리뷰 관련 API 엔드포인트
+ *
+ * /api/review/unrecommend/{review_id}:
+ *   delete:
+ *     summary: 로그인한 사용자가 특정 리뷰에 대한 추천 취소
+ *     tags: [Review]
+ *     parameters:
+ *       - in: path
+ *         name: review_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: 추천을 취소할 리뷰의 ID
+ *     responses:
+ *       200:
+ *         description: 리뷰 추천을 성공적으로 취소함
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "성공적으로 리뷰 추천을 취소하셨습니다."
+ *       400:
+ *         description: 세션에서 사용자 정보를 찾을 수 없거나 추천을 하지 않은 리뷰에 대한 요청
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "세션에서 사용자 정보를 찾을 수 없습니다." or "해당 리뷰에 추천을 하지 않으셨습니다."
+ *       500:
+ *         description: 내부 서버 오류
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "리뷰 추천을 취소하는 것에 오류가 발생했습니다."
+ */
 reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
 
 /**
@@ -345,13 +391,13 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
  *
- * /review/myreview:
+ * /api/review/myreview:
  *   get:
- *     summary: 내가 작성한 리뷰 조회
+ *     summary: 로그인한 사용자가 작성한 리뷰 조회
  *     tags: [Review]
  *     responses:
  *       200:
- *         description: 성공적으로 내 리뷰를 가져온 경우
+ *         description: 리뷰를 성공적으로 가져옴
  *         content:
  *           application/json:
  *             schema:
@@ -359,48 +405,32 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  *               properties:
  *                 status:
  *                   type: string
- *                   description: 응답 상태
+ *                   example: "success"
  *                 data:
  *                   type: array
- *                   description: 사용자가 작성한 리뷰 목록
  *                   items:
  *                     type: object
  *                     properties:
  *                       review_id:
  *                         type: integer
- *                         description: 리뷰의 고유 ID
- *                       title:
- *                         type: string
- *                         description: 리뷰 제목
+ *                         example: 1
+ *                       restaurant_id:
+ *                         type: integer
+ *                         example: 101
+ *                       user_id:
+ *                         type: integer
+ *                         example: 1
  *                       content:
  *                         type: string
- *                         description: 리뷰 내용
+ *                         example: "음식이 맛있어요!"
  *                       rating:
  *                         type: number
- *                         description: 리뷰 평점
- *                       images:
- *                         type: array
- *                         description: 리뷰에 첨부된 이미지 URL 목록
- *                         items:
- *                           type: string
- *                           description: 이미지 URL
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                         description: 리뷰 작성 일자 및 시간
- *               example:
- *                 status: success
- *                 data:
- *                   - review_id: 1
- *                     title: "맛있어요"
- *                     content: "음식이 정말 맛있어요."
- *                     rating: 4.5
- *                     images:
- *                       - "/static/img/reviewImages/image1.jpg"
- *                       - "/static/img/reviewImages/image2.jpg"
- *                     createdAt: "2023-09-11T12:34:56Z"
+ *                         example: 4.5
+ *                       usefulnessCount:
+ *                         type: integer
+ *                         example: 5
  *       400:
- *         description: 요청이 잘못된 경우 (세션에서 사용자 정보를 찾을 수 없는 경우 등)
+ *         description: 세션에서 사용자 정보를 찾을 수 없음
  *         content:
  *           application/json:
  *             schema:
@@ -408,15 +438,12 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  *               properties:
  *                 status:
  *                   type: string
- *                   description: 응답 상태
+ *                   example: "error"
  *                 message:
  *                   type: string
- *                   description: 오류 메시지
- *               example:
- *                 status: error
- *                 message: "세션에서 사용자 정보를 찾을 수 없습니다."
+ *                   example: "세션에서 사용자 정보를 찾을 수 없습니다."
  *       500:
- *         description: 서버 오류로 인해 리뷰를 가져오지 못한 경우
+ *         description: 내부 서버 오류
  *         content:
  *           application/json:
  *             schema:
@@ -424,14 +451,12 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  *               properties:
  *                 status:
  *                   type: string
- *                   description: 응답 상태
+ *                   example: "error"
  *                 message:
  *                   type: string
- *                   description: 오류 메시지
- *               example:
- *                 status: error
- *                 message: "리뷰를 가져오는 동안 오류가 발생했습니다."
+ *                   example: "리뷰를 가져오는 동안 오류가 발생했습니다."
  */
+
 reviewRouter.get('/myreview', controller.getMyReviews);
 
 /**
@@ -440,7 +465,7 @@ reviewRouter.get('/myreview', controller.getMyReviews);
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
  *
- * /review/{restaurant_id}:
+ * /api/review/{restaurant_id}:
  *   get:
  *     summary: 특정 레스토랑의 모든 리뷰 조회
  *     tags: [Review]
@@ -531,9 +556,9 @@ reviewRouter.get('/:restaurant_id', controller.getAllReviews);
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
  *
- * /review/{restaurant_id}:
+ * /api/review/{restaurant_id}:
  *   post:
- *     summary: 레스토랑에 새로운 리뷰 작성
+ *     summary: 로그인 한 사용자가 식당에 새로운 리뷰 작성
  *     tags: [Review]
  *     parameters:
  *       - in: path
