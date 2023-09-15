@@ -146,6 +146,11 @@
     width: 60px; /* 버튼의 너비 조정 */
     font-size: xx-small; /* 폰트 크기 줄이기 */
   }
+
+  .login,
+  .register {
+    display: none;
+  }
 }
 
 /* footer css */
