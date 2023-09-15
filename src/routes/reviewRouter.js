@@ -20,9 +20,16 @@ const uploadDetail = multer({
 /**
  * @swagger
  * tags:
+ *   name: Review
+ *   description: 리뷰 관련 API 엔드포인트
+ */
+
+/**
+ * @swagger
+ * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
+ * @swagger
  * /api/review/myreview/{review_id}:
  *   patch:
  *     summary: 로그인 한 사용자의 리뷰 수정하기
@@ -170,7 +177,7 @@ reviewRouter.patch('/myreview/:review_id', controller.editReview);
  * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
+ * @swagger
  * /api/review/myreview/{review_id}:
  *   delete:
  *     summary: 로그인 한 작성자 본인의 리뷰 삭제하기
@@ -271,7 +278,7 @@ reviewRouter.delete('/myreview/:review_id', controller.deleteReview);
  * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
+ * @swagger
  * /api/review/{review_id}/usefulness:
  *   post:
  *     summary: 로그인 한 사용자가 특정 리뷰 추천
@@ -336,7 +343,7 @@ reviewRouter.post('/usefulness/:review_id', controller.recommendReview);
  * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
+ * @swagger
  * /api/review/unrecommend/{review_id}:
  *   delete:
  *     summary: 로그인한 사용자가 특정 리뷰에 대한 추천 취소
@@ -390,11 +397,20 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
- * /api/review/myreview:
+ * @swagger
+ * /api/review/myreview?page=1
  *   get:
- *     summary: 로그인한 사용자가 작성한 리뷰 조회
+ *     summary: 로그인한 사용자가 작성한 리뷰를 페이지네이션 하여 조회
+ *     description: 각 페이지에는 최대 5개의 리뷰를 포함하고 있으며, 총 페이지 수를 포함하여 응답
  *     tags: [Review]
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         type: integer
+ *         description: 현재 페이지 번호 (기본값 1)
  *     responses:
  *       200:
  *         description: 리뷰를 성공적으로 가져옴
@@ -413,22 +429,43 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  *                     properties:
  *                       review_id:
  *                         type: integer
- *                         example: 1
  *                       restaurant_id:
  *                         type: integer
- *                         example: 101
  *                       user_id:
  *                         type: integer
- *                         example: 1
  *                       content:
  *                         type: string
- *                         example: "음식이 맛있어요!"
  *                       rating:
  *                         type: number
- *                         example: 4.5
  *                       usefulnessCount:
  *                         type: integer
- *                         example: 5
+ *                 totalPages:
+ *                   type: integer
+ *                   example: 10
+ *         examples:
+ *           application/json: |
+ *             {
+ *               "status": "success",
+ *               "data": [
+ *                 {
+ *                   "review_id": 1,
+ *                   "restaurant_id": 10,
+ *                   "user_id": 2,
+ *                   "content": "맛있습니다!",
+ *                   "rating": 4.5,
+ *                   "usefulnessCount": 3
+ *                 },
+ *                 {
+ *                   "review_id": 2,
+ *                   "restaurant_id": 11,
+ *                   "user_id": 2,
+ *                   "content": "그냥 그래요",
+ *                   "rating": 2.0,
+ *                   "usefulnessCount": 1
+ *                 }
+ *               ],
+ *               "totalPages": 10
+ *             }
  *       400:
  *         description: 세션에서 사용자 정보를 찾을 수 없음
  *         content:
@@ -456,7 +493,6 @@ reviewRouter.delete('/usefulness/:review_id', controller.unrecommendReview);
  *                   type: string
  *                   example: "리뷰를 가져오는 동안 오류가 발생했습니다."
  */
-
 reviewRouter.get('/myreview', controller.getMyReviews);
 
 /**
@@ -464,7 +500,7 @@ reviewRouter.get('/myreview', controller.getMyReviews);
  * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
+ * @swagger
  * /api/review/{restaurant_id}:
  *   get:
  *     summary: 특정 레스토랑의 모든 리뷰 조회
@@ -555,7 +591,7 @@ reviewRouter.get('/:restaurant_id', controller.getAllReviews);
  * tags:
  *   - name: Review
  *     description: 리뷰 관련 API 엔드포인트
- *
+ * @swagger
  * /api/review/{restaurant_id}:
  *   post:
  *     summary: 로그인 한 사용자가 식당에 새로운 리뷰 작성
