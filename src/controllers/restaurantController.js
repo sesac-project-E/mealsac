@@ -8,10 +8,95 @@ const {
   Tag,
   User,
   Restaurant,
+  sequelize,
 } = require('../models');
 const dotenv = require('dotenv');
 dotenv.config();
 const { formatDate } = require('../utils/formatDate');
+
+
+exports.getAllRestaurants = async (req, res) => {
+  try {
+    const {page} = req.params
+    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const response = await Restaurant.findAndCountAll({
+      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      limit : 20,
+      offset : 20 * (page - 1),
+      include : [{
+        model : User,
+        where : {id : (id ? id : 0)},
+        required : false,
+      }]
+    })
+    if (response.rows.length === 0)  {
+      throw Error()
+    }
+    res.send(response)
+  } catch (error) {
+    console.log(error)
+    res.redirect('/badpage')
+  }
+}
+
+exports.getLikeRestaurants = async (req, res) => {
+  try {
+    const {page} = req.params
+    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const response = await Restaurant.findAndCountAll({
+      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      limit : 20,
+      offset : 20 * (page - 1),
+      order : [
+        ['likes_count', 'DESC'],
+        ['rating', 'DESC'],
+        ['reviews_count', 'DESC'],
+
+      ],
+      include : [{
+        model : User,
+        where : {id : (id ? id : 0)},
+        required : false,
+      }]
+    })
+    if (response.rows.length === 0)  {
+      throw Error()
+    }
+    res.send(response)
+  } catch (error) {
+    console.log(error)
+    res.redirect('/badpage')
+  }
+}
+
+exports.getRatingRestaurants = async (req, res) => {
+  try {
+    const {page} = req.params
+    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const response = await Restaurant.findAndCountAll({
+      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      limit : 20,
+      offset : 20 * (page - 1),
+      order : [
+        ['rating', 'DESC'],
+        ['likes_count', 'DESC'],
+        ['reviews_count', 'DESC'],
+      ],
+      include : [{
+        model : User,
+        where : {id : (id ? id : 0)},
+        required : false,
+      }]
+    })
+    if (response.rows.length === 0)  {
+      throw Error()
+    }
+    res.send(response)
+  } catch (error) {
+    console.log(error)
+    res.redirect('/badpage')
+  }
+}
 
 exports.getRestaurant = (req, res) => {
   const { restaurant_id } = req.params;
