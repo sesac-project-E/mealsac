@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 게시판</title>
+    <link rel="stylesheet" href="/static/css/boardPost.css" />
+  </head>
+  <body>
+    <%- include('../common/header.ejs') %>
+    <div class="container">
+      <div class="topBox">
+        <div>
+          <h1>SAC BOARD</h1>
+          <p id="msg">새싹님들의 자유로운 밥 이야기를 들려주세요!</p>
+        </div>
+      </div>
+
+      <div class="btnBox">
+        <button type="button" class="boardType" name="boardType">
+          자유게시판
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="5vh"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+              fill="#4DDA67"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="postBox">
+        <div class="titleBox">
+          <h3 class="title">sss</h3>
+          <div class="postInfo">
+            <p>userName</p>
+            <p>2023.09.17</p>
+          </div>
+        </div>
+        <div class="postContent">우아아아ㅠㅠ치킨 먹고싶다ㅠ</div>
+      </div>
+
+      <div class="replyBox">
+        <form class="textReply">
+          <p>댓글</p>
+          <textarea name="reply" placeholder="댓글을 입력해 주세요."></textarea>
+          <button type="submit" id="replyBtn">등록</button>
+        </form>
+        <div class="replyList">
+          <div class="reply">
+            <div class="replyInfo">
+              <p>replyUserName</p>
+              <p>replyDate</p>
+            </div>
+            <div class="replycontent">으아앙</div>
+          </div>
+          <div class="reply">
+            <div class="replyInfo">
+              <p>replyUserName</p>
+              <p>replyDate</p>
+            </div>
+            <div class="replycontent">으아앙</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
