@@ -1,4 +1,9 @@
 <style>
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
   .restaurantContainer {
     display: flex;
     padding: 10px 0;
@@ -21,11 +26,6 @@
   .restaurantInfo > div:first-child {
     display: flex;
     justify-content: space-between;
-    width: 100%;
-  }
-
-  .restaurantInfo > div:nth-child(4) {
-    margin-top: 40px;
   }
 
   .restaurantInfo > div:last-child > * {
@@ -35,9 +35,11 @@
   .restaurantInfo h3 {
     font-size: 1.2rem;
   }
+
   .restaurantInfo .address {
     font-size: 0.7rem;
   }
+
   .heart {
     width: 23px;
     height: 25px;
@@ -57,6 +59,61 @@
     font-size: 0.8rem;
     transform: translateY(2px);
   }
+
+  .restaurantBtn {
+    width: 100%;
+    height: 27px;
+    text-align: center;
+    font-size: 0.9rem;
+    border: 2px solid #89d83f;
+    border-radius: 25px;
+
+    &:hover {
+      background-color: #e0f0d1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .restaurantContainer {
+      width: 75vw;
+    }
+
+    .restaurantInfo {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .restaurantImg {
+      width: 120px;
+      height: 120px;
+    }
+
+    .restaurantInfo h3 {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .heart {
+      width: 20px;
+      height: 22px;
+    }
+
+    .address,
+    .type {
+      margin-bottom: 5px;
+    }
+
+    .restaurantInfo > div:nth-child(4) {
+      margin-top: 5px;
+    }
+
+    .restaurantBtn {
+      padding: 0 5px;
+      overflow: hidden;
+      transform: translateY(-10px);
+    }
+  }
 </style>
 
 <article
@@ -72,14 +129,22 @@
     <div>
       <h3 class="restaurantName"><%= restaurant.restaurant_name %></h3>
       <img
-        src="/static/img/heart.png"
+        src="<% if (restaurant.Users && restaurant.Users.length === 0) { %> /static/img/heart.png <% } else { %> /static/img/heartFilled.png <% } %>"
         alt="찜 아이콘"
         class="heart"
         id="<%= restaurant.restaurant_id %>"
       />
     </div>
-    <p class="type"><%= restaurant.restaurant_type.restaurant_type %></p>
-    <p class="address"><%= restaurant.restaurant_address %></p>
+    <p class="address">
+      <%= (restaurant.restaurant_address && restaurant.restaurant_address) ?
+      restaurant.restaurant_address : '식당 주소 없음' %> <%=
+      restaurant.restaurant_address %>
+    </p>
+    <p class="type">
+      <%= (restaurant.restaurant_type_id && restaurant.restaurant_type_id) ?
+      restaurant.restaurant_type_id : '식당 타입 없음' %>
+    </p>
+
     <div>
       <img src="/static/img/star.png" alt="평점 아이콘" class="rating" />
       <p class="rate"><%= restaurant.rating %></p>
@@ -88,7 +153,13 @@
         alt="댓글 아이콘"
         class="comment"
       />
-      <p class="review"><%= restaurant.Reviews.length %></p>
+      <p class="review"><%= restaurant.reviews_count %></p>
+      <a
+        href="/restaurant/<%= restaurant.restaurant_id %>"
+        class="restaurantBtn"
+      >
+        <%= restaurant.restaurant_name %> 페이지
+      </a>
     </div>
   </div>
 </article>
