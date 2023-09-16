@@ -4,6 +4,12 @@ body {
 
 .container {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#write {
+  align-self: flex-end;
 }
 
 .topBox {
@@ -15,11 +21,6 @@ body {
 
 h1 {
   font-weight: 900;
-}
-
-.btnBox {
-  display: flex;
-  justify-content: space-between;
 }
 
 #freeBoard,
@@ -40,8 +41,8 @@ h1 {
   width: 100px;
   margin: 7px;
   border-radius: 30px;
-  border: none;
-  background-color: #ffe0b6;
+  background-color: transparent;
+  border: solid 1px #ffe0b6;
 }
 
 table {
