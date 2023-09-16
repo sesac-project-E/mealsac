@@ -9,16 +9,20 @@
 .desktop-logo {
   height: 40px;
 }
-.mobile-logo {
+.mobile-logo,
+.hamburger,  /* 추가 */
+.logged-out .mobile-login {
+  /* 추가 */
   display: none;
 }
-
 .dropdown-content {
   display: none;
 }
-
-.logged-in {
+.logged-out {
   display: none;
+}
+.logged-in {
+  display: block;
 }
 
 .login,
@@ -55,50 +59,45 @@
   font-family: Inter;
 }
 
-/* 태블릿 뷰 (481px - 1024px) */
-/* 여기서는 데스크탑 뷰와 동일하므로 별도의 스타일 지정이 필요하지 않습니다. */
-
-@media only screen and (min-width: 481px) and (max-width: 1024px) {
-  /* 아무 변경도 없음 */
+/* 데스크탑 뷰에서의 스타일 */
+.login,
+.register {
+  display: inline-block;
 }
 
-/* 모바일 뷰 (280px 이상, 480px 이하) */
-@media only screen and (min-width: 280px) and (max-width: 480px) {
-  .header {
-    padding: 15px 30px 15px 30px; /* 패딩 줄이기 */
-  }
-
-  .desktop-logo {
-    display: none; /* 데스크탑 로고 숨기기 */
-  }
-
-  .mobile-logo {
-    display: block; /* 모바일 로고 보이기 */
-  }
-
+/* 모바일 및 폴드 뷰에서의 스타일 */
+@media only screen and (max-width: 480px) {
   .login,
   .register {
     display: none;
   }
 
-  .logout,
-  .mypage {
+  .header {
+    padding: 15px 30px;
+  }
+
+  .desktop-logo {
     display: none;
   }
-
-  .logged-out .mobile-login,
-  .logged-in .hamburger {
-    display: block; /* 모바일 로그인 버튼 및 햄버거 메뉴 보이기 */
+  .mobile-logo {
+    display: block;
   }
 
-  .mobile-login {
-    height: 20px;
-    width: 60px;
-    font-size: xx-small;
+  .hamburger {
+    display: inline-block; /* 로그인 후에만 표시됩니다. */
+    width: 30px;
+    height: 22px;
+    background-image: url('path_to_hamburger_icon.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  .logged-out .mobile-login {
+    display: block; /* 로그인 전에만 표시됩니다. */
   }
 
   .header img {
-    height: 180%; /* 이미지 크기 줄이기 */
+    height: 180%;
   }
 
   .login,
@@ -107,17 +106,16 @@
   .mypage {
     height: 25px;
     width: 80px;
-    font-size: x-small; /* 글자 크기 줄이기 */
+    font-size: x-small;
   }
 
-  .logged-in .dropdown-content {
-    display: block; /* 일단 드롭다운을 항상 보이게 설정합니다. */
+  .dropdown-content {
     position: absolute;
-    right: 10px; /* 헤더의 오른쪽으로부터 10px 떨어져있게 설정 */
-    top: 50px; /* 헤더의 아래에 위치하도록 설정 */
-    background-color: #f9f9f9; /* 배경색 설정 */
+    right: 10px;
+    top: 50px;
+    background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1; /* 다른 요소들 위에 위치하도록 설정 */
+    z-index: 1;
   }
 
   .dropdown-content a {
@@ -135,25 +133,20 @@
 /* 갤럭시 폴드 폴드 상태 (280px) */
 @media only screen and (max-width: 280px) {
   .header img {
-    height: 180%; /* 로고의 높이를 줄입니다. */
+    height: 180%;
   }
 
   .login,
   .logout,
   .register,
   .mypage {
-    height: 20px; /* 버튼의 높이 조정 */
-    width: 60px; /* 버튼의 너비 조정 */
-    font-size: xx-small; /* 폰트 크기 줄이기 */
-  }
-
-  .login,
-  .register {
-    display: none;
+    height: 20px;
+    width: 60px;
+    font-size: xx-small;
   }
 }
 
-/* footer css */
+/* footer 스타일 */
 footer {
   background-color: #f7f7f7;
   text-align: center;
@@ -182,22 +175,5 @@ footer p {
   footer p {
     font-size: x-small;
     margin-bottom: 5px;
-  }
-}
-
-/* 갤럭시 폴드 폴드 상태 (280px 이하) */
-@media only screen and (max-width: 280px) {
-  .contact .github,
-  .contact .contact-link {
-    display: block;
-  }
-
-  .contact {
-    font-size: small;
-  }
-
-  footer p {
-    font-size: xx-small;
-    margin-bottom: 4px;
   }
 }
