@@ -1,52 +1,92 @@
 let isLoggedIn = false;
 
+// DOM 참조 초기화
+const loginBtn = document.querySelector('.login');
+const registerBtn = document.querySelector('.register');
+const logoutBtn = document.querySelector('.logout');
+const mypageBtn = document.querySelector('.mypage');
+const hamburgerMenu = document.querySelector('.hamburger');
+const mobileLoginBtn = document.querySelector('.mobile-login');
+const loggedOutDiv = document.querySelector('.logged-out');
+const loggedInDiv = document.querySelector('.logged-in');
+const dropdown = document.querySelector('.dropdown-content');
+
 const updateButtonVisibility = () => {
-  const loginBtn = document.querySelector('.login');
-  const registerBtn = document.querySelector('.register');
-  const logoutBtn = document.querySelector('.logout');
-  const mypageBtn = document.querySelector('.mypage');
-  const hamburgerMenu = document.querySelector('.hamburger');
+  const isMobileOrFolded = window.innerWidth <= 480;
 
   if (isLoggedIn) {
-    // 로그인 후 버튼 및 아이콘 표시
-    logoutBtn.style.display = 'inline-block';
-    mypageBtn.style.display = 'inline-block';
-    hamburgerMenu.style.display = 'inline-block'; // 햄버거 메뉴 보이기
+    if (isMobileOrFolded) {
+      hamburgerMenu.style.display = 'inline-block';
+      loginBtn.style.display = 'none';
+      registerBtn.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      mypageBtn.style.display = 'none';
+    } else {
+      logoutBtn.style.display = 'inline-block';
+      mypageBtn.style.display = 'inline-block';
+      hamburgerMenu.style.display = 'none';
+      loginBtn.style.display = 'none';
+      registerBtn.style.display = 'none';
+    }
 
-    // 로그인 전 버튼 숨기기
-    loginBtn.style.display = 'none';
-    registerBtn.style.display = 'none';
+    loggedOutDiv.style.display = 'none';
+    loggedInDiv.style.display = 'block';
   } else {
-    // 로그인 전 버튼 및 아이콘 표시
-    loginBtn.style.display = 'inline-block';
-    registerBtn.style.display = 'inline-block';
-    hamburgerMenu.style.display = 'none'; // 햄버거 메뉴 숨기기
+    if (isMobileOrFolded) {
+      hamburgerMenu.style.display = 'none';
+      loginBtn.style.display = 'none';
+      registerBtn.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      mypageBtn.style.display = 'none';
+    } else {
+      loginBtn.style.display = 'inline-block';
+      registerBtn.style.display = 'inline-block';
+      hamburgerMenu.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      mypageBtn.style.display = 'none';
+    }
 
-    // 로그인 후 버튼 숨기기
-    logoutBtn.style.display = 'none';
-    mypageBtn.style.display = 'none';
+    loggedOutDiv.style.display = 'block';
+    loggedInDiv.style.display = 'none';
   }
+
+  dropdown.style.display = 'none'; // 드롭다운 메뉴 초기화
 };
 
-// 초기 로딩 시 버튼 상태 업데이트
+const toggleLoginStatus = status => {
+  isLoggedIn = status;
+  updateButtonVisibility();
+};
+
+function getLoginStatusFromCookie() {
+  let loginStatus = getCookie('loginStatus');
+  return loginStatus === 'loggedIn';
+}
+
+function getCookie(name) {
+  let value = '; ' + document.cookie;
+  let parts = value.split('; ' + name + '=');
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+isLoggedIn = getLoginStatusFromCookie();
 updateButtonVisibility();
 
-// 로그인 상태 변경 시
-document.querySelector('.login').addEventListener('click', () => {
-  isLoggedIn = true;
-  updateButtonVisibility();
+loginBtn.addEventListener('click', () => {
+  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600';
+  toggleLoginStatus(true);
 });
 
-document.querySelector('.logout').addEventListener('click', () => {
-  isLoggedIn = false;
-  updateButtonVisibility();
+logoutBtn.addEventListener('click', () => {
+  document.cookie =
+    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  toggleLoginStatus(false);
+  location.reload();
 });
 
-document.querySelector('.hamburger').addEventListener('click', () => {
-  const dropdown = document.querySelector('.dropdown-content');
-  if (dropdown.style.display === 'block') {
-    dropdown.style.display = 'none';
-  } else {
-    dropdown.style.display = 'block';
-  }
+hamburgerMenu.addEventListener('click', () => {
+  dropdown.style.display =
+    dropdown.style.display === 'block' ? 'none' : 'block';
 });
+
+window.addEventListener('resize', updateButtonVisibility); // 반응형 사이즈 변경에 대응
