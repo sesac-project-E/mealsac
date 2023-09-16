@@ -5,33 +5,68 @@
     <title>MealSac | 식당 목록</title>
     <link rel="stylesheet" href="/static/css/restaurantList.css" />
     <script defer src="/static/js/restaurantList.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"></script>
   </head>
   <body>
     <%- include('../common/header.ejs') %>
     <main class="container-fluid itemContainer">
       <div class="row">
-        <section class="map col-lg-7 col-md-7 col-sm-6">지도</section>
-        <section class="restaurantList col-lg-5 col-md-5 col-sm-6">
+        <section class="map col-lg-7 col-md-7">지도</section>
+        <section class="restaurantList col-lg-5 col-md-5 col-sm-10" >
             <img src="../../static/img/hamburger.png" alt="" class="hamburgerIcon">
-          <section class="search">
-            <form action="/" method="get">
-              <input type="text" placeholder="매장명, 메뉴명" />
-              <button>검색</button>
+          <section class="search" id="up">
+            <div class="searchName clicked">매장명 검색</div>
+            <div class="searchType">카테고리, 태그 검색</div>
+            <div class="formContainer">
+            <form id="searchForm">
+              <div>
+              <input type="radio" name="search" id="name" checked>
+              <label for="name">매장명 검색</label>
+              <input type="radio" name="search" id="menu">
+              <label for="menu">메뉴명 검색</label>
+            </div>
+              <input type="text" id="searchInput" placeholder="매장명 검색" />
+              <button type="submit">검색</button>
             </form>
-            <section class="tags">
-              <!-- 필터 아이콘 -->
-              <!-- <div class="filterIcon">
-                <img src="../../static/img/filter.png" alt="필터 아이콘" />
-              </div> -->
-              <div class="tag tagActive"># 주변식당</div>
-              <div class="tag"># 분위기 좋은</div>
-              <div class="tag"># 가성비</div> 
+          </div>
+          <div class="tagNstyle searchInvisible">
+            <div class="styleContainer">
+              <section class="more">
+                <div class="tag">중식</div>
+                <div class="tag">분식</div>
+                <div class="tag">일식</div>
+                <div class="tag">양식</div>
+                <div class="tag">펍</div>
+                <div class="tag">치킨</div>
+                <div class="tag">족발, 보쌈</div>
+                <div class="tag">카페</div>
+                <div class="tag">고기구이</div>
+                <div class="tag">아시안</div>
+                <div class="tag">디저트</div>
+                <div class="tag">패스트푸드</div>
+                <div class="tag">편의점</div>
+              </section>
+              <div class="stylesMore">더보기</div>
+            </div>
+          <div class="tagContainer">
+            <section class="more tags">
+              <div class="tag"># 로맨틱한</div>
+              <div class="tag"># 가족이 오기 좋은</div>
+              <div class="tag"># 편안한</div> 
+              <div class="tag"># 가성비 좋은</div>
+              <div class="tag"># 값비싼</div>
+              <div class="tag"># 데이트하기 좋은</div> 
+              <div class="tag"># 친절한</div>
+              <div class="tag"># 분위기 주차가 편한</div>
+              <div class="tag"># 회식하기 좋은</div> 
             </section>
+            <div class="tagsMore">더보기</div>
+          </div>
+          <button class="tagNstyleBtn">검색</button>
+        </div>
           </section>
           <section class="result">
             <div>
-              <p>100개의 매장</p>
+              <p class="totalRestaurants">개의 매장</p>
               <div class="sortContainer">
                 <img src="../../static/img/sorting.png" alt="정렬 아이콘" />
                 <section class="sort">
@@ -39,6 +74,7 @@
                     <div class="sorting">인기순</div>
                     <ul class="sortType">
                       <li class="sortingMethod active">인기순</li>
+                      <li class="sortingMethod">평점순</li>
                       <li class="sortingMethod">최신 등록순</li>
                     </ul>
                   </article>
@@ -47,27 +83,17 @@
             </div>
             
             <div class="allRestaurantContainer">
-            <% if (Array.isArray(restaurants) && restaurants.length > 0) { %>
-              <% restaurants.forEach(restaurant => { %>
-                <%- include('../common/restaurantComponent.ejs', { restaurant: restaurant }) %>
-                <a href="/restaurant/<%= restaurant.restaurant_id %>" class="restaurantBtn">
-                  <%= restaurant.restaurant_name %> 상세페이지로 이동
-                </a>
-              <% }) %>
-            <% } else { %>
-              <p>해당하는 식당이 없습니다.</p>
-            <% } %>
-            <section class="pageBtn">
-              <button id="prevPage">이전 페이지</button>
-              <button id="nextPage">다음 페이지</button>
-            </section>
+              <div class="restaurants">
+          </div>
+            <div class="pagination" id="pagination-container">
+              <a href="#" id="prevPage" onclick="changePage(currentPage - 1)">&laquo;</a>
+              <a href="#" id="nextPage" onclick="changePage(currentPage + 1)">&raquo;</a>
+            </div>
           </div>
         </section>
       </div>
     </main>
-    <%- include('../common/footer.ejs') %>
-    <script>
-      const restaurants = <%- JSON.stringify(restaurants) %>;
-    </script>    
+    <!-- <%- include('../common/footer.ejs') %> -->
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"></script> -->
   </body>
 </html>
