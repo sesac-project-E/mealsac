@@ -13,8 +13,14 @@ exports.getRestaurantsByTag = async (req, res) => {
     const {id} = (req.session && req.session.userInfo) ? req.session.userInfo : 0
     const tags = req.query
     const tagIds = []
+    let page;
     for (let [k, v] of Object.entries(tags)) {
       try {
+        console.log(k,v)
+        if (k === "page") {
+          page = v
+          continue
+        }
         await Tag.findOne({
           where : {tag_name_eng : v}
         })
@@ -23,31 +29,42 @@ exports.getRestaurantsByTag = async (req, res) => {
           tagIds.push({"tag_id" : id})
         })
       } catch (error) {
-        res.redirect("/badpage")
+        res.status(400).send()
         return ;
       }
     }
-    Restaurant.findAll({
-      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
-      include: [{
-          model : Tag,
-          where : {
-            [Op.or] : [...tagIds]
+    if (page > 0) { 
+      Restaurant.findAndCountAll({
+        attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+        include: [{
+            model : Tag,
+            where : {
+              [Op.or] : [...tagIds]
+            },
           },
-        },
-        { 
-          model : User,
-          where : {id : (id ? id : 0)},
-          required : false,
-        }
-      ],
-    })
-    .then((response) => {
-      response = response.filter((item) => {
-        return item.Tags.length === tagIds.length
+          { 
+            model : User,
+            where : {id : (id ? id : 0)},
+            required : false,
+          },
+        ],
+        order : [
+          ['rating', 'DESC'],
+          ['likes_count', 'DESC'],
+          ['reviews_count', 'DESC'],
+        ],
       })
-      res.send(response)
-    })
+      .then((response) => {
+        rows = response.rows.filter((item) => {
+          return item.Tags.length === tagIds.length
+        })
+        const count = rows.length
+        rows = rows.slice(20 * (page - 1), 20 * (page - 1) + 20)
+        res.send({rows: rows, count : count})
+      })
+    } else {
+      res.status(400).send("올바르지 않은 페이지 번호입니다.")
+    }
   } catch (error) {
     console.log(error)
     res.status(500).send("알 수 없는 에러")
