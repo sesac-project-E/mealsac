@@ -9,7 +9,7 @@ const freeBoard = () => {
   freeBoardBtn.classList.add('clicked');
   noticeBoardBtn.classList.remove('clicked');
 
-  freeBoardList.style.display = 'block';
+  freeBoardList.style.display = 'flex';
   noticeBoardList.style.display = 'none';
 };
 
@@ -18,7 +18,7 @@ const noticeBoard = () => {
   freeBoardBtn.classList.remove('clicked');
 
   freeBoardList.style.display = 'none';
-  noticeBoardList.style.display = 'block';
+  noticeBoardList.style.display = 'flex';
 };
 
 // 자유게시판 페이지
