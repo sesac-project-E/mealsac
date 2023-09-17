@@ -45,10 +45,6 @@ app.use(
   }),
 );
 
-// app.get('/test', (req, res) => {
-//   res.send(req.session);
-// });
-
 app.use('/', indexRouter);
 
 db.sequelize.sync({ force: false }).then(() => {
