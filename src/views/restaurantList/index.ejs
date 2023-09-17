@@ -14,14 +14,14 @@
         <section class="restaurantList col-lg-5 col-md-5 col-sm-10" >
             <img src="../../static/img/hamburger.png" alt="" class="hamburgerIcon">
           <section class="search" id="up">
-            <div class="searchName clicked">매장명 검색</div>
+            <div class="searchName clicked">매장, 메뉴명 검색</div>
             <div class="searchType">카테고리, 태그 검색</div>
             <div class="formContainer">
-            <form id="searchForm">
+            <form id="searchNameMenu">
               <div>
-              <input type="radio" name="search" id="name" checked>
+              <input type="radio" name="search1" id="name" checked>
               <label for="name">매장명 검색</label>
-              <input type="radio" name="search" id="menu">
+              <input type="radio" name="search1" id="menu">
               <label for="menu">메뉴명 검색</label>
             </div>
               <input type="text" id="searchInput" placeholder="매장명 검색" />
@@ -29,35 +29,42 @@
             </form>
           </div>
           <div class="tagNstyle searchInvisible">
+            <form class="searchTagStyle">
+              <input type="radio" name="search2" id="category" checked>
+              <label for="category">카테고리 검색</label>
+              <input type="radio" name="search2" id="tag">
+              <label for="tag">태그 검색</label>
+            </form>
             <div class="styleContainer">
               <section class="more">
-                <div class="tag">중식</div>
-                <div class="tag">분식</div>
-                <div class="tag">일식</div>
-                <div class="tag">양식</div>
-                <div class="tag">펍</div>
-                <div class="tag">치킨</div>
-                <div class="tag">족발, 보쌈</div>
-                <div class="tag">카페</div>
-                <div class="tag">고기구이</div>
-                <div class="tag">아시안</div>
-                <div class="tag">디저트</div>
-                <div class="tag">패스트푸드</div>
-                <div class="tag">편의점</div>
+                <div class="tag" id="korean">한식</div>
+                <div class="tag" id="chinese">중식</div>
+                <div class="tag" id="street">분식</div>
+                <div class="tag" id="japanese">일식</div>
+                <div class="tag" id="western">양식</div>
+                <div class="tag" id="pub">펍</div>
+                <div class="tag" id="chicken">치킨</div>
+                <div class="tag" id="pork">족발, 보쌈</div>
+                <div class="tag" id="cafe">카페</div>
+                <div class="tag" id="meat">고기구이</div>
+                <div class="tag" id="asian">아시안</div>
+                <div class="tag" id="dessert">디저트</div>
+                <div class="tag" id="fast">패스트푸드</div>
+                <div class="tag" id="convenience">편의점</div>
               </section>
               <div class="stylesMore">더보기</div>
             </div>
-          <div class="tagContainer">
+          <div class="tagContainer invisible">
             <section class="more tags">
-              <div class="tag"># 로맨틱한</div>
-              <div class="tag"># 가족이 오기 좋은</div>
-              <div class="tag"># 편안한</div> 
-              <div class="tag"># 가성비 좋은</div>
-              <div class="tag"># 값비싼</div>
-              <div class="tag"># 데이트하기 좋은</div> 
-              <div class="tag"># 친절한</div>
-              <div class="tag"># 분위기 주차가 편한</div>
-              <div class="tag"># 회식하기 좋은</div> 
+              <div class="tag" id="romantic"># 로맨틱한</div>
+              <div class="tag" id="family"># 가족이 오기 좋은</div>
+              <div class="tag" id="cozy"># 편안한</div> 
+              <div class="tag" id="inexpensive"># 가성비 좋은</div>
+              <div class="tag" id="upscale"># 값비싼</div>
+              <div class="tag" id="date"># 데이트하기 좋은</div> 
+              <div class="tag" id="kind"># 친절한</div>
+              <div class="tag" id="parking"># 주차가 편한</div>
+              <div class="tag" id="company"># 회식하기 좋은</div> 
             </section>
             <div class="tagsMore">더보기</div>
           </div>

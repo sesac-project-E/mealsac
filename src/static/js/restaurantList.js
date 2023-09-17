@@ -1,17 +1,30 @@
+// const { query } = require('express');
+
 let selectedMarker = null;
 const markers = [];
 let map;
+let apiUrl;
 let currentPage = 1;
 let totalPages;
 let sortTypeValue = '인기순';
-const tags = [];
+let styles = [];
+let tags = [];
+let tagQuery = '';
 const searchName = document.querySelector('.searchName');
 const searchType = document.querySelector('.searchType');
 const nameRadio = document.querySelector('#name');
 const menuRadio = document.querySelector('#menu');
 const searchInput = document.querySelector('#searchInput');
-const searchForm = document.querySelector('#searchForm');
+const searchNameMenu = document.querySelector('#searchNameMenu');
+const tagRadio = document.querySelector('#tag');
+const styleRadio = document.querySelector('#category');
+const styleContainer = document.querySelector('.styleContainer');
+const tagContainer = document.querySelector('.tagContainer');
+const searchTagStyle = document.querySelector('#searchTagStyle');
 const tagNstyle = document.querySelector('.tagNstyle');
+const tagsMore = document.querySelector('.tagsMore');
+const stylesMore = document.querySelector('.stylesMore');
+const tagNstyleBtn = document.querySelector('.tagNstyleBtn');
 const formContainer = document.querySelector('.formContainer');
 
 const initMap = data => {
@@ -222,15 +235,13 @@ const drawPagination = centerPage => {
     pageElement.href = '#up';
     pageElement.className = 'page-number';
 
-    if (nameRadio.checked) {
-      pageElement.dataset.searchMode = 'name';
-      pageElement.dataset.query = searchInput.value;
-    } else if (menuRadio.checked) {
-      pageElement.dataset.searchMode = 'menu';
-      pageElement.dataset.query = searchInput.value;
-    }
-
-    if (nameRadio.checked) {
+    if ((nameRadio.checked || menuRadio.checked) && styleRadio.checked) {
+      pageElement.dataset.searchMode = 'style';
+      pageElement.dataset.query = styles;
+    } else if ((nameRadio.checked || menuRadio.checked) && tagRadio.checked) {
+      pageElement.dataset.searchMode = 'tag';
+      pageElement.dataset.query = tagQuery;
+    } else if (nameRadio.checked) {
       pageElement.dataset.searchMode = 'name';
       pageElement.dataset.query = searchInput.value;
     } else if (menuRadio.checked) {
@@ -256,26 +267,62 @@ const changePage = (newPage, searchMode = null, query = null) => {
 
   let url;
   if (searchMode === 'name') {
+    console.log(1);
     url = `/api/menu/search?page=${currentPage}&q=${query}`;
   } else if (searchMode === 'menu') {
+    console.log(2);
     url = `/api/menu/search?q=${query}&page=${currentPage}`;
+  } else if (searchMode === 'style') {
+    console.log(3);
+    url = `/api/restaurant_type/${query}&page=${currentPage}`;
+  } else if (searchMode === 'tag') {
+    console.log(4);
+    console.log(query);
+    url = `/api/tag/search?${query}page=${currentPage}`;
   }
+
   fetchData(url);
 };
 
-nameRadio.addEventListener('change', function () {
-  if (this.checked) {
-    searchInput.placeholder = '매장명 검색';
-  }
+nameRadio.addEventListener('change', () => {
+  searchInput.placeholder = '매장명 검색';
 });
 
-menuRadio.addEventListener('change', function () {
-  if (this.checked) {
-    searchInput.placeholder = '메뉴명 검색';
-  }
+menuRadio.addEventListener('change', () => {
+  searchInput.placeholder = '메뉴명 검색';
 });
 
-searchForm.addEventListener('submit', function (e) {
+tagRadio.addEventListener('change', () => {
+  tagContainer.classList.remove('invisible');
+  styleContainer.classList.add('invisible');
+
+  tags = [];
+
+  const tagElements = document.querySelectorAll('.tag');
+  tagElements.forEach(tag => {
+    tag.classList.remove('tagActive');
+  });
+
+  tagsMore.innerText = '더보기';
+  tagContainer.style.height = '30px';
+});
+
+styleRadio.addEventListener('change', () => {
+  styleContainer.classList.remove('invisible');
+  tagContainer.classList.add('invisible');
+
+  styles = [];
+
+  const tagElements = document.querySelectorAll('.tag');
+  tagElements.forEach(tag => {
+    tag.classList.remove('tagActive');
+  });
+
+  stylesMore.innerText = '더보기';
+  tagContainer.style.height = '30px';
+});
+
+searchNameMenu.addEventListener('submit', e => {
   e.preventDefault();
 
   const query = searchInput.value;
@@ -297,6 +344,37 @@ searchForm.addEventListener('submit', function (e) {
         : (totalPages = 1);
 
       drawPagination(1, query);
+
+      document.querySelector('.sorting').textContent = '인기순';
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+tagNstyleBtn.addEventListener('click', e => {
+  if (tagRadio.checked) {
+    tagQuery = '';
+    for (let i = 0; i < tags.length; i++) {
+      tagQuery += `tag${i + 1}=${tags[i]}&`;
+    }
+    apiUrl = `/api/tag/search?${tagQuery}page=1`;
+  } else if (styleRadio.checked) {
+    apiUrl = `/api/restaurant_type/${styles}`;
+    console.log(apiUrl);
+  }
+
+  axios
+    .get(apiUrl)
+    .then(response => {
+      updatePage(response.data);
+      console.log(response.data);
+
+      Math.ceil(response.data.count / 20)
+        ? (totalPages = Math.ceil(response.data.count / 20))
+        : (totalPages = 1);
+
+      drawPagination(1);
 
       document.querySelector('.sorting').textContent = '인기순';
     })
@@ -399,17 +477,23 @@ document.addEventListener('click', e => {
   if (tag) {
     if (tag.classList.contains('tagActive')) {
       tag.classList.remove('tagActive');
-      tags = tags.filter(item => (item !== tag.innerText[0]) === '#');
+      if (tag.innerText[0] === '#') {
+        tags = tags.filter(item => item !== tag.id);
+      } else {
+        styles = styles.filter(item => item !== tag.id);
+      }
     } else {
       tag.classList.add('tagActive');
       if (tag.innerText[0] === '#') {
-        tags.push(tag.innerText.substr(2));
+        tags.push(tag.id);
+      } else {
+        styles.push(tag.id);
       }
     }
   }
 });
 
-document.querySelector('.tagsMore').addEventListener('click', e => {
+tagsMore.addEventListener('click', e => {
   const tagContainer = document.querySelector('.tagContainer');
 
   if (e.target.innerText === '더보기') {
@@ -418,6 +502,18 @@ document.querySelector('.tagsMore').addEventListener('click', e => {
   } else {
     e.target.innerText = '더보기';
     tagContainer.style.height = '30px';
+  }
+});
+
+stylesMore.addEventListener('click', e => {
+  const styleContainer = document.querySelector('.styleContainer');
+
+  if (e.target.innerText === '더보기') {
+    e.target.innerText = '접기';
+    styleContainer.style.height = 'initial';
+  } else {
+    e.target.innerText = '더보기';
+    styleContainer.style.height = '30px';
   }
 });
 
@@ -435,17 +531,35 @@ searchType.addEventListener('click', e => {
   formContainer.classList.add('searchInvisible');
 });
 
-document.querySelector('.stylesMore').addEventListener('click', e => {
-  const styleContainer = document.querySelector('.styleContainer');
-
-  if (e.target.innerText === '더보기') {
-    e.target.innerText = '접기';
-    styleContainer.style.height = 'initial';
-  } else {
-    e.target.innerText = '더보기';
-    styleContainer.style.height = '30px';
-  }
-});
-
 fetchData();
 drawPagination(currentPage);
+
+// 드래그 이벤트
+let startY = 0;
+
+const hamburger = document.querySelector('.hamburgerIcon');
+
+hamburger.addEventListener('dragstart', function (event) {
+  startY = event.clientY;
+  console.log(startY);
+});
+
+hamburger.addEventListener('dragend', function (event) {
+  if (event.clientY === 0) return;
+
+  let diffY = event.clientY;
+
+  if (diffY < 300 && startY > 100) {
+    document.querySelector('.map').style.height = '0';
+    document.querySelector('.restaurantList').style.height = '93vh';
+  } else if (startY < 100) {
+    document.querySelector('.map').style.height = '43vh';
+    document.querySelector('.restaurantList').style.height = '50vh';
+  } else if (diffY > 500) {
+    document.querySelector('.map').style.height = '83vh';
+    document.querySelector('.restaurantList').style.height = '10vh';
+  } else {
+    document.querySelector('.map').style.height = '43vh';
+    document.querySelector('.restaurantList').style.height = '50vh';
+  }
+});

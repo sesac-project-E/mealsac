@@ -15,7 +15,6 @@ a {
 .restaurantList {
   height: calc(100vh - 7vh);
   overflow-y: auto;
-  transition: height 0.5s ease;
 }
 
 .search {
@@ -80,6 +79,25 @@ a {
   cursor: pointer;
 }
 
+.searchTagStyle input[type='radio'] {
+  display: none;
+}
+
+.searchTagStyle input[type='radio'] + label {
+  display: inline-block;
+  border: 2px solid #989898;
+  border-radius: 25px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.searchTagStyle input[type='radio']:checked + label {
+  color: #e0f0d1;
+  background-color: #0b9324;
+  border: 2px solid #0b9324;
+  border-radius: 25px;
+}
+
 .more {
   width: 100%;
   overflow: hidden;
@@ -114,6 +132,10 @@ a {
     text-align: end;
     margin-bottom: 5px;
   }
+}
+
+.invisible {
+  display: none;
 }
 
 .tagsMore,
@@ -185,6 +207,7 @@ a {
 
 .hamburgerIcon {
   display: none;
+  cursor: grab;
 }
 
 .allRestaurantContainer,
@@ -343,6 +366,7 @@ a {
 
   .map {
     height: calc(50vh - 7vh);
+    transition: height 1s ease;
   }
 
   .restaurantList {
@@ -355,6 +379,7 @@ a {
     display: flex;
     align-items: center;
     flex-direction: column;
+    transition: height 1s ease;
   }
 
   .hamburgerIcon {
