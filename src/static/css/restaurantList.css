@@ -156,6 +156,12 @@ a {
   display: flex;
 }
 
+.noResult {
+  margin: 15px 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
 .sortType {
   display: none;
   list-style: none;

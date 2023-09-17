@@ -68,16 +68,19 @@ const initMap = data => {
   });
 };
 
-const fetchData = async () => {
-  let url = '';
+const fetchData = async (url = '', query = null) => {
+  if (!url) {
+    if (sortTypeValue === '인기순') {
+      url = `/api/restaurant/like?page=${currentPage}`;
+    } else if (sortTypeValue === '평점순') {
+      url = `/api/restaurant/rating?page=${currentPage}`;
+    } else {
+      url = `/api/restaurant/all?page=1`;
+    }
+  }
 
-  if (sortTypeValue === '인기순') {
-    url = `/api/restaurant/like?page=${currentPage}`;
-  } else if (sortTypeValue === '평점순') {
-    url = `/api/restaurant/rating?page=${currentPage}`;
-  } else {
-    // 기본값 설정
-    url = `/api/restaurant/all?page=1`;
+  if (query) {
+    url += `&q=${query}`;
   }
 
   try {
@@ -85,7 +88,6 @@ const fetchData = async () => {
     totalPages = Math.ceil(response.data.count / 20);
     drawPagination(currentPage);
     updatePage(response.data);
-    // initMap(response.data.rows);
     return response.data.rows;
   } catch (error) {
     console.error('에러 발생 ', error);
@@ -96,10 +98,12 @@ const updatePage = data => {
   const restaurantContainer = document.querySelector('.restaurants');
   const totalRestaurants = document.querySelector('.totalRestaurants');
   restaurantContainer.innerHTML = '';
-  totalRestaurants.innerText = `${data.count}개의 매장`;
+  totalRestaurants.innerText = `${data.count || 0}개의 매장`;
 
   if (Array.isArray(data.rows) && data.rows.length > 0) {
-    data.rows.forEach(restaurant => {
+    data.rows.forEach(item => {
+      const restaurant = item.Restaurant ? item.Restaurant : item;
+
       const article = document.createElement('article');
       article.className = 'restaurantContainer';
       article.dataset.id = restaurant.restaurant_address;
@@ -123,9 +127,9 @@ const updatePage = data => {
       imgHeart.id = restaurant.restaurant_id;
       imgHeart.alt = '찜 아이콘';
       imgHeart.src =
-        restaurant.Users && restaurant.Users.length === 0
-          ? '/static/img/heart.png'
-          : '/static/img/heartFilled.png';
+        restaurant.Users && restaurant.Users.length !== 0
+          ? '/static/img/heartFilled.png'
+          : '/static/img/heart.png';
 
       divTop.appendChild(h3);
       divTop.appendChild(imgHeart);
@@ -180,26 +184,36 @@ const updatePage = data => {
       restaurantContainer.appendChild(article);
     });
   } else {
-    restaurantContainer.innerHTML = '<p>해당하는 식당이 없습니다.</p>';
+    restaurantContainer.innerHTML =
+      '<p class="noResult">해당하는 식당이 없습니다.</p>';
   }
 };
 
 const drawPagination = centerPage => {
   const container = document.querySelector('#pagination-container');
   const oldPageNumbers = document.querySelectorAll('.page-number');
-  let startPage = centerPage - 2;
-  let endPage = centerPage + 2;
 
   oldPageNumbers.forEach(el => el.remove());
 
-  if (startPage < 1) {
-    startPage = 1;
-    endPage = 5;
+  if (totalPages === 0) {
+    totalPages = 1;
   }
 
-  if (endPage > totalPages) {
+  let startPage;
+  let endPage;
+
+  if (totalPages >= 5) {
+    startPage = Math.max(centerPage - 2, 1);
+    endPage = Math.min(centerPage + 2, totalPages);
+
+    if (startPage === 1) {
+      endPage = 5;
+    } else if (endPage === totalPages) {
+      startPage = totalPages - 4;
+    }
+  } else {
+    startPage = 1;
     endPage = totalPages;
-    startPage = totalPages - 4;
   }
 
   for (let i = startPage; i <= endPage; i++) {
@@ -207,9 +221,27 @@ const drawPagination = centerPage => {
     pageElement.textContent = i;
     pageElement.href = '#up';
     pageElement.className = 'page-number';
-    pageElement.onclick = function () {
-      changePage(i);
+
+    if (nameRadio.checked) {
+      pageElement.dataset.searchMode = 'name';
+      pageElement.dataset.query = searchInput.value;
+    } else if (menuRadio.checked) {
+      pageElement.dataset.searchMode = 'menu';
+      pageElement.dataset.query = searchInput.value;
+    }
+
+    if (nameRadio.checked) {
+      pageElement.dataset.searchMode = 'name';
+      pageElement.dataset.query = searchInput.value;
+    } else if (menuRadio.checked) {
+      pageElement.dataset.searchMode = 'menu';
+      pageElement.dataset.query = searchInput.value;
+    }
+
+    pageElement.onclick = () => {
+      changePage(i, pageElement.dataset.searchMode, pageElement.dataset.query);
     };
+
     if (i === centerPage) {
       pageElement.classList.add('active');
     }
@@ -217,11 +249,18 @@ const drawPagination = centerPage => {
   }
 };
 
-const changePage = newPage => {
+const changePage = (newPage, searchMode = null, query = null) => {
   if (newPage < 1 || newPage > totalPages) return;
   currentPage = newPage;
   drawPagination(currentPage);
-  fetchData();
+
+  let url;
+  if (searchMode === 'name') {
+    url = `/api/menu/search?page=${currentPage}&q=${query}`;
+  } else if (searchMode === 'menu') {
+    url = `/api/menu/search?q=${query}&page=${currentPage}`;
+  }
+  fetchData(url);
 };
 
 nameRadio.addEventListener('change', function () {
@@ -241,18 +280,25 @@ searchForm.addEventListener('submit', function (e) {
 
   const query = searchInput.value;
   let apiUrl;
-  // currentPage=1
 
   if (nameRadio.checked) {
-    apiUrl = `/api/menu/search?q=${query}&page=1`;
+    apiUrl = `/api/menu/search?page=1&q=${query}`;
   } else if (menuRadio.checked) {
-    apiUrl = `/api/menu/search?menu=${query}&page=1`;
+    apiUrl = `/api/menu/search?q=${query}&page=1`;
   }
 
   axios
     .get(apiUrl)
     .then(response => {
       updatePage(response.data);
+
+      Math.ceil(response.data.count / 20)
+        ? (totalPages = Math.ceil(response.data.count / 20))
+        : (totalPages = 1);
+
+      drawPagination(1, query);
+
+      document.querySelector('.sorting').textContent = '인기순';
     })
     .catch(error => {
       console.log(error);
