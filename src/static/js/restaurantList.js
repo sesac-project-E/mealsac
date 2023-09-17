@@ -538,28 +538,38 @@ drawPagination(currentPage);
 let startY = 0;
 
 const hamburger = document.querySelector('.hamburgerIcon');
+const mapElement = document.querySelector('.map');
+const restaurantListElement = document.querySelector('.restaurantList');
 
-hamburger.addEventListener('dragstart', function (event) {
-  startY = event.clientY;
-  console.log(startY);
+const resetToDefault = () => {
+  mapElement.style.height = '43vh';
+  restaurantListElement.style.height = '50vh';
+};
+
+window.addEventListener('resize', function () {
+  if (window.innerWidth > 767) {
+    resetToDefault();
+  }
 });
 
-hamburger.addEventListener('dragend', function (event) {
-  if (event.clientY === 0) return;
+hamburger.addEventListener('dragstart', function (e) {
+  startY = e.clientY;
+});
 
-  let diffY = event.clientY;
+hamburger.addEventListener('dragend', function (e) {
+  let diffY = e.clientY;
 
   if (diffY < 300 && startY > 100) {
-    document.querySelector('.map').style.height = '0';
-    document.querySelector('.restaurantList').style.height = '93vh';
+    mapElement.style.height = '0';
+    restaurantListElement.style.height = '93vh';
   } else if (startY < 100) {
-    document.querySelector('.map').style.height = '43vh';
-    document.querySelector('.restaurantList').style.height = '50vh';
+    mapElement.style.height = '43vh';
+    restaurantListElement.style.height = '50vh';
   } else if (diffY > 500) {
-    document.querySelector('.map').style.height = '83vh';
-    document.querySelector('.restaurantList').style.height = '10vh';
+    mapElement.style.height = '83vh';
+    restaurantListElement.style.height = '10vh';
   } else {
-    document.querySelector('.map').style.height = '43vh';
-    document.querySelector('.restaurantList').style.height = '50vh';
+    mapElement.style.height = '43vh';
+    restaurantListElement.style.height = '50vh';
   }
 });
