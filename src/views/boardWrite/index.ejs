@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 게시판</title>
+    <link rel="stylesheet" href="/static/css/boardWrite.css" />
+    <!--  jQuery, bootstrap -->
+    <link
+      href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+      rel="stylesheet"
+    />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+    <!-- summernote css/js-->
+    <link
+      href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css"
+      rel="stylesheet"
+    />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+  </head>
+  <body>
+    <%- include('../common/header.ejs') %>
+    <div class="container" id="container">
+      <div class="topBox">
+        <h1>SAC BOARD</h1>
+        <p id="msg">새싹님들의 자유로운 밥 이야기를 들려주세요!</p>
+      </div>
+      <form method="post" class="postBox">
+        <div class="title">
+          <input id="inputTitle" placeholder="제목을 작성해주세요" />
+        </div>
+        <div class="content">
+          <div id="summernote" name="editorData"></div>
+        </div>
+        <div class="btns">
+          <button type="submit" id="postBtn">작성</button>
+          <button type="button" id="backBtn">취소</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+    $(function () {
+      $('#summernote').summernote({
+        height: 400,
+        maxHeight: 400,
+        placeholder: '내용을 입력해주세요.',
+        tabsize: 2,
+        focus: true,
+        toolbar: [
+          ['fontname', ['fontname']],
+          ['fontsize', ['fontsize']],
+          ['color', ['forecolor', 'color']],
+          ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+          ['insert', ['picture', 'link', 'video']],
+        ],
+      });
+    });
+  </script>
+</html>
