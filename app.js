@@ -57,6 +57,10 @@ app.get('/boardPost', (req, res) => {
   res.render('boardPost');
 });
 
+app.get('/boardModify', (req, res) => {
+  res.render('boardModify');
+});
+
 app.use('/', indexRouter);
 
 db.sequelize.sync({ force: false }).then(() => {

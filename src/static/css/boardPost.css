@@ -54,6 +54,20 @@ h1 {
   border-bottom: solid black 1px;
 }
 
+.btnBox {
+  margin-left: auto;
+  margin-top: 5px;
+}
+
+#modify,
+#delete {
+  border: solid #ffe0b6 1px;
+  border-radius: 30px;
+  background-color: transparent;
+  width: 50px;
+  margin-top: 5px;
+}
+
 .textReply {
   margin-top: 30px;
   display: flex;
