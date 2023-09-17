@@ -336,16 +336,12 @@ indexRouter.get('/profile', userController.getProfile);
 indexRouter.get('/restaurants', (req, res) => {
   res.render('restaurantList/index', {
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-    restaurants: restaurant,
   });
 });
-indexRouter.get(
-  '/restaurant/:restaurant_id',
-  restaurantController.getRestaurant,
-);
+
 indexRouter.get('/random', (req, res) => {
-  res.render('./random.ejs')
-})
+  res.render('./random.ejs');
+});
 
 indexRouter.get('/badpage', (req, res) => {
   res.render('404');
