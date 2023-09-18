@@ -73,21 +73,30 @@ span {
 #likeStore {
   border-radius: 21px;
   box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
-  margin: 20px 0;
   padding: 10px 10px;
 }
 
 #reviews {
-  width: 100%;
+  width: 95%;
   height: 100px;
   border-radius: 21px;
   box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
-  margin: 20px 0;
   padding: 10px 10px;
+  margin: 20px;
 }
 
 .container {
   margin-bottom: 4vh;
+}
+
+#myLikes,
+#myReviews,
+#myPosts {
+  margin: 20px;
+}
+
+#none {
+  text-align: center;
 }
 
 /* width: 360~768 */
@@ -126,16 +135,6 @@ span {
     border: none;
   }
 
-  #myLike,
-  #myReview,
-  #myPost {
-    width: 20vw;
-    height: 7vh;
-    border: none;
-    background-color: transparent;
-    font-size: 90%;
-  }
-
   .clicked {
     font-weight: bold;
     color: #fff;
@@ -147,7 +146,7 @@ span {
     color: #fff;
   }
 
-  #myLikes {
+  /* #myLikes {
     scale: 80%;
     position: relative;
     top: -50px;
@@ -156,16 +155,12 @@ span {
   #myReviews {
     margin-top: 20px;
     padding: 20px;
-  }
+  } */
 
   .list {
     height: 500px;
     display: flex;
     flex-direction: column;
-  }
-
-  #none {
-    margin-top: 100px;
   }
 }
 
@@ -202,17 +197,6 @@ span {
 
   .userRestaurant {
     height: 5vh;
-  }
-
-  #myLike,
-  #myReview,
-  #myPost {
-    width: 20vw;
-    height: 5vh;
-    border: none;
-    background-color: transparent;
-    font-size: 80%;
-    padding: 0;
   }
 
   .clicked {
