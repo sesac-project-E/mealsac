@@ -46,21 +46,21 @@ app.use(
   }),
 );
 
-app.get('/board', (req, res) => {
-  res.render('board');
-});
+// app.get('/board', (req, res) => {
+//   res.render('board');
+// });
 
-app.get('/boardWrite', (req, res) => {
-  res.render('boardWrite');
-});
+// app.get('/boardWrite', (req, res) => {
+//   res.render('boardWrite');
+// });
 
-app.get('/post', (req, res) => {
-  res.render('boardPost');
-});
+// app.get('/post', (req, res) => {
+//   res.render('boardPost');
+// });
 
-app.get('/boardModify', (req, res) => {
-  res.render('boardModify');
-});
+// app.get('/boardModify', (req, res) => {
+//   res.render('boardModify');
+// });
 
 app.use('/', indexRouter);
 

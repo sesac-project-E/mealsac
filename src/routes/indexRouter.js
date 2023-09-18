@@ -6,6 +6,7 @@ const indexController = require('../controllers/indexController.js');
 const userController = require('../controllers/userController.js');
 const restaurantController = require('../controllers/restaurantController.js');
 const likeRestaurantController = require('../controllers/likeRestaurantController.js');
+const reviewController = require('../controllers/reviewController.js');
 
 /**
  * @swagger
@@ -46,285 +47,17 @@ const likeRestaurantController = require('../controllers/likeRestaurantControlle
 indexRouter.get('/', indexController.indexPage);
 
 indexRouter.get('/register', (req, res) => {
-  res.render('register/index');
+  res.render('register');
 });
 
 indexRouter.get('/login', (req, res) => {
-  res.render('login/index');
+  res.render('login');
 });
-
-const restaurant = [
-  {
-    restaurant_id: '1',
-    restaurant_name: '장수식당',
-    restaurant_style: '한식',
-    restaurant_phone: '02-0000-0000',
-    restaurant_address: '서울특별시 영등포구 문래동2가 2-0번지 ',
-    restaurant_image: '/static/img/food/jpeg',
-    restaurant_kakao: '#',
-    restaurant_naver: '#',
-    restaurant_type_id: '1',
-    rating: '4.5',
-    reviews_count: '15',
-    Reviews: [
-      {
-        review_id: 5,
-        user_id: 8,
-        rating: '1.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:49.000Z',
-        ReviewImages: [
-          {
-            image_id: 5,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
-          },
-        ],
-      },
-      {
-        review_id: 6,
-        user_id: 8,
-        rating: '2.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:53.000Z',
-        ReviewImages: [
-          {
-            image_id: 6,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
-          },
-        ],
-      },
-    ],
-    restaurant_type: { restaurant_type: '한식' },
-  },
-  {
-    restaurant_id: '2',
-    restaurant_name: '하나식당',
-    restaurant_style: '한식',
-    restaurant_phone: '02-0000-0000',
-    restaurant_address: '서울특별시 영등포구 문래동3가 54-30번지 ',
-    restaurant_image: '/static/img/food/jpeg',
-    restaurant_kakao: '#',
-    restaurant_naver: '#',
-    restaurant_type_id: '1',
-    rating: '4.5',
-    reviews_count: '15',
-    Reviews: [
-      {
-        review_id: 5,
-        user_id: 8,
-        rating: '1.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:49.000Z',
-        ReviewImages: [
-          {
-            image_id: 5,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
-          },
-        ],
-      },
-      {
-        review_id: 6,
-        user_id: 8,
-        rating: '2.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:53.000Z',
-        ReviewImages: [
-          {
-            image_id: 6,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
-          },
-        ],
-      },
-    ],
-    restaurant_type: { restaurant_type: '한식' },
-  },
-  {
-    restaurant_id: '3',
-    restaurant_name: '대영각',
-    restaurant_style: '한식',
-    restaurant_phone: '02-0000-0000',
-    restaurant_address: '서울특별시 영등포구 문래동3가 54-5번지 ',
-    restaurant_image: '/static/img/food/jpeg',
-    restaurant_kakao: '#',
-    restaurant_naver: '#',
-    restaurant_type_id: '1',
-    rating: '4.5',
-    reviews_count: '15',
-    Reviews: [
-      {
-        review_id: 5,
-        user_id: 8,
-        rating: '1.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:49.000Z',
-        ReviewImages: [
-          {
-            image_id: 5,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
-          },
-        ],
-      },
-      {
-        review_id: 6,
-        user_id: 8,
-        rating: '2.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:53.000Z',
-        ReviewImages: [
-          {
-            image_id: 6,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
-          },
-        ],
-      },
-    ],
-    restaurant_type: { restaurant_type: '한식' },
-  },
-  {
-    restaurant_id: '4',
-    restaurant_name: '영일분식',
-    restaurant_style: '한식',
-    restaurant_phone: '02-0000-0000',
-    restaurant_address: '서울특별시 영등포구 문래동4가 8-26 ',
-    restaurant_image: '/static/img/food/jpeg',
-    restaurant_kakao: '#',
-    restaurant_naver: '#',
-    restaurant_type_id: '1',
-    rating: '4.5',
-    reviews_count: '15',
-    Reviews: [
-      {
-        review_id: 5,
-        user_id: 8,
-        rating: '1.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:49.000Z',
-        ReviewImages: [
-          {
-            image_id: 5,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
-          },
-        ],
-      },
-      {
-        review_id: 6,
-        user_id: 8,
-        rating: '2.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:53.000Z',
-        ReviewImages: [
-          {
-            image_id: 6,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
-          },
-        ],
-      },
-    ],
-    restaurant_type: { restaurant_type: '한식' },
-  },
-  {
-    restaurant_id: '5',
-    restaurant_name: '남성호프',
-    restaurant_style: '한식',
-    restaurant_phone: '02-0000-0000',
-    restaurant_address:
-      '서울특별시 영등포구 문래동2가 35번지 남성아파트 상가 1층 3호',
-    restaurant_image: '/static/img/food/jpeg',
-    restaurant_kakao: '#',
-    restaurant_naver: '#',
-    restaurant_type_id: '1',
-    rating: '4.5',
-    reviews_count: '15',
-    Reviews: [
-      {
-        review_id: 5,
-        user_id: 8,
-        rating: '1.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:49.000Z',
-        ReviewImages: [
-          {
-            image_id: 5,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
-          },
-        ],
-      },
-      {
-        review_id: 6,
-        user_id: 8,
-        rating: '2.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:53.000Z',
-        ReviewImages: [
-          {
-            image_id: 6,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
-          },
-        ],
-      },
-    ],
-    restaurant_type: { restaurant_type: '한식' },
-  },
-  {
-    restaurant_id: '6',
-    restaurant_name: '쟁반집',
-    restaurant_style: '한식',
-    restaurant_phone: '02-0000-0000',
-    restaurant_address: '서울특별시 영등포구 문래동4가 9-6 1층 ',
-    restaurant_image: '/static/img/food/jpeg',
-    restaurant_kakao: '#',
-    restaurant_naver: '#',
-    restaurant_type_id: '1',
-    rating: '4.5',
-    reviews_count: '15',
-    Reviews: [
-      {
-        review_id: 5,
-        user_id: 8,
-        rating: '1.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:49.000Z',
-        ReviewImages: [
-          {
-            image_id: 5,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718436.jpeg',
-          },
-        ],
-      },
-      {
-        review_id: 6,
-        user_id: 8,
-        rating: '2.0',
-        content: 'ss2',
-        updatedAt: '2023-09-13T12:22:53.000Z',
-        ReviewImages: [
-          {
-            image_id: 6,
-            review_id: 16,
-            image_url: '/static/img/reviewImage/food1694669718438.jpeg',
-          },
-        ],
-      },
-    ],
-    restaurant_type: { restaurant_type: '한식' },
-  },
-];
 
 indexRouter.get('/mypage', (req, res) => {
   const userInfo = req.session.userInfo;
 
-  res.render('mypage/index', {
+  res.render('mypage', {
     user_name: userInfo.user_name,
     restaurant: likeRestaurantController.getUserLikes,
   });
@@ -334,13 +67,46 @@ indexRouter.get('/mypage', (req, res) => {
 indexRouter.get('/profile', userController.getProfile);
 
 indexRouter.get('/restaurants', (req, res) => {
-  res.render('restaurantList/index', {
+  const userInfo = req.session.userInfo;
+
+  res.render('restaurantList', {
+    userInfo,
+    restaurant: restaurantController.getAllRestaurants,
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
   });
 });
 
+indexRouter.get('/restaurant/:restaurant_id', async (req, res) => {
+  const userInfo = req.session.userInfo;
+  const restaurantData = await restaurantController.getRestaurant(req, res);
+  const reviewData = await reviewController.getAllReviews(req, res);
+
+  res.render('restaurantDetail', {
+    userInfo,
+    restaurant: restaurantData,
+    review: reviewData,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+  });
+});
+
+indexRouter.get('/board', (req, res) => {
+  res.render('board');
+});
+
+indexRouter.get('/post/write', (req, res) => {
+  res.render('boardWrite');
+});
+
+indexRouter.get('/post/edit/:post_id', (req, res) => {
+  res.render('boardModify');
+});
+
+indexRouter.get('/post/:post_id', (req, res) => {
+  res.render('boardPost');
+});
+
 indexRouter.get('/random', (req, res) => {
-  res.render('./random.ejs');
+  res.render('random');
 });
 
 indexRouter.get('/badpage', (req, res) => {
