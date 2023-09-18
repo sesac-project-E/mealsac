@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const row = document.createElement('tr');
       row.innerHTML = `
               <th scope="row" class="idx">${startIndex + index + 1}</th>
-              <td class="title"><a href="#">${post.title}</a></td>
+              <td class="title"><a href="/post">${post.title}</a></td>
               <td class="writer">${post.board_name}</td>
               <td class="date">${post.updated_at}</td>
             `;
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const row = document.createElement('tr');
       row.innerHTML = `
                 <th scope="row" class="idx">${startIndex + index + 1}</th>
-                <td class="title"><a href="#">${post.title}</a></td>
+                <td class="title"><a href="/post">${post.title}</a></td>
                 <td class="writer">${post.board_name}</td>
                 <td class="date">${post.updated_at}</td>
               `;
