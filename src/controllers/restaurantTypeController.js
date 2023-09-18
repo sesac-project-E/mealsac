@@ -1,8 +1,9 @@
-const {Restaurant, RestaurantType, RestaurantImage} = require("../models")
+const {Restaurant, RestaurantType, RestaurantImage, User} = require("../models")
 
 exports.getTypeRestaurants = (req, res) => {
   try {
     const { type } = req.params
+    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
     const { page } = req.query
     const restaurant_type_eng = type
     RestaurantType.findOne({
@@ -20,11 +21,18 @@ exports.getTypeRestaurants = (req, res) => {
             ['likes_count', 'DESC'],
             ['reviews_count', 'DESC'],
           ],
-          include : [{
+          include : [
+            {
             model : RestaurantImage,
             attributes : ["restaurant_image_url"],
             limit : 1
-          }],
+            },
+            {
+              model: User,
+              where : {id : (id ? id : 0)},
+              required : false
+            },
+          ],
           offset : 20 * (page - 1),
           limit : 20
         })
