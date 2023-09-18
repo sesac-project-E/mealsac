@@ -4,14 +4,33 @@
     <%- include('./common/commonHead.ejs') %>
     <title>mainPage</title>
     <link rel="stylesheet" href="/static/css/index.css" />
+    <script src="../static/js/index.js"></script>
   </head>
   <body>
     <!-- Header -->
     <%- include('./common/header.ejs') %>
 
+    <!-- search -->
+    <div class="searchContainer">
+      <input type="text" id="searchInput" placeholder="매장명 검색" />
+      <button type="submit">검색</button>
+    </div>
+    <br />
+
     <!-- Menu Icons -->
     <div class="menuIcons">
-      <!-- ... (생략) -->
+      <div class="button" onclick="window.location.href='/random'">
+        <img src="../static/img/random.png" alt="랜덤 메뉴 아이콘" />
+        <p>랜덤 메뉴</p>
+      </div>
+      <div class="button" onclick="window.location.href='/board'">
+        <img src="../static/img/chat.png" alt="게시판 아이콘" />
+        <p>게시판</p>
+      </div>
+      <div class="button" onclick="window.location.href='/restaurants'">
+        <img src="../static/img/search.png" alt="키워드 검색 아이콘" />
+        <p>식당 찾기</p>
+      </div>
     </div>
     <br />
 
@@ -89,6 +108,7 @@
     <br />
 
     <!-- User's Favorites (if log in) -->
+
     <div class="restaurants">
       <h3>찜한 식당</h3>
       <button class="slide-btn prev">&lt;</button>

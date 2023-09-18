@@ -67,7 +67,9 @@ exports.indexPage = async (req, res) => {
       limit: 8,
     });
 
-    userLikeRestaurants = userWithLikes ? userWithLikes.Restaurants : [];
+    userLikeRestaurants = userLikeRestaurants
+      ? userLikeRestaurants.Restaurants
+      : [];
   }
   try {
     res.render('index', {

@@ -1,12 +1,33 @@
-app.get('/', async (req, res) => {
-  // 데이터베이스 또는 API에서 식당 정보 가져오기
-  const popularRestaurants = await getPopularRestaurants(); // 인기 식당 가져오는 함수
-  const recentRestaurants = await getRecentRestaurants(); // 신규 식당 가져오는 함수
-  const userPickRestaurants = await getUserPickRestaurants(); // 사용자가 찜한 식당 가져오는 함수
+document.addEventListener('DOMContentLoaded', function () {
+  const slideGroups = document.querySelectorAll('.restaurants');
 
-  res.render('index', {
-    popularRestaurants: popularRestaurants,
-    newRestaurants: newRestaurants,
-    userFavorites: userFavorites,
+  slideGroups.forEach(group => {
+    const cardContainer = group.querySelector('.cardMenu');
+    const cards = cardContainer.querySelectorAll('.card-container');
+    const cardWidth = cards[0].offsetWidth;
+    let slideIndex = 0;
+
+    group
+      .querySelector('.slide-btn.prev')
+      .addEventListener('click', function () {
+        if (slideIndex > 0) {
+          slideIndex -= 4;
+          updateSlidePosition(cardContainer, slideIndex, cardWidth);
+        }
+      });
+
+    group
+      .querySelector('.slide-btn.next')
+      .addEventListener('click', function () {
+        if (slideIndex < cards.length - 4) {
+          slideIndex += 4;
+          updateSlidePosition(cardContainer, slideIndex, cardWidth);
+        }
+      });
   });
+
+  function updateSlidePosition(cardContainer, slideIndex, cardWidth) {
+    const offset = -cardWidth * slideIndex;
+    cardContainer.style.transform = `translateX(${offset}px)`;
+  }
 });
