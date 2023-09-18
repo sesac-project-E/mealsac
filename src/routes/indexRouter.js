@@ -333,6 +333,11 @@ indexRouter.get('/mypage', (req, res) => {
 
 indexRouter.get('/profile', userController.getProfile);
 
+indexRouter.get(
+  '/restaurant/:restaurant_id',
+  restaurantController.getRestaurant,
+);
+
 indexRouter.get('/restaurants', (req, res) => {
   res.render('restaurantList/index', {
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
