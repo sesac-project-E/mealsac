@@ -33,7 +33,6 @@ exports.indexPage = async (req, res) => {
     userLikeRestaurants = await User.findAll({
       where : {id : id},
       attributes : ["id"],
-      order : [''],
       include : [{
         model : Restaurant,
         attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
