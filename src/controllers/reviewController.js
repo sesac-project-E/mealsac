@@ -44,6 +44,7 @@ exports.getAllReviews = async (req, res) => {
         is_useful: didIRecommend,
       };
     });
+
     res.json({ status: 'success', data: reviewsWithUsefulness });
   } catch (error) {
     console.error(error);
@@ -86,7 +87,7 @@ exports.postReview = async (req, res) => {
         image_url: filePath,
       });
     });
-    await Promise.all(imagePromises);
+    const images = await Promise.all(imagePromises);
     await Restaurant.update(
       {
         reviews_count: reviews_count + 1,
@@ -98,6 +99,13 @@ exports.postReview = async (req, res) => {
     res.status(201).json({
       status: 'success',
       message: '성공적으로 리뷰를 등록했습니다.',
+      review: {
+        review_id: newReview.review_id,
+        content: newReview.content,
+        rating: newReview.rating,
+        user_id: newReview.user_id,
+        images: images.map(image => image.image_url),
+      },
     });
   } catch (error) {
     console.error('에러 정보: ', error);
