@@ -71,18 +71,23 @@ exports.indexPage = async (req, res) => {
       limit: 8,
     });
 
-    userLikeRestaurants = userLikeRestaurants
-      ? userLikeRestaurants.Restaurants
-      : [];
+    userLikeRestaurants =
+      userLikeRestaurants && userLikeRestaurants[0]
+        ? userLikeRestaurants[0].Restaurants
+        : [];
   }
+
+  const renderData = {
+    recentRestaurants: recentRestaurants,
+    popularRestaurants: popularRestaurants,
+  };
+
+  if (userLikeRestaurants && userLikeRestaurants.length > 0) {
+    renderData.userLikeRestaurants = userLikeRestaurants;
+  }
+
   try {
-    res.render('index', {
-      recentRestaurants: recentRestaurants,
-      popularRestaurants: popularRestaurants,
-      userLikeRestaurants: userLikeRestaurants
-        ? userLikeRestaurants.Restaurants
-        : [],
-    });
+    res.render('index', renderData);
   } catch (error) {
     console.log(error);
     res.send(error);

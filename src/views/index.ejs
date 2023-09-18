@@ -42,7 +42,10 @@
         <div class="cardMenu">
           <% popularRestaurants.forEach(function(restaurant) { %>
           <div class="card-container">
-            <div class="card">
+            <div
+              class="card"
+              onclick="window.location.href='/restaurant/<%= restaurant.id %>'"
+            >
               <img
                 src="<%= restaurant.image_url %>"
                 alt="<%= restaurant.restaurant_name %>"
@@ -79,7 +82,10 @@
           <% recentRestaurants.forEach(function(restaurant) { %>
 
           <div class="card-container">
-            <div class="card">
+            <div
+              class="card"
+              onclick="window.location.href='/restaurant/<%= restaurant.id %>'"
+            >
               <img
                 src="<%= restaurant.image_url %>"
                 alt="<%= restaurant.restaurant_name %>"
@@ -109,6 +115,7 @@
 
     <!-- User's Favorites (if log in) -->
 
+    <% if (typeof userLikeRestaurants !== 'undefined') { %>
     <div class="restaurants">
       <h3>찜한 식당</h3>
       <button class="slide-btn prev">&lt;</button>
@@ -117,7 +124,10 @@
           <% userLikeRestaurants.forEach(function(restaurant) { %>
 
           <div class="card-container">
-            <div class="card">
+            <div
+              class="card"
+              onclick="window.location.href='/restaurant/<%= restaurant.id %>'"
+            >
               <img
                 src="<%= restaurant.image_url %>"
                 alt="<%= restaurant.restaurant_name %>"
@@ -144,6 +154,7 @@
       <button class="slide-btn next">&gt;</button>
     </div>
     <br />
+    <% } %>
 
     <!-- Footer -->
     <%- include('./common/footer.ejs') %>
