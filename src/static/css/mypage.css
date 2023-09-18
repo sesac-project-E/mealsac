@@ -146,21 +146,14 @@ span {
     color: #fff;
   }
 
-  /* #myLikes {
-    scale: 80%;
-    position: relative;
-    top: -50px;
-  }
-
-  #myReviews {
-    margin-top: 20px;
-    padding: 20px;
-  } */
-
   .list {
     height: 500px;
     display: flex;
     flex-direction: column;
+  }
+
+  .userRestaurant {
+    font-size: 90%;
   }
 }
 
@@ -238,5 +231,9 @@ span {
 
   #none {
     margin-top: 100px;
+  }
+
+  .userRestaurant {
+    font-size: 80%;
   }
 }
