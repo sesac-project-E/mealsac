@@ -1,14 +1,309 @@
 /* 전체 페이지의 기본 스타일 */
 * {
   font-family: Inter;
-}
-
-body {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-h1 {
-  margin : 0;
-  padding: 0;
-  color : red;
+
+.random-container {
+  position: relative;
+  margin: 5% 10%;
+  height  : 60vh;   
+  align-items: center; 
+  overflow: hidden;
+  background-color: aliceblue;
+}
+
+.random-content {
+  width: 100%;
+  height: inherit;
+  display: flex;
+  padding: 0 2.5%;
+}
+
+.ranbtn:hover {
+  background-color: rgb(21, 173, 21);
+  color :white;
+}
+
+.none {
+  visibility: hidden;
+}
+
+#random-intro {
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-right: 5%;
+  padding: 10% 0;
+  transition: .3s ease-out;
+}
+
+.title {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 3%;
+}
+
+.random-intro-description {
+  height: 40%;
+  font-size: 32px;
+  display: flex;
+  list-style: none;
+}
+
+.random-intro-column {
+  list-style: none;
+  height: 30%;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  width: 150%;
+}
+.random-intro-marker {
+  width: 20%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  margin-right: 5%;
+}
+#button-intro-group {
+  width: 50%;
+  border-top: 1px solid black;
+  margin-left : 2rem;
+  padding-top: 3%;
+}
+
+button {
+  z-index: 2;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 15px;
+  width: 20%;
+  height: 20%;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#randomStartBtn {
+  width: 20%;
+  transition: 0.75s ease;
+  height: 150%;
+}
+#randomStartBtn:hover{
+  width: 30%;
+  transition: 0.75s ease;
+}
+
+#randomStartBtn:hover::before {
+  content : "지금 바로 ";
+}
+#randomStartBtn:hover::after {
+  content : "->";
+}
+
+#random-question {
+  display: none;
+  flex-direction: column;
+  min-width: 70%;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-right: 5%;
+  padding-top: 5%;
+}
+
+form {
+  min-height: 80%;
+  width: 100%;
+  display: none;
+}
+.question {
+  width: 80%;
+  margin-bottom: 5%;
+}
+
+.options {
+  display: flex;
+  width: 80%;
+  min-height: 65%;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: gray;
+}
+
+.input-none {
+  width: inherit;
+  height: inherit;
+  vertical-align: middle;
+  appearance: none;
+  cursor: pointer;
+}
+
+.option > label > img {
+  width: 100%;
+  margin-bottom: 30%;
+  cursor: pointer;
+}
+
+.option > label {
+  font-size: 1.5em;
+  margin-bottom: 10%;
+  cursor: pointer;
+}
+
+.random-result {
+  display: flex;
+  min-width: 20%;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (max-width : 900px) {
+  .random-result {
+    display: none;
+  }
+}
+
+#randomNextBtn {
+  margin-right: 2.5%;
+}
+
+#randomPrevBtn:hover {
+  background-color: gray;
+}
+
+#randomResultBtn {
+  display: none;
+}
+.button-group {
+  width: 80%;
+  border-top: 1px solid black;
+  height: 20%;
+}
+.button-group-question {
+  display: flex;
+  padding-top: 3%;
+}
+.question-button {
+  width: 10%;
+  height: 48px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.random-border:nth-of-type(1) {
+  position: absolute;
+  top : 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  background: black;
+  animation: col 1000ms forwards;
+}
+
+.random-border:nth-of-type(2) {
+  position: absolute;
+  top : 0;
+  left : 0;
+  /* transform: translateX(-25%); */
+  height: 10px;
+  background: black;
+  animation: row 1000ms forwards;
+  animation-delay: 1000ms;
+}
+
+.random-border:nth-of-type(3) {
+  position: absolute;
+  bottom : 0;
+  left : 0;
+  /* transform: translateX(-25%); */
+  height: 10px;
+  background: black;
+  animation: row 1000ms forwards;
+  animation-delay: 1000ms;
+}
+
+.random-border:nth-of-type(4) {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 10px;
+  background: black;
+  animation: col 1000ms forwards;
+  animation-delay: 250ms;
+}
+
+@keyframes row {
+  from {
+    width: 0
+  }
+  
+  to {
+    width: 75%
+  }
+}
+
+@keyframes col {
+  from {
+    height: 0
+  }
+  
+  to {
+    height: 100%
+  }
+}
+@keyframes colDelete {
+  from {
+    height: 100%
+  }
+  
+  to {
+    height: 0
+  }
+}
+
+@keyframes moveRowRight {
+  from {
+    /* transform: translateX(-25%); */
+    left : 0;
+    width : 0%;
+  }
+  to {
+    /* transform: translateX(75%); */
+    left : 75%;
+    width:  25%;
+  }
 }
