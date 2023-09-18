@@ -8,6 +8,7 @@ const likeRestaurantRouter = require('./likeRestaurantRouter.js');
 const menuRouter = require('./menuRouter.js');
 const tagRouter = require('./tagRouter.js');
 const indexRouter = require('./indexRouter.js');
+const postRouter = require('./postRouter.js');
 
 router.use('/api/user', userRouter);
 router.use('/api/restaurant', restaurantRouter);
@@ -16,6 +17,8 @@ router.use('/api/review', reviewRouter);
 router.use('/api/like', likeRestaurantRouter);
 router.use('/api/menu', menuRouter);
 router.use('/api/tag', tagRouter);
+router.use('/api/post', postRouter);
+
 router.use('/', indexRouter);
 
 module.exports = router;
