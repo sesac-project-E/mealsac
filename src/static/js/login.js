@@ -13,7 +13,6 @@ const doLogin = async () => {
     });
     if (res.data.result === true) {
       console.log(res.data.result);
-      alert(`${res.data.data.user_id}님, 로그인 성공!`);
       document.location.href = '/';
     } else {
       console.log(res.data.result);
