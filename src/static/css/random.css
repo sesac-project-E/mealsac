@@ -23,8 +23,8 @@
 }
 
 .ranbtn:hover {
-  background-color: rgb(21, 173, 21);
-  color :white;
+  background-color: ;
+  
 }
 
 .none {
@@ -43,14 +43,14 @@
 }
 
 .title {
-  font-size: 60px;
+  font-size: 5rem;
   font-weight: bold;
   margin-bottom: 3%;
 }
 
 .random-intro-description {
   height: 40%;
-  font-size: 32px;
+  font-size: 2rem;
   display: flex;
   list-style: none;
 }
@@ -64,16 +64,17 @@
   width: 150%;
 }
 .random-intro-marker {
-  width: 20%;
+  width: 7.5rem;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 30px;
+  font-size: 1.5rem;
   margin-right: 5%;
 }
+
 #button-intro-group {
   width: 50%;
   border-top: 1px solid black;
@@ -85,28 +86,33 @@ button {
   z-index: 2;
   background-color: transparent;
   border: 1px solid gray;
-  border-radius: 15px;
-  width: 20%;
+  border-radius: 1.25rem;
+  width: 5rem;
   height: 20%;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: bold;
 }
 
 #randomStartBtn {
-  width: 20%;
-  transition: 0.75s ease;
+  width: 5rem;
+  transition: 0.5s ease;
   height: 150%;
 }
 #randomStartBtn:hover{
-  width: 30%;
-  transition: 0.75s ease;
+  width: 20rem;
+  transition: 0.5s ease;
+  color :white;
+  background-color: rgb(21, 173, 21);
 }
 
 #randomStartBtn:hover::before {
   content : "지금 바로 ";
+  transition-delay: 0.75s ease;
 }
 #randomStartBtn:hover::after {
   content : "->";
+  transition-delay: 0.75s ease;
+
 }
 
 #random-question {
@@ -188,9 +194,14 @@ form {
 #randomNextBtn {
   margin-right: 2.5%;
 }
+#randomNextBtn:hover {
+  color: white;
+  background-color: rgb(21, 173, 21);
+}
 
 #randomPrevBtn:hover {
   background-color: gray;
+  color: white;
 }
 
 #randomResultBtn {
@@ -305,5 +316,26 @@ form {
     /* transform: translateX(75%); */
     left : 75%;
     width:  25%;
+  }
+}
+
+
+/* font-size relative */
+@media (max-width: 1920px) {
+  * {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  * {
+    font-size: 6px;
+  }
+}
+
+
+@media (max-width: 280px) {
+  * {
+    font-size: 4px;
   }
 }
