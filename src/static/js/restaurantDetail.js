@@ -22,7 +22,7 @@ window.addEventListener('resize', checkWidth);
 document.querySelector('.heart').addEventListener('click', async e => {
   const currentSrc = e.target.getAttribute('src');
 
-  if (currentSrc === ' /static/img/heart.png ') {
+  if (currentSrc === '/static/img/heart.png') {
     try {
       const response = await axios({
         method: 'POST',
@@ -36,9 +36,9 @@ document.querySelector('.heart').addEventListener('click', async e => {
       }
     } catch (error) {
       console.error('에러 정보:', error);
-      alert('찜 목록에 추가하는 것을 실패했습니다.');
+      alert('로그인 후 찜이 가능합니다.');
     }
-  } else if (currentSrc === ' /static/img/heartFilled.png') {
+  } else if (currentSrc === '/static/img/heartFilled.png') {
     try {
       const response = await axios({
         method: 'DELETE',
@@ -222,11 +222,11 @@ function codeAddress() {
 let currentPage = 1;
 const reviewsPerPage = 5;
 
-function renderReviewsPage(page) {
+const renderReviewsPage = page => {
   const start = (page - 1) * reviewsPerPage;
   const end = page * reviewsPerPage;
 
-  const reviews = restaurant.Reviews;
+  const reviews = restaurant.Reviews.reverse();
 
   const reviewsToRender = reviews.slice(start, end);
   const reviewsElement = document.querySelector('.renderReviews');
@@ -245,6 +245,13 @@ function renderReviewsPage(page) {
       imagesHTML += `<img src="${image.image_url}" alt="후기 이미지">`;
     });
 
+    console.log(review.reviewUsefulness);
+
+    let imgSrc;
+    review.reviewUsefulness.length > 0
+      ? (imgSrc = '/static/img/likeFilled.png')
+      : (imgSrc = '/static/img/like.png');
+
     const reviewHTML = `
     <section class="reviewContainer" >
     <div>
@@ -255,10 +262,10 @@ function renderReviewsPage(page) {
        <p><img src="/static/img/star.png" alt="평점" class="starIcon"> ${
          review.rating
        }</p>
-      <p><img src="/static/img/like.png" alt="추천하기" class="thumbsIcon" id=${
-        review.review_id
-      }> <span>${
-      review.is_useful === undefined ? 0 : review.is_useful
+      <p><img src=${imgSrc} alt="추천하기" class="thumbsIcon" id=${
+      review.review_id
+    }> <span>${
+      review.reviewUsefulness.length > 0 ? review.reviewUsefulness.length : 0
     }<span></p>
        <p>${new Date(review.updatedAt)
          .toLocaleDateString()
@@ -272,7 +279,7 @@ function renderReviewsPage(page) {
 
     reviewsElement.innerHTML += reviewHTML;
   });
-}
+};
 
 renderReviewsPage(currentPage);
 
@@ -304,7 +311,9 @@ document
       const review_id = target.id;
       const currentSrc = target.getAttribute('src');
 
-      if (currentSrc === '/static/img/like.png') {
+      if (id === 0) {
+        alert('로그인 후 찜이 가능합니다.');
+      } else if (currentSrc === '/static/img/like.png') {
         try {
           const response = await axios({
             method: 'POST',
@@ -339,6 +348,8 @@ document
           if (response.status === 200) {
             alert('리뷰 추천을 취소하였습니다.');
             e.target.setAttribute('src', '/static/img/like.png');
+            e.target.nextElementSibling.innerText =
+              Number(e.target.nextElementSibling.innerText) - 1;
           }
         } catch (error) {
           console.error('에러 정보:', error);
