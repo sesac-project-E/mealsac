@@ -3,49 +3,68 @@ const pwMsg = document.querySelector('#pwMsg');
 const idMsg = document.querySelector('#idMsg');
 const nameMsg = document.querySelector('#nameMsg');
 
-const overlapId = async () => {
-  try {
-    const res = await axios({
-      url: '/api/user/overlapid',
-      method: 'POST',
-      data: {
-        user_id: form.inputId.value,
-      },
-    });
+const pwCheck = () => {
+  const inputPw = form.inputPw.value;
+  const confirmPw = form.confirmPw.value;
+  if (inputPw === confirmPw) {
+    pwMsg.innerHTML = '<p style="color:green">비밀번호가 일치합니다.</p>';
+  } else {
+    pwMsg.innerHTML = '<p style="color:red">비밀번호가 일치하지 않습니다.</p>';
+  }
+};
 
-    if (res.data.result) {
-      console.log('ok');
-      idMsg.innerHTML = '<p style="color:green">사용 가능한 아이디입니다.</p>';
-      form.checkedId.value = 'Y';
-    } else {
-      idMsg.textContent = '중복된 아이디입니다.';
-      form.inputId.value = '';
+const overlapId = async () => {
+  if (form.inputId.value === '') {
+    idMsg.innerHTML = '<p style="color:red">아이디를 입력해주세요</p>';
+  } else {
+    try {
+      const res = await axios({
+        url: '/api/user/overlapid',
+        method: 'POST',
+        data: {
+          user_id: form.inputId.value,
+        },
+      });
+
+      if (res.data.result) {
+        console.log('ok');
+        idMsg.innerHTML =
+          '<p style="color:green">사용 가능한 아이디입니다.</p>';
+        form.checkedId.value = 'Y';
+      } else {
+        idMsg.textContent = '중복된 아이디입니다.';
+        form.inputId.value = '';
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
 };
 
 const overlapName = async () => {
-  try {
-    const res = await axios({
-      url: '/api/user/overlapname',
-      method: 'POST',
-      data: {
-        user_name: form.inputName.value,
-      },
-    });
+  if (form.inputName.value === '') {
+    idMsg.innerHTML = '<p style="color:red">닉네임을 입력해주세요</p>';
+  } else {
+    try {
+      const res = await axios({
+        url: '/api/user/overlapname',
+        method: 'POST',
+        data: {
+          user_name: form.inputName.value,
+        },
+      });
 
-    if (res.data.result) {
-      nameMsg.innerHTML =
-        '<p style="color:green">사용 가능한 닉네임입니다.</p>';
-      form.checkedName.value = 'Y';
-    } else {
-      nameMsg.textContent = '중복된 닉네임입니다.';
-      form.inputName.value = '';
+      if (res.data.result) {
+        nameMsg.innerHTML =
+          '<p style="color:green">사용 가능한 닉네임입니다.</p>';
+        form.checkedName.value = 'Y';
+      } else {
+        nameMsg.textContent = '중복된 닉네임입니다.';
+        form.inputName.value = '';
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
 };
 
