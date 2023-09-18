@@ -24,7 +24,11 @@ exports.indexPage = async (req, res) => {
     limit: 8,
   });
   const popularRestaurants = await Restaurant.findAll({
-    order: [['likes_count', 'DESC']],
+    order: [
+      ['likes_count', 'DESC'],
+      ['rating', 'DESC'],
+      ['reviews_count', 'DESC'],
+    ],
     attributes: [
       'restaurant_id',
       'restaurant_name',

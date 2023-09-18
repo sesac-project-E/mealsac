@@ -22,11 +22,6 @@
   padding: 0 2.5%;
 }
 
-.ranbtn:hover {
-  background-color: ;
-  
-}
-
 .none {
   visibility: hidden;
 }
@@ -109,6 +104,7 @@ button {
   content : "지금 바로 ";
   transition-delay: 0.75s ease;
 }
+
 #randomStartBtn:hover::after {
   content : "->";
   transition-delay: 0.75s ease;
@@ -191,18 +187,30 @@ form {
   }
 }
 
-#randomNextBtn {
+.next-button {
   margin-right: 2.5%;
 }
-#randomNextBtn:hover {
+.bg-green-hover:hover {
   color: white;
   background-color: rgb(21, 173, 21);
 }
+.disabled {
+  pointer-events: none;
+}
 
-#randomPrevBtn:hover {
+.bg-blue-hover:hover {
+  color: white;
+  background-color: blue;
+}
+.prev-button {
+  cursor: default;
+}
+
+.bg-gray-hover:hover {
   background-color: gray;
   color: white;
 }
+
 
 #randomResultBtn {
   display: none;

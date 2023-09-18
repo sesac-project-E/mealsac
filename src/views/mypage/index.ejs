@@ -4,6 +4,7 @@
     <%- include('../common/commonHead.ejs') %>
     <link rel="stylesheet" href="../../static/css/mypage.css" />
     <title>MealSac | 마이페이지</title>
+    <script defer src="../../static/js/mypage.js"></script>
   </head>
   <body>
     <%- include('../common/header') %>
@@ -22,26 +23,11 @@
     </div>
     <hr />
     <div class="userRestaurant">
-      <button
-        type="button"
-        name="myLike"
-        id="myLike"
-        class="clicked"
-        onclick="likeList()"
-      >
+      <button type="button" name="myLike" id="myLike" class="clicked">
         찜목록
       </button>
-      <button
-        type="button"
-        name="myReview"
-        id="myReview"
-        onclick="reviewList()"
-      >
-        리뷰목록
-      </button>
-      <button type="button" name="myPost" id="myPost" onclick="postList()">
-        글목록
-      </button>
+      <button type="button" name="myReview" id="myReview">리뷰목록</button>
+      <button type="button" name="myPost" id="myPost">글목록</button>
     </div>
     <hr />
     <div class="list">
@@ -68,5 +54,4 @@
       </div>
     </div>
   </body>
-  <script src="../../static/js/mypage.js"></script>
 </html>

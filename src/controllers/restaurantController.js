@@ -26,9 +26,9 @@ exports.getAllRestaurants = async (req, res) => {
       offset : 20 * (page - 1),
       include : [
         {
-        model : User,
-        where : {id : (id ? id : 0)},
-        required : false,
+          model : User,
+          where : {id : (id ? id : 0)},
+          required : false,
         },
         {
           model: RestaurantImage,
@@ -135,9 +135,9 @@ exports.getSearchRestaurantByName = async (req, res) => {
       ],
       include : [
         {
-        model : User,
-        where : {id : (id ? id : 0)},
-        required : false,
+          model : User,
+          where : {id : (id ? id : 0)},
+          required : false,
         },
         {
           model : RestaurantImage,
@@ -157,16 +157,19 @@ exports.getSearchRestaurantByName = async (req, res) => {
 }
 
 exports.getRestaurant = (req, res) => {
+  const {id} = req.session && req.session.userInfo ? req.session.userInfo : 0
   const { restaurant_id } = req.params;
   Restaurant.findOne({
     include: [
       {
         model: User,
-        attributes: ['user_name'],
+        where : {id : `${id}`},
+        required : false,
       },
       {
         model: Tag,
-        attributes: ['tag_id', 'tag_name']
+        attributes: ['tag_id', 'tag_name'],
+        required : false,
       },
       {
         model: Review,
@@ -175,14 +178,15 @@ exports.getRestaurant = (req, res) => {
         include: [
           {
             model: ReviewImage,
-            // as : "image_id",
             limit: 1,
           },
         ],
+        required : false,
       },
       {
         model: Menu,
         attributes: ['menu_name', 'menu_price'],
+        required : false,
       },
       {
         model: RestaurantType,
@@ -192,11 +196,12 @@ exports.getRestaurant = (req, res) => {
       {
         model: RestaurantImage,
         attributes : ["restaurant_image_url"],
+        required : false,
       }
     ],
     where: { restaurant_id: restaurant_id },
-  }).then(restaurant => {
-    res.render('restaurantDetail/index', {
+  }).then((restaurant) => {
+    res.render('restaurantDetail/index', {  
       restaurant,
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     });
