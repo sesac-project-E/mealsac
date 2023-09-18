@@ -27,6 +27,7 @@ input {
   height: 50px;
   align-items: center;
   border-bottom: solid black;
+  margin-top: 10px;
 }
 
 .content {
@@ -54,4 +55,11 @@ form {
   margin: 5px;
   border-radius: 30px;
   border: solid 1px #ffe0b6;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
