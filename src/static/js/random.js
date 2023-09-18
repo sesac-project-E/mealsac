@@ -78,7 +78,58 @@ randomInit.animate(
   1000,
 );
 
-function randomNext (){
+
+function randomNext () {
+  nextInit()
+  addInputs()
+
+}
+
+function randomPrev () {
+  prevInit()
+  addInputs()
+}
+
+function randomStart() {
+  randomBorders[3].style.display = 'block'
+  randomBorders[0].style.animation = 'colDelete 1000ms forwards'
+  randomBorders[1].style.animation = 'moveRowRight 1000ms forwards' 
+  randomBorders[2].style.animation = 'moveRowRight 1000ms forwards' 
+  randomInit.style.setProperty('--beforeDisplay', 'none')
+  randomInit.style.setProperty('--afterDisplay', 'block')
+  startRandomBtn.style.display = 'none'
+  randomIntro.setAttribute('class', 'none')
+  randomIntro.style.display = 'none'
+  randomQuestion.style.display = 'block'
+  form.style.display = 'block'
+}
+
+function randomResult() {
+  randomInit.style.setProperty('--beforeDisplay', 'block')
+  randomInit.style.setProperty('--afterDisplay', 'none')
+  startRandomBtn.style.display = 'block'
+  randomResultBtn.style.display = 'none'
+}
+
+function addInputs () {
+  const inputs = document.querySelectorAll("input")
+  inputs.forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+      console.log(e.target.value)
+      inputs.forEach((elem) => {
+        const pa = elem.parentElement.parentElement
+        if (pa.style.backgroundColor === 'gray') {
+          pa.style.backgroundColor = ""
+        }
+      })
+      const el = e.target
+      const p = el.parentElement.parentElement
+      p.style.backgroundColor = 'gray';
+    })
+  });
+}
+
+function nextInit() {
   const options = document.querySelector(".options")
   currQuestion = (currQuestion + 1) % 3
   question.innerHTML = questionForm[currQuestion].question
@@ -108,55 +159,45 @@ function randomNext (){
     label2.setAttribute("for", questionForm[currQuestion].options[i].eng)
     label2.innerText = `${questionForm[currQuestion].options[i].label}`
     option.appendChild(label2)
-
     options.appendChild(option)
   }
   
-  
 }
 
-function randomPrev () {
+
+
+function prevInit() {
   currQuestion = ((currQuestion - 1) < 0 ? 2 : (currQuestion - 1)) % 3
   question.innerHTML = questionForm[currQuestion].question
-  console.log(options.childNodes)
-  for (let i = 0; i < questionForm[currQuestion]; i += 2) {
-    console.log(i, i + 1)
+  const options = document.querySelector(".options")
+  let name = questionForm[currQuestion].name
+  const allOptions = document.querySelectorAll(".option")
+  allOptions.forEach((el) => {
+    el.remove()
+  })
+  for (let i = 0; i < questionForm[currQuestion].options.length; i++) {
+    const option = document.createElement('div')
+    option.classList.add('option')
+    const label1 = document.createElement('label')
+    label1.setAttribute("for", questionForm[currQuestion].options[i].eng)
+    const input = document.createElement('input')
+    input.setAttribute("type", "radio")
+    input.setAttribute("name", name)
+    input.setAttribute("name", name)
+    input.setAttribute("value", questionForm[currQuestion].options[i].eng)
+    input.setAttribute("id", questionForm[currQuestion].options[i].eng)
+    input.classList.add('input-none')
+    label1.appendChild(input)
+    const img = document.createElement('img')
+    img.setAttribute("src", "../../static/img/random/50000.jpeg")
+    label1.appendChild(img)
+    option.appendChild(label1)
+    const label2 = document.createElement('label')
+    label2.setAttribute("for", questionForm[currQuestion].options[i].eng)
+    label2.innerText = `${questionForm[currQuestion].options[i].label}`
+    option.appendChild(label2)
+    options.appendChild(option)
   }
 }
 
-function randomStart() {
-  randomBorders[3].style.display = 'block'
-  randomBorders[0].style.animation = 'colDelete 1000ms forwards'
-  randomBorders[1].style.animation = 'moveRowRight 1000ms forwards' 
-  randomBorders[2].style.animation = 'moveRowRight 1000ms forwards' 
-  randomInit.style.setProperty('--beforeDisplay', 'none')
-  randomInit.style.setProperty('--afterDisplay', 'block')
-  startRandomBtn.style.display = 'none'
-  randomIntro.setAttribute('class', 'none')
-  randomIntro.style.display = 'none'
-  randomQuestion.style.display = 'block'
-  form.style.display = 'block'
-}
-
-function randomResult() {
-  randomInit.style.setProperty('--beforeDisplay', 'block')
-  randomInit.style.setProperty('--afterDisplay', 'none')
-  startRandomBtn.style.display = 'block'
-  randomResultBtn.style.display = 'none'
-}
-inputs.forEach((elem) => {
-  elem.addEventListener('click', (e) => {
-    console.log(e.target.value)
-    inputs.forEach((elem) => {
-      const pa = elem.parentElement.parentElement
-      if (pa.style.backgroundColor === 'gray') {
-        pa.style.backgroundColor = ""
-      }
-    })
-    const el = e.target
-    const p = el.parentElement.parentElement
-    p.style.backgroundColor = 'gray';
-    
-  })
-})
-
+addInputs()
