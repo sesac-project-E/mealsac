@@ -78,10 +78,10 @@ span {
 
 #reviews {
   width: 95%;
-  height: 100px;
+  height: 200px;
   border-radius: 21px;
   box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px;
+  padding: 10px 20px;
   margin: 20px;
 }
 
@@ -97,6 +97,15 @@ span {
 
 #none {
   text-align: center;
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.reviewInfo {
+  display: flex;
 }
 
 /* width: 360~768 */
@@ -140,7 +149,7 @@ span {
     color: #fff;
   }
 
-  span,
+  .msg,
   h1,
   #userName {
     color: #fff;
@@ -197,7 +206,7 @@ span {
     color: #fff;
   }
 
-  span,
+  .msg,
   h1,
   #userName {
     color: #fff;

@@ -10,8 +10,8 @@
     <%- include('../common/header') %>
     <div class="container">
       <h1>MY PAGE</h1>
-      <span id="userName"><%= user_name %></span>
-      <span>님, 반갑습니다!</span>
+      <span class="msg" id="userName"><%= user_name %></span>
+      <span class="msg">님, 반갑습니다!</span>
       <br /><br /><br />
 
       <button type="button" id="profile" onclick="location.href='profile'">
@@ -23,11 +23,26 @@
     </div>
     <hr />
     <div class="userRestaurant">
-      <button type="button" name="myLike" id="myLike" class="clicked">
+      <button
+        type="button"
+        name="myLike"
+        id="myLike"
+        class="clicked"
+        onclick="likeList()"
+      >
         찜목록
       </button>
-      <button type="button" name="myReview" id="myReview">리뷰목록</button>
-      <button type="button" name="myPost" id="myPost">글목록</button>
+      <button
+        type="button"
+        name="myReview"
+        id="myReview"
+        onclick="reviewList()"
+      >
+        리뷰목록
+      </button>
+      <button type="button" name="myPost" id="myPost" onclick="postList()">
+        글목록
+      </button>
     </div>
     <hr />
     <div class="list">
@@ -43,9 +58,33 @@
         <% } %>
       </div>
       <div id="myReviews" style="display: none">
-        <div id="reviews">review1</div>
-        <div id="reviews">review2</div>
-        <div id="reviews">review3</div>
+        <div id="reviews">
+          <div class="reviewInfo">
+            <div>
+              <span>restaurantName</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="5vh"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+                  fill="#4DDA67"
+                />
+              </svg>
+            </div>
+            <div>
+              <img src="/static/img/star.png" alt="평점" class="starIcon" />
+              <span>4.5</span>
+            </div>
+          </div>
+          <p>우아아 마시땅</p>
+          <div class="reviewImg" style="overflow: hidden; position: relative">
+            <img src="/static/img/like.png" />
+          </div>
+        </div>
       </div>
       <div id="myPosts" style="display: none">
         <div class="post">post</div>
