@@ -9,7 +9,7 @@
 .random-container {
   position: relative;
   margin: 5% 10%;
-  height  : 60vh;   
+  height  : 70vh;   
   align-items: center; 
   overflow: hidden;
   background-color: aliceblue;
@@ -35,6 +35,9 @@
   margin-right: 5%;
   padding: 10% 0;
   transition: .3s ease-out;
+  opacity: 0;
+  animation: random-init-animation 1s ease-out forwards;
+  animation-delay: 1s;
 }
 
 .title {
@@ -58,8 +61,9 @@
   align-items: center;
   width: 150%;
 }
+
 .random-intro-marker {
-  width: 7.5rem;
+  width: 6rem;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid black;
@@ -72,43 +76,33 @@
 
 #button-intro-group {
   width: 50%;
+  margin-top: 10%;
   border-top: 1px solid black;
   margin-left : 2rem;
   padding-top: 3%;
 }
 
-button {
+.button {
   z-index: 2;
   background-color: transparent;
   border: 1px solid gray;
   border-radius: 1.25rem;
-  width: 5rem;
-  height: 20%;
+  min-height: 3.5rem;
   font-size: 2rem;
   font-weight: bold;
+  min-width: 12.5rem;
 }
 
 #randomStartBtn {
   width: 5rem;
   transition: 0.5s ease;
-  height: 150%;
 }
+
 #randomStartBtn:hover{
-  width: 20rem;
-  transition: 0.5s ease;
+  width: 17.5rem;
+  transition: 0.75s ease;
   color :white;
   background-color: rgb(21, 173, 21);
-}
-
-#randomStartBtn:hover::before {
-  content : "지금 바로 ";
-  transition-delay: 0.75s ease;
-}
-
-#randomStartBtn:hover::after {
-  content : "->";
-  transition-delay: 0.75s ease;
-
 }
 
 #random-question {
@@ -122,8 +116,8 @@ button {
 }
 
 form {
-  min-height: 80%;
   width: 100%;
+  min-height: 100%;
   display: none;
 }
 .question {
@@ -181,7 +175,7 @@ form {
   align-items: center;
   justify-content: center;
 }
-@media screen and (max-width : 900px) {
+@media screen and (max-width : 1023px) {
   .random-result {
     display: none;
   }
@@ -190,6 +184,7 @@ form {
 .next-button {
   margin-right: 2.5%;
 }
+
 .bg-green-hover:hover {
   color: white;
   background-color: rgb(21, 173, 21);
@@ -285,6 +280,23 @@ form {
   animation-delay: 250ms;
 }
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  
+}
+@keyframes random-init-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 @keyframes row {
   from {
     width: 0
@@ -327,6 +339,17 @@ form {
   }
 }
 
+
+@keyframes fillFullContainer {
+  from {
+    width  : 25%;
+    left : 75%;
+  }
+  to {
+    width : 100%;
+    right : 0;
+  }
+}
 
 /* font-size relative */
 @media (max-width: 1920px) {
