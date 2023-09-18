@@ -10,6 +10,7 @@ const randomQuestion = document.querySelector("#random-question")
 const randomNextBtn = document.querySelector("#randomNextBtn")
 const randomPrevBtn = document.querySelector("#randomPrevBtn")
 const options = document.querySelector(".options")
+randomPrevBtn.style.display = 'none'
 
 let currQuestion = 0
 const question = document.querySelector(".question")
@@ -22,17 +23,20 @@ const questionForm = [
       {
         "value" : 0,
         "label" : "돈이 많다.",
-        "eng" : "rich"
+        "eng" : "rich",
+        "src" : "../../static/img/random/rich.png"
       },
       {
         "value" : 1,
         "label" : "돈이 중간.",
-        "eng" : "middle"
+        "eng" : "middle",
+        "src" : "../../static/img/random/middle.png"
       },
       {
         "value" : 2,
         "label" : "돈이 적다.",
-        "eng" : "poor"
+        "eng" : "poor",
+        "src" : "../../static/img/random/poor.png"
       }
     ] 
   },
@@ -43,12 +47,14 @@ const questionForm = [
       {
         "value" : 0,
         "label" : "혼자",
-        "eng" : "solo"
+        "eng" : "solo",
+        "src" : "../../static/img/random/solo.png"
       },
       {
         "value" : 1,
         "label" : "많이",
-        "eng" : "many"
+        "eng" : "many",
+        "src" : "../../static/img/random/many.png"
       }
     ] 
   },
@@ -59,12 +65,15 @@ const questionForm = [
       {
         "value" : 0,
         "label" : "친근한 맛",
-        "eng" : "familiar"
+        "eng" : "familiar",
+        "src" : "../../static/img/random/familiar.png"
       },
       {
         "value" : 1,
         "label" : "새로운 도전",
-        "eng" : "new"
+        "eng" : "new",
+        "src" : "../../static/img/random/new.png"
+
       }
     ] 
   }
@@ -80,12 +89,37 @@ randomInit.animate(
 
 
 function randomNext () {
+  randomPrevBtn.style.display = 'block'
+  if (currQuestion == 2) {
+    console.log("결과 도출")
+    randomPrevBtn.setAttribute('')
+    return ;
+  }
+  if (currQuestion === 1) {
+    randomNextBtn.classList.remove('bg-green-hover')
+    randomNextBtn.classList.add('bg-blue-hover')
+    randomNextBtn.innerText = '결과 보기'
+  } else {
+    randomNextBtn.classList.remove('bg-blue-hover')
+    randomNextBtn.classList.add('bg-green-hover')
+    randomNextBtn.innerText = '다음'
+  }
   nextInit()
   addInputs()
-
 }
 
 function randomPrev () {
+  if (currQuestion === 0) {
+    randomPrevBtn.classList.add('disabled')
+    randomPrevBtn.classList.remove('bg-gray-hover')
+    return ;
+  } else {
+    randomPrevBtn.classList.remove('disabled')
+    randomPrevBtn.classList.add('bg-gray-hover')
+  }
+  randomNextBtn.classList.remove('bg-blue-hover')
+  randomNextBtn.classList.add('bg-green-hover')
+  randomNextBtn.innerText = '다음'
   prevInit()
   addInputs()
 }
@@ -152,7 +186,7 @@ function nextInit() {
     input.classList.add('input-none')
     label1.appendChild(input)
     const img = document.createElement('img')
-    img.setAttribute("src", "../../static/img/random/50000.jpeg")
+    img.setAttribute("src", questionForm[currQuestion].options[i].src)
     label1.appendChild(img)
     option.appendChild(label1)
     const label2 = document.createElement('label')
@@ -189,7 +223,7 @@ function prevInit() {
     input.classList.add('input-none')
     label1.appendChild(input)
     const img = document.createElement('img')
-    img.setAttribute("src", "../../static/img/random/50000.jpeg")
+    img.setAttribute("src", questionForm[currQuestion].options[i].src)
     label1.appendChild(img)
     option.appendChild(label1)
     const label2 = document.createElement('label')
