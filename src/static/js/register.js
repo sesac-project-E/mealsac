@@ -43,7 +43,7 @@ const overlapId = async () => {
 
 const overlapName = async () => {
   if (form.inputName.value === '') {
-    idMsg.innerHTML = '<p style="color:red">닉네임을 입력해주세요</p>';
+    nameMsg.innerHTML = '<p style="color:red">닉네임을 입력해주세요</p>';
   } else {
     try {
       const res = await axios({
@@ -99,8 +99,7 @@ const doRegister = async () => {
         });
         console.log(res.status);
         if (res.status === 200) {
-          alert('회원가입 성공!');
-          document.location.href = '/';
+          document.location.href = '/login';
         }
       } catch (error) {
         console.log(error);
