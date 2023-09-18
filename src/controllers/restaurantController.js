@@ -201,11 +201,10 @@ exports.getRestaurant = (req, res) => {
     ],
     where: { restaurant_id: restaurant_id },
   }).then((restaurant) => {
-    // res.render('restaurantDetail/index', {
-    res.send(restaurant)    
-    //   restaurant,
-    //   googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-    // });
+    res.render('restaurantDetail/index', {  
+      restaurant,
+      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+    });
   });
 };
 
