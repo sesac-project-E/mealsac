@@ -6,6 +6,7 @@ const indexController = require('../controllers/indexController.js');
 const userController = require('../controllers/userController.js');
 const restaurantController = require('../controllers/restaurantController.js');
 const likeRestaurantController = require('../controllers/likeRestaurantController.js');
+const reviewController = require('../controllers/reviewController.js');
 
 /**
  * @swagger
@@ -46,17 +47,17 @@ const likeRestaurantController = require('../controllers/likeRestaurantControlle
 indexRouter.get('/', indexController.indexPage);
 
 indexRouter.get('/register', (req, res) => {
-  res.render('register/index');
+  res.render('register');
 });
 
 indexRouter.get('/login', (req, res) => {
-  res.render('login/index');
+  res.render('login');
 });
 
 indexRouter.get('/mypage', (req, res) => {
   const userInfo = req.session.userInfo;
 
-  res.render('mypage/index', {
+  res.render('mypage', {
     user_name: userInfo.user_name,
     restaurant: likeRestaurantController.getUserLikes,
   });
@@ -66,13 +67,46 @@ indexRouter.get('/mypage', (req, res) => {
 indexRouter.get('/profile', userController.getProfile);
 
 indexRouter.get('/restaurants', (req, res) => {
-  res.render('restaurantList/index', {
+  const userInfo = req.session.userInfo;
+
+  res.render('restaurantList', {
+    userInfo,
+    restaurant: restaurantController.getAllRestaurants,
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
   });
 });
 
+indexRouter.get('/restaurant/:restaurant_id', async (req, res) => {
+  const userInfo = req.session.userInfo;
+  const restaurantData = await restaurantController.getRestaurant(req, res);
+  const reviewData = await reviewController.getAllReviews(req, res);
+
+  res.render('restaurantDetail', {
+    userInfo,
+    restaurant: restaurantData,
+    review: reviewData,
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+  });
+});
+
+indexRouter.get('/board', (req, res) => {
+  res.render('board');
+});
+
+indexRouter.get('/post/write', (req, res) => {
+  res.render('boardWrite');
+});
+
+indexRouter.get('/post/edit/:post_id', (req, res) => {
+  res.render('boardModify');
+});
+
+indexRouter.get('/post/:post_id', (req, res) => {
+  res.render('boardPost');
+});
+
 indexRouter.get('/random', (req, res) => {
-  res.render('./random.ejs');
+  res.render('random');
 });
 
 indexRouter.get('/badpage', (req, res) => {
