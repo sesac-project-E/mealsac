@@ -12,7 +12,6 @@
   </head>
   <body>
     <%- include('../common/header.ejs') %>
-
     <main class="container col-lg-8 col-md-9 col-sm-10">
       <div class="restaurantComponent">
         <article
@@ -27,12 +26,10 @@
           <div class="restaurantInfo">
             <div>
               <h3 class="restaurantName"><%= restaurant.restaurant_name %></h3>
-              <img
-                src="<% if (restaurant.Users) { %> /static/img/heart.png <% } else { %> /static/img/heartFilled.png <% } %>"
-                alt="찜 아이콘"
-                class="heart"
-                id="<%= restaurant.restaurant_id %>"
-              />
+              <% const isFilled = restaurant.Users.some(user => user.id === id);
+              const imgSrc = isFilled ? "/static/img/heartFilled.png" :
+              "/static/img/heart.png"; %>
+              <img src="<%= imgSrc %>" alt="찜 아이콘" class="heart" />
             </div>
             <p class="address">
               <%= (restaurant.restaurant_address &&
