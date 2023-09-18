@@ -45,7 +45,7 @@ exports.indexPage = async (req, res) => {
     res.render("index", {
       recentRestaurants : recentRestaurants, 
       popularRestaurants : popularRestaurants, 
-      userLikeRestaurants : userLikeRestaurants ? userLikeRestaurants.Restaurants : ""}
+      userLikeRestaurants : userLikeRestaurants ? userLikeRestaurants.Restaurants : []}
     )
   } catch (error) {
     console.log(error)

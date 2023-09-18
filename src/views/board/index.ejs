@@ -4,6 +4,7 @@
     <%- include('../common/commonHead.ejs') %>
     <title>MealSac | 게시판</title>
     <link rel="stylesheet" href="/static/css/board.css" />
+    <script defer src="/static/js/board.js"></script>
   </head>
   <body>
     <%- include('../common/header.ejs') %>
@@ -16,15 +17,26 @@
       </div>
 
       <div class="btnBox">
-        <button type="button" class="clicked" id="freeBoard" name="freeBoard">
+        <button
+          type="button"
+          class="clicked"
+          id="freeBoard"
+          name="freeBoard"
+          onclick="freeBoard()"
+        >
           자유게시판
         </button>
-        <button type="button" id="noticeBoard" name="noticeBoard">
+        <button
+          type="button"
+          id="noticeBoard"
+          name="noticeBoard"
+          onclick="noticeBoard()"
+        >
           공지사항
         </button>
       </div>
 
-      <div class="boardList">
+      <div class="boardList" id="freeBoardList">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -35,39 +47,55 @@
             </tr>
           </thead>
 
-          <tbody>
-            <% for (let i = 1; i <= 10; i++) { %> <% const now = new Date(); %>
-            <% const formattedDate = `${now.getFullYear()}.${(now.getMonth() +
-            1).toString().padStart(2,
-            '0')}.${now.getDate().toString().padStart(2, '0')}
-            ${now.getHours().toString().padStart(2,
-            '0')}:${now.getMinutes().toString().padStart(2, '0')}`; %>
-            <tr>
-              <td scope="row" class="idx"><%= i %></td>
-              <td class="title"><a href="#">Title</a></td>
-              <td class="writer">User</td>
-              <td class="date"><%= formattedDate %></td>
-            </tr>
-            <% } %>
-          </tbody>
-          <!-- <tbody>
-        < data.forEach((el,index) => {%>
-        <tr>
-          <th scope="row"><= index + 1%></th>
-          <td><= el.Title %></td>
-          <td><= el.Article %></td>
-          <td><= el.Created.toLocaleDateString() %></td>
-          <td>
-            <a class="btn btn-warning" href="/edit/<= el.id %> ">수정/삭제</a>
-          </td>
-        </tr>
-      </tbody>
-      < }) %> -->
+          <tbody class="freeBoardTable"></tbody>
         </table>
+
+        <button
+          type="button"
+          id="write"
+          name="write"
+          onclick="location.href='/boardWrite'"
+        >
+          글쓰기
+        </button>
+        <div class="boardPage">
+          <ul class="pagination" id="freeBoardPage">
+            <li class="page-item">
+              <a class="page-link" data-page="1">1</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <button type="button" id="write" name="write">글쓰기</button>
-      <div class="pagenation">
-        <p>1 2 3 4 5</p>
+
+      <div class="boardList" id="noticeBoardList" style="display: none">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="cols" class="idx">#</th>
+              <th scope="cols" class="title">제목</th>
+              <th scope="cols" class="writer">작성자</th>
+              <th scope="cols" class="date">날짜</th>
+            </tr>
+          </thead>
+
+          <tbody class="noticeBoardTable"></tbody>
+        </table>
+
+        <button
+          type="button"
+          id="write"
+          name="write"
+          onclick="location.href='/boardWrite'"
+        >
+          글쓰기
+        </button>
+        <div class="boardPage" id="noticePage">
+          <ul class="pagination" id="noticeBoardPage">
+            <li class="page-item">
+              <a class="page-link" data-page="1">1</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </body>

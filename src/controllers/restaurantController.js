@@ -8,6 +8,7 @@ const {
   Tag,
   User,
   Restaurant,
+  RestaurantImage,
   sequelize,
 } = require('../models');
 const dotenv = require('dotenv');
@@ -20,14 +21,21 @@ exports.getAllRestaurants = async (req, res) => {
     const {page} = req.query
     const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
     const response = await Restaurant.findAndCountAll({
-      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit : 20,
       offset : 20 * (page - 1),
-      include : [{
+      include : [
+        {
         model : User,
         where : {id : (id ? id : 0)},
         required : false,
-      }]
+        },
+        {
+          model: RestaurantImage,
+          attributes : ["restaurant_image_url"],
+          limit : 1
+        }
+      ]
     })
     if (response.rows.length === 0)  {
       throw Error()
@@ -44,21 +52,28 @@ exports.getLikeRestaurants = async (req, res) => {
     const {page} = req.query
     const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
     const response = await Restaurant.findAndCountAll({
-      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit : 20,
       offset : 20 * (page - 1),
       order : [
         ['likes_count', 'DESC'],
         ['rating', 'DESC'],
         ['reviews_count', 'DESC'],
-
       ],
-      include : [{
-        model : User,
-        where : {id : (id ? id : 0)},
-        required : false,
-      }]
+      include : [
+        {
+          model : User,
+          where : {id : (id ? id : 0)},
+          required : false,
+        },
+        {
+          model: RestaurantImage,
+          attributes : ["restaurant_image_url"],
+          limit : 1
+        }
+      ]
     })
+    console.log(response)
     if (response.rows.length === 0)  {
       throw Error()
     }
@@ -74,7 +89,7 @@ exports.getRatingRestaurants = async (req, res) => {
     const {page} = req.query
     const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
     const response = await Restaurant.findAndCountAll({
-      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit : 20,
       offset : 20 * (page - 1),
       order : [
@@ -82,11 +97,18 @@ exports.getRatingRestaurants = async (req, res) => {
         ['likes_count', 'DESC'],
         ['reviews_count', 'DESC'],
       ],
-      include : [{
-        model : User,
-        where : {id : (id ? id : 0)},
-        required : false,
-      }]
+      include : [
+        {
+          model : User,
+          where : {id : (id ? id : 0)},
+          required : false,
+        },
+        {
+          model: RestaurantImage,
+          attributes : ["restaurant_image_url"],
+          limit : 1
+        }
+      ]
     })
     if (response.rows.length === 0)  {
       throw Error()
@@ -102,7 +124,7 @@ exports.getSearchRestaurantByName = async (req, res) => {
     const {q, page} = req.query
     const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
     const response = await Restaurant.findAndCountAll({
-      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit : 20,
       where : {"restaurant_name" : {[Op.like] : `%${q}%`}},
       offset : 20 * (page - 1),
@@ -111,11 +133,18 @@ exports.getSearchRestaurantByName = async (req, res) => {
         ['likes_count', 'DESC'],
         ['reviews_count', 'DESC'],
       ],
-      include : [{
+      include : [
+        {
         model : User,
         where : {id : (id ? id : 0)},
         required : false,
-      }]
+        },
+        {
+          model : RestaurantImage,
+          attributes : ["restaurant_image_url"],
+          limit : 1
+        },
+      ]
     })
     if (response.rows.length === 0)  {
       throw Error()
@@ -159,6 +188,10 @@ exports.getRestaurant = (req, res) => {
         model: RestaurantType,
         attributes: ["restaurant_type"],
         as : "restaurant_type"
+      },
+      {
+        model: RestaurantImage,
+        attributes : ["restaurant_image_url"],
       }
     ],
     where: { restaurant_id: restaurant_id },
