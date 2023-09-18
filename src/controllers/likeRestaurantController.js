@@ -108,7 +108,7 @@ exports.getUserLikes = async (req, res) => {
   if (id > 0) {
     const response = await User.findAll({
       where: { id: id },
-      attributes: ['id'],
+      attributes: ['id', 'user_name'],
       include: [
         {
           model: Restaurant,

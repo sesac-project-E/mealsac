@@ -8,7 +8,7 @@ exports.getTypeRestaurants = (req, res) => {
   })
   .then((restaurantTypeRecord) => {
     Restaurant.findAll({
-      attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       where : {restaurant_type_id : restaurantTypeRecord.restaurant_type_id}
     })
     .then((response) => {
