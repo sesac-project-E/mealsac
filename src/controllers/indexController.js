@@ -16,7 +16,11 @@ exports.indexPage = async (req, res) => {
     limit : 8
   })
   const popularRestaurants = await Restaurant.findAll({
-    order : [['likes_count', 'DESC']],
+    order : [
+      ['likes_count', 'DESC'],
+      ['rating', 'DESC'],
+      ['reviews_count', 'DESC']
+    ],
     attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
     include : [{
       model : RestaurantImage,
@@ -45,7 +49,7 @@ exports.indexPage = async (req, res) => {
     res.render("index", {
       recentRestaurants : recentRestaurants, 
       popularRestaurants : popularRestaurants, 
-      userLikeRestaurants : userLikeRestaurants ? userLikeRestaurants.Restaurants : []}
+      userLikeRestaurants : userLikeRestaurants ? userLikeRestaurants.Restaurants : ""}
     )
   } catch (error) {
     console.log(error)
