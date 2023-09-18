@@ -4,26 +4,40 @@ form.userName.addEventListener('input', () => {
   form.checkedName.value = 'N';
 });
 
-const overlapName = async () => {
-  try {
-    const res = await axios({
-      url: '/api/user/overlapname',
-      method: 'POST',
-      data: {
-        user_name: form.userName.value,
-      },
-    });
+const pwCheck = () => {
+  const userPw = form.userPw.value;
+  const confirmPw = form.confirmPw.value;
+  if (userPw === confirmPw) {
+    pwMsg.innerHTML = '<p style="color:green">비밀번호가 일치합니다.</p>';
+  } else {
+    pwMsg.innerHTML = '<p style="color:red">비밀번호가 일치하지 않습니다.</p>';
+  }
+};
 
-    if (res.data.result) {
-      nameMsg.innerHTML =
-        '<p style="color:green">사용 가능한 닉네임입니다.</p>';
-      form.checkedName.value = 'Y';
-    } else {
-      nameMsg.textContent = '중복된 닉네임입니다.';
-      form.userName.value = '';
+const overlapName = async () => {
+  if (form.userName.value === '') {
+    nameMsg.innerHTML = '<p style="color:red">닉네임을 입력해주세요</p>';
+  } else {
+    try {
+      const res = await axios({
+        url: '/api/user/overlapname',
+        method: 'POST',
+        data: {
+          user_name: form.userName.value,
+        },
+      });
+
+      if (res.data.result) {
+        nameMsg.innerHTML =
+          '<p style="color:green">사용 가능한 닉네임입니다.</p>';
+        form.checkedName.value = 'Y';
+      } else {
+        nameMsg.textContent = '중복된 닉네임입니다.';
+        form.userName.value = '';
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -52,9 +66,8 @@ const edit = async () => {
           },
         });
         if (res.data.result) {
-          alert('정보 수정이 완료되었습니다!');
           console.log(res.data);
-          document.location.href = '/';
+          document.location.href = '/mypage';
         }
       } catch (error) {
         console.log(error);

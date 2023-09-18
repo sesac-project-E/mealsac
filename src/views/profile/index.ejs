@@ -30,6 +30,7 @@
               id="userPw"
               placeholder="8자 이상 영문과 숫자를 혼합"
               required
+              oninput="pwCheck()"
             />
             <br />
           </div>
@@ -41,6 +42,7 @@
               id="confirmPw"
               placeholder="비밀번호를 한 번 더 입력하세요."
               required
+              oninput="pwCheck()"
             />
           </div>
           <p id="pwMsg"></p>

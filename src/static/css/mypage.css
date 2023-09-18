@@ -37,8 +37,9 @@ h1 {
 }
 
 #myLike,
-#myReview {
-  width: 30vw;
+#myReview,
+#myPost {
+  width: 20vw;
   height: 7vh;
   border: none;
   background-color: transparent;
@@ -126,11 +127,13 @@ span {
   }
 
   #myLike,
-  #myReview {
-    width: 32vw;
+  #myReview,
+  #myPost {
+    width: 20vw;
     height: 7vh;
     border: none;
     background-color: transparent;
+    font-size: 90%;
   }
 
   .clicked {
@@ -153,6 +156,16 @@ span {
   #myReviews {
     margin-top: 20px;
     padding: 20px;
+  }
+
+  .list {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #none {
+    margin-top: 100px;
   }
 }
 
@@ -192,11 +205,14 @@ span {
   }
 
   #myLike,
-  #myReview {
-    width: 32vw;
+  #myReview,
+  #myPost {
+    width: 20vw;
     height: 5vh;
     border: none;
     background-color: transparent;
+    font-size: 80%;
+    padding: 0;
   }
 
   .clicked {
@@ -228,5 +244,15 @@ span {
   #reviews {
     border: none;
     box-shadow: inherit;
+  }
+
+  .list {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #none {
+    margin-top: 100px;
   }
 }
