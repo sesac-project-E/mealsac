@@ -10,6 +10,8 @@ const randomQuestion = document.querySelector("#random-question")
 const randomNextBtn = document.querySelector("#randomNextBtn")
 const randomPrevBtn = document.querySelector("#randomPrevBtn")
 const options = document.querySelector(".options")
+const randomResultForm = document.querySelector(".random-result")
+
 randomPrevBtn.style.display = 'none'
 
 let currQuestion = 0
@@ -78,26 +80,33 @@ const questionForm = [
     ] 
   }
 ]
+const submitForm = {
+  "money" : "",
+  "people" : "",
+  "taste" : ""
+}
 
-randomInit.animate(
-  [
-    { opacity: 0.5, easing: "ease-out" },
-    { opacity: 1 },
-  ],
-  1000,
-);
-
+// randomInit.animate(
+//   [
+//     { opacity: 0.5, easing: "ease-out" },
+//     { opacity: 1 },
+//   ],
+//   1000,
+// );
 
 function randomNext () {
   randomPrevBtn.style.display = 'block'
+  randomPrevBtn.classList.add('bg-gray-hover')
+  randomPrevBtn.classList.remove('disabled')
   if (currQuestion == 2) {
-    console.log("결과 도출")
-    randomPrevBtn.setAttribute('')
+    randomPrevBtn.classList.remove('disabled')
+    randomEnd()
     return ;
-  }
-  if (currQuestion === 1) {
+  } else if (currQuestion === 1) {
+
     randomNextBtn.classList.remove('bg-green-hover')
     randomNextBtn.classList.add('bg-blue-hover')
+
     randomNextBtn.innerText = '결과 보기'
   } else {
     randomNextBtn.classList.remove('bg-blue-hover')
@@ -109,17 +118,15 @@ function randomNext () {
 }
 
 function randomPrev () {
+  randomNextBtn.classList.remove('bg-blue-hover')
+  randomNextBtn.classList.add('bg-green-hover')
+  randomNextBtn.innerText = '다음'
+
   if (currQuestion === 0) {
     randomPrevBtn.classList.add('disabled')
     randomPrevBtn.classList.remove('bg-gray-hover')
     return ;
-  } else {
-    randomPrevBtn.classList.remove('disabled')
-    randomPrevBtn.classList.add('bg-gray-hover')
-  }
-  randomNextBtn.classList.remove('bg-blue-hover')
-  randomNextBtn.classList.add('bg-green-hover')
-  randomNextBtn.innerText = '다음'
+  } 
   prevInit()
   addInputs()
 }
@@ -135,7 +142,67 @@ function randomStart() {
   randomIntro.setAttribute('class', 'none')
   randomIntro.style.display = 'none'
   randomQuestion.style.display = 'block'
-  form.style.display = 'block'
+  form.style.display = 'flex'
+  form.style.flexDirection = 'column'
+  form.style.justifyContent = 'space-around'
+  form.style.width = '100%'
+  form.style.minHeight = '100%'
+
+
+}
+
+function randomEnd() {
+  if (!(submitForm.money && submitForm.people && submitForm.taste)) {
+    return ;
+  }
+  form.remove()
+  randomBorders[1].style.animation = 'fillFullContainer 1000ms forwards' 
+  randomBorders[2].style.animation = 'fillFullContainer 1000ms forwards' 
+  randomBorders[0].style.animation = 'col 1000ms forwards'
+  randomBorders[0].style.animationDelay = '250ms'
+  const {money, people, taste} = submitForm
+  const result = money + people + taste
+  const resultMessage = document.createElement('h1')
+  switch (result) {
+    case 'richsolofamiliar':
+      resultMessage.innerText = '한식'
+      randomResultForm.append(resultMessage)
+    case 'richsolonew':
+        resultMessage.innerText = '중식'
+        randomResultForm.append(resultMessage)
+    case 'richmanyfamiliar':
+      resultMessage.innerText = '일식'
+      randomResultForm.append(resultMessage)
+    case 'richmanynew':
+      resultMessage.innerText = '일식'
+      randomResultForm.append(resultMessage)
+    case 'middlesolofamiliar':
+      resultMessage.innerText = '한식'
+      randomResultForm.append(resultMessage)
+    case 'middlesolonew':
+        resultMessage.innerText = '중식'
+        randomResultForm.append(resultMessage)
+    case 'middlemanyfamiliar':
+      resultMessage.innerText = '일식'
+      randomResultForm.append(resultMessage)
+    case 'middlemanynew':
+      resultMessage.innerText = '일식'
+      randomResultForm.append(resultMessage)
+    case 'poorsolofamiliar':
+      resultMessage.innerText = '한식'
+      randomResultForm.append(resultMessage)
+    case 'poorsolonew':
+        resultMessage.innerText = '중식'
+        randomResultForm.append(resultMessage)
+    case 'poormanyfamiliar':
+      resultMessage.innerText = '일식'
+      randomResultForm.append(resultMessage)
+    case 'poormanynew':
+      resultMessage.innerText = '일식'
+      randomResultForm.append(resultMessage)
+    default:
+      return ;
+  }
 }
 
 function randomResult() {
@@ -143,13 +210,16 @@ function randomResult() {
   randomInit.style.setProperty('--afterDisplay', 'none')
   startRandomBtn.style.display = 'block'
   randomResultBtn.style.display = 'none'
+
+
 }
 
 function addInputs () {
   const inputs = document.querySelectorAll("input")
   inputs.forEach((elem) => {
     elem.addEventListener('click', (e) => {
-      console.log(e.target.value)
+      submitForm[e.target.name] = e.target.value
+      console.log(submitForm)
       inputs.forEach((elem) => {
         const pa = elem.parentElement.parentElement
         if (pa.style.backgroundColor === 'gray') {
