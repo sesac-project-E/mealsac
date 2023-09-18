@@ -22,7 +22,7 @@ window.addEventListener('resize', checkWidth);
 document.querySelector('.heart').addEventListener('click', async e => {
   const currentSrc = e.target.getAttribute('src');
 
-  if (currentSrc === '/static/img/heart.png') {
+  if (currentSrc === ' /static/img/heart.png ') {
     try {
       const response = await axios({
         method: 'POST',
@@ -38,7 +38,7 @@ document.querySelector('.heart').addEventListener('click', async e => {
       console.error('에러 정보:', error);
       alert('찜 목록에 추가하는 것을 실패했습니다.');
     }
-  } else if (currentSrc === '/static/img/heartFilled.png') {
+  } else if (currentSrc === ' /static/img/heartFilled.png') {
     try {
       const response = await axios({
         method: 'DELETE',
@@ -106,7 +106,7 @@ document.getElementById('submitbtn').addEventListener('click', async e => {
   const content = formData.get('content');
   const rating = formData.get('rating');
   const imageFiles = formData.getAll('image');
-  const restaurant_id = 1;
+  const restaurant_id = restaurant.restaurant_id;
 
   if (!content || !rating) {
     alert('내용과 평점을 모두 입력해주세요.');
@@ -128,18 +128,29 @@ document.getElementById('submitbtn').addEventListener('click', async e => {
       reviewForm.style.display = 'none';
       reviewForm.reset();
 
-      const newReviewData = response.data.data;
+      document.querySelector('.review').innerText =
+        Number(document.querySelector('.review').innerText) + 1;
+
+      const newReviewData = response.data.review;
       addNewReview(newReviewData);
     }
   } catch (error) {
     console.error('에러 정보:', error);
-    alert('리뷰를 등록하는 동안 오류가 발생했습니다.');
+
+    if (
+      error.response.data.message === '세션에서 사용자 정보를 찾을 수 없습니다.'
+    ) {
+      alert('로그인 후 리뷰를 등록해주세요.');
+    } else {
+      alert('리뷰를 등록하는 동안 오류가 발생했습니다.');
+    }
   }
 });
 
 // 리뷰 등록 후 등록한 리뷰 바로 보여지도록 하는 함수
 const addNewReview = reviewData => {
-  const newReviewElement = document.createElement('div');
+  const newReviewElement = document.createElement('section');
+  newReviewElement.classList.add('reviewContainer');
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -147,21 +158,30 @@ const addNewReview = reviewData => {
   const dd = String(today.getDate()).padStart(2, '0');
   const formattedDate = `${yyyy}.${mm}.${dd}`;
 
-  const review = reviewData.review;
+  let imagesHTML = '';
+
+  reviewData.images.forEach(image => {
+    imagesHTML += `<img src="${image}" alt="후기 이미지">`;
+  });
 
   newReviewElement.innerHTML = `
-    <p>Rating: ${review.rating}</p>
-    <p>${review.content}</p>
-    <p>작성일 : ${formattedDate}</p>
-    <p>추천 : ${review.is_useful === undefined ? 0 : review.is_useful}</p>
+  <div>
+    <div>
+     <p>작성자</p>
+    </div>
+     <div>
+     <p><img src="/static/img/star.png" alt="평점" class="starIcon"> ${
+       reviewData.rating
+     }</p>
+    <p><img src="/static/img/like.png" alt="추천하기" class="thumbsIcon" id=${
+      reviewData.review_id
+    }> ${reviewData.is_useful === undefined ? 0 : reviewData.is_useful}</p>
+     <p>${formattedDate}</p>
+    </div>
+    </div>
+    <div class="reviewImg">${imagesHTML}</div>
+    <p class="reviewContent">${reviewData.content}</p>
   `;
-
-  (reviewData.reviewImages || []).forEach(image => {
-    const imgElement = document.createElement('img');
-    imgElement.src = image.image_url;
-    imgElement.alt = 'Review Image';
-    newReviewElement.appendChild(imgElement);
-  });
 
   renderReviews.prepend(newReviewElement);
 };
@@ -206,7 +226,9 @@ function renderReviewsPage(page) {
   const start = (page - 1) * reviewsPerPage;
   const end = page * reviewsPerPage;
 
-  const reviewsToRender = restaurant.Reviews.slice(start, end);
+  const reviews = restaurant.Reviews;
+
+  const reviewsToRender = reviews.slice(start, end);
   const reviewsElement = document.querySelector('.renderReviews');
 
   reviewsElement.innerHTML = ''; // 리뷰 컨테이너 초기화
@@ -217,25 +239,37 @@ function renderReviewsPage(page) {
   }
 
   reviewsToRender.forEach(review => {
+    let imagesHTML = '';
+
+    review.ReviewImages.forEach(image => {
+      imagesHTML += `<img src="${image.image_url}" alt="후기 이미지">`;
+    });
+
     const reviewHTML = `
     <section class="reviewContainer" >
+    <div>
       <div>
-       <p>작성자</p>
-       <p>작성일: ${new Date(review.updatedAt)
+       <p>${review.user.user_name}</p>
+      </div>
+       <div>
+       <p><img src="/static/img/star.png" alt="평점" class="starIcon"> ${
+         review.rating
+       }</p>
+      <p><img src="/static/img/like.png" alt="추천하기" class="thumbsIcon" id=${
+        review.review_id
+      }> <span>${
+      review.is_useful === undefined ? 0 : review.is_useful
+    }<span></p>
+       <p>${new Date(review.updatedAt)
          .toLocaleDateString()
          .replace(/\.$/, '')}</p>
       </div>
-      <div>
-        <p><img src="/static/img/star.png" alt="평점" class="starIcon"> ${
-          review.rating
-        }</p>
-        <p><img src="/static/img/like.png" alt="추천하기" class="thumbsIcon" id=${
-          review.review_id
-        }> ${review.is_useful === undefined ? 0 : review.is_useful}</p>
       </div>
-      <p>${review.content}</p>
+      <div class="reviewImg">${imagesHTML}</div>
+      <p class="reviewContent">${review.content}</p>
     </section>
     `;
+
     reviewsElement.innerHTML += reviewHTML;
   });
 }
@@ -280,6 +314,8 @@ document
           if (response.status === 200) {
             alert('성공적으로 리뷰를 추천하셨습니다.');
             e.target.setAttribute('src', '/static/img/likeFilled.png');
+            e.target.nextElementSibling.innerText =
+              Number(e.target.nextElementSibling.innerText) + 1;
           }
         } catch (error) {
           if (
