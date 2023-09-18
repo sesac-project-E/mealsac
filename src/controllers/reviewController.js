@@ -226,6 +226,10 @@ exports.getMyReviews = async (req, res) => {
           model: ReviewImage,
           attributes: ['image_url'],
         },
+        {
+          model: Restaurant,
+          attributes: ['restaurant_name'],
+        },
       ],
       order: [['createdAt', 'DESC']],
       limit,
