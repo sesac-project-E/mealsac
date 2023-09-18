@@ -35,7 +35,7 @@ exports.getRestaurantsByTag = async (req, res) => {
     }
     if (page > 0) { 
       Restaurant.findAndCountAll({
-        attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
+        // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
         include: [{
             model : Tag,
             where : {

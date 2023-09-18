@@ -8,7 +8,6 @@ exports.searchMenu = (req, res) => {
       include : [
         {
           model : Restaurant,
-          attributes : ["restaurant_name", "likes_count", "reviews_count", "rating"],
         }
       ],
       limit : 20,

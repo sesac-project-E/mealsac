@@ -135,7 +135,7 @@ restaurantRouter.get('/rating', restaurantController.getRatingRestaurants)
  *   tags : [Restaurant]
  *   responses:
  *     200:
- *       description: 식당 디테일 페이지 데이터
+ *       description: 식당 디테일 페이지 데이터, User가 비어있다면 좋아요를 누르지 않은 것입니다.
  *       content:
  *        application/json:
  *          schema:
@@ -184,7 +184,9 @@ restaurantRouter.get('/rating', restaurantController.getRatingRestaurants)
  *                restaurant_type:
  *                  type: json 
  *                  example : {"restaurant_type": "분식"}
- * 
+ *                RestaurantImages:
+ *                  type: array  
+ *                  example : [{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MjJfMjA1/MDAxNTkyNzg0NjAxMTM5.RKKpCY89B_vyXNkySi8csQcTks_XjLR4LfKJyH4AXXIg.peUl7Q_FMvAhnnudENfNrYwxUW4n2PmKJZjPLowabGgg.JPEG.kyungha926/SE-a6fd1722-f3f0-4a98-9592-e55e9e938b68.jpg?type=w800"},{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MjJfNzYg/MDAxNTkyNzg0NjA2OTY0.X_CT3K5yz-YHtTZCkCbiqIcZ5Ane92nUNZtCQpXsJBog.1-I9RHmy7nqwcoM-KmOq2FrInB0yLU4X5eRzbb2Z5Cwg.JPEG.kyungha926/SE-a31e96e3-68f9-47df-a9e0-3877e370a683.jpg?type=w800"},{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MjJfMjU5/MDAxNTkyNzg0NjAzOTcw.mGO_JGlJbaA-M9oRylu3c3g6kbF1PXU8U_HTZubJaO4g.vXEruZMVbGM8Q_4QGTVQJf0sDH5vX7USM9KWPKBAkXMg.JPEG.kyungha926/SE-e84f5a05-bbbd-4e68-a305-7818e64389bb.jpg?type=w800"}]
  *       500:
  *         description: 알 수 없는 오류의 경우 500이 전송됩니다.
  * */
