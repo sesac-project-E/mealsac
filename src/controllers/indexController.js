@@ -75,7 +75,7 @@ exports.indexPage = async (req, res) => {
       popularRestaurants: popularRestaurants,
       userLikeRestaurants: userLikeRestaurants
         ? userLikeRestaurants.Restaurants
-        : '',
+        : [],
     });
   } catch (error) {
     console.log(error);
