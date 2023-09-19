@@ -105,9 +105,9 @@ input .review {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* 슬라이드 효과를 위해 nowrap 설정 */
   width: 100%;
-  overflow: hidden;
+  transition: 0.5s;
 }
 
 .card-container {
@@ -245,7 +245,7 @@ footer p {
     padding: 0 30px;
   }
   .card-container {
-    flex: 0 0 50%; /* 3개의 카드를 보여주기 위해 33.33%의 너비로 설정 */
+    flex: 0 0 33.33%; /* 3개의 카드를 보여주기 위해 33.33%의 너비로 설정 */
   }
 }
 

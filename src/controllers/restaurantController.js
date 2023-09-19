@@ -15,197 +15,204 @@ const dotenv = require('dotenv');
 dotenv.config();
 const { formatDate } = require('../utils/formatDate');
 
-
 exports.getAllRestaurants = async (req, res) => {
   try {
-    const {page} = req.query
-    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const { page } = req.query;
+    const { id } =
+      req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
       // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
-      limit : 20,
-      offset : 20 * (page - 1),
-      include : [
+      limit: 20,
+      offset: 20 * (page - 1),
+      include: [
         {
-          model : User,
-          where : {id : (id ? id : 0)},
-          required : false,
+          model: User,
+          where: { id: id ? id : 0 },
+          required: false,
         },
         {
           model: RestaurantImage,
-          attributes : ["restaurant_image_url"],
-          limit : 1
-        }
-      ]
-    })
-    if (response.rows.length === 0)  {
-      throw Error()
+          attributes: ['restaurant_image_url'],
+          limit: 1,
+        },
+      ],
+    });
+    if (response.rows.length === 0) {
+      throw Error();
     }
-    res.send(response)
+    // res.send(response);
+    return response;
   } catch (error) {
-    console.log(error)
-    res.status(404).send()
+    console.log(error);
+    res.status(404).send();
   }
-}
+};
 
 exports.getLikeRestaurants = async (req, res) => {
   try {
-    const {page} = req.query
-    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const { page } = req.query;
+    const { id } =
+      req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
       // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
-      limit : 20,
-      offset : 20 * (page - 1),
-      order : [
+      limit: 20,
+      offset: 20 * (page - 1),
+      order: [
         ['likes_count', 'DESC'],
         ['rating', 'DESC'],
         ['reviews_count', 'DESC'],
       ],
-      include : [
+      include: [
         {
-          model : User,
-          where : {id : (id ? id : 0)},
-          required : false,
+          model: User,
+          where: { id: id ? id : 0 },
+          required: false,
         },
         {
           model: RestaurantImage,
-          attributes : ["restaurant_image_url"],
-          limit : 1
-        }
-      ]
-    })
-    console.log(response)
-    if (response.rows.length === 0)  {
-      throw Error()
+          attributes: ['restaurant_image_url'],
+          limit: 1,
+        },
+      ],
+    });
+    console.log(response);
+    if (response.rows.length === 0) {
+      throw Error();
     }
-    res.send(response)
+    res.send(response);
   } catch (error) {
-    console.log(error)
-    res.status(404).send()
+    console.log(error);
+    res.status(404).send();
   }
-}
+};
 
 exports.getRatingRestaurants = async (req, res) => {
   try {
-    const {page} = req.query
-    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const { page } = req.query;
+    const { id } =
+      req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
       // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
-      limit : 20,
-      offset : 20 * (page - 1),
-      order : [
+      limit: 20,
+      offset: 20 * (page - 1),
+      order: [
         ['rating', 'DESC'],
         ['likes_count', 'DESC'],
         ['reviews_count', 'DESC'],
       ],
-      include : [
+      include: [
         {
-          model : User,
-          where : {id : (id ? id : 0)},
-          required : false,
+          model: User,
+          where: { id: id ? id : 0 },
+          required: false,
         },
         {
           model: RestaurantImage,
-          attributes : ["restaurant_image_url"],
-          limit : 1
-        }
-      ]
-    })
-    if (response.rows.length === 0)  {
-      throw Error()
+          attributes: ['restaurant_image_url'],
+          limit: 1,
+        },
+      ],
+    });
+    if (response.rows.length === 0) {
+      throw Error();
     }
-    res.send(response)
+    res.send(response);
   } catch (error) {
-    console.log(error)
-    res.status(404).send()
+    console.log(error);
+    res.status(404).send();
   }
-}
+};
 exports.getSearchRestaurantByName = async (req, res) => {
   try {
-    const {q, page} = req.query
-    const {id} = req.session && req.session.userInfo ? req.session.userInfo : -1
+    const { q, page } = req.query;
+    const { id } =
+      req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
       // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
-      limit : 20,
-      where : {"restaurant_name" : {[Op.like] : `%${q}%`}},
-      offset : 20 * (page - 1),
-      order : [
+      limit: 20,
+      where: { restaurant_name: { [Op.like]: `%${q}%` } },
+      offset: 20 * (page - 1),
+      order: [
         ['rating', 'DESC'],
         ['likes_count', 'DESC'],
         ['reviews_count', 'DESC'],
       ],
-      include : [
+      include: [
         {
-          model : User,
-          where : {id : (id ? id : 0)},
-          required : false,
+          model: User,
+          where: { id: id ? id : 0 },
+          required: false,
         },
         {
-          model : RestaurantImage,
-          attributes : ["restaurant_image_url"],
-          limit : 1
+          model: RestaurantImage,
+          attributes: ['restaurant_image_url'],
+          limit: 1,
         },
-      ]
-    })
-    if (response.rows.length === 0)  {
-      throw Error()
+      ],
+    });
+    if (response.rows.length === 0) {
+      throw Error();
     }
-    res.send(response)
+    res.send(response);
   } catch (error) {
-    console.log(error)
-    res.status(404).send()
+    console.log(error);
+    res.status(404).send();
   }
-}
+};
 
-exports.getRestaurant = (req, res) => {
-  const {id} = req.session && req.session.userInfo ? req.session.userInfo : 0
+exports.getRestaurant = async (req, res) => {
+  const { id } = req.session && req.session.userInfo ? req.session.userInfo : 0;
   const { restaurant_id } = req.params;
-  Restaurant.findOne({
+  const restaurant = await Restaurant.findOne({
     include: [
       {
         model: User,
-        where : {id : `${id}`},
-        required : false,
+        where: { id: `${id}` },
+        required: false,
       },
       {
         model: Tag,
         attributes: ['tag_id', 'tag_name'],
-        required : false,
+        required: false,
       },
-      {
-        model: Review,
-        attributes: ['review_id', 'user_id', 'rating', 'content', 'updatedAt'],
-        order: [['updatedAt', 'DESC']],
-        include: [
-          {
-            model: ReviewImage,
-            limit: 1,
-          },
-        ],
-        required : false,
-      },
+      // {
+      //   model: Review,
+      //   attributes: ['review_id', 'user_id', 'rating', 'content', 'updatedAt'],
+      //   order: [['updatedAt', 'DESC']],
+      //   include: [
+      //     {
+      //       model: ReviewImage,
+      //       limit: 1,
+      //     },
+      //   ],
+      //   required: false,
+      // },
       {
         model: Menu,
         attributes: ['menu_name', 'menu_price'],
-        required : false,
+        required: false,
       },
       {
         model: RestaurantType,
-        attributes: ["restaurant_type"],
-        as : "restaurant_type"
+        attributes: ['restaurant_type'],
+        as: 'restaurant_type',
       },
       {
         model: RestaurantImage,
-        attributes : ["restaurant_image_url"],
-        required : false,
-      }
+        attributes: ['restaurant_image_url'],
+        required: false,
+      },
     ],
     where: { restaurant_id: restaurant_id },
-  }).then((restaurant) => {
-    res.render('restaurantDetail/index', {  
-      restaurant,
-      googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-    });
   });
+  // .then(restaurant => {
+  //   res.render('restaurantDetail/index', {
+  //     restaurant,
+  //     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+  //   });
+  //   res.send(restaurant);
+  // });
+  return restaurant;
 };
 
 exports.createRestaurant = (req, res) => {
