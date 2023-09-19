@@ -26,7 +26,7 @@
           <div class="restaurantInfo">
             <div>
               <h3 class="restaurantName"><%= restaurant.restaurant_name %></h3>
-              <% if(restaurant.Users.length > 0) { imgSrc =
+              <% if(userInfo && restaurant.Users.length > 0) { imgSrc =
               "/static/img/heartFilled.png"; } else {imgSrc =
               "/static/img/heart.png";}%>
               <img src="<%= imgSrc %>" alt="찜 아이콘" class="heart" />
@@ -48,7 +48,7 @@
                 alt="평점 아이콘"
                 class="rating"
               />
-              <p class="rate"><%= restaurant.rating %></p>
+              <p class="rate"><%= restaurant.rating.toFixed(1); %></p>
               <img
                 src="/static/img/speechBalloon.png"
                 alt="댓글 아이콘"
@@ -164,7 +164,10 @@
         <section id="restaurantInfo">
           <h3>상세정보</h3>
           <address>주소 : <%- restaurant.restaurant_address %></address>
-          <div>전화번호 : <%- restaurant.restaurant_phone %></div>
+          <div>
+            전화번호 : <%= restaurant.restaurant_phone ?
+            restaurant.restaurant_phone : '전화번호가 등록되어있지 않습니다.' %>
+          </div>
         </section>
       </article>
     </main>
@@ -172,6 +175,15 @@
     <%- include('../common/footer.ejs') %> //
     <script>
       const restaurant = <%- JSON.stringify(restaurant) %>;
+      const review = <%- JSON.stringify(review.reverse()) %>;
+      <% if (userInfo) { %>
+        const userInfo = JSON.parse('<%- JSON.stringify(userInfo) %>');
+      <% } else { %>
+       const userInfo = null;
+      <% } %>
+      console.log(`restaurant: ${restaurant}`)
+      console.log(`review: ${review}`)
+      console.log(`userInfo: ${userInfo}`)
     </script>
   </body>
 </html>

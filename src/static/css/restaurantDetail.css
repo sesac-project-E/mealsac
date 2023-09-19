@@ -51,6 +51,7 @@ p {
 
 .restaurantInfo h3 {
   font-size: 1.2rem;
+  font-weight: 700;
 }
 
 .restaurantInfo .address {
@@ -138,7 +139,8 @@ p {
 }
 
 section h3 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   margin: 35px 0 10px 0;
 }
 
@@ -169,7 +171,7 @@ section h3 {
   justify-content: space-between;
 }
 
-#review input:not(#imageFiles):not(#submitbtn),
+#review input:not(#imageFiles):not(#submitbtn):not(.editNdelete input),
 #review select,
 #review textarea {
   border: 1px solid #989898;
@@ -260,15 +262,26 @@ section h3 {
   height: 20px;
 }
 
-.reviewContainer:not(:last-child) {
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+.reviewContainer {
+  padding: 10px 0;
   border-bottom: 1px solid #989898;
+}
+
+.reviewContainer .editNdelete {
+  justify-content: end;
+}
+
+.reviewContainer .editNdelete input {
+  color: #989898;
+  background-color: #fff;
+  border: none;
+  font-size: 13px;
 }
 
 .pageBtn {
   display: flex;
   justify-content: space-around;
+  margin-top: 15px;
 
   & button {
     padding: 0 10px;
@@ -329,7 +342,7 @@ section h3 {
 
   .restaurantInfo h3 {
     font-size: 1.2rem;
-    font-weight: bold;
+    font-weight: 700;
     margin: 0;
   }
 
