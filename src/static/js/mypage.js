@@ -27,43 +27,41 @@ const reviewList = async () => {
 
       if (Array.isArray(reviews) && reviews.length > 0) {
         reviews.forEach(review => {
-          // 리뷰 컨테이너 생성
           const reviewContainer = document.createElement('div');
           reviewContainer.classList.add('reviews');
+          reviewContainer.id = `review_${review.review_id}`;
 
-          // 리뷰 정보 템플릿 리터럴로 구성
           reviewContainer.innerHTML = `
-          <div class="reviewInfo">
-            <div><a href="/restaurant/${review.restaurant_id}">
-              <span>${review.Restaurant.restaurant_name}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="30"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
-                  fill="#4DDA67"
-                />
-              </svg>
+            <div class="reviewInfo">
+              <div><a href="/restaurant/${review.restaurant_id}">
+                <span class="restaurantName">${review.Restaurant.restaurant_name}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+                    fill="#4DDA67"
+                  />
+                </svg>
               </a>
-            </div>
-            <div>
-              <img src="/static/img/star.png" alt="평점" class="starIcon" />
-              <span>${review.rating}</span>
-            </div>
+              </div>
+              <div>
+                <img src="/static/img/star.png" alt="평점" class="starIcon" />
+                <span class="rate">${review.rating}</span>
+              </div>
             </div>
             <p>${review.content}</p>
             <div class="reviewImg"></div>
             <div class="updateBtn">
-            <button type="button" class="reviewDelete" onclick="deleteReview(${review.review_id})">삭제</button>
-            <button type="button" class="reviewEdit" onclick="edit()">수정</button>
+              <button type="button" class="reviewDelete" onclick="deleteReview(${review.review_id})">삭제</button>
+              <button type="button" class="reviewEdit" onclick="edit(${review.review_id})">수정</button>
             </div>
           `;
 
-          // 리뷰 이미지 처리
           const reviewImgContainer =
             reviewContainer.querySelector('.reviewImg');
           (review.ReviewImages || []).forEach(image => {
@@ -109,6 +107,79 @@ const deleteReview = async reviewId => {
       await reviewList();
     } else {
       console.error('리뷰 삭제에 실패했습니다.');
+    }
+  } catch (error) {
+    console.error('오류 발생:', error);
+  }
+};
+
+// 리뷰 수정
+const edit = reviewId => {
+  try {
+    const reviewContainer = document.querySelector(`#review_${reviewId}`);
+
+    if (reviewContainer) {
+      const restaurant =
+        reviewContainer.querySelector('.restaurantName').textContent;
+      const rating = reviewContainer.querySelector('.rate').textContent;
+      const content = reviewContainer.querySelector('p').textContent;
+
+      reviewContainer.innerHTML = `
+        <div class="reviewInfo">
+          <div>
+            <span>${restaurant}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+                fill="#4DDA67"
+              />
+            </svg>
+          </a>
+          </div>
+          <div>
+            <img src="/static/img/star.png" alt="평점" class="starIcon" />
+            <input type="number" id="editedRating" value="${rating}" step="0.5" min="0" max="5" />
+          </div>
+        </div>
+        <div class="editContent">
+        <textarea id="editedContent">${content}</textarea>
+        <div class="updateBtn">
+          <button type="button" class="reviewEdit" onclick="editDone(${reviewId})">수정완료</button>
+        </div>
+        </div>
+      `;
+    } else {
+      console.error('리뷰 컨테이너를 찾을 수 없습니다.');
+    }
+  } catch (error) {
+    console.error('오류 발생:', error);
+  }
+};
+
+const editDone = async reviewId => {
+  try {
+    const editedRating = document.querySelector('#editedRating').value;
+    const editedContent = document.querySelector('#editedContent').value;
+
+    const res = await axios({
+      method: 'PATCH',
+      url: `/api/review/myreview/${reviewId}`,
+      data: {
+        rating: editedRating,
+        content: editedContent,
+      },
+    });
+
+    if (res.data.status === 'success') {
+      await reviewList();
+    } else {
+      console.error('리뷰 업데이트에 실패했습니다.');
     }
   } catch (error) {
     console.error('오류 발생:', error);

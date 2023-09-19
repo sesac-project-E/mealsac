@@ -130,6 +130,7 @@ a {
 
 .updateBtn {
   float: right;
+  display: flex;
 }
 
 .reviewDelete,
@@ -145,6 +146,25 @@ a {
   align-items: center;
   height: 60vh;
   text-align: center;
+}
+
+#editedRating {
+  width: 40px;
+}
+
+.editContent {
+  display: flex;
+  flex-direction: column;
+}
+
+#editedContent {
+  height: 50px;
+  width: 100%;
+  resize: none;
+}
+
+.reviewEdit {
+  margin-left: auto;
 }
 
 /* width: 360~768 */
