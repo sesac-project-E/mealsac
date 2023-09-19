@@ -44,8 +44,8 @@ exports.getAllReviews = async (req, res) => {
         is_useful: didIRecommend,
       };
     });
-
-    res.json({ status: 'success', data: reviewsWithUsefulness });
+    // res.json({ status: 'success', data: reviewsWithUsefulness });
+    return reviewsWithUsefulness;
   } catch (error) {
     console.error(error);
     res.status(500).json({
