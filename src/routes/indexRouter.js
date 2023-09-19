@@ -66,11 +66,6 @@ indexRouter.get('/mypage', (req, res) => {
 
 indexRouter.get('/profile', userController.getProfile);
 
-indexRouter.get(
-  '/restaurant/:restaurant_id',
-  restaurantController.getRestaurant,
-);
-
 indexRouter.get('/restaurants', (req, res) => {
   const userInfo = req.session.userInfo;
 
