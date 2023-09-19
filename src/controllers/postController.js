@@ -6,6 +6,27 @@ exports.getPosts = (req, res) => {
   });
 };
 
+// const getPosts = async (req, res) => {
+//   const result = await Post.findAll();
+
+//   const formattedData = [];
+//   for (const entry of result) {
+//     const formattedEntry = {
+//       post_id: entry.dataValues.post_id,
+//       title: entry.dataValues.title,
+//       content: entry.dataValues.content,
+//       createdAt: entry.dataValues.createdAt,
+//       updatedAt: entry.dataValues.updatedAt,
+//     };
+//     formattedData.push(formattedEntry);
+//   }
+
+// console.log(formattedData);
+// res.render('board', {
+//   data: formattedData,
+// });
+// };
+
 exports.getPost = async (req, res) => {
   const { post_id } = req.params;
   try {
@@ -35,6 +56,23 @@ exports.getPost = async (req, res) => {
       message: 'An error occurred while render post.',
     });
   }
+};
+
+exports.postCreatePost = async (req, res) => {
+  const { title, content } = req.body;
+
+  const result = await Post.create({
+    title,
+    content,
+  });
+
+  res.send({
+    post_id: result.dataValues.post_id,
+    title: result.dataValues.title,
+    content: result.dataValues.content,
+    createdAt: result.dataValues.createdAt,
+    updatedAt: result.dataValues.updatedAt,
+  });
 };
 
 // exports.getPost = async (req, res) => {
