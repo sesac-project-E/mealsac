@@ -58,8 +58,8 @@ const reviewList = async () => {
             <p>${review.content}</p>
             <div class="reviewImg"></div>
             <div class="updateBtn">
-            <button type="button" class="reviewDelete">삭제</button>
-            <button type="button" class="reviewEdit">수정</button>
+            <button type="button" class="reviewDelete" onclick="deleteReview(${review.review_id})">삭제</button>
+            <button type="button" class="reviewEdit" onclick="edit()">수정</button>
             </div>
           `;
 
@@ -82,11 +82,9 @@ const reviewList = async () => {
             reviewImgContainer.style.height = '0';
           }
 
-          // 리뷰 컨테이너를 #reviews에 추가
           document.querySelector('#myReviews').appendChild(reviewContainer);
         });
       } else {
-        // 리뷰 데이터가 없는 경우 메시지 출력
         document.querySelector('#myReviews').innerHTML =
           '<div class="none">남긴 리뷰가 없습니다.</div>';
       }
@@ -95,6 +93,25 @@ const reviewList = async () => {
     }
   } catch (error) {
     console.log(error);
+  }
+};
+
+// 리뷰 삭제
+const deleteReview = async reviewId => {
+  try {
+    const res = await axios.delete(`/api/review/myreview/${reviewId}`);
+    if (res.data.status === 'success') {
+      const reviewContainer = document.querySelector(`#review_${reviewId}`);
+      if (reviewContainer) {
+        reviewContainer.remove();
+      }
+
+      await reviewList();
+    } else {
+      console.error('리뷰 삭제에 실패했습니다.');
+    }
+  } catch (error) {
+    console.error('오류 발생:', error);
   }
 };
 
