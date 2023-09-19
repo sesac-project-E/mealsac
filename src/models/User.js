@@ -30,8 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
-  console.log(sequelize);
-
   User.associate = function (models) {
     User.belongsToMany(models.Restaurant, {
       through: 'LikeRestaurant',
@@ -56,12 +54,20 @@ module.exports = (sequelize, DataTypes) => {
       as: 'restaurants',
       foreignKey: 'id',
     });
+    // User - Board
+    // 한명의 유저는 여러개 게시글 업로드 가능 / 게시글 올린 사람 존재
+    User.hasMany(models.Post, {
+      foreignKey: 'user_id',
+      sourceKey: 'id',
+      onDelete: 'CASCADE',
+    });
+    // User - Comment
+    // 한명의 유저는 여러개의 댓글 가능 / 댓글 올린 유저 존재
+    User.hasMany(models.Comment, {
+      foreignKey: 'user_id',
+      sourceKey: 'id',
+      onDelete: 'CASCADE',
+    });
   };
-  console.log(sequelize);
-
-  // console.log(user)
   return User;
 };
-console.log(sequelize);
-
-// console.log(user);

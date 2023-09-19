@@ -11,7 +11,7 @@ module.exports = (sequelize, Datatypes) => {
         autoIncrement: true,
       },
       user_id: {
-        type: Datatypes.STRING(100),
+        type: Datatypes.INTEGER,
         allowNull: false,
       },
       board_id: {
@@ -23,26 +23,40 @@ module.exports = (sequelize, Datatypes) => {
         allowNull: false,
       },
       content: {
-        type: Datatypes.TEXT,
+        type: Datatypes.TEXT(),
         allowNull: false,
       },
-      created_at: {
-        type: Datatypes.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: Datatypes.DATE,
-        allowNull: false,
-      },
-      views: {
-        type: Datatypes.INTEGER,
-        allowNull: false,
-      },
+      // created_at: {
+      //   type: Datatypes.DATE,
+      //   allowNull: false,
+      // },
+      // updated_at: {
+      //   type: Datatypes.DATE,
+      //   allowNull: false,
+      // },
     },
     {
+      tableName: 'Post',
       freezeTableName: true,
-      timestamps: false,
+      timestamps: true,
     },
   );
+
+  Post.associate = function (models) {
+    // Board - post
+    // 포스트는 보드에 속해있음
+
+    Post.belongsTo(models.Board, {
+      foreignKey: 'board_id',
+      targetKey: 'board_id',
+      onDelete: 'CASCADE',
+    });
+    // user - post
+    Post.belongsTo(models.User, {
+      foreignKey: 'user_id',
+      targetKey: 'id',
+      onDelete: 'CASCADE',
+    });
+  };
   return Post;
 };
