@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
+  console.log(sequelize);
+
   User.associate = function (models) {
     User.belongsToMany(models.Restaurant, {
       through: 'LikeRestaurant',
@@ -55,5 +57,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id',
     });
   };
+  console.log(sequelize);
+
+  // console.log(user)
   return User;
 };
+console.log(sequelize);
+
+// console.log(user);
