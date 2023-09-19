@@ -88,7 +88,7 @@ const noticeBoard = async () => {
 const Post = [
   {
     post_id: 1,
-    user_id: 4,
+    user_id: 'a',
     board_id: 1,
     title: 'aaa',
     board_name: 'dd',
@@ -502,13 +502,19 @@ function getCookie(name) {
 }
 
 window.addEventListener('load', () => {
-  var loginStatus = getCookie('loginStatus');
+  let loginStatus = getCookie('loginStatus');
+  let userId = `${Post.user_id}`;
 
   if (loginStatus === 'loggedIn') {
-    document.querySelector('.write').style.display = 'block';
-    document.querySelector('#noticeWrite').style.display = 'block';
+    if (userId === 'admin') {
+      document.querySelector('#freeWrite').style.display = 'block';
+      document.querySelector('#noticeWrite').style.display = 'block';
+    } else {
+      document.querySelector('#freeWrite').style.display = 'block';
+      document.querySelector('#noticeWrite').style.display = 'none';
+    }
   } else {
-    document.querySelector('.write').style.display = 'none';
+    document.querySelector('#freeWrite').style.display = 'none';
     document.querySelector('#noticeWrite').style.display = 'none';
   }
 });
