@@ -11,7 +11,7 @@
     <main class="container-fluid itemContainer">
       <div class="row">
         <section class="map col-lg-7 col-md-7">지도</section>
-        <section class="restaurantList col-lg-5 col-md-5 col-sm-10" >
+        <section class="restaurantList col-lg-5 col-md-5" >
             <img src="../../static/img/hamburger.png" alt="" class="hamburgerIcon">
           <section class="search" id="up">
             <div class="searchName clicked">매장, 메뉴명 검색</div>
@@ -19,9 +19,9 @@
             <div class="formContainer">
             <form id="searchNameMenu">
               <div>
-              <input type="radio" name="search1" id="name" checked>
+              <input type="radio" name="search" id="name" checked>
               <label for="name">매장명 검색</label>
-              <input type="radio" name="search1" id="menu">
+              <input type="radio" name="search" id="menu">
               <label for="menu">메뉴명 검색</label>
             </div>
               <input type="text" id="searchInput" placeholder="매장명 검색" />
@@ -30,27 +30,41 @@
           </div>
           <div class="tagNstyle searchInvisible">
             <form class="searchTagStyle">
-              <input type="radio" name="search2" id="category" checked>
+              <input type="radio" name="search" id="category" checked>
               <label for="category">카테고리 검색</label>
-              <input type="radio" name="search2" id="tag">
+              <input type="radio" name="search" id="tag">
               <label for="tag">태그 검색</label>
             </form>
             <div class="styleContainer">
               <section class="more">
-                <div class="tag" id="korean">한식</div>
-                <div class="tag" id="chinese">중식</div>
-                <div class="tag" id="street">분식</div>
-                <div class="tag" id="japanese">일식</div>
-                <div class="tag" id="western">양식</div>
-                <div class="tag" id="pub">펍</div>
-                <div class="tag" id="chicken">치킨</div>
-                <div class="tag" id="pork">족발, 보쌈</div>
-                <div class="tag" id="cafe">카페</div>
-                <div class="tag" id="meat">고기구이</div>
-                <div class="tag" id="asian">아시안</div>
-                <div class="tag" id="dessert">디저트</div>
-                <div class="tag" id="fast">패스트푸드</div>
-                <div class="tag" id="convenience">편의점</div>
+                <input type="radio" name="style" id="korean" checked>
+                <label for="korean">한식</label>
+                <input type="radio" name="style" id="chinese">
+                <label for="chinese">중식</label>
+                <input type="radio" name="style" id="street">
+                <label for="street">분식</label>
+                <input type="radio" name="style" id="japanese">
+                <label for="japanese">일식</label>
+                <input type="radio" name="style" id="western">
+                <label for="western">양식</label>
+                <input type="radio" name="style" id="pub">
+                <label for="pub">펍</label>
+                <input type="radio" name="style" id="chicken">
+                <label for="chicken">치킨</label>
+                <input type="radio" name="style" id="pork">
+                <label for="pork">족발, 보쌈</label>
+                <input type="radio" name="style" id="cafe">
+                <label for="cafe">카페</label>
+                <input type="radio" name="style" id="meat">
+                <label for="meat">고기구이</label>
+                <input type="radio" name="style" id="asian">
+                <label for="asian">아시안</label>
+                <input type="radio" name="style" id="dessert">
+                <label for="dessert">디저트</label>
+                <input type="radio" name="style" id="fast">
+                <label for="fast">패스트푸드</label>
+                <input type="radio" name="style" id="convenience">
+                <label for="convenience">편의점</label>
               </section>
               <div class="stylesMore">더보기</div>
             </div>
@@ -101,6 +115,17 @@
       </div>
     </main>
     <!-- <%- include('../common/footer.ejs') %> -->
+    <script>
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+        key: "<%= googleMapsApiKey %>",
+        v: "weekly",
+      });
+      <% if (userInfo) { %>
+        const userInfo = JSON.parse('<%- JSON.stringify(userInfo) %>');
+      <% } else { %>
+       const userInfo = null;
+      <% } %>
+    </script>
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"></script> -->
   </body>
 </html>
