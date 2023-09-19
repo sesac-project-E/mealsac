@@ -88,7 +88,7 @@ const noticeBoard = async () => {
 const Post = [
   {
     post_id: 1,
-    user_id: 'a',
+    user_id: '36',
     board_id: 1,
     title: 'aaa',
     board_name: 'dd',
