@@ -57,7 +57,7 @@ const reviewList = async () => {
             </div>
             <p>${review.content}</p>
             <div class="reviewImg"></div>
-            <div>
+            <div class="updateBtn">
             <button type="button" class="reviewDelete">삭제</button>
             <button type="button" class="reviewEdit">수정</button>
             </div>
@@ -88,7 +88,7 @@ const reviewList = async () => {
       } else {
         // 리뷰 데이터가 없는 경우 메시지 출력
         document.querySelector('#myReviews').innerHTML =
-          '<div id="none">남긴 리뷰가 없습니다.</div>';
+          '<div class="none">남긴 리뷰가 없습니다.</div>';
       }
     } else {
       console.log('서버 응답 오류:', res.data.message);

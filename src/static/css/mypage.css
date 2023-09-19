@@ -39,7 +39,7 @@ h1 {
 #myLike,
 #myReview,
 #myPost {
-  width: 20vw;
+  width: 22vw;
   height: 7vh;
   border: none;
   background-color: transparent;
@@ -67,7 +67,11 @@ span {
 .list {
   width: 70vw;
   margin: auto;
+  display: inline-block;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 #likeStore {
@@ -125,6 +129,25 @@ a {
   color: black;
 }
 
+.updateBtn {
+  float: right;
+}
+
+.reviewDelete,
+.reviewEdit {
+  border: none;
+  background-color: transparent;
+  font-size: 80%;
+}
+
+.none {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  text-align: center;
+}
+
 /* width: 360~768 */
 @media (min-width: 361px) and (max-width: 768px) {
   html {
@@ -140,7 +163,6 @@ a {
   }
   .list {
     width: 100%;
-    height: 100%;
     border-radius: 50px 50px 0px 0px;
     background-color: #fff;
   }
@@ -150,11 +172,6 @@ a {
     box-shadow: none;
     margin-bottom: 20px;
     padding: 0;
-  }
-
-  #reviews {
-    border: none;
-    box-shadow: inherit;
   }
 
   hr {
@@ -173,18 +190,17 @@ a {
     color: #fff;
   }
 
-  .list {
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .userRestaurant {
+  .reviewInfo span {
     font-size: 90%;
   }
 
   .reviews {
-    margin-left: 10px;
+    margin: 5px 10px 5px 10px;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: solid 1px #4dda67;
+    font-size: 90%;
   }
 }
 
@@ -221,6 +237,12 @@ a {
 
   .userRestaurant {
     height: 5vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .userRestaurant button {
+    font-size: 90%;
   }
 
   .clicked {
@@ -234,30 +256,8 @@ a {
     color: #fff;
   }
 
-  #myLikes {
-    scale: 80%;
-    position: relative;
-    top: -50px;
-  }
-
   br {
     height: 2px;
-  }
-
-  #myReviews {
-    margin-top: 20px;
-    padding: 20px;
-  }
-
-  #reviews {
-    border: none;
-    box-shadow: inherit;
-  }
-
-  .list {
-    height: 500px;
-    display: flex;
-    flex-direction: column;
   }
 
   #none {
@@ -268,7 +268,16 @@ a {
     font-size: 80%;
   }
 
+  .reviewInfo span {
+    font-size: 80%;
+  }
+
   .reviews {
-    margin: 0 0 20px 0;
+    margin: 5px 10px 5px 10px;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: solid 1px #4dda67;
+    font-size: 80%;
   }
 }
