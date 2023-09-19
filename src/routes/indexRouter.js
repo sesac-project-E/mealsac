@@ -101,25 +101,25 @@ indexRouter.get('/post/edit/:post_id', (req, res) => {
   res.render('boardModify');
 });
 
-// indexRouter.get('/post/:post_id', (req, res) => {
-//   const post = {
-//     post_id: 1,
-//     user_id: '36',
-//     board_id: 1,
-//     title: 'aaa',
-//     board_name: 'dd',
-//     content: 'ssss',
-//     updated_at: '2023.10.07 09:10',
-//     views: 12,
-//     user_name: '포스트_유저네임',
-//   };
-
-//   res.render('boardPost', { post });
-// });
-
 indexRouter.get('/post/:post_id', (req, res) => {
-  res.render('boardPost');
+  const post = {
+    post_id: 1,
+    user_id: '36',
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+    user_name: '포스트_유저네임',
+  };
+
+  res.render('boardPost', { post });
 });
+
+// indexRouter.get('/post/:post_id', (req, res) => {
+//   res.render('boardPost');
+// });
 
 indexRouter.get('/random', (req, res) => {
   res.render('random');

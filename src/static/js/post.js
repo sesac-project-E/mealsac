@@ -32,3 +32,25 @@ const enterReply = async e => {
   const formData = new FormData(replyForm);
   const replyContent = formData.get('replyContent');
 };
+
+// 수정
+const modifyBtn = () => {
+  //   location.href = `/post/edit/${post_id}`;
+  location.href = `/post/edit/post_id`;
+};
+
+// 삭제
+const deleteBtn = async () => {
+  try {
+    const res = await axios({
+      method: 'DELETE',
+      url: `/api/post/${post.post_id}`,
+      data: { post_id: post.post_id },
+    });
+    if (res.data.result) {
+      location.href = '/board';
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
