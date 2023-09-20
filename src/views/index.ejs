@@ -11,10 +11,17 @@
     <%- include('./common/header.ejs') %>
 
     <!-- search -->
-    <div class="searchContainer">
-      <input type="text" id="searchInput" placeholder="매장명 검색" />
-      <button type="submit">검색</button>
-    </div>
+    <form id="searchForm" action="/restaurants" method="GET">
+      <div class="searchContainer">
+        <input
+          type="text"
+          name="query"
+          id="searchInput"
+          placeholder="매장명 검색"
+        />
+        <button type="submit">검색</button>
+      </div>
+    </form>
     <br />
 
     <!-- Menu Icons -->
