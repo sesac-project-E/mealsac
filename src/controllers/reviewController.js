@@ -1,5 +1,7 @@
 const path = require('path');
 const {
+  sequelize,
+  User,
   Review,
   ReviewImage,
   ReviewUsefulness,
@@ -14,6 +16,11 @@ exports.getAllReviews = async (req, res) => {
     const reviews = await Review.findAll({
       where: { restaurant_id },
       include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['user_name'],
+        },
         {
           model: ReviewImage,
           attributes: ['image_url'],
@@ -59,6 +66,7 @@ exports.postReview = async (req, res) => {
   const { restaurant_id } = req.params;
   const { content, rating } = req.body;
   const userInfo = req.session ? req.session.userInfo : null;
+
   if (!userInfo || !userInfo.id) {
     return res.status(400).json({
       status: 'error',
@@ -66,41 +74,80 @@ exports.postReview = async (req, res) => {
     });
   }
 
+  const transaction = await sequelize.transaction();
+
   try {
-    let restaurant = await Restaurant.findOne({
-      attributes: ['reviews_count', 'rating'],
-      where: { restaurant_id: restaurant_id },
-    });
+    let restaurant = await Restaurant.findOne(
+      {
+        attributes: ['reviews_count', 'rating'],
+        where: { restaurant_id },
+      },
+      { transaction },
+    );
+
     let reviews_count = restaurant.dataValues.reviews_count;
     let restaurantRating = restaurant.dataValues.rating;
-    const newReview = await Review.create({
-      content: content,
-      rating: rating,
-      user_id: userInfo.id,
-      restaurant_id: Number(restaurant_id),
-    });
+
+    const newReview = await Review.create(
+      {
+        review_id: null,
+        content,
+        rating,
+        user_id: userInfo.id,
+        restaurant_id: Number(restaurant_id),
+      },
+      { transaction },
+    );
+
+    if (!newReview || !newReview.review_id) {
+      await transaction.rollback();
+      return res.status(500).json({
+        status: 'error',
+        message: '리뷰 생성에 실패했습니다.',
+      });
+    }
 
     const imagePromises = (req.files || []).map(file => {
       const filePath = path.join('/static/img/reviewImage', file.filename);
-      return ReviewImage.create({
-        review_id: newReview.review_id,
-        image_url: filePath,
-      });
+      return ReviewImage.create(
+        {
+          image_id: null,
+          review_id: newReview.review_id,
+          image_url: filePath,
+        },
+        { transaction },
+      );
     });
-    await Promise.all(imagePromises);
+
+    const images = await Promise.all(imagePromises);
+
     await Restaurant.update(
       {
         reviews_count: reviews_count + 1,
         rating:
           (restaurantRating * reviews_count + rating) / (reviews_count + 1),
       },
-      { where: { restaurant_id: restaurant_id } },
+      {
+        where: { restaurant_id },
+        transaction,
+      },
     );
+
+    await transaction.commit();
+
     res.status(201).json({
       status: 'success',
       message: '성공적으로 리뷰를 등록했습니다.',
+      review: {
+        review_id: newReview.review_id,
+        content: newReview.content,
+        rating: newReview.rating,
+        user_id: newReview.user_id,
+        images: images.map(image => image.image_url),
+      },
     });
   } catch (error) {
+    await transaction.rollback();
     console.error('에러 정보: ', error);
     res.status(500).json({
       status: 'error',
@@ -204,14 +251,8 @@ exports.getMyReviews = async (req, res) => {
   }
 
   const user_id = userInfo.id;
-  const page = Number(req.query.page) || 1;
-  const limit = 5;
-  const offset = (page - 1) * limit;
 
   try {
-    const totalReviews = await Review.count({ where: { user_id } });
-    const totalPages = Math.ceil(totalReviews / limit);
-
     const reviews = await Review.findAll({
       where: { user_id },
       include: [
@@ -225,8 +266,6 @@ exports.getMyReviews = async (req, res) => {
         },
       ],
       order: [['createdAt', 'DESC']],
-      limit,
-      offset,
     });
 
     if (reviews.length === 0) {
@@ -234,7 +273,6 @@ exports.getMyReviews = async (req, res) => {
         status: 'success',
         message: '사용자가 작성한 리뷰가 없습니다.',
         data: [],
-        totalPages: 0,
       });
     }
 
@@ -248,7 +286,7 @@ exports.getMyReviews = async (req, res) => {
       }),
     );
 
-    res.json({ status: 'success', data: reviewsWithUsefulness, totalPages });
+    res.json({ status: 'success', data: reviewsWithUsefulness });
   } catch (error) {
     console.error(error);
     res.status(500).json({

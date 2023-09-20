@@ -103,38 +103,26 @@ exports.deleteLike = async (req, res) => {
 exports.getUserLikes = async (req, res) => {
   const { id } =
     req.session && req.session.userInfo ? req.session.userInfo : -1;
-  console.log('****************', req.session);
-
   if (id > 0) {
-    const response = await User.findAll({
-      where: { id: id },
-      attributes: ['id', 'user_name'],
-      include: [
+    const response = await Restaurant.findAll({
+      include : [
         {
-          model: Restaurant,
-          attributes: [
-            'restaurant_id',
-            'restaurant_name',
-            'likes_count',
-            'reviews_count',
-            'rating',
-          ],
-          include: [
-            {
-              model: RestaurantImage,
-              attributes: ['restaurant_image_url'],
-              limit: 1,
-            },
-          ],
+          model : User,
+          where : {id : id}
         },
-      ],
-    });
-    //response 키 값에 userName넣어서 전송
-    // response['userName'] = user_name;
-    console.log(response);
-    res.send(response);
+        {
+          model: RestaurantImage,
+          attributes: ['restaurant_image_url'],
+          limit: 1,
+        }
+      ]
+    })
+    const ret = []
+    for (let [k,v] in Object.entries(response)) {
+      ret.push(response[k].dataValues)
+    }
+    return ret.slice(0, )
   } else {
     res.send('session에 저장된 정보가 없습니다.').status(400);
   }
-  res.send('tttt');
 };

@@ -53,6 +53,7 @@ exports.getPost = async (req, res) => {
 };
 
 exports.postCreatePost = async (req, res) => {
+
   const { id } =
     req.session && req.session.userInfo ? req.session.userInfo : -1;
 
@@ -71,6 +72,7 @@ exports.postCreatePost = async (req, res) => {
   const result = await Post.create({
     title,
     content,
+
     user_id: id,
     board_id,
   });
