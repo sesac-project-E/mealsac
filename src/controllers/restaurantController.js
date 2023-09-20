@@ -129,7 +129,10 @@ exports.getSearchRestaurantByName = async (req, res) => {
     const response = await Restaurant.findAndCountAll({
       // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit: 20,
-      where: { restaurant_name: { [Op.like]: `%${q}%` } },
+      where: { 
+      restaurant_name: { 
+        [Op.like] : `%` + `${q}` + `%`
+      }},
       offset: 20 * (page - 1),
       order: [
         ['rating', 'DESC'],

@@ -38,7 +38,7 @@ h1 {
   flex-direction: column;
 }
 
-#write {
+.write {
   width: 100px;
   margin: 7px;
   border-radius: 30px;
