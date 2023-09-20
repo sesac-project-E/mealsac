@@ -54,14 +54,13 @@ indexRouter.get('/login', (req, res) => {
   res.render('login');
 });
 
-indexRouter.get('/mypage', (req, res) => {
-  const userInfo = req.session.userInfo;
-
+indexRouter.get('/mypage', async (req, res) => {
+  const userInfo = await req.session.userInfo;
+  const restaurant = await likeRestaurantController.getUserLikes(req, res)
   res.render('mypage', {
     user_name: userInfo.user_name,
-    restaurant: likeRestaurantController.getUserLikes,
+    restaurant,
   });
-  // res.render('mypage/index');
 });
 
 indexRouter.get('/profile', userController.getProfile);
