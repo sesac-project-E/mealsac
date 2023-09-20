@@ -1,9 +1,12 @@
 html {
   margin: 0px 20px 0px 20px;
+  padding: 0;
 }
 
 body {
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 hr {
@@ -39,7 +42,7 @@ h1 {
 #myLike,
 #myReview,
 #myPost {
-  width: 20vw;
+  width: 22vw;
   height: 7vh;
   border: none;
   background-color: transparent;
@@ -67,7 +70,11 @@ span {
 .list {
   width: 70vw;
   margin: auto;
+  display: inline-block;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 #likeStore {
@@ -76,13 +83,13 @@ span {
   padding: 10px 10px;
 }
 
-#reviews {
+.reviews {
   width: 95%;
-  height: 100px;
   border-radius: 21px;
   box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px;
+  padding: 10px 20px;
   margin: 20px;
+  display: inline-block;
 }
 
 .container {
@@ -95,8 +102,69 @@ span {
   margin: 20px;
 }
 
-#none {
+.starIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.reviewInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reviewImg {
+  overflow: auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.reviewImg img {
+  width: 80px;
+  height: 80px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.updateBtn {
+  float: right;
+  display: flex;
+}
+
+.reviewDelete,
+.reviewEdit {
+  border: none;
+  background-color: transparent;
+  font-size: 80%;
+}
+
+.none {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
   text-align: center;
+}
+
+#editedRating {
+  width: 40px;
+}
+
+.editContent {
+  display: flex;
+  flex-direction: column;
+}
+
+#editedContent {
+  height: 50px;
+  width: 100%;
+  resize: none;
+}
+
+.reviewEdit {
+  margin-left: auto;
 }
 
 /* width: 360~768 */
@@ -125,11 +193,6 @@ span {
     padding: 0;
   }
 
-  #reviews {
-    border: none;
-    box-shadow: inherit;
-  }
-
   hr {
     width: 70vw;
     border: none;
@@ -140,27 +203,23 @@ span {
     color: #fff;
   }
 
-  span,
+  .msg,
   h1,
   #userName {
     color: #fff;
   }
 
-  /* #myLikes {
-    scale: 80%;
-    position: relative;
-    top: -50px;
+  .reviewInfo span {
+    font-size: 90%;
   }
 
-  #myReviews {
-    margin-top: 20px;
-    padding: 20px;
-  } */
-
-  .list {
-    height: 500px;
-    display: flex;
-    flex-direction: column;
+  .reviews {
+    margin: 5px 10px 5px 10px;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: solid 1px #4dda67;
+    font-size: 90%;
   }
 }
 
@@ -197,6 +256,12 @@ span {
 
   .userRestaurant {
     height: 5vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .userRestaurant button {
+    font-size: 90%;
   }
 
   .clicked {
@@ -204,39 +269,34 @@ span {
     color: #fff;
   }
 
-  span,
+  .msg,
   h1,
   #userName {
     color: #fff;
-  }
-
-  #myLikes {
-    scale: 80%;
-    position: relative;
-    top: -50px;
   }
 
   br {
     height: 2px;
   }
 
-  #myReviews {
-    margin-top: 20px;
-    padding: 20px;
-  }
-
-  #reviews {
-    border: none;
-    box-shadow: inherit;
-  }
-
-  .list {
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-  }
-
   #none {
     margin-top: 100px;
+  }
+
+  .userRestaurant {
+    font-size: 80%;
+  }
+
+  .reviewInfo span {
+    font-size: 80%;
+  }
+
+  .reviews {
+    margin: 5px 10px 5px 10px;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: solid 1px #4dda67;
+    font-size: 80%;
   }
 }

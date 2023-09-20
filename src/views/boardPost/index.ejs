@@ -4,6 +4,7 @@
     <%- include('../common/commonHead.ejs') %>
     <title>MealSac | 게시판</title>
     <link rel="stylesheet" href="/static/css/boardPost.css" />
+    <script defer src="/static/js/post.js"></script>
   </head>
   <body>
     <%- include('../common/header.ejs') %>
@@ -16,8 +17,14 @@
       </div>
 
       <div class="category">
-        <button type="button" class="boardType" name="boardType">
-          자유게시판
+        <button
+          type="button"
+          class="boardType"
+          name="boardType"
+          onclick="category()"
+        >
+          <% if(post.board_id===1) {%> 자유게시판 <% } else { %> 공지사항 <% }
+          %>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -35,25 +42,38 @@
 
       <div class="postBox">
         <div class="titleBox">
-          <h3 class="title">sss</h3>
+          <h3 class="title"><%= post.title%></h3>
           <div class="postInfo">
-            <p>userName</p>
+            <p><%= post.user_name %></p>
+            <p></p>
             <p>2023.09.17</p>
           </div>
         </div>
-        <div class="postContent">우아아아ㅠㅠ치킨 먹고싶다ㅠ</div>
+        <div class="postContent"><%= post.content %></div>
+        <!-- <div class="postContent">우아아아ㅠㅠ치킨 먹고싶다ㅠ</div> -->
       </div>
 
       <div class="btnBox">
-        <button type="button" id="modify" name="modify">수정</button>
-        <button type="button" id="delete" name="delete">삭제</button>
+        <button type="button" id="modify" name="modify" onclick="modifyBtn()">
+          수정
+        </button>
+        <button type="button" id="delete" name="delete" onclick="deleteBtn()">
+          삭제
+        </button>
       </div>
 
       <div class="replyBox">
-        <form class="textReply">
-          <p>댓글</p>
-          <textarea name="reply" placeholder="댓글을 입력해 주세요."></textarea>
-          <button type="submit" id="replyBtn">등록</button>
+        <form class="textReply" id="replyForm" style="display: none">
+          <span>댓글</span>
+          <!-- <span><= Post.reply %></span> -->
+          <textarea
+            name="replyContent"
+            id="replyContent"
+            placeholder="댓글을 입력해 주세요."
+          ></textarea>
+          <button type="submit" id="replyBtn" onclick="enterReply()">
+            등록
+          </button>
         </form>
         <div class="replyList">
           <div class="reply">
