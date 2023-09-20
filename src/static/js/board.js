@@ -13,15 +13,361 @@ const freeBoard = () => {
   noticeBoardList.style.display = 'none';
 };
 
-const noticeBoard = () => {
+const noticeBoard = async () => {
   noticeBoardBtn.classList.add('clicked');
   freeBoardBtn.classList.remove('clicked');
 
   freeBoardList.style.display = 'none';
   noticeBoardList.style.display = 'flex';
+
+  try {
+    const res = await axios.get('/api/post/notice');
+    const noticePosts = res.data;
+
+    const tableBody = document.querySelector('.noticeBoardTable');
+    const pagination = document.querySelector('#noticeBoardPage');
+
+    const postsPerPage = 10; // 페이지 당 게시물 수
+    let currentPage = 1; // 현재 페이지
+
+    function displayPosts(posts, page) {
+      const startIndex = (page - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const displayedPosts = posts.slice(startIndex, endIndex);
+
+      tableBody.innerHTML = '';
+
+      displayedPosts.forEach((post, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+              <th scope="row" class="idx">${startIndex + index + 1}</th>
+              <td class="title"><a href="/post/${post.post_id}">${
+          post.title
+        }</a></td>
+              <td class="writer">${post.board_name}</td>
+              <td class="date">${post.updated_at}</td>
+            `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function updatePagination(totalPosts) {
+      pagination.innerHTML = ''; // 페이지네이션 초기화
+      const totalPages = Math.ceil(totalPostsForBoard1 / postsPerPage);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.classList.add('page-link');
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        pageLink.dataset.page = i;
+
+        pageLink.addEventListener('click', event => {
+          event.preventDefault();
+          currentPage = parseInt(event.target.dataset.page, 10);
+          displayPosts(Post, currentPage);
+        });
+
+        const pageItem = document.createElement('li');
+        pageItem.classList.add('page-item');
+        pageItem.appendChild(pageLink);
+
+        pagination.appendChild(pageItem);
+      }
+    }
+
+    displayPosts(Post, currentPage);
+    updatePagination(Post);
+  } catch (error) {
+    // 에러가 발생하면 콘솔에 에러 메시지를 출력합니다.
+    console.error('에러 발생:', error);
+  }
 };
 
-// 자유게시판 페이지
+// 임시 데이터
+const Post = [
+  {
+    post_id: 1,
+    user_id: '36',
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 2,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 3,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 4,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 5,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 6,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 7,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 8,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 9,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 10,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 11,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 12,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 13,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 14,
+    user_id: 4,
+    board_id: 1,
+    title: 'aaa',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 1,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 2,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 3,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 4,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 5,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 6,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 7,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 8,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 9,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 10,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 11,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 12,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 13,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+  {
+    post_id: 14,
+    user_id: 4,
+    board_id: 2,
+    title: '공지',
+    board_name: 'dd',
+    content: 'ssss',
+    updated_at: '2023.10.07 09:10',
+    views: 12,
+  },
+];
+
 document.addEventListener('DOMContentLoaded', function () {
   const tableBody = document.querySelector('.freeBoardTable');
   const pagination = document.querySelector('#freeBoardPage');
@@ -29,74 +375,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const postsPerPage = 10; // 페이지 당 게시물 수
   let currentPage = 1; // 현재 페이지
 
-  // 임시 데이터
-  const freePosts = [
-    {
-      title: '제목12',
-      board_name: '닉네임12',
-      updated_at: '2023.10.08 14:55',
-    },
-    {
-      title: '제목11',
-      board_name: '닉네임11',
-      updated_at: '2023.10.07 09:10',
-    },
-    {
-      title: '제목10',
-      board_name: '닉네임10',
-      updated_at: '2023.10.06 22:30',
-    },
-    {
-      title: '제목9',
-      board_name: '닉네임9',
-      updated_at: '2023.10.05 20:05',
-    },
-    {
-      title: '제목8',
-      board_name: '닉네임8',
-      updated_at: '2023.10.04 18:25',
-    },
-    {
-      title: '제목7',
-      board_name: '닉네임7',
-      updated_at: '2023.10.03 17:45',
-    },
-    {
-      title: '제목6',
-      board_name: '닉네임6',
-      updated_at: '2023.10.02 16:10',
-    },
-    {
-      title: '제목5',
-      board_name: '닉네임5',
-      updated_at: '2023.10.01 14:20',
-    },
-    {
-      title: '제목4',
-      board_name: '닉네임4',
-      updated_at: '2023.09.30 12:30',
-    },
-    {
-      title: '제목3',
-      board_name: '닉네임3',
-      updated_at: '2023.09.29 11:15',
-    },
-    {
-      title: '제목2',
-      board_name: '닉네임2',
-      updated_at: '2023.09.28 10:45',
-    },
-    {
-      title: '제목1',
-      board_name: '닉네임1',
-      updated_at: '2023.09.27 09:36',
-    },
-  ];
-
   function displayPosts(posts, page) {
     const startIndex = (page - 1) * postsPerPage;
     const endIndex = startIndex + postsPerPage;
-    const displayedPosts = posts.slice(startIndex, endIndex);
+
+    // board_id가 1인 게시물만 필터링
+    const displayedPosts = posts
+      .filter(post => post.board_id === 1)
+      .slice(startIndex, endIndex);
 
     tableBody.innerHTML = '';
 
@@ -104,7 +390,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const row = document.createElement('tr');
       row.innerHTML = `
               <th scope="row" class="idx">${startIndex + index + 1}</th>
-              <td class="title"><a href="/post">${post.title}</a></td>
+              <td class="title"><a href="/post/${post.post_id}">${
+        post.title
+      }</a></td>
               <td class="writer">${post.board_name}</td>
               <td class="date">${post.updated_at}</td>
             `;
@@ -115,10 +403,13 @@ document.addEventListener('DOMContentLoaded', function () {
   function updatePagination(totalPosts) {
     pagination.innerHTML = ''; // 페이지네이션 초기화
 
-    // 전체 페이지 수를 계산
-    const totalPages = Math.ceil(totalPosts.length / postsPerPage);
+    // board_id가 1인 게시물 수를 세기
+    const totalPostsForBoard1 = totalPosts.filter(
+      post => post.board_id === 1,
+    ).length;
 
-    // 페이지 번호를 생성, 이벤트 등록
+    const totalPages = Math.ceil(totalPostsForBoard1 / postsPerPage);
+
     for (let i = 1; i <= totalPages; i++) {
       const pageLink = document.createElement('a');
       pageLink.classList.add('page-link');
@@ -129,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pageLink.addEventListener('click', event => {
         event.preventDefault();
         currentPage = parseInt(event.target.dataset.page, 10);
-        displayPosts(freePosts, currentPage);
+        displayPosts(Post, currentPage);
       });
 
       const pageItem = document.createElement('li');
@@ -140,129 +431,90 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  displayPosts(freePosts, currentPage);
-  updatePagination(freePosts);
+  displayPosts(Post, currentPage);
+  updatePagination(Post);
 });
 
-// 공지사항 페이지네이션
-document.addEventListener('DOMContentLoaded', function () {
-  const tableBody = document.querySelector('.noticeBoardTable');
-  const pagination = document.querySelector('#noticeBoardPage');
+// 공지사항
+// document.addEventListener('DOMContentLoaded', function () {
+// const tableBody = document.querySelector('.noticeBoardTable');
+// const pagination = document.querySelector('#noticeBoardPage');
+// const postsPerPage = 10; // 페이지 당 게시물 수
+// let currentPage = 1; // 현재 페이지
+// function displayPosts(posts, page) {
+//   const startIndex = (page - 1) * postsPerPage;
+//   const endIndex = startIndex + postsPerPage;
+//   // board_id가 2인 게시물만 필터링
+//   const displayedPosts = posts
+//     .filter(post => post.board_id === 2)
+//     .slice(startIndex, endIndex);
+//   tableBody.innerHTML = '';
+//   displayedPosts.forEach((post, index) => {
+//     const row = document.createElement('tr');
+//     row.innerHTML = `
+//             <th scope="row" class="idx">${startIndex + index + 1}</th>
+//             <td class="title"><a href="/post/${post.post_id}">${
+//       post.title
+//     }</a></td>
+//             <td class="writer">${post.board_name}</td>
+//             <td class="date">${post.updated_at}</td>
+//           `;
+//     tableBody.appendChild(row);
+//   });
+// }
+// function updatePagination(totalPosts) {
+//   pagination.innerHTML = ''; // 페이지네이션 초기화
+//   const totalPostsForBoard1 = totalPosts.filter(
+//     post => post.board_id === 2,
+//   ).length;
+//   const totalPages = Math.ceil(totalPostsForBoard1 / postsPerPage);
+//   for (let i = 1; i <= totalPages; i++) {
+//     const pageLink = document.createElement('a');
+//     pageLink.classList.add('page-link');
+//     pageLink.href = '#';
+//     pageLink.textContent = i;
+//     pageLink.dataset.page = i;
+//     pageLink.addEventListener('click', event => {
+//       event.preventDefault();
+//       currentPage = parseInt(event.target.dataset.page, 10);
+//       displayPosts(Post, currentPage);
+//     });
+//     const pageItem = document.createElement('li');
+//     pageItem.classList.add('page-item');
+//     pageItem.appendChild(pageLink);
+//     pagination.appendChild(pageItem);
+//   }
+// }
+// displayPosts(Post, currentPage);
+// updatePagination(Post);
+// });
 
-  const postsPerPage = 10; // 페이지 당 게시물 수
-  let currentPage = 1; // 현재 페이지
-
-  // 임시 데이터
-  const noticePosts = [
-    {
-      title: '공지12',
-      board_name: 'admin',
-      updated_at: '2023.10.08 14:55',
-    },
-    {
-      title: '공지11',
-      board_name: 'admin',
-      updated_at: '2023.10.07 09:10',
-    },
-    {
-      title: '공지10',
-      board_name: 'admin',
-      updated_at: '2023.10.06 22:30',
-    },
-    {
-      title: '공지9',
-      board_name: 'admin',
-      updated_at: '2023.10.05 20:05',
-    },
-    {
-      title: '공지8',
-      board_name: 'admin',
-      updated_at: '2023.10.04 18:25',
-    },
-    {
-      title: '공지7',
-      board_name: 'admin',
-      updated_at: '2023.10.03 17:45',
-    },
-    {
-      title: '공지6',
-      board_name: 'admin',
-      updated_at: '2023.10.02 16:10',
-    },
-    {
-      title: '공지5',
-      board_name: 'admin',
-      updated_at: '2023.10.01 14:20',
-    },
-    {
-      title: '공지4',
-      board_name: 'admin',
-      updated_at: '2023.09.30 12:30',
-    },
-    {
-      title: '공지3',
-      board_name: 'admin',
-      updated_at: '2023.09.29 11:15',
-    },
-    {
-      title: '공지2',
-      board_name: 'admin',
-      updated_at: '2023.09.28 10:45',
-    },
-    {
-      title: '공지1',
-      board_name: 'admin',
-      updated_at: '2023.09.27 09:36',
-    },
-  ];
-
-  function displayPosts(posts, page) {
-    const startIndex = (page - 1) * postsPerPage;
-    const endIndex = startIndex + postsPerPage;
-    const displayedPosts = posts.slice(startIndex, endIndex);
-
-    tableBody.innerHTML = '';
-
-    displayedPosts.forEach((post, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-                <th scope="row" class="idx">${startIndex + index + 1}</th>
-                <td class="title"><a href="/post">${post.title}</a></td>
-                <td class="writer">${post.board_name}</td>
-                <td class="date">${post.updated_at}</td>
-              `;
-      tableBody.appendChild(row);
-    });
-  }
-
-  function updatePagination(totalPosts) {
-    pagination.innerHTML = ''; // 페이지네이션 초기화
-
-    // 전체 페이지 수를 계산
-    const totalPages = Math.ceil(totalPosts.length / postsPerPage);
-
-    // 페이지 번호를 생성, 이벤트 등록
-    for (let i = 1; i <= totalPages; i++) {
-      const pageLink = document.createElement('a');
-      pageLink.classList.add('page-link');
-      pageLink.href = '#';
-      pageLink.textContent = i;
-      pageLink.dataset.page = i;
-
-      pageLink.addEventListener('click', event => {
-        event.preventDefault();
-        currentPage = parseInt(event.target.dataset.page, 10);
-        displayPosts(noticePosts, currentPage);
-      });
-
-      const pageItem = document.createElement('li');
-      pageItem.classList.add('page-item');
-      pageItem.appendChild(pageLink);
-
-      pagination.appendChild(pageItem);
+// 로그인 유무 글쓰기 버튼
+function getCookie(name) {
+  var cookies = document.cookie.split(';');
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i].trim();
+    if (cookie.indexOf(name + '=') === 0) {
+      return cookie.substring(name.length + 1);
     }
   }
+  return null;
+}
 
-  displayPosts(noticePosts, currentPage);
-  updatePagination(noticePosts);
+window.addEventListener('load', () => {
+  let loginStatus = getCookie('loginStatus');
+  let userId = `${Post.user_id}`;
+
+  if (loginStatus === 'loggedIn') {
+    if (userId === 'admin') {
+      document.querySelector('#freeWrite').style.display = 'block';
+      document.querySelector('#noticeWrite').style.display = 'block';
+    } else {
+      document.querySelector('#freeWrite').style.display = 'block';
+      document.querySelector('#noticeWrite').style.display = 'none';
+    }
+  } else {
+    document.querySelector('#freeWrite').style.display = 'none';
+    document.querySelector('#noticeWrite').style.display = 'none';
+  }
 });
