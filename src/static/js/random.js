@@ -26,7 +26,7 @@ const questionForm = [
         "value" : 0,
         "label" : "돈이 많다.",
         "eng" : "rich",
-        "src" : "../../static/img/random/rich.png"
+        "src" : "../../static/img/random/rich.png",
       },
       {
         "value" : 1,
@@ -80,6 +80,23 @@ const questionForm = [
     ] 
   }
 ]
+const imgSrcs = {
+  "korean" : "../../static/img/random/korean.jpeg",
+  "street" : "../../static/img/random/street.jpeg",
+  "chinese" : "../../static/img/random/chinese.jpeg",
+  "cafe" : "../../static/img/random/cafe.jpeg",
+  "dessert" : "../../static/img/random/dessert.jpeg",
+  "japanese" : "../../static/img/random/japanese.jpeg",
+  "fast" : "../../static/img/random/fast.jpeg",
+  "meat" : "../../static/img/random/meat.jpeg",
+  "pub" : "../../static/img/random/pub.jpeg",
+  "convenience" : "../../static/img/random/convenience.jpeg",
+  "chicken" : "../../static/img/random/chicken.jpeg",
+  "pork" : "../../static/img/random/pork.jpeg",
+  "western" : "../../static/img/random/western.jpeg",
+
+}
+
 const submitForm = {
   "money" : "",
   "people" : "",
@@ -120,10 +137,12 @@ function randomNext () {
 }
 
 function randomStart() {
-  randomBorders[3].style.display = 'block'
-  randomBorders[0].style.animation = 'colDelete 1000ms forwards'
-  randomBorders[1].style.animation = 'moveRowRight 1000ms forwards' 
-  randomBorders[2].style.animation = 'moveRowRight 1000ms forwards' 
+  if (window.screen.width > 768)  {
+    randomBorders[3].style.display = 'block'
+    randomBorders[0].style.animation = 'colDelete 1000ms forwards'
+    randomBorders[1].style.animation = 'moveRowRight 1000ms forwards' 
+    randomBorders[2].style.animation = 'moveRowRight 1000ms forwards' 
+  }
   randomInit.style.setProperty('--beforeDisplay', 'none')
   randomInit.style.setProperty('--afterDisplay', 'block')
   startRandomBtn.style.display = 'none'
@@ -142,65 +161,89 @@ function randomEnd() {
     return ;
   }
   form.remove()
-  randomBorders[1].style.animation = 'fillFullContainer 1000ms forwards' 
-  randomBorders[2].style.animation = 'fillFullContainer 1000ms forwards' 
-  randomBorders[0].style.animation = 'col 1000ms forwards'
-  randomBorders[0].style.animationDelay = '250ms'
+  if (window.screen.width > 768) {
+    randomBorders[1].style.animation = 'fillFullContainer 1000ms forwards' 
+    randomBorders[2].style.animation = 'fillFullContainer 1000ms forwards' 
+    randomBorders[0].style.animation = 'col 1000ms forwards'
+    randomBorders[0].style.animationDelay = '250ms'
+  } 
   randomQuestion.style.display = 'none'
+  randomResultForm.style.display = 'flex'
   randomResultForm.style.width = '100%'
   const {money, people, taste} = submitForm
   const result = money + people + taste
   const resultMessage = document.createElement('h1')
   toMainBtn.style.display = 'block'
   toRandomBtn.style.display = 'block'
+  const img = document.createElement('img')
+  img.style.width = '15rem'
+  randomResultForm.append(img)
   switch (result) {
     case 'richsolofamiliar':
       resultMessage.innerText = '고기구이을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["meat"]}`)
       break
     case 'richsolonew':
         resultMessage.innerText = '족발을 추천합니다!'
         randomResultForm.append(resultMessage)
+        img.setAttribute('src', `${imgSrcs["pork"]}`)
         break
     case 'richmanyfamiliar':
       resultMessage.innerText = '일식을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["japanese"]}`)
       break
     case 'richmanynew':
       resultMessage.innerText = '중식을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["chinese"]}`)
+
       break
     case 'middlesolofamiliar':
       resultMessage.innerText = '한식을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["korean"]}`)
+
       break
     case 'middlesolonew':
         resultMessage.innerText = '양식을 추천합니다!'
         randomResultForm.append(resultMessage)
+        img.setAttribute('src', `${imgSrcs["western"]}`)
         break
     case 'middlemanyfamiliar':
       resultMessage.innerText = '치킨을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["chicken"]}`)
+
       break
     case 'middlemanynew':
       resultMessage.innerText = '펍을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["pub"]}`)
       break
     case 'poorsolofamiliar':
       resultMessage.innerText = '편의점을 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["convenience"]}`)
+
       break
     case 'poorsolonew':
         resultMessage.innerText = '디저트을 추천합니다!'
         randomResultForm.append(resultMessage)
+        img.setAttribute('src', `${imgSrcs["dessert"]}`)
+
         break
     case 'poormanyfamiliar':
       resultMessage.innerText = '패스트푸드를 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["fast"]}`)
+
       break
     case 'poormanynew':
       resultMessage.innerText = '카페를 추천합니다!'
       randomResultForm.append(resultMessage)
+      img.setAttribute('src', `${imgSrcs["cafe"]}`)
       break
     default:
       return ;
