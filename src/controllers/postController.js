@@ -65,7 +65,6 @@ exports.postCreatePost = async (req, res) => {
 
   console.log(req.session)
   console.log(req.session.userInfo)
-  const {id}  = (req.session && req.session.userInfo) ? req.session.userInfo : 1
   const { title, content, board_id } = req.body;
 
   const result = await Post.create({
