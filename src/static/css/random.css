@@ -12,11 +12,10 @@
   height  : 70vh;   
   align-items: center; 
   overflow: hidden;
-  background-color: aliceblue;
 }
 
 .random-content {
-  width: 100%;
+  min-width: inherit;
   height: inherit;
   display: flex;
   padding: 0 2.5%;
@@ -171,10 +170,13 @@ form {
 
 .random-result {
   display: flex;
-  min-width: 20%;
+  flex-direction: column-reverse;
+  min-width: 80%;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
+  margin: 20% 0;
 }
+
 @media screen and (max-width : 1023px) {
   .random-result {
     display: none;
@@ -242,7 +244,7 @@ form {
   top : 50%;
   transform: translateY(-50%);
   width: 10px;
-  background: black;
+  background: #85bc4f;
   animation: col 1000ms forwards;
 }
 
@@ -252,7 +254,7 @@ form {
   left : 0;
   /* transform: translateX(-25%); */
   height: 10px;
-  background: black;
+  background:#85bc4f;
   animation: row 1000ms forwards;
   animation-delay: 1000ms;
 }
@@ -263,7 +265,7 @@ form {
   left : 0;
   /* transform: translateX(-25%); */
   height: 10px;
-  background: black;
+  background: #85bc4f;
   animation: row 1000ms forwards;
   animation-delay: 1000ms;
 }
@@ -275,9 +277,42 @@ form {
   right: 0;
   transform: translateY(-50%);
   width: 10px;
-  background: black;
+  background: #85bc4f;
   animation: col 1000ms forwards;
   animation-delay: 250ms;
+}
+#toRandomBtn {
+  min-width: 10rem;
+  min-height: 3.3rem;
+  border-radius: 25px;
+  border: 1px solid #1b63e7;
+  background-color: white;
+  margin: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  display: none;
+}
+
+#toRandomBtn:hover {
+  background-color: #1b63e7;
+  color: white;
+}
+
+#toMainBtn{
+  min-width: 10rem;
+  min-height: 3.3rem;
+  border-radius: 25px;
+  border: 1px solid #a5e467;
+  background-color: white;
+  margin: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  display: none;
+}
+#toMainBtn:hover {
+  background: #a5e467;
+  color: white;
+
 }
 
 @keyframes fadein {
