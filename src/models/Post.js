@@ -13,10 +13,18 @@ module.exports = (sequelize, Datatypes) => {
       user_id: {
         type: Datatypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
       },
       board_id: {
         type: Datatypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'Board',
+          key: 'board_id',
+        },
       },
       title: {
         type: Datatypes.STRING(255),
@@ -58,6 +66,9 @@ module.exports = (sequelize, Datatypes) => {
       foreignKey: 'user_id',
       targetKey: 'id',
       onDelete: 'CASCADE',
+    });
+    Post.hasMany(models.PostImage, {
+      foreignKey: 'image_id',
     });
   };
   return Post;
