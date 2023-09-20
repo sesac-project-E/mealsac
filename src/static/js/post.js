@@ -2,7 +2,7 @@ const category = () => {
   history.back();
 };
 
-// 컨트롤러 완성 후
+// 컨트롤러 완성 후 주석 풀기
 // const myPost = () => {
 //   const btnBox = document.querySelector('.btnBox');
 //   if (`${post.user_id}` === `${user.id}`) {

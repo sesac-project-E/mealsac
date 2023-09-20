@@ -2,23 +2,24 @@ html {
   margin: 0px 20px 0px 20px;
 }
 
-#container {
+.container {
   padding: 0;
-  font-size: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .topBox {
   height: 20vh;
+  display: flex;
   align-items: center;
-  padding-top: 4vh;
-  margin-bottom: 20px;
+  padding-top: 5vh;
 }
 
-div h1 {
+h1 {
   font-weight: 900;
 }
 
-input {
+#inputTitle {
   border: none;
   outline: none;
 }
@@ -27,10 +28,15 @@ input {
   height: 50px;
   align-items: center;
   border-bottom: solid black;
+  margin: 15px 0;
 }
 
-.content {
+#editor {
   margin-top: 10px;
+}
+
+.ck-editor__editable {
+  min-height: 400px;
 }
 
 button {
@@ -54,4 +60,11 @@ form {
   margin: 5px;
   border-radius: 30px;
   border: solid 1px #ffe0b6;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
