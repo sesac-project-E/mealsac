@@ -9,10 +9,11 @@ const menuRouter = require('./menuRouter.js');
 const tagRouter = require('./tagRouter.js');
 const indexRouter = require('./indexRouter.js');
 const postRouter = require('./postRouter.js');
+
 const oauthRouter = require('./oauthRouter.js')
 const boardRouter = require('./boardRouter.js');
-const commentRouter = require('./commentRouter.js')
 
+const commentRouter = require('./commentRouter.js')
 
 router.use('/api/user', userRouter);
 router.use('/api/restaurant', restaurantRouter);
@@ -22,6 +23,7 @@ router.use('/api/like', likeRestaurantRouter);
 router.use('/api/menu', menuRouter);
 router.use('/api/tag', tagRouter);
 router.use('/api/post', postRouter);
+
 router.use('/api/oauth', oauthRouter);
 router.use('/api/board', boardRouter);
 router.use('/api/comment', commentRouter);
