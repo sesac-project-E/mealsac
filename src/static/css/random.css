@@ -40,14 +40,14 @@
 }
 
 .title {
-  font-size: 5rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 3%;
 }
 
 .random-intro-description {
   height: 40%;
-  font-size: 2rem;
+  font-size: 0.5rem;
   display: flex;
   list-style: none;
 }
@@ -62,7 +62,7 @@
 }
 
 .random-intro-marker {
-  width: 6rem;
+  width: 3rem;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 1px solid black;
@@ -87,7 +87,7 @@
   border: 1px solid gray;
   border-radius: 1.25rem;
   min-height: 3.5rem;
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bold;
   min-width: 12.5rem;
 }
@@ -98,7 +98,7 @@
 }
 
 #randomStartBtn:hover{
-  width: 17.5rem;
+  width: 12.5rem;
   transition: 0.75s ease;
   color :white;
   background-color: rgb(21, 173, 21);
@@ -163,7 +163,7 @@ form {
 }
 
 .option > label {
-  font-size: 1.5em;
+  font-size: 1rem;
   margin-bottom: 10%;
   cursor: pointer;
 }
@@ -177,11 +177,7 @@ form {
   margin: 20% 0;
 }
 
-@media screen and (max-width : 1023px) {
-  .random-result {
-    display: none;
-  }
-}
+
 
 .next-button {
   margin-right: 2.5%;
@@ -283,12 +279,12 @@ form {
 }
 #toRandomBtn {
   min-width: 10rem;
-  min-height: 3.3rem;
+  min-height: 3.5rem;
   border-radius: 25px;
   border: 1px solid #1b63e7;
   background-color: white;
   margin: 5px;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 700;
   display: none;
 }
@@ -300,12 +296,12 @@ form {
 
 #toMainBtn{
   min-width: 10rem;
-  min-height: 3.3rem;
+  min-height: 3.5rem;
   border-radius: 25px;
   border: 1px solid #a5e467;
   background-color: white;
   margin: 5px;
-  font-size: 18px;
+  font-size: 1rem;
   font-weight: 700;
   display: none;
 }
@@ -387,21 +383,46 @@ form {
 }
 
 /* font-size relative */
-@media (max-width: 1920px) {
+@media (max-width: 1200px) {
   * {
-    font-size: 10px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 768px) {
+  * {
+    font-size: 9px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   * {
     font-size: 6px;
   }
 }
 
 
-@media (max-width: 280px) {
-  * {
-    font-size: 4px;
+
+@media screen and (max-width : 768px) {
+  .random-container {
+    margin: 2.5%;
+  }
+  .random-result {
+    display: none;
+  }
+  #random-intro {
+    min-width: 100%;
+  }
+  .random-border{
+    display : none
+  }
+  form {
+    min-width: 100%;
+    text-align: center;
+  }
+  .options {
+    min-width: 100%;
+  }
+  .question {
+    min-width: 100%;
   }
 }
