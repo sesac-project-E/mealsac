@@ -58,12 +58,24 @@ label {
 
 .doLogin {
   border-radius: 15px;
-  border: 1px solid #a5e467;
-  background: #a5e467;
-  font-size: 25px;
-  font-weight: 500;
-
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
   height: 45px;
+  margin-bottom: 10px;
+}
+
+#login {
+  background: #a5e467;
+}
+
+#kakaoLogin {
+  background: #fee500;
+  padding-left: 0;
+}
+
+#kakaoIcon {
+  height: 40px;
 }
 
 .already {

@@ -76,5 +76,7 @@ ClassicEditor.create(document.querySelector('.editor'), {
   });
 
 // 작성
+// 작성한 글을 포스트로 요청
 
 // 취소
+// 원래 있던 게시판으로 돌아가도록
