@@ -59,6 +59,10 @@ exports.getPost = async (req, res) => {
 };
 
 exports.postCreatePost = async (req, res) => {
+
+  const { id } =
+    req.session && req.session.userInfo ? req.session.userInfo : -1;
+
   console.log(req.session)
   console.log(req.session.userInfo)
   const {id}  = (req.session && req.session.userInfo) ? req.session.userInfo : 1
@@ -71,15 +75,32 @@ exports.postCreatePost = async (req, res) => {
     board_id,
   });
 
-  res.send({
-    post_id: result.dataValues.post_id,
-    user_id: result.dataValues.user_id,
-    board_id: result.dataValues.board_id,
-    title: result.dataValues.title,
-    content: result.dataValues.content,
-    // createdAt: result.dataValues.createdAt,
-    // updatedAt: result.dataValues.updatedAt,
-  });
+
+  console.log(req.session);
+  console.log(req.session.userInfo);
+
+  if (req.session.userInfo) {
+    const { title, content, board_id } = req.body;
+
+    const result = await Post.create({
+      title,
+      content,
+      user_id: id,
+      board_id,
+    });
+    res.json({ result: true, message: '전송 완료!' });
+    // res.send({
+    //   post_id: result.dataValues.post_id,
+    //   user_id: result.dataValues.user_id,
+    //   board_id: result.dataValues.board_id,
+    //   title: result.dataValues.title,
+    //   content: result.dataValues.content,
+    //   // createdAt: result.dataValues.createdAt,
+    //   // updatedAt: result.dataValues.updatedAt,
+    // });
+  } else {
+    res.json({ result: false, message: '현재 로그인되어있지 않습니다.' });
+  }
 };
 
 // exports.getPost = async (req, res) => {
