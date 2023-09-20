@@ -1,11 +1,5 @@
 const { User, Post } = require('../models');
 
-exports.getPosts = (req, res) => {
-  Post.findAll().then(response => {
-    res.send(response);
-  });
-};
-
 // const getPosts = async (req, res) => {
 //   const result = await Post.findAll();
 
@@ -65,28 +59,31 @@ exports.postCreatePost = async (req, res) => {
   console.log(req.session);
   console.log(req.session.userInfo);
 
-  if (req.session.userInfo) {
-    const { title, content, board_id } = req.body;
-
-    const result = await Post.create({
-      title,
-      content,
-      user_id: id,
-      board_id,
+  if (!req.session.userInfo) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
     });
-    res.json({ result: true, message: '전송 완료!' });
-    // res.send({
-    //   post_id: result.dataValues.post_id,
-    //   user_id: result.dataValues.user_id,
-    //   board_id: result.dataValues.board_id,
-    //   title: result.dataValues.title,
-    //   content: result.dataValues.content,
-    //   // createdAt: result.dataValues.createdAt,
-    //   // updatedAt: result.dataValues.updatedAt,
-    // });
-  } else {
-    res.json({ result: false, message: '현재 로그인되어있지 않습니다.' });
   }
+
+  const { title, content, board_id } = req.body;
+
+  const result = await Post.create({
+    title,
+    content,
+    user_id: id,
+    board_id,
+  });
+  res.json({ result: true, message: '전송 완료!' });
+  // res.send({
+  //   post_id: result.dataValues.post_id,
+  //   user_id: result.dataValues.user_id,
+  //   board_id: result.dataValues.board_id,
+  //   title: result.dataValues.title,
+  //   content: result.dataValues.content,
+  //   // createdAt: result.dataValues.createdAt,
+  //   // updatedAt: result.dataValues.updatedAt,
+  // });
 };
 
 // exports.getPost = async (req, res) => {
