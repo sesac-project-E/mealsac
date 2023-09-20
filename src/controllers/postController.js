@@ -59,13 +59,15 @@ exports.getPost = async (req, res) => {
 };
 
 exports.postCreatePost = async (req, res) => {
-  const { title, content, post_id, user_id, board_id } = req.body;
+  console.log(req.session)
+  console.log(req.session.userInfo)
+  const {id}  = (req.session && req.session.userInfo) ? req.session.userInfo : 1
+  const { title, content, board_id } = req.body;
 
   const result = await Post.create({
     title,
     content,
-    post_id,
-    user_id,
+    user_id : id,
     board_id,
   });
 
