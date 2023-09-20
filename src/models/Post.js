@@ -62,3 +62,5 @@ module.exports = (sequelize, Datatypes) => {
   };
   return Post;
 };
+
+// module.exports = Post;
