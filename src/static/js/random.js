@@ -8,11 +8,11 @@ const randomStartBtn = document.querySelector("#randomStartBtn")
 const randomIntro = document.querySelector("#random-intro")
 const randomQuestion = document.querySelector("#random-question")
 const randomNextBtn = document.querySelector("#randomNextBtn")
-const randomPrevBtn = document.querySelector("#randomPrevBtn")
 const options = document.querySelector(".options")
 const randomResultForm = document.querySelector(".random-result")
+const toMainBtn = document.querySelector("#toMainBtn")
+const toRandomBtn = document.querySelector("#toRandomBtn")
 
-randomPrevBtn.style.display = 'none'
 
 let currQuestion = 0
 const question = document.querySelector(".question")
@@ -86,49 +86,37 @@ const submitForm = {
   "taste" : ""
 }
 
-// randomInit.animate(
-//   [
-//     { opacity: 0.5, easing: "ease-out" },
-//     { opacity: 1 },
-//   ],
-//   1000,
-// );
-
 function randomNext () {
-  randomPrevBtn.style.display = 'block'
-  randomPrevBtn.classList.add('bg-gray-hover')
-  randomPrevBtn.classList.remove('disabled')
   if (currQuestion == 2) {
-    randomPrevBtn.classList.remove('disabled')
-    randomEnd()
-    return ;
+    if (submitForm["taste"] === "") {
+      window.alert("하나를 선택해주세요")
+    } else {
+      randomEnd()
+      return ;
+    }
   } else if (currQuestion === 1) {
-
-    randomNextBtn.classList.remove('bg-green-hover')
-    randomNextBtn.classList.add('bg-blue-hover')
-
-    randomNextBtn.innerText = '결과 보기'
+    if (submitForm["people"] === "") {
+      window.alert("하나를 선택해주세요")
+    } else {
+      randomNextBtn.classList.remove('bg-green-hover')
+      randomNextBtn.classList.add('bg-blue-hover')
+      randomNextBtn.innerText = '결과 보기'
+      nextInit()
+      addInputs()
+    }
   } else {
-    randomNextBtn.classList.remove('bg-blue-hover')
-    randomNextBtn.classList.add('bg-green-hover')
-    randomNextBtn.innerText = '다음'
+    if (submitForm["money"] === "") {
+      window.alert("하나를 선택해주세요")
+    } else {
+      randomNextBtn.classList.remove('bg-blue-hover')
+      randomNextBtn.classList.add('bg-green-hover')
+      randomNextBtn.innerText = '다음'
+      nextInit()
+      addInputs()
+    }
   }
-  nextInit()
-  addInputs()
-}
 
-function randomPrev () {
-  randomNextBtn.classList.remove('bg-blue-hover')
-  randomNextBtn.classList.add('bg-green-hover')
-  randomNextBtn.innerText = '다음'
 
-  if (currQuestion === 0) {
-    randomPrevBtn.classList.add('disabled')
-    randomPrevBtn.classList.remove('bg-gray-hover')
-    return ;
-  } 
-  prevInit()
-  addInputs()
 }
 
 function randomStart() {
@@ -147,8 +135,6 @@ function randomStart() {
   form.style.justifyContent = 'space-around'
   form.style.width = '100%'
   form.style.minHeight = '100%'
-
-
 }
 
 function randomEnd() {
@@ -160,46 +146,62 @@ function randomEnd() {
   randomBorders[2].style.animation = 'fillFullContainer 1000ms forwards' 
   randomBorders[0].style.animation = 'col 1000ms forwards'
   randomBorders[0].style.animationDelay = '250ms'
+  randomQuestion.style.display = 'none'
+  randomResultForm.style.width = '100%'
   const {money, people, taste} = submitForm
   const result = money + people + taste
   const resultMessage = document.createElement('h1')
+  toMainBtn.style.display = 'block'
+  toRandomBtn.style.display = 'block'
   switch (result) {
     case 'richsolofamiliar':
-      resultMessage.innerText = '한식'
+      resultMessage.innerText = '고기구이을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'richsolonew':
-        resultMessage.innerText = '중식'
+        resultMessage.innerText = '족발을 추천합니다!'
         randomResultForm.append(resultMessage)
+        break
     case 'richmanyfamiliar':
-      resultMessage.innerText = '일식'
+      resultMessage.innerText = '일식을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'richmanynew':
-      resultMessage.innerText = '일식'
+      resultMessage.innerText = '중식을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'middlesolofamiliar':
-      resultMessage.innerText = '한식'
+      resultMessage.innerText = '한식을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'middlesolonew':
-        resultMessage.innerText = '중식'
+        resultMessage.innerText = '양식을 추천합니다!'
         randomResultForm.append(resultMessage)
+        break
     case 'middlemanyfamiliar':
-      resultMessage.innerText = '일식'
+      resultMessage.innerText = '치킨을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'middlemanynew':
-      resultMessage.innerText = '일식'
+      resultMessage.innerText = '펍을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'poorsolofamiliar':
-      resultMessage.innerText = '한식'
+      resultMessage.innerText = '편의점을 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'poorsolonew':
-        resultMessage.innerText = '중식'
+        resultMessage.innerText = '디저트을 추천합니다!'
         randomResultForm.append(resultMessage)
+        break
     case 'poormanyfamiliar':
-      resultMessage.innerText = '일식'
+      resultMessage.innerText = '패스트푸드를 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     case 'poormanynew':
-      resultMessage.innerText = '일식'
+      resultMessage.innerText = '카페를 추천합니다!'
       randomResultForm.append(resultMessage)
+      break
     default:
       return ;
   }
@@ -269,39 +271,5 @@ function nextInit() {
 }
 
 
-
-function prevInit() {
-  currQuestion = ((currQuestion - 1) < 0 ? 2 : (currQuestion - 1)) % 3
-  question.innerHTML = questionForm[currQuestion].question
-  const options = document.querySelector(".options")
-  let name = questionForm[currQuestion].name
-  const allOptions = document.querySelectorAll(".option")
-  allOptions.forEach((el) => {
-    el.remove()
-  })
-  for (let i = 0; i < questionForm[currQuestion].options.length; i++) {
-    const option = document.createElement('div')
-    option.classList.add('option')
-    const label1 = document.createElement('label')
-    label1.setAttribute("for", questionForm[currQuestion].options[i].eng)
-    const input = document.createElement('input')
-    input.setAttribute("type", "radio")
-    input.setAttribute("name", name)
-    input.setAttribute("name", name)
-    input.setAttribute("value", questionForm[currQuestion].options[i].eng)
-    input.setAttribute("id", questionForm[currQuestion].options[i].eng)
-    input.classList.add('input-none')
-    label1.appendChild(input)
-    const img = document.createElement('img')
-    img.setAttribute("src", questionForm[currQuestion].options[i].src)
-    label1.appendChild(img)
-    option.appendChild(label1)
-    const label2 = document.createElement('label')
-    label2.setAttribute("for", questionForm[currQuestion].options[i].eng)
-    label2.innerText = `${questionForm[currQuestion].options[i].label}`
-    option.appendChild(label2)
-    options.appendChild(option)
-  }
-}
 
 addInputs()
