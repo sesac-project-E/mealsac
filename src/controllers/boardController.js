@@ -57,8 +57,8 @@ exports.getFree = async (req, res) => {
     if (response.rows.length === 0) {
       throw Error();
     }
-    res.send(response);
-    // return response;
+    // res.send(response);
+    return response;
   } catch (error) {
     console.log(error);
     res.status(404).send();
