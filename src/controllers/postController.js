@@ -1,4 +1,4 @@
-const { Post, User } = require('../models');
+const { User, Post } = require('../models');
 
 exports.getPosts = (req, res) => {
   Post.findAll().then(response => {
@@ -59,19 +59,24 @@ exports.getPost = async (req, res) => {
 };
 
 exports.postCreatePost = async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, post_id, user_id, board_id } = req.body;
 
   const result = await Post.create({
     title,
     content,
+    post_id,
+    user_id,
+    board_id,
   });
 
   res.send({
     post_id: result.dataValues.post_id,
+    user_id: result.dataValues.user_id,
+    board_id: result.dataValues.board_id,
     title: result.dataValues.title,
     content: result.dataValues.content,
-    createdAt: result.dataValues.createdAt,
-    updatedAt: result.dataValues.updatedAt,
+    // createdAt: result.dataValues.createdAt,
+    // updatedAt: result.dataValues.updatedAt,
   });
 };
 
