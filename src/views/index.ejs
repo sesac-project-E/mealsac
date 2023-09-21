@@ -41,7 +41,7 @@
         </div>
       </div>
       <div id="mainInfo">
-        <div>
+        <div id="infoContainer">
           <div>
             <p>Taste the World Near You</p>
             <p>With <span>MEALSAC</span></p>
@@ -61,6 +61,35 @@
         <p>SCROLL</p>
         <img src="../static/img/navigate_next.svg" alt="스크롤이미지" />
       </button>
+    </div>
+    <!-- 모바일 메뉴 -->
+    <div class="mobileMenuBar">
+      <div>
+        <button
+          class="mobileMenu"
+          id="menuRandom"
+          onclick="window.location.href='/random'"
+        >
+          <img src="../static/img/random.png" alt="랜덤메뉴" />
+          <p>RANDOM</p>
+        </button>
+        <button
+          class="mobileMenu"
+          id="menuBoard"
+          onclick="window.location.href='/board'"
+        >
+          <img src="../static/img/board.png" alt="게시판" />
+          <p>BOARD</p>
+        </button>
+        <button
+          class="mobileMenu"
+          id="menuRestaurant"
+          onclick="window.location.href='/restaurants'"
+        >
+          <img src="../static/img/restaurant.png" alt="식당" />
+          <p>RESTAURANT</p>
+        </button>
+      </div>
     </div>
     <!-- 리스트 -->
     <div class="container">

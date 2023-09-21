@@ -28,12 +28,6 @@
   height: 100vh;
   background-color: #bce899;
   padding-left: 20px;
-}
-
-#mainInfo {
-  width: 50%;
-  height: 100vh;
-  background-color: #bce899;
   top: 0;
   left: 0;
   display: flex;
@@ -101,6 +95,11 @@
 }
 
 /* 플로팅 메뉴 */
+.mobileMenuBar,
+.mobileMenu {
+  display: none;
+}
+
 .floating {
   background-color: #e0f0d1;
   position: fixed;
@@ -392,4 +391,222 @@ h3 {
   transform: scale(1.1);
   transition: transform 0.3s ease-in-out;
   background-color: #ffba3a;
+}
+
+/* /////////////////////////////////////// */
+/* 반응형 */
+@media only screen and (max-width: 920px) {
+  .mainBanner {
+    flex-direction: column-reverse;
+  }
+
+  #mainCarousel {
+    width: 100%;
+    height: 60vh;
+  }
+
+  .carousel-item img {
+    height: 60vh;
+  }
+
+  #mainInfo {
+    width: 100%;
+    height: 60vh;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    background-color: rgba(188, 232, 153, 0.5);
+    text-align: center;
+  }
+
+  #scroll {
+    background-color: transparent;
+    border: none;
+    scale: 120%;
+    padding-left: 50px;
+  }
+
+  #scroll p {
+    font-weight: bold;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+  }
+
+  #scroll img {
+    height: 50px;
+  }
+
+  #infoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #infoContainer p {
+    scale: 150%;
+  }
+
+  .search input {
+    scale: 80%;
+    font-size: 80%;
+    width: 100%;
+  }
+
+  .search img {
+    margin-right: 0;
+  }
+
+  .floating {
+    scale: 70%;
+  }
+
+  .likeTitle {
+    margin-right: 30px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header {
+    padding: 15px;
+  }
+  .mainBanner {
+    flex-direction: column-reverse;
+  }
+
+  #mainCarousel {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .carousel-item img {
+    width: 200vh;
+    height: 100vh;
+  }
+
+  #mainInfo {
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    background-color: rgba(188, 232, 153, 0.5);
+    text-align: center;
+  }
+
+  #scroll {
+    background-color: transparent;
+    border: none;
+    scale: 120%;
+    padding-left: 50px;
+  }
+
+  #scroll p {
+    font-weight: bold;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+  }
+
+  #scroll img {
+    height: 50px;
+  }
+
+  #infoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #infoContainer p {
+    scale: 200%;
+    margin-bottom: 20px;
+  }
+
+  .search {
+    width: 200px;
+  }
+
+  .search input {
+    scale: 80%;
+    font-size: 80%;
+    width: 100%;
+  }
+
+  .search img {
+    margin-right: 0;
+  }
+
+  .card {
+    width: 150px;
+    height: 200px;
+  }
+
+  .best {
+    margin-bottom: 0;
+  }
+  .new {
+    margin: 0 auto;
+  }
+  .floating {
+    display: none;
+  }
+
+  .mobileMenuBar {
+    display: block;
+    background-color: #e0f0d1;
+    width: 100%;
+    height: 120px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mobileMenuBar div {
+    margin: auto;
+    display: flex;
+  }
+
+  .mobileMenu {
+    scale: 90%;
+    display: block;
+    border: none;
+    background-color: transparent;
+    width: 70px;
+    margin: 0 5px;
+  }
+
+  .mobileMenuBar img {
+    width: 50px;
+  }
+
+  .mobileMenuBar p {
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .animateTitle {
+    padding-top: 50px;
+  }
+
+  .likes {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .likeTitle button {
+    width: 100px;
+    font-size: 80%;
+    margin-bottom: 20px;
+  }
+
+  .likeCard {
+    width: 140px;
+    height: 200px;
+    margin: 0 5px;
+    padding: 10px;
+  }
 }
