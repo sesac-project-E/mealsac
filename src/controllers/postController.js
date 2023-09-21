@@ -59,6 +59,7 @@ exports.postCreatePost = async (req, res) => {
   // });
 };
 
+// 본인포스팅 삭제 or 관리자가 특정포스팅 삭제
 exports.deletePost = async (req, res) => {
   console.log(req.session.userInfo);
   const userInfo = req.session ? req.session.userInfo : null;
@@ -71,6 +72,8 @@ exports.deletePost = async (req, res) => {
   }
 
   const user_id = userInfo.id;
+
+  //포스트 아이디를 파라미터로 가져와서 삭제
   const { post_id } = req.params;
 
   try {
