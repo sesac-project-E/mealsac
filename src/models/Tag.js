@@ -13,6 +13,9 @@ const Tag = (sequelize, dataTypes) => {
       tag_name: {
         type: dataTypes.STRING(256),
       },
+      tag_name_eng: {
+        type: dataTypes.STRING(256),
+      },
     },
     {
       tableName: 'Tag',
