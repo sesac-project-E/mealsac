@@ -18,7 +18,7 @@ class UploadAdapter {
     const xhr = (this.xhr = new XMLHttpRequest());
     // 경로 변수화
     const currentUrl = window.location.origin;
-    const uploadUrl = `${currentUrl}/upload/editor/file`;
+    const uploadUrl = `/api/post/uploadImg`;
     xhr.open('POST', uploadUrl, true);
     xhr.responseType = 'json';
   }
@@ -51,7 +51,7 @@ class UploadAdapter {
 
   _sendRequest(file) {
     const data = new FormData();
-    data.append('file', file);
+    data.append('imageFiles', file);
     console.log(data);
     this.xhr.send(data);
   }
@@ -76,5 +76,39 @@ ClassicEditor.create(document.querySelector('.editor'), {
   });
 
 // 수정 완료
+document.querySelector('#modifyBtn').addEventListener('click', async e => {
+  e.preventDefault();
+
+  const postId = document.querySelector('input').id;
+
+  const editorData = editor.getData();
+  const title = document.querySelector('.inputTitle').value;
+  const board_id = document.querySelector('form').id;
+
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: `/api/post/${postId}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify({
+        title: title,
+        content: editorData,
+        board_id,
+      }),
+    });
+    if (res.data.status === 'success') {
+      location.href = `/post/${postId}`;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 // 취소
+document.querySelector('#backBtn').addEventListener('click', async e => {
+  e.preventDefault();
+  const postId = document.querySelector('input').id;
+  location.href = `/post/${postId}`;
+});
