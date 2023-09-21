@@ -14,7 +14,7 @@ exports.kakaoResult = async (req, res) => {
     {
       "grant_type" : "authorization_code",
       "client_id" : `${rest}`,
-      "redirect_uri" : "http://127.0.0.1:8000/api/oauth/kakao/result",
+      "redirect_uri" : "https://mealsac-473f548ea790.herokuapp.com/api/oauth/kakao/result",
       "code" : `${code}`
     },
     {
@@ -32,6 +32,8 @@ exports.kakaoResult = async (req, res) => {
       }
     }
   )
+  console.log(getUserInfo.data.properties)
+  console.log(getUserInfo.data)
   let user = await User.findOne({
     where : {user_id : `${getUserInfo.data.id}@kakao.com`},
   })
