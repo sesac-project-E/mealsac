@@ -8,7 +8,7 @@ const switchToFreeBoard = () => {
   noticeBoardBtn.classList.remove('clicked');
   freeBoardList.style.display = 'flex';
   noticeBoardList.style.display = 'none';
-  fetchAndDisplayPosts(1, '.freeBoardTable', '#freeBoardPage');
+  fetchAndDisplayPosts(1, '.freeBoardTable', '#pagination-container-freeBoard');
 };
 
 const switchToNoticeBoard = () => {
@@ -16,17 +16,28 @@ const switchToNoticeBoard = () => {
   freeBoardBtn.classList.remove('clicked');
   freeBoardList.style.display = 'none';
   noticeBoardList.style.display = 'flex';
-  fetchAndDisplayPosts(2, '.noticeBoardTable', '#noticeBoardPage');
+  fetchAndDisplayPosts(
+    2,
+    '.noticeBoardTable',
+    '#pagination-container-noticeBoard',
+  );
 };
 
 freeBoardBtn.addEventListener('click', switchToFreeBoard);
 noticeBoardBtn.addEventListener('click', switchToNoticeBoard);
 
-async function fetchAndDisplayPosts(boardId, tableSelector, pageSelector) {
+async function fetchAndDisplayPosts(
+  boardId,
+  tableSelector,
+  pageSelector,
+  currentPage = 1,
+) {
+  console.log(
+    `Function called with boardId: ${boardId}, currentPage: ${currentPage}`,
+  ); // 이 로그 추가
   const tableBody = document.querySelector(tableSelector);
   const pagination = document.querySelector(pageSelector);
   const postsPerPage = 10;
-  let currentPage = 1;
 
   let endpoint = `/api/board/?page=${currentPage}`;
   if (boardId === 2) {
@@ -36,6 +47,10 @@ async function fetchAndDisplayPosts(boardId, tableSelector, pageSelector) {
   try {
     const res = await axios.get(endpoint);
     const posts = res.data.rows;
+    const totalPosts = res.data.count;
+
+    console.log('API Response:', res.data);
+    console.log('Posts:', posts);
 
     if (!Array.isArray(posts)) {
       console.error('Unexpected response format.');
@@ -43,10 +58,27 @@ async function fetchAndDisplayPosts(boardId, tableSelector, pageSelector) {
     }
 
     displayPosts(posts, currentPage, boardId, tableBody);
-    updatePagination(posts, postsPerPage, boardId, pagination);
+    updatePagination(
+      totalPosts,
+      posts,
+      postsPerPage,
+      boardId,
+      pagination,
+      tableBody,
+      tableSelector, // 변수 추가
+      pageSelector, // 변수 추가
+    );
   } catch (error) {
     console.error('Error fetching posts:', error);
   }
+}
+
+function formatDate(rawDate) {
+  let dateObj = new Date(rawDate);
+  return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(
+    2,
+    '0',
+  )}-${String(dateObj.getDate()).padStart(2, '0')}`;
 }
 
 function displayPosts(posts, page, boardId, tableBody) {
@@ -54,24 +86,37 @@ function displayPosts(posts, page, boardId, tableBody) {
   const startIndex = (page - 1) * postsPerPage;
   const endIndex = startIndex + postsPerPage;
 
-  const displayedPosts = posts.slice(startIndex, endIndex);
+  const displayedPosts = posts;
 
   tableBody.innerHTML = '';
   displayedPosts.forEach((post, index) => {
+    const formattedDate = formatDate(post.createdAt); // 변환된 날짜
     const row = document.createElement('tr');
     row.innerHTML = `
         <th scope="row" class="idx">${startIndex + index + 1}</th>
         <td class="title"><a href="/post/${post.post_id}">${post.title}</a></td>
-        <td class="writer">${post.board_name}</td>
-        <td class="date">${post.updated_at}</td>
+        <td class="writer">${post.User.user_name}</td> 
+        <td class="date">${formattedDate}</td>
     `;
     tableBody.appendChild(row);
   });
 }
 
-function updatePagination(posts, postsPerPage, boardId, pagination) {
-  const totalPosts = posts.length;
+function updatePagination(
+  totalPosts,
+  posts,
+  postsPerPage,
+  boardId,
+  pagination,
+  tableBody,
+  tableSelector, // 변수 추가
+  pageSelector, // 변수 추가
+) {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
+  console.log('Total Posts:', totalPosts);
+  console.log('Posts Per Page:', postsPerPage);
+  console.log('Total Pages:', totalPages);
+
   pagination.innerHTML = '';
 
   for (let i = 1; i <= totalPages; i++) {
@@ -83,8 +128,9 @@ function updatePagination(posts, postsPerPage, boardId, pagination) {
 
     pageLink.addEventListener('click', event => {
       event.preventDefault();
-      currentPage = parseInt(event.target.dataset.page, 10);
-      displayPosts(posts, currentPage, boardId, tableBody);
+      const clickedPage = parseInt(event.target.dataset.page, 10);
+      console.log(`Fetching data for page: ${clickedPage}`);
+      fetchAndDisplayPosts(boardId, tableSelector, pageSelector, clickedPage);
     });
 
     const pageItem = document.createElement('li');
