@@ -35,19 +35,20 @@ const enterReply = async e => {
 
 // 수정
 const modifyBtn = () => {
-  location.href = `/post/edit/${post_id}`;
-  // location.href = `/post/edit/post_id`;
+  const postId = document.querySelector('.postBox').id;
+  location.href = `/post/edit/${postId}`;
 };
 
 // 삭제
 const deleteBtn = async () => {
+  const postId = document.querySelector('.postBox').id;
+
   try {
     const res = await axios({
       method: 'DELETE',
-      url: `/api/post/${post.post_id}`,
-      data: { post_id: post.post_id },
+      url: `/api/post/${postId}`,
     });
-    if (res.data.result) {
+    if (res.data.status === 'success') {
       location.href = '/board';
     }
   } catch (err) {
