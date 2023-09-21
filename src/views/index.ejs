@@ -177,10 +177,15 @@
                 class="card"
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
+                <% if (restaurant.RestaurantImages &&
+                restaurant.RestaurantImages.length > 0) { %>
                 <img
                   src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
+                <% } else { %>
+                <img src="../static/img/commingsoon.jpg" alt="이미지 준비중" />
+                <% } %>
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
                 <div class="categoryRating">
                   <p class="category"><%= restaurant.category %></p>
@@ -197,6 +202,7 @@
                 </div>
               </div>
             </div>
+
             <% }); %><% recentRestaurants.forEach(function(restaurant) { %>
 
             <div class="card-container">
@@ -204,10 +210,15 @@
                 class="card"
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
+                <% if (restaurant.RestaurantImages &&
+                restaurant.RestaurantImages.length > 0) { %>
                 <img
-                  src="<%= restaurant.image_url %>"
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
+                <% } else { %>
+                <img src="../static/img/commingsoon.jpg" alt="이미지 준비중" />
+                <% } %>
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
                 <div class="categoryRating">
                   <p class="category"><%= restaurant.category %></p>
@@ -224,6 +235,7 @@
                 </div>
               </div>
             </div>
+
             <% }); %>
           </div>
         </div>
