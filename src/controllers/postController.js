@@ -25,8 +25,17 @@ exports.getPost = async (req, res) => {
       },
     ],
   });
-  // console.log(result);
-  res.send(result);
+  console.log(result);
+  res.render('boardPost', {
+    post: result,
+    formatDate: function (dateString) {
+      const dateObj = new Date(dateString);
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${year}.${month}.${day}`;
+    },
+  });
 };
 
 //내가 작성한 게시물 조회
