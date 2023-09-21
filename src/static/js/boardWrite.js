@@ -1,5 +1,3 @@
-const { default: axios } = require('axios');
-
 class UploadAdapter {
   constructor(loader) {
     this.loader = loader;
@@ -108,7 +106,7 @@ document.getElementById('postBtn').addEventListener('click', function (event) {
     .then(data => {
       if (data.status === 'success') {
         alert('글이 성공적으로 작성되었습니다.');
-        window.location.href = '/board/list';
+        window.location.href = '/board';
       } else {
         alert('글 작성에 실패했습니다: ' + data.message);
       }
