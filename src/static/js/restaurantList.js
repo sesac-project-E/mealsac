@@ -60,9 +60,20 @@ const addMarker = options => {
     position: { lat: options.lat, lng: options.lng },
     title: options.title,
     icon: options.icon,
+    // restaurantAddress: options.restaurantAddress,
   });
 
   marker.isInitial = options.isInitial || false;
+
+  // marker.addListener('click', function () {
+  //   alert(this.restaurantAddress);
+  //   const associatedRadio = document.querySelector(
+  //     `.restaurantContainer[data-id="${this.restaurantAddress}"] input[type="radio"]`,
+  //   );
+  //   if (associatedRadio) {
+  //     associatedRadio.checked = true;
+  //   }
+  // });
 
   markers.push(marker);
 
@@ -79,27 +90,67 @@ const clearMarkers = () => {
   markers = markers.filter(marker => marker.isInitial);
 };
 
-// 주소를 좌표로 변환
-const geocodeAddress = async address => {
-  geocoder.geocode({ address: address }, (results, status) => {
-    if (status === 'OK') {
-      const lat = results[0].geometry.location.lat();
-      const lng = results[0].geometry.location.lng();
+// 식당 타입에 따른 지도 마커 아이콘
+const getIconUrlByType = type => {
+  switch (type) {
+    case 1:
+      return '/static/img/korean.png';
+    case 2:
+      return '/static/img/chinese.png';
+    case 3:
+      return '/static/img/street.png';
+    case 4:
+      return '/static/img/japanese.png';
+    case 5:
+      return '/static/img/western.png';
+    case 6:
+      return '/static/img/pub.png';
+    case 7:
+      return '/static/img/chicken.png';
+    case 8:
+      return '/static/img/pork.png';
+    case 9:
+      return '/static/img/cafe.png';
+    case 10:
+      return '/static/img/meat.png';
+    case 11:
+      return '/static/img/asian.png';
+    case 12:
+      return '/static/img/dessert.png';
+    case 13:
+      return '/static/img/fast.png';
+    case 14:
+      return '/static/img/convenience.png';
+    default:
+      return '/static/img/korean.png';
+  }
+};
 
-      addMarker({
-        lat: lat,
-        lng: lng,
-        title: address,
-        icon: {
-          url: '/static/img/korean.png',
-          scaledSize: new google.maps.Size(40, 40),
-        },
-      });
-    } else {
-      console.error(
-        'Geocode was not successful for the following reason: ' + status,
-      );
+// 주소를 좌표로 변환
+const geocodeAddress = async (address, type) => {
+  if (!address) return;
+
+  geocoder.geocode({ address: address }, (results, status) => {
+    if (status !== 'OK') {
+      // console.error(
+      //   'Geocode was not successful for the following reason: ' + status,
+      // );
+      return;
     }
+
+    const lat = results[0].geometry.location.lat();
+    const lng = results[0].geometry.location.lng();
+
+    addMarker({
+      lat: lat,
+      lng: lng,
+      title: address,
+      icon: {
+        url: getIconUrlByType(type),
+        scaledSize: new google.maps.Size(40, 40),
+      },
+      // restaurantAddress: address,
+    });
   });
 };
 
@@ -121,6 +172,7 @@ document.querySelector('.sort').addEventListener('click', e => {
 
 // 모든 식당 클릭 시 정렬 아이콘 삽입, 모든 식당 데이터 렌더
 document.querySelector('#allRestaurants1').addEventListener('change', () => {
+  currentPage = 1;
   document.querySelector('#searchNameMenu div:last-child').style.display =
     'none';
   document.querySelector('.sortContainer').style.display = 'flex';
@@ -129,6 +181,7 @@ document.querySelector('#allRestaurants1').addEventListener('change', () => {
 });
 
 document.querySelector('#allRestaurants2').addEventListener('change', () => {
+  currentPage = 1;
   styleContainer.classList.add('invisible');
   tagContainer.classList.add('invisible');
   tagNstyleBtn.style.display = 'none';
@@ -143,6 +196,9 @@ searchName.addEventListener('click', e => {
   searchType.classList.remove('clicked');
   formContainer.classList.remove('searchInvisible');
   tagNstyle.classList.add('searchInvisible');
+  document.querySelector('#allRestaurants1').checked = true;
+  fetchData();
+  drawPagination(currentPage);
 });
 
 searchType.addEventListener('click', e => {
@@ -153,6 +209,9 @@ searchType.addEventListener('click', e => {
   styleContainer.classList.add('invisible');
   tagContainer.classList.add('invisible');
   tagNstyleBtn.style.display = 'none';
+  document.querySelector('#allRestaurants2').checked = true;
+  fetchData();
+  drawPagination(currentPage);
 });
 
 // 검색 방식 세부 설정
@@ -266,17 +325,24 @@ searchNameMenu.addEventListener('submit', e => {
       initMap();
       clearMarkers();
 
-      const restaurants = response.data;
-      for (const restaurant of restaurants.rows) {
-        geocodeAddress(restaurant.restaurant_address);
+      // if (nameRadio.checked) {
+      //   for (const restaurant of response.data.rows) {
+      //     geocodeAddress(restaurant.restaurant_address);
+      //   }
+      // } else {
+      for (const data of response.data.rows) {
+        geocodeAddress(
+          data.Restaurant.restaurant_address,
+          data.Restaurant.restaurant_type_id,
+        );
       }
-
-      updatePage(response.data);
+      // }
 
       Math.ceil(response.data.count / 20)
         ? (totalPages = Math.ceil(response.data.count / 20))
         : (totalPages = 1);
 
+      updatePage(response.data);
       drawPagination(1);
 
       document.querySelector('.sorting').textContent = '인기순';
@@ -307,17 +373,19 @@ tagNstyleBtn.addEventListener('click', e => {
     .then(response => {
       const restaurants = response.data;
 
-      updatePage(restaurants);
-
       Math.ceil(response.data.count / 20)
         ? (totalPages = Math.ceil(response.data.count / 20))
         : (totalPages = 1);
 
+      updatePage(restaurants);
       drawPagination(1);
 
       clearMarkers();
       for (const restaurant of restaurants.rows) {
-        geocodeAddress(restaurant.restaurant_address);
+        geocodeAddress(
+          restaurant.restaurant_address,
+          restaurant.restaurant_type_id,
+        );
       }
     })
     .catch(error => {
@@ -359,8 +427,10 @@ document
             // 새로운 마커 확대
             const newIcon = {
               ...targetMarker.getIcon(),
-              scaledSize: new google.maps.Size(60, 60),
-              anchor: new google.maps.Point(30, 30),
+              size: new google.maps.Size(50, 50), // 원래 이미지의 크기
+              origin: new google.maps.Point(0, 0), // 이미지의 시작점
+              scaledSize: new google.maps.Size(50, 50), // 화면에 표시될 이미지의 크기
+              anchor: new google.maps.Point(25, 25),
               optimized: false,
             };
             targetMarker.setIcon(newIcon);
@@ -441,7 +511,10 @@ const fetchData = async (url = '') => {
     clearMarkers();
 
     for (const restaurant of restaurants.rows) {
-      geocodeAddress(restaurant.restaurant_address);
+      geocodeAddress(
+        restaurant.restaurant_address,
+        restaurant.restaurant_type_id,
+      );
     }
 
     return response.data.rows;
@@ -459,10 +532,18 @@ const updatePage = data => {
 
   if (Array.isArray(data.rows) && data.rows.length > 0) {
     data.rows.forEach(item => {
-      // const restaurant = item.Restaurant ? item.Restaurant : item;
-      const article = createRestaurantArticle(item);
+      if (item.RestaurantImages) {
+        const article = createRestaurantArticle(item, item.RestaurantImages);
 
-      restaurantContainer.appendChild(article);
+        restaurantContainer.appendChild(article);
+      } else {
+        const article = createRestaurantArticle(
+          item.Restaurant,
+          item.Restaurant.RestaurantImages,
+        );
+
+        restaurantContainer.appendChild(article);
+      }
     });
   } else {
     restaurantContainer.innerHTML =
@@ -530,14 +611,12 @@ const changePage = newPage => {
     query = searchInput.value;
     url = `/api/menu/search?q=${query}&page=${currentPage}`;
   } else if (styleRadio.checked) {
-    query = styles;
+    query = style;
     url = `/api/restaurant_type/${query}?page=${currentPage}`;
   } else if (tagRadio.checked) {
     query = tags.map((tag, i) => `tag${i + 1}=${tag}`).join('&');
-    url = `/api/tag/search?${query}page=${currentPage}`;
+    url = `/api/tag/search?${query}&page=${currentPage}`;
   }
-
-  document.querySelector('.sorting').textContent = '인기순';
   fetchData(url);
 };
 
@@ -581,14 +660,32 @@ hamburger.addEventListener('dragend', function (e) {
 });
 
 // 식당 컴포넌트 생성
-const createRestaurantArticle = restaurant => {
+const createRestaurantArticle = (restaurant, restaurantImg) => {
+  const label = document.createElement('label');
+  label.className = 'restaurantLabel';
+
+  const radioInput = document.createElement('input');
+  radioInput.type = 'radio';
+  radioInput.name = 'restaurantSelection';
+  radioInput.value = restaurant.restaurant_id;
+  radioInput.style.display = 'none';
+  label.appendChild(radioInput);
+
   const article = document.createElement('article');
   article.className = 'restaurantContainer';
   article.dataset.id = restaurant.restaurant_address;
 
   const img = document.createElement('img');
   img.className = 'restaurantImg';
-  img.src = restaurant.RestaurantImages[0].restaurant_image_url;
+  if (
+    restaurantImg &&
+    restaurantImg[0] &&
+    restaurantImg[0].restaurant_image_url
+  ) {
+    img.src = restaurantImg[0].restaurant_image_url;
+  } else {
+    img.src = '';
+  }
   img.alt = `${restaurant.restaurant_name} 이미지`;
 
   const divInfo = document.createElement('div');
@@ -618,7 +715,8 @@ const createRestaurantArticle = restaurant => {
 
   const pType = document.createElement('p');
   pType.className = 'type';
-  pType.textContent = restaurant.restaurant_type_id || '식당 타입 없음';
+  pType.textContent =
+    restaurantType(restaurant.restaurant_type_id) || '식당 타입 없음';
 
   const divBottom = document.createElement('div');
 
@@ -659,7 +757,30 @@ const createRestaurantArticle = restaurant => {
   article.appendChild(img);
   article.appendChild(divInfo);
 
-  return article;
+  label.appendChild(article);
+
+  return label;
+};
+
+const restaurantType = restaurantType => {
+  const type = [
+    '한식',
+    '중식',
+    '분식',
+    '일식',
+    '양식',
+    '펍',
+    '치킨',
+    '족발, 보쌈',
+    '카페',
+    '고기구이',
+    '아시안',
+    '디저트',
+    '패스트푸드',
+    '편의점',
+  ];
+
+  return type[restaurantType - 1];
 };
 
 fetchData();
