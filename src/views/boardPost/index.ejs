@@ -21,7 +21,7 @@
           type="button"
           class="boardType"
           name="boardType"
-          onclick="location.href='board'"
+          onclick="location.href='/board'"
         >
           <% if(post.board_id===1) {%> 공지사항 <% } else { %> 자유게시판 <% }
           %>
@@ -40,7 +40,7 @@
         </button>
       </div>
 
-      <div class="postBox">
+      <div class="postBox" id="<%= post.post_id%>">
         <div class="titleBox">
           <h3 class="title"><%= post.title%></h3>
           <div class="postInfo">
