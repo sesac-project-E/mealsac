@@ -25,6 +25,16 @@ if (!fs.existsSync(reviewDirectory)) {
   fs.mkdirSync(reviewDirectory, { recursive: true });
 }
 
+const postDirectory = path.join(__dirname, 'src', 'static', 'img', 'postImage');
+
+if (!fs.existsSync(reviewDirectory)) {
+  fs.mkdirSync(reviewDirectory, { recursive: true });
+}
+
+if (!fs.existsSync(postDirectory)) {
+  fs.mkdirSync(postDirectory, { recursive: true });
+}
+
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src', 'views'));
@@ -45,22 +55,6 @@ app.use(
     },
   }),
 );
-
-// app.get('/board', (req, res) => {
-//   res.render('board');
-// });
-
-// app.get('/boardWrite', (req, res) => {
-//   res.render('boardWrite');
-// });
-
-// app.get('/post', (req, res) => {
-//   res.render('boardPost');
-// });
-
-// app.get('/boardModify', (req, res) => {
-//   res.render('boardModify');
-// });
 
 app.use('/', indexRouter);
 
