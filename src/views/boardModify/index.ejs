@@ -19,13 +19,18 @@
         </div>
       </div>
 
-      <form method="post" class="postBox">
+      <form method="post" class="postBox" id="<%= post.board_id %>">
         <div class="title">
-          <input id="inputTitle" placeholder="제목을 작성해주세요" />
+          <input
+            class="inputTitle"
+            id="<%= post.post_id %>"
+            placeholder="제목을 작성해주세요"
+            value="<%= post.title%>"
+          />
         </div>
-        <div class="editor"></div>
+        <div class="editor"><%- post.content %></div>
         <div class="btns">
-          <button type="submit" id="modifyBtn">수정</button>
+          <button type="button" id="modifyBtn">수정</button>
           <button type="button" id="backBtn">취소</button>
         </div>
       </form>
