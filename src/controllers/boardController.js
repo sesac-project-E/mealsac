@@ -1,4 +1,4 @@
-const { Post, User, ReviewImage } = require('../models'); //Post, User모델 참조
+const { Post, User, PostImage } = require('../models'); //Post, User모델 참조
 
 //공지게시판조회
 exports.getNotice = async (req, res) => {
