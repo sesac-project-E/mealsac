@@ -77,8 +77,12 @@ ClassicEditor.create(document.querySelector('.editor'), {
 
 // 작성
 // 작성한 글을 포스트로 요청
-document.getElementById('postBtn').addEventListener('click', function () {
+document.getElementById('postBtn').addEventListener('click', function (event) {
+  event.preventDefault(); // 페이지 리프레시 방지
+
   const editorData = editor.getData();
+  const title = document.getElementById('inputTitle').value;
+  const boardType = document.getElementById('boardType').value;
 
   // 서버에 데이터 전송
   fetch('/api/post/create', {
@@ -87,12 +91,14 @@ document.getElementById('postBtn').addEventListener('click', function () {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      title: title,
       content: editorData,
+      board_id: boardType,
     }),
   })
     .then(response => response.json())
     .then(data => {
-      if (data.success) {
+      if (data.result) {
         alert('글이 성공적으로 작성되었습니다.');
         window.location.href = '/board/list';
       } else {
