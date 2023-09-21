@@ -70,7 +70,6 @@ indexRouter.get('/restaurants', (req, res) => {
 
   res.render('restaurantList', {
     userInfo,
-    restaurant: restaurantController.getAllRestaurants,
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
   });
 });
