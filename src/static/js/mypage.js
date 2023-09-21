@@ -1,4 +1,5 @@
 let currentPage = 1;
+let totalPages = 1;
 const reviewsPerPage = 5;
 const postsPerPage = 5;
 
@@ -52,13 +53,15 @@ const reviewList = async () => {
       const reviews = res.data.data;
 
       if (Array.isArray(reviews) && reviews.length > 0) {
-        const paginatedPosts = paginateReviews(
+        totalPages = Math.ceil(reviews.length / 5);
+
+        const paginatedReviews = paginateReviews(
           reviews,
           currentPage,
           reviewsPerPage,
         );
 
-        paginatedPosts.forEach(review => {
+        paginatedReviews.forEach(review => {
           const reviewContainer = document.createElement('div');
           reviewContainer.classList.add('reviews');
           reviewContainer.id = `review_${review.review_id}`;
@@ -131,12 +134,18 @@ document.getElementById('reviewPrev').addEventListener('click', () => {
   if (currentPage > 1) {
     currentPage--;
     reviewList();
+  } else {
+    alert('더 이상 이전 페이지가 없습니다.');
   }
 });
 
 document.getElementById('reviewNext').addEventListener('click', () => {
-  currentPage++;
-  reviewList();
+  if (currentPage < totalPages) {
+    currentPage++;
+    reviewList();
+  } else {
+    alert('더 이상 다음 페이지가 없습니다.');
+  }
 });
 
 // 리뷰 삭제
@@ -233,9 +242,9 @@ const editDone = async reviewId => {
 
 // 게시글
 const postList = async () => {
-  const likesContainer = document.querySelector('#myPosts');
-  while (likesContainer.firstChild) {
-    likesContainer.removeChild(likesContainer.firstChild);
+  const postsContainer = document.querySelector('#myPosts');
+  while (postsContainer.firstChild) {
+    postsContainer.removeChild(postsContainer.firstChild);
   }
 
   document.getElementById('myPost').classList.add('clicked');
@@ -248,53 +257,145 @@ const postList = async () => {
   document.querySelector('.postPage').style.display = 'block';
 
   try {
-    const res = await axios.get('/api/post/my/post');
-    if (res.data.status === 'success') {
-      const posts = res.data.data;
+    const response = await fetch('/api/post/my/post');
+    const data = await response.json();
 
-      if (Array.isArray(posts) && posts.length > 0) {
-        // const paginatedPosts = paginatePosts(posts, currentPage, postsPerPage);
+    if (Array.isArray(data) && data.length > 0) {
+      totalPages = Math.ceil(data.length / 5);
 
-        paginatedPosts.forEach(post => {
-          const postContainer = document.createElement('div');
-          postContainer.classList.add('posts');
+      const paginatedPosts = paginatePosts(data, currentPage, postsPerPage);
 
-          postContainer.innerHTML = `
-            <div class="postInfo">
-            <div><a href="/restaurant/${post.post_id}">
-            <span class="restaurantName">${post.title}</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="30"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
-                fill="#4DDA67"
-              />
-            </svg>
-          </a>
-          </div>
-          <span class="rate">${post.createdAt}</span>
-            </div>
-            <p>${post.content}</p>
-          `;
+      function formatDateToKorean(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear() % 100;
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
 
-          document.querySelector('#myPosts').appendChild(postContainer);
-        });
-      } else {
-        document.querySelector('#myPosts').innerHTML =
-          '<div class="none">나의 게시물이 없습니다.</div>';
+        const formattedDate = `${year}.${month < 10 ? '0' : ''}${month}.${
+          day < 10 ? '0' : ''
+        }${day}`;
+        return formattedDate;
       }
+
+      paginatedPosts.forEach(post => {
+        const postContainer = document.createElement('div');
+        postContainer.classList.add('posts');
+        postContainer.id = `post_${post.post_id}`;
+        const koreanDate = formatDateToKorean(post.createdAt);
+
+        const shortContent = `${post.content}`.slice(0, 10);
+
+        postContainer.innerHTML = `
+          <div class="postInfo">
+            <div>
+              <a href="/post/${post.post_id}">
+                <span class="titleName">${post.title}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+                    fill="#4DDA67"
+                  />
+                </svg>
+              </a>
+            </div>
+            <span class="date">${koreanDate}</span>
+          </div>
+          <p>${shortContent}</p>
+        `;
+
+        document.querySelector('#myPosts').appendChild(postContainer);
+      });
     } else {
-      console.log('서버 응답 오류:', res.data.message);
+      document.querySelector('#myPosts').innerHTML =
+        '<div class="none">작성한 게시글이 없습니다.</div>';
     }
   } catch (error) {
-    console.log(error);
+    console.error('서버 응답 오류:', error);
   }
 };
+
+document.getElementById('postPrev').addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    postList();
+  } else {
+    alert('더 이상 이전 페이지가 없습니다.');
+  }
+});
+
+document.getElementById('postNext').addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    postList();
+  } else {
+    alert('더 이상 다음 페이지가 없습니다.');
+  }
+});
+
+// const postList = async () => {
+//   const postsContainer = document.querySelector('#myPosts');
+//   while (postsContainer.firstChild) {
+//     postsContainer.removeChild(postsContainer.firstChild);
+//   }
+
+//   document.getElementById('myPost').classList.add('clicked');
+//   document.getElementById('myReview').classList.remove('clicked');
+//   document.getElementById('myLike').classList.remove('clicked');
+//   document.getElementById('myReviews').style.display = 'none';
+//   document.getElementById('myLikes').style.display = 'none';
+//   document.getElementById('myPosts').style.display = 'block';
+//   document.querySelector('.reviewPage').style.display = 'none';
+//   document.querySelector('.postPage').style.display = 'block';
+
+//   fetch('/api/post/my/post')
+//     .then(response => response.json())
+//     .then(data => {
+//       const myPostsDiv = document.getElementById('myPosts');
+
+//       // 데이터 배열을 순환하며 요소 추가
+//       data.forEach(post => {
+//         const postContainer = document.createElement('div');
+//         postContainer.className = 'postContainer'; // 필요한 클래스를 추가하세요
+
+//         // 포스트 정보를 포함하는 div 추가
+//         postContainer.innerHTML = `
+//         <div class="postInfo">
+//           <div><a href="/post/${post.post_id}">
+//             <span class="titleName">${post.title}</span>
+//             <svg
+//               xmlns="http://www.w3.org/2000/svg"
+//               width="24"
+//               height="30"
+//               viewBox="0 0 24 24"
+//               fill="none"
+//             >
+//               <path
+//                 d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+//                 fill="#4DDA67"
+//               />
+//             </svg>
+//           </a></div>
+//           <span class="date">${post.createdAt}</span>
+//         </div>
+//         <p>${post.content}</p>
+//       `;
+
+//         myPostsDiv.appendChild(postContainer);
+//       });
+
+//       // 데이터를 받아오면 myPosts를 보여줌
+//       myPostsDiv.style.display = 'block';
+//     })
+//     .catch(error => {
+//       console.error('데이터를 불러오는 중 오류 발생:', error);
+//     });
+// };
 
 // 찜삭제
 const heartElements = document.querySelectorAll('.heart');

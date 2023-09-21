@@ -97,7 +97,8 @@ span {
   margin-bottom: 20px;
 }
 
-.reviews {
+.reviews,
+.posts {
   width: 95%;
   border-radius: 21px;
   box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
@@ -120,7 +121,8 @@ span {
   height: 20px;
 }
 
-.reviewInfo {
+.reviewInfo,
+.postInfo {
   display: flex;
   justify-content: space-between;
 }
@@ -180,11 +182,13 @@ a {
   margin-left: auto;
 }
 
-.reviewPage {
+.reviewPage,
+.postPage {
   text-align: center;
 }
 
-.reviewPage button {
+.reviewPage button,
+.postPage button {
   border: none;
   background-color: transparent;
   font-size: 20px;
@@ -193,7 +197,7 @@ a {
 }
 
 /* width: 360~768 */
-@media (min-width: 361px) and (max-width: 768px) {
+@media (max-width: 768px) {
   html {
     margin: 0;
   }
@@ -205,6 +209,13 @@ a {
   .container {
     scale: 90%;
   }
+
+  .listContainer {
+    border-radius: 50px 50px 0px 0px;
+    background-color: #fff;
+    height: 70vh;
+  }
+
   .list {
     width: 100%;
     border-radius: 50px 50px 0px 0px;
@@ -235,11 +246,13 @@ a {
     color: #fff;
   }
 
-  .reviewInfo span {
+  .reviewInfo span,
+  .postInfo span {
     font-size: 90%;
   }
 
-  .reviews {
+  .reviews,
+  .posts {
     margin: 5px 10px 5px 10px;
     width: 95%;
     border-radius: 0;
@@ -250,6 +263,11 @@ a {
 
   #likeStore .restaurantContainer {
     width: 85vw;
+  }
+
+  .reviewPage button,
+  .postPage button {
+    font-size: 80%;
   }
 }
 
@@ -321,16 +339,28 @@ a {
     font-size: 80%;
   }
 
-  .reviewInfo span {
+  .reviewInfo span,
+  .postInfo span {
     font-size: 80%;
   }
 
-  .reviews {
+  .reviews,
+  .posts {
     margin: 5px 10px 5px 10px;
     width: 95%;
     border-radius: 0;
     box-shadow: none;
     border-bottom: solid 1px #4dda67;
     font-size: 80%;
+  }
+
+  .reviewPage button,
+  .postPage button {
+    font-size: 80%;
+  }
+
+  .reviewPage button,
+  .postPage button {
+    font-size: 60%;
   }
 }
