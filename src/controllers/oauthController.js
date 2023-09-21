@@ -3,8 +3,7 @@ const rest = "0cee9e4fe5f244869b2caf837039c13d"
 const {User} = require('../models')
 
 exports.kakaoLogin = (req, res) => {
-  res.redirect(`https://kauth.kakao.com/oauth/authorize?client_id=${rest}&response_type=code&redirect_uri=https://mealsac-473f548ea790.herokuapp.com/api/oauth/kakao/result`)
-
+  res.redirect(`https://kauth.kakao.com/oauth/authorize?client_id=${rest}&response_type=code&redirect_uri=${req.protocol}://${req.get('Host')}/api/oauth/kakao/result`)
 }
 
 exports.kakaoResult = async (req, res) => {
@@ -14,7 +13,7 @@ exports.kakaoResult = async (req, res) => {
     {
       "grant_type" : "authorization_code",
       "client_id" : `${rest}`,
-      "redirect_uri" : "https://mealsac-473f548ea790.herokuapp.com/api/oauth/kakao/result",
+      "redirect_uri" : `${req.protocol}://${req.get('Host')}/api/oauth/kakao/result`,
       "code" : `${code}`
     },
     {
@@ -34,17 +33,15 @@ exports.kakaoResult = async (req, res) => {
   )
   let user = await User.findOne({
     where : {user_id : `${getUserInfo.data.id}@kakao.com`},
-  })
+  });
+  let alertMsg = user ? '로그인을 환영합니다!' : '회원가입을 환영합니다!'
   if (!user) {
     user = await User.create({
       user_id : `${getUserInfo.data.id}@kakao.com`,
       password : "",
       user_name : `${getUserInfo.data.id}kakao`
-    })
-    alert("회원가입을 환영합니다!")
-  } else {
-    alert("로그인을 환영합니다!")
+    });
   }
-  req.session.userInfo = {user_name : `${user.dataValues.user_name}`, id : `${user.dataValues.id}`}
-  res.redirect('/')
+  req.session.userInfo = {user_name : `${user.dataValues.user_name}`, id : `${user.dataValues.id}`};
+  res.send(`<script>location.href='/'; alert('${alertMsg}');</script>`);
 }
