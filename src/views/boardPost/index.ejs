@@ -21,9 +21,9 @@
           type="button"
           class="boardType"
           name="boardType"
-          onclick="category()"
+          onclick="location.href='board'"
         >
-          <% if(post.board_id===1) {%> 자유게시판 <% } else { %> 공지사항 <% }
+          <% if(post.board_id===1) {%> 공지사항 <% } else { %> 자유게시판 <% }
           %>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,13 +44,12 @@
         <div class="titleBox">
           <h3 class="title"><%= post.title%></h3>
           <div class="postInfo">
-            <p><%= post.user_name %></p>
+            <p><%= post.User.user_name %></p>
             <p></p>
-            <p>2023.09.17</p>
+            <p><%= formatDate(post.createdAt)%></p>
           </div>
         </div>
-        <div class="postContent"><%= post.content %></div>
-        <!-- <div class="postContent">우아아아ㅠㅠ치킨 먹고싶다ㅠ</div> -->
+        <div class="postContent"><%- post.content %></div>
       </div>
 
       <div class="btnBox">
