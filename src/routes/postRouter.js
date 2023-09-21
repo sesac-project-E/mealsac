@@ -17,9 +17,6 @@ const uploadDetail = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-//post_id로 개별 포스팅 조회
-router.get('/:post_id', postController.getPost);
-
 router.post('/uploadImg', uploadDetail.single('imageFiles'), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: '이미지 업로드에 실패했습니다.' });
@@ -41,6 +38,9 @@ router.post(
 
 //게시글 삭제
 router.delete('/:post_id', postController.deletePost);
+
+// 게시글 수정
+router.patch('/:post_id', postController.updatePost);
 
 //내 게시글 조회
 router.get('/my/post', postController.getMyPosts);

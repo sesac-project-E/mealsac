@@ -7,6 +7,7 @@ const userController = require('../controllers/userController.js');
 const restaurantController = require('../controllers/restaurantController.js');
 const likeRestaurantController = require('../controllers/likeRestaurantController.js');
 const reviewController = require('../controllers/reviewController.js');
+const postController = require('../controllers/postController.js');
 
 /**
  * @swagger
@@ -56,7 +57,7 @@ indexRouter.get('/login', (req, res) => {
 
 indexRouter.get('/mypage', async (req, res) => {
   const userInfo = await req.session.userInfo;
-  const restaurant = await likeRestaurantController.getUserLikes(req, res)
+  const restaurant = await likeRestaurantController.getUserLikes(req, res);
   res.render('mypage', {
     user_name: userInfo.user_name,
     restaurant,
@@ -95,29 +96,10 @@ indexRouter.get('/post/write', (req, res) => {
   res.render('boardWrite');
 });
 
-indexRouter.get('/post/edit/:post_id', (req, res) => {
-  res.render('boardModify');
-});
+indexRouter.get('/post/edit/:post_id', postController.getEditPost);
 
-indexRouter.get('/post/:post_id', (req, res) => {
-  const post = {
-    post_id: 1,
-    user_id: '36',
-    board_id: 1,
-    title: 'aaa',
-    board_name: 'dd',
-    content: 'ssss',
-    updated_at: '2023.10.07 09:10',
-    views: 12,
-    user_name: '포스트_유저네임',
-  };
-
-  res.render('boardPost', { post });
-});
-
-// indexRouter.get('/post/:post_id', (req, res) => {
-//   res.render('boardPost');
-// });
+//post_id로 개별 포스팅 조회
+indexRouter.get('/post/:post_id', postController.getPost);
 
 indexRouter.get('/random', (req, res) => {
   res.render('random');
