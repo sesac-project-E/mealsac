@@ -1,4 +1,4 @@
-const { Post, User, ReviewImage } = require('../models'); //Post, User모델 참조
+const { Post, User, PostImage } = require('../models'); //Post, User모델 참조
 
 //공지게시판조회
 exports.getNotice = async (req, res) => {
@@ -11,12 +11,12 @@ exports.getNotice = async (req, res) => {
       where: { board_id: 1 },
       include: [
         {
-          model: ReviewImage,
-          attributes: ['image_url'],
-        },
-        {
           model: User,
           required: true,
+        },
+        {
+          model: PostImage,
+          attributes: ['image_url'],
         },
       ],
       order: [['createdAt', 'DESC']],
@@ -45,6 +45,10 @@ exports.getFree = async (req, res) => {
         {
           model: User,
           required: true,
+        },
+        {
+          model: PostImage,
+          attributes: ['image_url'],
         },
       ],
       order: [['createdAt', 'DESC']],
