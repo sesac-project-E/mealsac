@@ -103,7 +103,7 @@ exports.deletePost = async (req, res) => {
     console.error(error);
     res.status(500).json({
       status: 'error',
-      message: '리뷰를 삭제하는 동안 오류가 발생했습니다.',
+      message: '포스팅을 삭제하는 동안 오류가 발생했습니다.',
     });
   }
 };
