@@ -197,6 +197,7 @@ searchName.addEventListener('click', e => {
   formContainer.classList.remove('searchInvisible');
   tagNstyle.classList.add('searchInvisible');
   document.querySelector('#allRestaurants1').checked = true;
+  document.querySelector('.sortContainer').style.display = 'flex';
   fetchData();
   drawPagination(currentPage);
 });
@@ -209,6 +210,9 @@ searchType.addEventListener('click', e => {
   styleContainer.classList.add('invisible');
   tagContainer.classList.add('invisible');
   tagNstyleBtn.style.display = 'none';
+  document.querySelector('.sortContainer').style.display = 'flex';
+  document.querySelector('#searchNameMenu div:nth-child(2)').style.display =
+    'none';
   document.querySelector('#allRestaurants2').checked = true;
   fetchData();
   drawPagination(currentPage);
