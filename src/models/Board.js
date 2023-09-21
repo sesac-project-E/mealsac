@@ -22,7 +22,6 @@ module.exports = (Sequelize, DataTypes) => {
     },
   );
   Board.associate = function (models) {
-    // 8. Board - Comment
     // 하나의 게시판에는 여러개의 post 가능
     Board.hasMany(models.Post, {
       foreignKey: 'board_id',
