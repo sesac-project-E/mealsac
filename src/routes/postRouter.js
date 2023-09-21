@@ -20,6 +20,18 @@ const uploadDetail = multer({
 //post_id로 개별 포스팅 조회
 router.get('/:post_id', postController.getPost);
 
+router.post('/uploadImg', uploadDetail.single('imageFiles'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: '이미지 업로드에 실패했습니다.' });
+  }
+
+  const imageUrl = `/static/img/postImage/${req.file.filename}`;
+  res.json({
+    uploaded: true,
+    url: imageUrl,
+  });
+});
+
 //게시글 생성
 router.post(
   '/create',
