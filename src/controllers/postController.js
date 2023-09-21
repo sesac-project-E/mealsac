@@ -43,7 +43,7 @@ exports.getMyPosts = async (req, res) => {
     //포스트 제목, 작성날짜, 게시판 종류
     const myPosts = await Post.findAll({
       where: { user_id },
-      attributes: ['title', 'content', 'createdAt'],
+      attributes: ['title', 'content', 'post_id', 'createdAt'],
       //작성날짜 최신순 정렬
       order: [['createdAt', 'DESC']],
     });
