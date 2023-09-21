@@ -4,7 +4,7 @@
     <%- include('../common/commonHead.ejs') %>
     <link rel="stylesheet" href="../../static/css/mypage.css" />
     <title>MealSac | 마이페이지</title>
-    <script defer src="../../static/js/mypage.js"></script>
+    <script defer src="/static/js/mypage.js"></script>
   </head>
   <body>
     <%- include('../common/header') %>
@@ -17,9 +17,6 @@
       <button type="button" id="profile" onclick="location.href='profile'">
         회원정보
       </button>
-      <!-- <button type="button" id="logout" onclick="location.href='/'">
-        로그아웃
-      </button> -->
     </div>
     <hr />
     <div class="userRestaurant">
@@ -52,14 +49,27 @@
         <div id="likeStore">
           <%- include('../common/restaurantComponent.ejs', { restaurant:
           restaurant }) %>
+          <p style="display: none"><%= restaurant.restaurant_id%></p>
         </div>
         <% }) %> <% } else { %>
         <div class="none"><p>찜한 식당이 없습니다.</p></div>
         <% } %>
       </div>
-      <div id="myReviews" style="display: none"></div>
-      <div id="myPosts" style="display: none">
-        <div class="none"><p>내 게시글이 없습니다.</p></div>
+      <div>
+        <div id="myReviews" style="display: none"></div>
+        <div class="reviewPage" style="display: none">
+          <button class="prevPage" id="reviewPrev">< 이전</button>
+          <button class="nextPage" id="reviewNext">다음 ></button>
+        </div>
+      </div>
+      <div>
+        <div id="myPosts" style="display: none">
+          <div class="posts">
+            <div class="postInfo"></div>
+          </div>
+        </div>
+
+        <div class="postPage" style="display: none"></div>
       </div>
     </div>
   </body>

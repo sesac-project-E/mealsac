@@ -1,3 +1,7 @@
+let currentPage = 1;
+const reviewsPerPage = 5;
+const postsPerPage = 5;
+
 const likeList = () => {
   document.getElementById('myLike').classList.add('clicked');
   document.getElementById('myReview').classList.remove('clicked');
@@ -5,7 +9,27 @@ const likeList = () => {
   document.getElementById('myLikes').style.display = 'block';
   document.getElementById('myReviews').style.display = 'none';
   document.getElementById('myPosts').style.display = 'none';
+  document.querySelector('.reviewPage').style.display = 'none';
+  document.querySelector('.postPage').style.display = 'none';
 };
+
+function paginateReviews(reviews, page, perPage) {
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  return reviews.slice(startIndex, endIndex);
+}
+
+function paginatePosts(posts, page, perPage) {
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  return posts.slice(startIndex, endIndex);
+}
+
+function paginateLikes(likes, page, perPage) {
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  return likes.slice(startIndex, endIndex);
+}
 
 const reviewList = async () => {
   const reviewsContainer = document.querySelector('#myReviews');
@@ -19,6 +43,8 @@ const reviewList = async () => {
   document.getElementById('myReviews').style.display = 'block';
   document.getElementById('myLikes').style.display = 'none';
   document.getElementById('myPosts').style.display = 'none';
+  document.querySelector('.reviewPage').style.display = 'block';
+  document.querySelector('.postPage').style.display = 'none';
 
   try {
     const res = await axios.get('/api/review/myreview');
@@ -26,7 +52,13 @@ const reviewList = async () => {
       const reviews = res.data.data;
 
       if (Array.isArray(reviews) && reviews.length > 0) {
-        reviews.forEach(review => {
+        const paginatedPosts = paginateReviews(
+          reviews,
+          currentPage,
+          reviewsPerPage,
+        );
+
+        paginatedPosts.forEach(review => {
           const reviewContainer = document.createElement('div');
           reviewContainer.classList.add('reviews');
           reviewContainer.id = `review_${review.review_id}`;
@@ -60,6 +92,7 @@ const reviewList = async () => {
               <button type="button" class="reviewDelete" onclick="deleteReview(${review.review_id})">삭제</button>
               <button type="button" class="reviewEdit" onclick="edit(${review.review_id})">수정</button>
             </div>
+            
           `;
 
           const reviewImgContainer =
@@ -93,6 +126,18 @@ const reviewList = async () => {
     console.log(error);
   }
 };
+
+document.getElementById('reviewPrev').addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    reviewList();
+  }
+});
+
+document.getElementById('reviewNext').addEventListener('click', () => {
+  currentPage++;
+  reviewList();
+});
 
 // 리뷰 삭제
 const deleteReview = async reviewId => {
@@ -186,18 +231,94 @@ const editDone = async reviewId => {
   }
 };
 
-const postList = () => {
+// 게시글
+const postList = async () => {
+  const likesContainer = document.querySelector('#myPosts');
+  while (likesContainer.firstChild) {
+    likesContainer.removeChild(likesContainer.firstChild);
+  }
+
   document.getElementById('myPost').classList.add('clicked');
   document.getElementById('myReview').classList.remove('clicked');
   document.getElementById('myLike').classList.remove('clicked');
   document.getElementById('myReviews').style.display = 'none';
   document.getElementById('myLikes').style.display = 'none';
   document.getElementById('myPosts').style.display = 'block';
+  document.querySelector('.reviewPage').style.display = 'none';
+  document.querySelector('.postPage').style.display = 'block';
+
+  try {
+    const res = await axios.get('/api/post/my/post');
+    if (res.data.status === 'success') {
+      const posts = res.data.data;
+
+      if (Array.isArray(posts) && posts.length > 0) {
+        // const paginatedPosts = paginatePosts(posts, currentPage, postsPerPage);
+
+        paginatedPosts.forEach(post => {
+          const postContainer = document.createElement('div');
+          postContainer.classList.add('posts');
+
+          postContainer.innerHTML = `
+            <div class="postInfo">
+            <div><a href="/restaurant/${post.post_id}">
+            <span class="restaurantName">${post.title}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+                fill="#4DDA67"
+              />
+            </svg>
+          </a>
+          </div>
+          <span class="rate">${post.createdAt}</span>
+            </div>
+            <p>${post.content}</p>
+          `;
+
+          document.querySelector('#myPosts').appendChild(postContainer);
+        });
+      } else {
+        document.querySelector('#myPosts').innerHTML =
+          '<div class="none">나의 게시물이 없습니다.</div>';
+      }
+    } else {
+      console.log('서버 응답 오류:', res.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+// 찜삭제
 const heartElements = document.querySelectorAll('.heart');
 heartElements.forEach(heartElement => {
-  heartElement.addEventListener('click', e => {
-    e.target.setAttribute('src', '../../static/img/heartFilled.png');
+  heartElement.addEventListener('click', async () => {
+    const restaurant_id = heartElement.id;
+    try {
+      const response = await axios({
+        method: 'DELETE',
+        url: `/api/like`,
+        data: { restaurant_id: restaurant_id },
+      });
+
+      if (response.status === 200) {
+        alert('찜 목록에서 삭제되었습니다.');
+        heartElement.setAttribute('src', '/static/img/heart.png');
+        window.location.reload();
+      } else {
+        console.error('서버 응답 오류:', response.data.message);
+        alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('에러 정보:', error);
+      alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+    }
   });
 });
