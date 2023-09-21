@@ -1,4 +1,4 @@
-const { Post, User } = require('../models'); //Post, User모델 참조
+const { Post, User, ReviewImage } = require('../models'); //Post, User모델 참조
 
 //공지게시판조회
 exports.getNotice = async (req, res) => {
@@ -10,6 +10,10 @@ exports.getNotice = async (req, res) => {
       offset: 10 * (page - 1),
       where: { board_id: 1 },
       include: [
+        {
+          model: ReviewImage,
+          attributes: ['image_url'],
+        },
         {
           model: User,
           required: true,
