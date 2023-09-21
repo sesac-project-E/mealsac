@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController.js');
 
-//post 아이디로 조회
-
-//api/post/36
+//post_id로 개별 포스팅 조회
 router.get('/:post_id', postController.getPost);
 
-//api/create
+//게시글 생성
 router.post('/create', postController.postCreatePost);
 
+//게시글 삭제
 router.delete('/:post_id', postController.deletePost);
+
+//내 게시글 조회
+router.get('/my/post', postController.getMyPosts);
 
 module.exports = router;

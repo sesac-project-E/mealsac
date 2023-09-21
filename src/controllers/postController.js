@@ -1,5 +1,6 @@
 const { User, Post } = require('../models');
 
+//post_id 값으로 특정 게시물 조회
 exports.getPost = async (req, res) => {
   // [after]
   const { post_id } = req.params;
@@ -22,6 +23,47 @@ exports.getPost = async (req, res) => {
   });
   // console.log(result);
   res.send(result);
+};
+
+//내가 작성한 게시물 조회
+exports.getMyPosts = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  //로그인 안되어 있는경우
+  if (!userInfo || !userInfo.id) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.id;
+
+  try {
+    //포스트 제목, 작성날짜, 게시판 종류
+    const myPosts = await Post.findAll({
+      where: { user_id },
+      attributes: ['title', 'content', 'createdAt'],
+      //작성날짜 최신순 정렬
+      order: [['createdAt', 'DESC']],
+    });
+    //포스트가 없는 경우
+    if (myPosts.length === 0) {
+      return res.json({
+        status: 'success',
+        message: '사용자가 작성한 포스트가 없습니다.',
+        data: [],
+      });
+    }
+    //내 게시물 전송
+    res.send(myPosts);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: 'error',
+      message: '포스트를 가져오는 동안 오류가 발생했습니다.',
+    });
+  }
 };
 
 //게시글 작성
