@@ -81,12 +81,21 @@ logoutBtn.addEventListener('click', () => {
   document.cookie =
     'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   toggleLoginStatus(false);
-  location.reload();
+  window.location.reload();
 });
 
 hamburgerMenu.addEventListener('click', () => {
   dropdown.style.display =
     dropdown.style.display === 'block' ? 'none' : 'block';
+});
+
+const mobileLogout = document.querySelector('.mobileLogout');
+
+mobileLogout.addEventListener('click', () => {
+  document.cookie =
+    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  toggleLoginStatus(false);
+  window.location.reload();
 });
 
 window.addEventListener('resize', updateButtonVisibility); // 반응형 사이즈 변경에 대응
