@@ -84,6 +84,11 @@ logoutBtn.addEventListener('click', () => {
   window.location.reload();
 });
 
+mobileLoginBtn.addEventListener('click', () => {
+  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600';
+  toggleLoginStatus(true);
+});
+
 hamburgerMenu.addEventListener('click', () => {
   dropdown.style.display =
     dropdown.style.display === 'block' ? 'none' : 'block';
