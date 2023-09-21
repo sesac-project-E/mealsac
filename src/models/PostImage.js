@@ -1,31 +1,41 @@
-module.exports = (sequelize, Datatypes) => {
+module.exports = (sequelize, DataTypes) => {
   const PostImage = sequelize.define(
     'PostImage',
     {
-      restaurant_image_id: {
-        type: Datatypes.INTEGER,
+      image_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
         autoIncrement: true,
+        primaryKey: true,
       },
-      restaurant_image_url: {
-        type: Datatypes.STRING(2048),
+      post_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Post',
+          key: 'post_id',
+        },
+      },
+      image_url: {
+        type: DataTypes.STRING(1024),
+        allowNull: true,
       },
     },
     {
+      timestamps: false,
+      underscored: true,
       tableName: 'PostImage',
       freezeTableName: true,
-      charset: 'utf8',
-      collate: 'utf8_general_ci',
-      timestamps: false,
     },
   );
-  PostImage.associate = function (models) {
-    PostImage.belongsTo(models.Restaurant, {
-      foreignKey: 'restaurant_id',
-      allowNull: false,
+
+  PostImage.associate = models => {
+    PostImage.belongsTo(models.Post, {
+      foreignKey: 'post_id',
+      targetKey: 'post_id',
       onDelete: 'CASCADE',
     });
   };
+
   return PostImage;
 };

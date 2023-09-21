@@ -80,19 +80,28 @@ exports.getMyPosts = async (req, res) => {
 exports.postCreatePost = async (req, res) => {
   const { id } =
     req.session && req.session.userInfo ? req.session.userInfo : -1;
-  console.log(req.session);
 
-  // if (!req.session.userInfo) {
-  //   return res.status(400).json({
-  //     status: 'error',
-  //     message: '세션에서 사용자 정보를 찾을 수 없습니다.',
-  //   });
-  // }
+  if (!req.session.userInfo) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
 
   // const transaction = await sequelize.transaction();
   const { title, content, board_id } = req.body;
 
-  //만약 board_id가 1이면 특정 id가
+  //만약 board_id가 1이면 req.session.userInfo.admin_id가 0일경우 400에러
+  //관리자 아니면 공지 못올림
+  const { checkAdmin } =
+    board_id === 1 && req.session.userInfo.isAdmin === 0 ? 1 : null;
+  if (checkAdmin) {
+    return res.status(400).json({
+      status: 'error',
+      message: '관리자만 공지할 수 있습니다',
+    });
+  }
+
   if (req.session.userInfo) {
     try {
       const newPost = await Post.create(
