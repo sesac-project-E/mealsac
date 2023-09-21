@@ -3,14 +3,14 @@ const category = () => {
 };
 
 // 컨트롤러 완성 후 주석 풀기
-// const myPost = () => {
-//   const btnBox = document.querySelector('.btnBox');
-//   if (`${post.user_id}` === `${user.id}`) {
-//     btnBox.style.display = 'block';
-//   } else {
-//     btnBox.style.display = 'none';
-//   }
-// };
+const myPost = () => {
+  const btnBox = document.querySelector('.btnBox');
+  if (`${post.user_id}` === `${user.id}`) {
+    btnBox.style.display = 'block';
+  } else {
+    btnBox.style.display = 'none';
+  }
+};
 
 document.addEventListener('DOMContentLoaded', function () {
   const replyForm = document.getElementById('replyForm');
@@ -35,8 +35,8 @@ const enterReply = async e => {
 
 // 수정
 const modifyBtn = () => {
-  //   location.href = `/post/edit/${post_id}`;
-  location.href = `/post/edit/post_id`;
+  location.href = `/post/edit/${post_id}`;
+  // location.href = `/post/edit/post_id`;
 };
 
 // 삭제

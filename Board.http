@@ -1,0 +1,21 @@
+@server = http://localhost:8000
+
+
+###post_id:36 게시물 조회
+GET {{server}}/api/post/36
+
+###20개단위로 페이지네이션된 자유게시판 1페이지
+GET {{server}}/api/board/?page=1
+
+###20개단위로 페이지네이션된 공지게시판 2페이지
+GET {{server}}/api/board/notice/?page=1
+
+###게시글 포스팅 (로그인 세션값 필요)
+POST {{server}}/api/post/create
+
+{
+  "board_id": 2,
+  "title": "난 ESFJ야",
+  "content": "mbti 댓글에 적어줄 사람?"
+}
+
