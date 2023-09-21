@@ -1,3 +1,5 @@
+const { default: axios } = require('axios');
+
 class UploadAdapter {
   constructor(loader) {
     this.loader = loader;
@@ -18,7 +20,7 @@ class UploadAdapter {
     const xhr = (this.xhr = new XMLHttpRequest());
     // 경로 변수화
     const currentUrl = window.location.origin;
-    const uploadUrl = `${currentUrl}/upload/editor/file`;
+    const uploadUrl = `/api/post/uploadImg`;
     xhr.open('POST', uploadUrl, true);
     xhr.responseType = 'json';
   }
@@ -51,7 +53,7 @@ class UploadAdapter {
 
   _sendRequest(file) {
     const data = new FormData();
-    data.append('file', file);
+    data.append('imageFiles', file);
     console.log(data);
     this.xhr.send(data);
   }
@@ -83,6 +85,12 @@ document.getElementById('postBtn').addEventListener('click', function (event) {
   const editorData = editor.getData();
   const title = document.getElementById('inputTitle').value;
   const boardType = document.getElementById('boardType').value;
+  let board_id;
+  if (boardType === 'notice') {
+    board_id = 1;
+  } else {
+    board_id = 2;
+  }
 
   // 서버에 데이터 전송
   fetch('/api/post/create', {
@@ -93,12 +101,12 @@ document.getElementById('postBtn').addEventListener('click', function (event) {
     body: JSON.stringify({
       title: title,
       content: editorData,
-      board_id: boardType,
+      board_id,
     }),
   })
     .then(response => response.json())
     .then(data => {
-      if (data.result) {
+      if (data.status === 'success') {
         alert('글이 성공적으로 작성되었습니다.');
         window.location.href = '/board/list';
       } else {
