@@ -19,25 +19,31 @@
             <div class="formContainer">
             <form id="searchNameMenu">
               <div>
-              <input type="radio" name="search" id="name" checked>
+              <input type="radio" name="search" id="allRestaurants1" checked>
+              <label for="allRestaurants1">모든 식당</label>
+              <input type="radio" name="search" id="name">
               <label for="name">매장명 검색</label>
               <input type="radio" name="search" id="menu">
               <label for="menu">메뉴명 검색</label>
             </div>
+            <div>
               <input type="text" id="searchInput" placeholder="매장명 검색" />
               <button type="submit">검색</button>
+            </div>
             </form>
           </div>
           <div class="tagNstyle searchInvisible">
             <form class="searchTagStyle">
-              <input type="radio" name="search" id="category" checked>
+              <input type="radio" name="search" id="allRestaurants2" checked>
+              <label for="allRestaurants2">모든 식당</label>
+              <input type="radio" name="search" id="category">
               <label for="category">카테고리 검색</label>
               <input type="radio" name="search" id="tag">
               <label for="tag">태그 검색</label>
             </form>
             <div class="styleContainer">
               <section class="more">
-                <input type="radio" name="style" id="korean" checked>
+                <input type="radio" name="style" id="korean">
                 <label for="korean">한식</label>
                 <input type="radio" name="style" id="chinese">
                 <label for="chinese">중식</label>

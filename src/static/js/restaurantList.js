@@ -119,6 +119,24 @@ document.querySelector('.sort').addEventListener('click', e => {
   sortArticle.classList.toggle('active');
 });
 
+// 모든 식당 클릭 시 정렬 아이콘 삽입, 모든 식당 데이터 렌더
+document.querySelector('#allRestaurants1').addEventListener('change', () => {
+  document.querySelector('#searchNameMenu div:last-child').style.display =
+    'none';
+  document.querySelector('.sortContainer').style.display = 'flex';
+  fetchData();
+  drawPagination(currentPage);
+});
+
+document.querySelector('#allRestaurants2').addEventListener('change', () => {
+  styleContainer.classList.add('invisible');
+  tagContainer.classList.add('invisible');
+  tagNstyleBtn.style.display = 'none';
+  document.querySelector('.sortContainer').style.display = 'flex';
+  fetchData();
+  drawPagination(currentPage);
+});
+
 // 검색 방식
 searchName.addEventListener('click', e => {
   e.target.classList.add('clicked');
@@ -132,15 +150,24 @@ searchType.addEventListener('click', e => {
   searchName.classList.remove('clicked');
   tagNstyle.classList.remove('searchInvisible');
   formContainer.classList.add('searchInvisible');
+  styleContainer.classList.add('invisible');
+  tagContainer.classList.add('invisible');
+  tagNstyleBtn.style.display = 'none';
 });
 
 // 검색 방식 세부 설정
 nameRadio.addEventListener('change', () => {
   searchInput.placeholder = '매장명 검색';
+  document.querySelector('#searchNameMenu div:last-child').style.display =
+    'block';
+  document.querySelector('.sortContainer').style.display = 'none';
 });
 
 menuRadio.addEventListener('change', () => {
   searchInput.placeholder = '메뉴명 검색';
+  document.querySelector('#searchNameMenu div:last-child').style.display =
+    'block';
+  document.querySelector('.sortContainer').style.display = 'none';
 });
 
 tagRadio.addEventListener('change', () => {
@@ -156,6 +183,8 @@ tagRadio.addEventListener('change', () => {
 
   tagsMore.innerText = '더보기';
   tagContainer.style.height = '30px';
+  tagNstyleBtn.style.display = 'inline-block';
+  document.querySelector('.sortContainer').style.display = 'none';
 });
 
 styleRadio.addEventListener('change', () => {
@@ -169,6 +198,8 @@ styleRadio.addEventListener('change', () => {
 
   stylesMore.innerText = '더보기';
   tagContainer.style.height = '30px';
+  tagNstyleBtn.style.display = 'inline-block';
+  document.querySelector('.sortContainer').style.display = 'none';
 });
 
 // 카테고리 더보기 이벤트
@@ -235,12 +266,12 @@ searchNameMenu.addEventListener('submit', e => {
       initMap();
       clearMarkers();
 
-      const restaurants = response.data.rows;
-      for (const restaurant of restaurants) {
+      const restaurants = response.data;
+      for (const restaurant of restaurants.rows) {
         geocodeAddress(restaurant.restaurant_address);
       }
 
-      updatePage(restaurants);
+      updatePage(response.data);
 
       Math.ceil(response.data.count / 20)
         ? (totalPages = Math.ceil(response.data.count / 20))
@@ -268,14 +299,13 @@ tagNstyleBtn.addEventListener('click', e => {
       '.styleContainer input[type="radio"]:checked',
     );
     style = styleRadio.id;
-    apiUrl = `/api/restaurant_type/${style}`;
-    console.log(apiUrl);
+    apiUrl = `/api/restaurant_type/${style}?page=1`;
   }
 
   axios
     .get(apiUrl)
     .then(response => {
-      const restaurants = response.data.rows;
+      const restaurants = response.data;
 
       updatePage(restaurants);
 
@@ -285,10 +315,8 @@ tagNstyleBtn.addEventListener('click', e => {
 
       drawPagination(1);
 
-      document.querySelector('.sorting').textContent = '인기순';
-
       clearMarkers();
-      for (const restaurant of restaurants) {
+      for (const restaurant of restaurants.rows) {
         geocodeAddress(restaurant.restaurant_address);
       }
     })
@@ -403,7 +431,7 @@ const fetchData = async (url = '') => {
 
   try {
     const response = await axios.get(url);
-    const restaurants = response.data.rows;
+    const restaurants = response.data;
 
     totalPages = Math.ceil(response.data.count / 20);
     updatePage(restaurants);
@@ -412,7 +440,7 @@ const fetchData = async (url = '') => {
     await initMap();
     clearMarkers();
 
-    for (const restaurant of restaurants) {
+    for (const restaurant of restaurants.rows) {
       geocodeAddress(restaurant.restaurant_address);
     }
 
@@ -429,10 +457,10 @@ const updatePage = data => {
   restaurantContainer.innerHTML = '';
   totalRestaurants.innerText = `${data.count || 0}개의 매장`;
 
-  if (Array.isArray(data) && data.length > 0) {
-    data.forEach(item => {
-      const restaurant = item.Restaurant ? item.Restaurant : item;
-      const article = createRestaurantArticle(restaurant);
+  if (Array.isArray(data.rows) && data.rows.length > 0) {
+    data.rows.forEach(item => {
+      // const restaurant = item.Restaurant ? item.Restaurant : item;
+      const article = createRestaurantArticle(item);
 
       restaurantContainer.appendChild(article);
     });
@@ -444,7 +472,6 @@ const updatePage = data => {
 
 // 페이지네이션 렌더
 const drawPagination = centerPage => {
-  console.log(centerPage);
   const container = document.querySelector('#pagination-container');
   const oldPageNumbers = document.querySelectorAll('.page-number');
 
@@ -504,7 +531,7 @@ const changePage = newPage => {
     url = `/api/menu/search?q=${query}&page=${currentPage}`;
   } else if (styleRadio.checked) {
     query = styles;
-    url = `/api/restaurant_type/${query}&page=${currentPage}`;
+    url = `/api/restaurant_type/${query}?page=${currentPage}`;
   } else if (tagRadio.checked) {
     query = tags.map((tag, i) => `tag${i + 1}=${tag}`).join('&');
     url = `/api/tag/search?${query}page=${currentPage}`;
@@ -561,7 +588,7 @@ const createRestaurantArticle = restaurant => {
 
   const img = document.createElement('img');
   img.className = 'restaurantImg';
-  img.src = restaurant.restaurant_image;
+  img.src = restaurant.RestaurantImages[0].restaurant_image_url;
   img.alt = `${restaurant.restaurant_name} 이미지`;
 
   const divInfo = document.createElement('div');
