@@ -11,12 +11,12 @@ exports.getNotice = async (req, res) => {
       where: { board_id: 1 },
       include: [
         {
-          model: ReviewImage,
-          attributes: ['image_url'],
-        },
-        {
           model: User,
           required: true,
+        },
+        {
+          model: PostImage,
+          attributes: ['image_url'],
         },
       ],
       order: [['createdAt', 'DESC']],
@@ -45,6 +45,10 @@ exports.getFree = async (req, res) => {
         {
           model: User,
           required: true,
+        },
+        {
+          model: PostImage,
+          attributes: ['image_url'],
         },
       ],
       order: [['createdAt', 'DESC']],
