@@ -19,7 +19,7 @@ h1 {
   font-weight: 900;
 }
 
-#inputTitle {
+.inputTitle {
   border: none;
   outline: none;
 }
