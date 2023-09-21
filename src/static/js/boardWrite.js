@@ -77,6 +77,35 @@ ClassicEditor.create(document.querySelector('.editor'), {
 
 // 작성
 // 작성한 글을 포스트로 요청
+document.getElementById('postBtn').addEventListener('click', function () {
+  const editorData = editor.getData();
+
+  // 서버에 데이터 전송
+  fetch('/api/post/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      content: editorData,
+    }),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('글이 성공적으로 작성되었습니다.');
+        window.location.href = '/board/list';
+      } else {
+        alert('글 작성에 실패했습니다: ' + data.message);
+      }
+    })
+    .catch(error => {
+      alert('오류가 발생했습니다: ' + error.message);
+    });
+});
 
 // 취소
 // 원래 있던 게시판으로 돌아가도록
+document.getElementById('backBtn').addEventListener('click', function () {
+  window.location.href = '/board';
+});
