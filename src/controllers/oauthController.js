@@ -32,8 +32,6 @@ exports.kakaoResult = async (req, res) => {
       }
     }
   )
-  console.log(getUserInfo.data.properties)
-  console.log(getUserInfo.data)
   let user = await User.findOne({
     where : {user_id : `${getUserInfo.data.id}@kakao.com`},
   })
@@ -43,7 +41,10 @@ exports.kakaoResult = async (req, res) => {
       password : "",
       user_name : `${getUserInfo.data.id}kakao`
     })
-  } 
+    alert("회원가입을 환영합니다!")
+  } else {
+    alert("로그인을 환영합니다!")
+  }
   req.session.userInfo = {user_name : `${user.dataValues.user_name}`, id : `${user.dataValues.id}`}
   res.redirect('/')
 }
