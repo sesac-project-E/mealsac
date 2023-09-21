@@ -69,7 +69,9 @@ const reviewList = async () => {
           reviewContainer.innerHTML = `
             <div class="reviewInfo">
               <div><a href="/restaurant/${review.restaurant_id}">
-                <span class="restaurantName">${review.Restaurant.restaurant_name}</span>
+                <span class="restaurantName">${
+                  review.Restaurant.restaurant_name
+                }</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -86,14 +88,18 @@ const reviewList = async () => {
               </div>
               <div>
                 <img src="/static/img/star.png" alt="평점" class="starIcon" />
-                <span class="rate">${review.rating}</span>
+                <span class="rate">${restaurant.rating.toFixed(1)}</span>
               </div>
             </div>
             <p>${review.content}</p>
             <div class="reviewImg"></div>
             <div class="updateBtn">
-              <button type="button" class="reviewDelete" onclick="deleteReview(${review.review_id})">삭제</button>
-              <button type="button" class="reviewEdit" onclick="edit(${review.review_id})">수정</button>
+              <button type="button" class="reviewDelete" onclick="deleteReview(${
+                review.review_id
+              })">삭제</button>
+              <button type="button" class="reviewEdit" onclick="edit(${
+                review.review_id
+              })">수정</button>
             </div>
             
           `;

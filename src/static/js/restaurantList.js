@@ -731,7 +731,7 @@ const createRestaurantArticle = (restaurant, restaurantImg) => {
 
   const pRating = document.createElement('p');
   pRating.className = 'rate';
-  pRating.textContent = restaurant.rating;
+  pRating.textContent = restaurant.rating.toFixed(1);
 
   const imgComment = document.createElement('img');
   imgComment.className = 'comment';
