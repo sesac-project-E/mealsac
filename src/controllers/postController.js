@@ -92,14 +92,21 @@ exports.postCreatePost = async (req, res) => {
   const { title, content, board_id } = req.body;
 
   //만약 board_id가 1이면 req.session.userInfo.admin_id가 0일경우 400에러
-  //관리자 아니면 공지 못올림
-  // const { checkAdmin } =
-  //   board_id === 1 && req.session.userInfo.isAdmin === 0 ? 1 : null;
-  // if (checkAdmin) {
-  //   return res.status(400).json({
-  //     status: 'error',
-  //     message: '관리자만 공지할 수 있습니다',
-  //   });
+  //관리자가 공지게시물
+  // console.log(req.body.board_id);
+
+  // const checkAdmin = (board_id =
+  //   req.session.userInfo.isAdmin == 1 ? req.session.userInfo.isAdmin : null);
+
+  // console.log(!checkAdmin);
+
+  // if (req.body.board_id == 1) {
+  //   if (req.body.board_id == req.session.userInfo.isAdmin + 1) {
+  //     return res.status(400).json({
+  //       status: 'error',
+  //       message: '관리자만 공지할 수 있습니다',
+  //     });
+  //   }
   // }
 
   if (req.session.userInfo) {
