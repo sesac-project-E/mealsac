@@ -94,6 +94,10 @@
   width: 20vw;
 }
 
+#infoContainer {
+  margin: 0 45px;
+}
+
 /* 플로팅 메뉴 */
 .mobileMenuBar,
 .mobileMenu {
