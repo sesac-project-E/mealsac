@@ -110,7 +110,7 @@
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
                 <img
-                  src="<%= restaurant.image_url %>"
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
@@ -123,7 +123,7 @@
                     </p>
                     <p class="review">
                       <img src="../static/img/speechBalloon.png" alt="Review" />
-                      <%= restaurant.review_count %>
+                      <%= restaurant.reviews_count %>
                     </p>
                   </div>
                 </div>
@@ -136,7 +136,7 @@
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
                 <img
-                  src="<%= restaurant.image_url %>"
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
@@ -149,7 +149,7 @@
                     </p>
                     <p class="review">
                       <img src="../static/img/speechBalloon.png" alt="Review" />
-                      <%= restaurant.review_count %>
+                      <%= restaurant.reviews_count %>
                     </p>
                   </div>
                 </div>
@@ -178,7 +178,7 @@
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
                 <img
-                  src="<%= restaurant.image_url %>"
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
@@ -191,7 +191,7 @@
                     </p>
                     <p class="review">
                       <img src="../static/img/speechBalloon.png" alt="Review" />
-                      <%= restaurant.review_count %>
+                      <%= restaurant.reviews_count %>
                     </p>
                   </div>
                 </div>
@@ -218,7 +218,7 @@
                     </p>
                     <p class="review">
                       <img src="../static/img/speechBalloon.png" alt="Review" />
-                      <%= restaurant.review_count %>
+                      <%= restaurant.reviews_count %>
                     </p>
                   </div>
                 </div>
@@ -275,7 +275,7 @@
                       onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
                     >
                       <img
-                        src="<%= restaurant.image_url %>"
+                        src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                         alt="<%= restaurant.restaurant_name %>"
                       />
                       <p class="restaurantName">
@@ -293,7 +293,7 @@
                               src="../static/img/speechBalloon.png"
                               alt="Review"
                             />
-                            <%= restaurant.review_count %>
+                            <%= restaurant.reviews_count %>
                           </p>
                         </div>
                       </div>
