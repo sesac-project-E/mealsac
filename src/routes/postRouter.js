@@ -39,6 +39,9 @@ router.post(
 //게시글 삭제
 router.delete('/:post_id', postController.deletePost);
 
+// 게시글 수정
+router.patch('/:post_id', postController.updatePost);
+
 //내 게시글 조회
 router.get('/my/post', postController.getMyPosts);
 

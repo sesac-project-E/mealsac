@@ -96,9 +96,7 @@ indexRouter.get('/post/write', (req, res) => {
   res.render('boardWrite');
 });
 
-indexRouter.get('/post/edit/:post_id', (req, res) => {
-  res.render('boardModify');
-});
+indexRouter.get('/post/edit/:post_id', postController.getEditPost);
 
 //post_id로 개별 포스팅 조회
 indexRouter.get('/post/:post_id', postController.getPost);
