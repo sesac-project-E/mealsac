@@ -395,11 +395,43 @@ form {
 }
 
 @media (max-width: 576px) {
-  * {
-    font-size: 6px;
+  html {
+    font-size: 8px;
+  }
+  .title {
+    font-size: 5rem;
+  }
+  #randomStartBtn {
+    width: 30rem;
+    height: 10rem;
+    border-radius: 5rem;
+  }
+  .random-intro-column{
+    font-size: 3rem;
+  }
+  #random-intro {
+    padding: 0;
   }
 }
-
+@media (max-width: 380px) {
+  html {
+    font-size: 6px;
+  }
+  .title {
+    font-size: 5rem;
+  }
+  #randomStartBtn {
+    width: 30rem;
+    height: 10rem;
+    border-radius: 5rem;
+  }
+  .random-intro-column{
+    font-size: 3rem;
+  }
+  #random-intro {
+    padding: 0;
+  }
+}
 
 
 @media screen and (max-width : 768px) {

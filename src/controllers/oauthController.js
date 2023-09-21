@@ -1,5 +1,5 @@
 const axios = require('axios')
-const rest = "0cee9e4fe5f244869b2caf837039c13d"
+const rest = process.env.KAKAO_REST_API_KEY
 const {User} = require('../models')
 
 exports.kakaoLogin = (req, res) => {
