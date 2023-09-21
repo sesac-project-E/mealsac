@@ -6,7 +6,7 @@ const likeList = () => {
   document.getElementById('myLike').classList.add('clicked');
   document.getElementById('myReview').classList.remove('clicked');
   document.getElementById('myPost').classList.remove('clicked');
-  document.getElementById('myLikes').style.display = 'block';
+  document.getElementById('myLikes').style.display = 'flex';
   document.getElementById('myReviews').style.display = 'none';
   document.getElementById('myPosts').style.display = 'none';
   document.querySelector('.reviewPage').style.display = 'none';
