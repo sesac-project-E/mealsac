@@ -104,17 +104,12 @@ exports.postCreatePost = async (req, res) => {
 
   if (req.session.userInfo) {
     try {
-      const newPost = await Post.create(
-        {
-          title,
-          content,
-          user_id: id,
-          board_id,
-        },
-        // {
-        //   transaction,
-        // },
-      );
+      const newPost = await Post.create({
+        title,
+        content,
+        user_id: id,
+        board_id,
+      });
 
       if (!newPost || !newPost.post_id) {
         return res.status(500).json({
@@ -123,21 +118,6 @@ exports.postCreatePost = async (req, res) => {
         });
       }
 
-      const imagePromises = (req.files || []).map(file => {
-        const filePath = path.join('/static/img/postImage', file.filename);
-        return PostImage.create(
-          {
-            image_id: null,
-            post_id: newPost.post_id,
-            image_url: filePath,
-          },
-          // { transaction },
-        );
-      });
-      const images = await Promise.all(imagePromises);
-
-      // await transaction.commit();
-
       res.status(201).json({
         status: 'success',
         message: '성공적으로 포스트를 등록했습니다.',
@@ -145,11 +125,9 @@ exports.postCreatePost = async (req, res) => {
           post_id: newPost.post_id,
           content: newPost.content,
           user_id: newPost.user_id,
-          images: images.map(image => image.image_url),
         },
       });
-    } catch {
-      // await transaction.rollback();
+    } catch (error) {
       console.error('에러 정보: ', error);
       res.status(500).json({
         status: 'error',
