@@ -3,7 +3,9 @@
 <br><br>
 
 <p align="center">
-  <img src="" width="1000" height="563" alt="밀싹 이미지">
+
+[<img src="./src/static/img/mainPage.png" width="1000" height="563" alt="밀싹 홈페이지">](https://mealsac-473f548ea790.herokuapp.com/)
+
 </p>
 
 <br><br>
@@ -16,7 +18,7 @@
 
 <br>
 
-[<img src="./src/static/img/logo2.png">](https://mealsac-473f548ea790.herokuapp.com/)
+[<img src="./src/static/img/logo2.png" style="background-color: #fff">](https://mealsac-473f548ea790.herokuapp.com/)
 
 #### 🔍 배너 클릭해서 사이트 구경하기!
 
@@ -203,7 +205,7 @@
 
 ### 🪄 **기술 명세서**
 
-<h align="center">[<img src="/static/img/">](https://www.notion.so/45cf9a03f8a94299a21d4c68e13d0da7?v=b6c751094077472c8c89b0159de8a935)</h>
+<h align="center">[<img src="/static/img/">](https://www.notion.so/93e38d8e51db40c09af9555a12758671?v=80d1a5c5840a4a5584e7cc27a30a9d99)</h>
 
 #### 기술명세서 자세히 보고 싶다면 사진 클릭
 
