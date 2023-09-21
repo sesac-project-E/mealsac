@@ -87,11 +87,11 @@ a {
   cursor: pointer;
 }
 
-.searchTagStyle input[type='radio'] {
+.tagNstyle input[type='radio'] {
   display: none;
 }
 
-.searchTagStyle input[type='radio'] + label {
+.tagNstyle input[type='radio'] + label {
   display: inline-block;
   border: 2px solid #989898;
   border-radius: 25px;
@@ -99,7 +99,7 @@ a {
   margin-bottom: 10px;
 }
 
-.searchTagStyle input[type='radio']:checked + label {
+.tagNstyle input[type='radio']:checked + label {
   color: #e0f0d1;
   background-color: #0b9324;
   border: 2px solid #0b9324;
@@ -330,6 +330,10 @@ p.review {
   &:hover {
     background-color: #e0f0d1;
   }
+}
+
+.restaurantLabel input[type='radio']:checked + article {
+  background-color: #f2f2f2;
 }
 
 @media (max-width: 768px) {
