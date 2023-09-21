@@ -60,34 +60,50 @@ exports.postCreatePost = async (req, res) => {
 };
 
 exports.deletePost = async (req, res) => {
+  console.log(req.session.userInfo);
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  if (!userInfo || (!userInfo.id && !userInfo.isAdmin)) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
+  const user_id = userInfo.id;
+  const { post_id } = req.params;
+
   try {
-    const { post_id } = req.params;
-    if (post_id) {
-      Post.findOne({
-        where: { post_id: post_id },
-      }).then(response => {
-        if (
-          response &&
-          response.dataValues.user_id === req.session.userInfo.id
-        ) {
-          Post.destroy({
-            where: { post_id: post_id },
-          })
-            .then(() => {
-              res.send('잘 삭제되었습니다.');
-            })
-            .catch(() => {
-              throw Error();
-            });
-        } else {
-          res.status(400).send();
-        }
+    const post = await Post.findOne({
+      where: { post_id },
+    });
+
+    if (!post) {
+      return res.status(404).json({
+        status: 'error',
+        message: '해당 포스팅을 찾을 수 없습니다.',
       });
-    } else {
-      throw Error();
     }
+
+    // 리뷰 작성자 또는 관리자만 리뷰를 삭제할 수 있도록 함
+    if (post.user_id !== user_id && !userInfo.isAdmin) {
+      return res.status(403).json({
+        status: 'error',
+        message: '리뷰를 포스팅을 삭제할 권한이 없습니다.',
+      });
+    }
+
+    await post.destroy();
+
+    res.json({
+      status: 'success',
+      message: '포스팅이 성공적으로 삭제되었습니다.',
+    });
   } catch (error) {
-    console.log(error);
-    res.send(error);
+    console.error(error);
+    res.status(500).json({
+      status: 'error',
+      message: '리뷰를 삭제하는 동안 오류가 발생했습니다.',
+    });
   }
 };
