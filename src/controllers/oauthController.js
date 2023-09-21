@@ -3,7 +3,7 @@ const rest = "0cee9e4fe5f244869b2caf837039c13d"
 const {User} = require('../models')
 
 exports.kakaoLogin = (req, res) => {
-  res.redirect(`https://kauth.kakao.com/oauth/authorize?client_id=${rest}&response_type=code&redirect_uri=http://127.0.0.1:8000/api/oauth/kakao/result`)
+  res.redirect(`https://kauth.kakao.com/oauth/authorize?client_id=${rest}&response_type=code&redirect_uri=https://mealsac-473f548ea790.herokuapp.com/api/oauth/kakao/result`)
 
 }
 
@@ -32,8 +32,6 @@ exports.kakaoResult = async (req, res) => {
       }
     }
   )
-  console.log(getUserInfo.data.properties)
-  console.log(getUserInfo.data)
   let user = await User.findOne({
     where : {user_id : `${getUserInfo.data.id}@kakao.com`},
   })
