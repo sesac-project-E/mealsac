@@ -122,8 +122,13 @@ exports.postLogin = async (req, res) => {
       where: { user_id },
     });
     console.log(user)
+    
     // Step2. 입력된 비밀번호 암호화하여 기존 데이터와 비교
     if (user) {
+      if (user.password === '') {
+        res.json({result : 'kakao'})
+        return ;
+      }
       const result = await compareFunc(password, user.password); // true or false
       if (result) {
         req.session.userInfo = { user_name: user.user_name, id: user.id }; // 세션 생성
