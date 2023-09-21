@@ -4,6 +4,9 @@
 ###post_id:36 게시물 조회
 GET {{server}}/api/post/36
 
+###내가 쓴 게시물 조회
+GET {{server}}/api/post/my/post
+
 ###20개단위로 페이지네이션된 자유게시판 1페이지
 GET {{server}}/api/board/?page=1
 
@@ -21,4 +24,3 @@ POST {{server}}/api/post/create
 
 ###post_id:24 게시글삭제 (본인이 아니거나 관리자 아니면 삭제불가)
 DELETE {{server}}/api/post/24
-
