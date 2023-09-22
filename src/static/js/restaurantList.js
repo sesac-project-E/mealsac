@@ -318,7 +318,7 @@ searchNameMenu.addEventListener('submit', e => {
   let apiUrl;
 
   if (nameRadio.checked) {
-    apiUrl = `/api/menu/search?page=1&q=${query}`;
+    apiUrl = `/api/restaurant/search?page=1&q=${query}`;
   } else if (menuRadio.checked) {
     apiUrl = `/api/menu/search?q=${query}&page=1`;
   }
@@ -334,11 +334,16 @@ searchNameMenu.addEventListener('submit', e => {
       //     geocodeAddress(restaurant.restaurant_address);
       //   }
       // } else {
+
       for (const data of response.data.rows) {
-        geocodeAddress(
-          data.Restaurant.restaurant_address,
-          data.Restaurant.restaurant_type_id,
-        );
+        if (data.restaurant_address) {
+          geocodeAddress(data.restaurant_address, data.restaurant_type_id);
+        } else {
+          geocodeAddress(
+            data.Restaurant.restaurant_address,
+            data.Restaurant.restaurant_type_id,
+          );
+        }
       }
       // }
 
@@ -385,11 +390,15 @@ tagNstyleBtn.addEventListener('click', e => {
       drawPagination(1);
 
       clearMarkers();
-      for (const restaurant of restaurants.rows) {
-        geocodeAddress(
-          restaurant.restaurant_address,
-          restaurant.restaurant_type_id,
-        );
+      for (const data of response.data.rows) {
+        if (data.restaurant_address) {
+          geocodeAddress(data.restaurant_address, data.restaurant_type_id);
+        } else {
+          geocodeAddress(
+            data.Restaurant.restaurant_address,
+            data.Restaurant.restaurant_type_id,
+          );
+        }
       }
     })
     .catch(error => {
@@ -514,11 +523,15 @@ const fetchData = async (url = '') => {
     await initMap();
     clearMarkers();
 
-    for (const restaurant of restaurants.rows) {
-      geocodeAddress(
-        restaurant.restaurant_address,
-        restaurant.restaurant_type_id,
-      );
+    for (const data of response.data.rows) {
+      if (data.restaurant_address) {
+        geocodeAddress(data.restaurant_address, data.restaurant_type_id);
+      } else {
+        geocodeAddress(
+          data.Restaurant.restaurant_address,
+          data.Restaurant.restaurant_type_id,
+        );
+      }
     }
 
     return response.data.rows;
@@ -610,7 +623,8 @@ const changePage = newPage => {
 
   if (nameRadio.checked) {
     query = searchInput.value;
-    url = `/api/menu/search?page=${currentPage}&q=${query}`;
+    url = `/api/restaurant/search?page=${currentPage}&q=${query}`;
+    console.log(url);
   } else if (menuRadio.checked) {
     query = searchInput.value;
     url = `/api/menu/search?q=${query}&page=${currentPage}`;
