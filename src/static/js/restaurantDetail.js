@@ -128,7 +128,7 @@ document.getElementById('submitbtn').addEventListener('click', async e => {
   try {
     const response = await axios({
       method: 'POST',
-      url: `http://localhost:8000/api/review/${restaurant_id}`,
+      url: `/api/review/${restaurant_id}`,
       data: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
