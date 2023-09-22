@@ -148,16 +148,6 @@ section h3 {
   margin: 35px 0 10px 0;
 }
 
-#menu figure {
-  display: flex;
-}
-
-#menu img {
-  width: 130px;
-  height: 130px;
-  border-radius: 10px;
-}
-
 #menu div {
   margin: auto 10px;
 }

@@ -104,15 +104,10 @@
           <h3>대표메뉴</h3>
           <% if (restaurant.Menus && restaurant.Menus.length > 0) { %> <%
           restaurant.Menus.forEach(menu => { %>
-          <figure>
-            <img src="/static/img/food.jpeg" alt="대표메뉴" />
-            <div>
-              <figcaption><%= menu.menu_name %></figcaption>
-              <figcaption>
-                <%= menu.menu_price.toLocaleString('en-US') %>원
-              </figcaption>
-            </div>
-          </figure>
+          <div>
+            <span><%= menu.menu_name %></span>
+            <span><%= menu.menu_price.toLocaleString('en-US') %>원</span>
+          </div>
           <% }) %> <% } else { %>
           <p>등록된 메뉴가 없습니다.</p>
           <% } %>
