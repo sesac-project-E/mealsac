@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random</title>
+  <%- include('../common/commonHead.ejs') %>
+  <link rel="stylesheet" href="/static/css/random.css"></link>
+</head>
+<body>
+  <%- include('../common/header.ejs') %>
+  <div class="random-container">
+    <span class="random-border"></span>
+    <span class="random-border"></span>
+    <span class="random-border"></span>
+    <span class="random-border"></span>
+    <div class="random-content">
+      <section id="random-intro">
+        <h1 class="title">오늘 뭐 먹지?</h1>
+        <ul id="random-intro-description">
+          <li class="random-intro-column">
+            <div class="random-intro-marker">
+              1
+            </div>
+            <div>
+              <h4>모든 식당을 기반으로 한 추천</h4>
+              <span>MealSAC에 있는 모든 식당 데이터</span>
+            </div>
+          </li>
+          <li class="random-intro-column">
+            <div class="random-intro-marker">
+              2
+            </div>
+            <div>
+              <h4>간단한 설문 조사</h4>
+              <span>취향등 다양한 질문을 통한 메뉴 추천</span>
+            </div>
+          </li>
+          <li class="random-intro-column">
+            <div class="random-intro-marker">
+              3
+            </div>
+            <div>
+              <h4>바로 결과 검색</h4>
+              <span>바로 추천받은 식당으로 바로가기!</span>
+            </div>
+          </li>
+        </ul>
+        <div id="button-intro-group">
+          <button onclick="randomStart()" class="button" id="randomStartBtn">시작</button>
+        </div>
+      </section>
+      <section id="random-question">
+        <form name="random">
+          <h1 class="question">자신이 생각하는 최대 점심값</h1>
+          <div class="options">
+            <div class="option">
+              <label for="rich" >
+                <input class="input-none" type="radio" name="money" value="rich" id="rich" > 
+                <img src="../../static/img/random/rich.png" alt="">
+              </label>
+              <label for="rich">돈이 많다</label>
+            </div>
+            <div class="option">
+              <label for="middle">
+                <input class="input-none" type="radio" name="money" value="middle" id="middle" >
+                <img src="../../static/img/random/middle.png" alt="">
+              </label>
+              <label for="middle">돈이 보통</label>
+            </div>
+            <div class="option">
+              <label for="poor">
+                <input type="radio" name="money" value="poor" id="poor" class="input-none">
+                <img src="../../static/img/random/poor.png" alt="">
+              </label>
+              <label for="poor">돈이 적다</label>
+            </div>
+          </div>
+          <div class="button-group button-group-question">
+            <button type="button" onclick="randomNext()" class="button next-button bg-green-hover" id="randomNextBtn" >다음</button>
+          </div>
+        </form>
+      </section>
+      <section class="random-result">
+        <button type="button" onclick="document.location.href='/random'" id="toRandomBtn">
+          다시하기</button
+        ><br />
+        <button type="button" onclick="document.location.href='/'" id="toMainBtn">
+          메인으로</button
+        ><br />
+      </section>
+    </div>
+  </div>
+  <%- include('../common/footer.ejs') %>
+  <script src="../../static/js/random.js"></script>
+</body>
+</html>

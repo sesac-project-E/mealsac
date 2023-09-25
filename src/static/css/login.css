@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  font-family: Inter;
+}
+
+.logo {
+  height: 20vh;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+#logo1 {
+  width: 44px;
+  height: 47px;
+}
+
+.container {
+  width: 400px;
+  margin: auto;
+}
+
+.container div,
+.container button {
+  width: 100%;
+}
+
+input {
+  border: none;
+  outline: none;
+  margin: 13px;
+  font-size: 15px;
+  width: 90%;
+}
+
+.box {
+  position: relative;
+  width: 362px;
+  height: 50px;
+  border-radius: 15px;
+  border: 1px solid #989898;
+  margin-top: 10px;
+}
+
+h1 {
+  font-weight: 900;
+}
+
+#msg {
+  font-weight: 300;
+  font-size: 18px;
+}
+
+label {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.doLogin {
+  border-radius: 15px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  height: 45px;
+  margin-bottom: 10px;
+}
+
+#login {
+  background: #a5e467;
+}
+
+#kakaoLogin {
+  background: #fee500;
+  padding-left: 0;
+}
+
+#kakaoIcon {
+  height: 40px;
+}
+
+.already {
+  display: flex;
+  justify-content: space-between;
+  color: #989898;
+  margin-top: 10px;
+}
+
+a {
+  color: #989898;
+}
+
+#loginMsg {
+  color: red;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .logo {
+    height: 20vh;
+  }
+  .container {
+    width: 80vw;
+  }
+
+  .already {
+    font-size: 80%;
+  }
+}

@@ -1,0 +1,621 @@
+/* 메인배너 */
+.mainBanner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.header {
+  position: absolute;
+  z-index: 9999;
+  background-color: transparent;
+  width: 100%;
+  padding: 20px;
+}
+
+#mainCarousel {
+  width: 50%;
+  height: 100vh;
+  position: relative;
+}
+
+.carousel-item img {
+  height: 100vh;
+}
+
+#mainInfo {
+  width: 50%;
+  height: 100vh;
+  background-color: #bce899;
+  padding-left: 20px;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+#scroll {
+  position: absolute;
+  width: 240px;
+  height: 120px;
+  background-color: black;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  z-index: 1;
+  border-radius: 200px 200px 0px 0px;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#scroll p {
+  margin-bottom: 0;
+  font-size: 15px;
+  color: #fff;
+}
+
+#scroll img {
+  height: 50px;
+}
+
+#mainInfo p {
+  color: #fff;
+  font-size: 3vw;
+  margin-bottom: 0;
+  font-weight: 900;
+}
+
+#mainInfo p span {
+  color: #317630;
+}
+
+.search {
+  background-color: white;
+  border-radius: 50px;
+  width: 30vw;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.search img {
+  height: 25px;
+  margin: 0 10px;
+}
+
+.search input {
+  border: none;
+  outline: none;
+  width: 20vw;
+}
+
+#infoContainer {
+  margin: 0 45px;
+}
+
+/* 플로팅 메뉴 */
+.mobileMenuBar,
+.mobileMenu {
+  display: none;
+}
+
+.floating {
+  background-color: #e0f0d1;
+  position: fixed;
+  left: 3vw;
+  top: 25vh;
+  width: 100px;
+  height: 350px;
+  border-radius: 55px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.floating div {
+  margin: auto;
+}
+
+.floating button {
+  border: none;
+  background-color: transparent;
+}
+
+.floating img {
+  width: 50px;
+}
+
+.floating p {
+  font-size: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 리스트 */
+h3 {
+  font-weight: bold;
+}
+
+.listName {
+  margin-top: 30px;
+}
+
+.best,
+.new {
+  margin: 50px 5vw;
+  height: 420px;
+  text-align: center;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.slide-container {
+  overflow: hidden;
+  position: relative;
+  width: calc(300px * 8);
+  animation: scroll 60s linear infinite;
+  padding: 50px;
+}
+
+.cardMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+  transition: 0.5s;
+}
+
+.card {
+  width: 200px;
+  height: 270px;
+  flex-basis: calc(25% - 20px);
+  margin: 0 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.restaurantName {
+  text-align: left;
+  margin: 10px 0;
+}
+
+.categoryRating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.category,
+.rating,
+.review {
+  margin: 0;
+  font-size: small;
+}
+
+.category {
+  text-align: left;
+}
+
+.rating {
+  text-align: end;
+}
+
+.ratingReview {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.rating {
+  margin: 0;
+}
+
+.review {
+  margin: 0 0 0 10px;
+}
+
+.card img,
+.likeCard img {
+  width: 100%;
+  height: 60%;
+  border-radius: 10px;
+}
+
+.card p {
+  margin-top: 10px;
+}
+
+.rating img {
+  width: 15px;
+  height: 15px;
+}
+
+.review img {
+  width: 15px;
+  height: 15px;
+}
+
+/* 슬라이드 컨테이너 애니메이션 적용 */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-300px * 4));
+  }
+}
+
+.cardMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+  animation: scroll 60s linear infinite;
+}
+
+.cardMenu:hover {
+  animation-play-state: paused;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+  background-color: #ffba3a;
+}
+
+.slide-container:hover {
+  animation-play-state: paused;
+}
+
+/* 디자인요소 애니메이션 적용 */
+.animateTitle {
+  font-size: 80px;
+  font-weight: 900;
+  font-style: italic;
+  color: #5da555;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.animated-title .track {
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 60s linear infinite;
+}
+
+.animateContent {
+  white-space: nowrap;
+  animation: roll 10s linear infinite;
+}
+
+@keyframes roll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* 찜목록 */
+.likeList {
+  background: #f0e0d1;
+}
+
+.like {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.likeList .container {
+  padding: 60px 12px;
+  overflow: hidden;
+}
+
+.likes {
+  margin: 50px 5vw;
+  display: flex;
+  overflow: hidden;
+}
+
+.likeCards {
+  display: flex;
+  flex-direction: wrap;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.likeCard {
+  width: 150px;
+  height: 220px;
+  margin: 0 10px;
+  padding: 15px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.next {
+  z-index: 8888;
+  margin-top: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(221, 108, 108, 0.5);
+}
+
+.prev {
+  z-index: 8888;
+  margin-top: 10px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(221, 108, 108, 0.5);
+  position: relative;
+}
+
+.likeTitle p {
+  margin-bottom: 0;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.likeTitle button {
+  border: none;
+  background-color: #a5e467;
+  height: 40px;
+  width: 150px;
+}
+
+.likeTitle {
+  margin-right: 100px;
+}
+
+.likeCard:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+  background-color: #ffba3a;
+}
+
+/* /////////////////////////////////////// */
+/* 반응형 */
+@media only screen and (max-width: 920px) {
+  .mainBanner {
+    flex-direction: column-reverse;
+  }
+
+  #mainCarousel {
+    width: 100%;
+    height: 60vh;
+  }
+
+  .carousel-item img {
+    height: 60vh;
+  }
+
+  #mainInfo {
+    width: 100%;
+    height: 60vh;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    background-color: rgba(188, 232, 153, 0.5);
+    text-align: center;
+  }
+
+  #scroll {
+    background-color: transparent;
+    border: none;
+    scale: 120%;
+    padding-left: 50px;
+  }
+
+  #scroll p {
+    font-weight: bold;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+  }
+
+  #scroll img {
+    height: 50px;
+  }
+
+  #infoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #infoContainer p {
+    scale: 150%;
+  }
+
+  .search input {
+    scale: 80%;
+    font-size: 80%;
+    width: 100%;
+  }
+
+  .search img {
+    margin-right: 0;
+  }
+
+  .floating {
+    scale: 70%;
+  }
+
+  .likeTitle {
+    margin-right: 30px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header {
+    padding: 15px;
+  }
+  .mainBanner {
+    flex-direction: column-reverse;
+  }
+
+  #mainCarousel {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .carousel-item img {
+    width: 200vh;
+    height: 100vh;
+  }
+
+  #mainInfo {
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    background-color: rgba(188, 232, 153, 0.5);
+    text-align: center;
+  }
+
+  #scroll {
+    background-color: transparent;
+    border: none;
+    scale: 120%;
+    padding-left: 50px;
+  }
+
+  #scroll p {
+    font-weight: bold;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+  }
+
+  #scroll img {
+    height: 50px;
+  }
+
+  #infoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  #infoContainer p {
+    scale: 200%;
+    margin-bottom: 20px;
+  }
+
+  .search {
+    width: 200px;
+  }
+
+  .search input {
+    scale: 80%;
+    font-size: 80%;
+    width: 100%;
+  }
+
+  .search img {
+    margin-right: 0;
+  }
+
+  .card {
+    width: 150px;
+    height: 200px;
+  }
+
+  .best {
+    margin-bottom: 0;
+  }
+  .new {
+    margin: 0 auto;
+  }
+  .floating {
+    display: none;
+  }
+
+  .mobileMenuBar {
+    display: block;
+    background-color: #e0f0d1;
+    width: 100%;
+    height: 120px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .mobileMenuBar div {
+    margin: auto;
+    display: flex;
+  }
+
+  .mobileMenu {
+    scale: 90%;
+    display: block;
+    border: none;
+    background-color: transparent;
+    width: 70px;
+    margin: 0 5px;
+  }
+
+  .mobileMenuBar img {
+    width: 50px;
+  }
+
+  .mobileMenuBar p {
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .animateTitle {
+    padding-top: 50px;
+  }
+
+  .likes {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .likeTitle button {
+    width: 100px;
+    font-size: 80%;
+    margin-bottom: 20px;
+  }
+
+  .likeCard {
+    width: 140px;
+    height: 200px;
+    margin: 0 5px;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,366 @@
+html {
+  margin: 0px 20px 0px 20px;
+  padding: 0;
+}
+
+body {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  width: 70vw;
+  margin: auto;
+}
+
+#profile,
+#logout {
+  border-radius: 30px;
+  border: 1px solid #a5e467;
+  background: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  width: 120px;
+}
+
+h1 {
+  margin-top: 10%;
+}
+
+.userInfo {
+  width: 70vw;
+  height: 25vh;
+  margin: auto;
+}
+.userRestaurant {
+  width: 70vw;
+  height: 7vh;
+  margin: auto;
+}
+
+#myLike,
+#myReview,
+#myPost {
+  width: 22vw;
+  height: 7vh;
+  border: none;
+  background-color: transparent;
+}
+
+#myLikes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+#likeStore .restaurantContainer {
+  width: 66vw;
+}
+
+h1 {
+  font-weight: 900;
+}
+
+span {
+  font-size: 20px;
+}
+
+#userName {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4dda67;
+}
+
+.clicked {
+  font-weight: bold;
+  color: #a5e467;
+}
+
+.list {
+  width: 70vw;
+  margin: auto;
+  display: inline-block;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+#likeStore {
+  border-radius: 21px;
+  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
+  padding: 10px 10px;
+  width: 70vw;
+  margin-bottom: 20px;
+}
+
+.reviews,
+.posts {
+  width: 95%;
+  border-radius: 21px;
+  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
+  padding: 10px 20px;
+  margin: 20px;
+  display: inline-block;
+}
+
+.container {
+  margin-bottom: 4vh;
+}
+
+#myReviews,
+#myPosts {
+  margin: 20px;
+}
+
+.starIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.reviewInfo,
+.postInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reviewImg {
+  overflow: auto;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.reviewImg img {
+  width: 80px;
+  height: 80px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.updateBtn {
+  float: right;
+  display: flex;
+}
+
+.reviewDelete,
+.reviewEdit {
+  border: none;
+  background-color: transparent;
+  font-size: 80%;
+}
+
+.none {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+}
+
+#editedRating {
+  width: 40px;
+}
+
+.editContent {
+  display: flex;
+  flex-direction: column;
+}
+
+#editedContent {
+  height: 50px;
+  width: 100%;
+  resize: none;
+}
+
+.reviewEdit {
+  margin-left: auto;
+}
+
+.reviewPage,
+.postPage {
+  text-align: center;
+}
+
+.reviewPage button,
+.postPage button {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  color: #4dda67;
+  margin: 20px 50px 50px 50px;
+}
+
+/* width: 360~768 */
+@media (max-width: 768px) {
+  html {
+    margin: 0;
+  }
+
+  body {
+    background-color: #4dda67;
+  }
+
+  .container {
+    scale: 90%;
+  }
+
+  .listContainer {
+    border-radius: 50px 50px 0px 0px;
+    background-color: #fff;
+    height: 70vh;
+  }
+
+  .list {
+    width: 100%;
+    border-radius: 50px 50px 0px 0px;
+    background-color: #fff;
+  }
+
+  #likeStore {
+    border-radius: initial;
+    box-shadow: none;
+    margin-bottom: 20px;
+    padding: 0;
+    width: 85vw;
+  }
+
+  hr {
+    width: 70vw;
+    border: none;
+  }
+
+  .clicked {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .msg,
+  h1,
+  #userName {
+    color: #fff;
+  }
+
+  .reviewInfo span,
+  .postInfo span {
+    font-size: 90%;
+  }
+
+  .reviews,
+  .posts {
+    margin: 5px 10px 5px 10px;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: solid 1px #4dda67;
+    font-size: 90%;
+  }
+
+  #likeStore .restaurantContainer {
+    width: 85vw;
+  }
+
+  .reviewPage button,
+  .postPage button {
+    font-size: 80%;
+  }
+}
+
+/* width: ~360 */
+@media (max-width: 360px) {
+  html {
+    margin: 0;
+  }
+
+  body {
+    background-color: #4dda67;
+  }
+
+  .container {
+    scale: 90%;
+  }
+  .list {
+    width: 100%;
+    border-radius: 50px 50px 0px 0px;
+    background-color: #fff;
+  }
+
+  #likeStore {
+    border-radius: initial;
+    box-shadow: none;
+    margin-bottom: 20px;
+    padding: 0;
+    width: 85vw;
+  }
+
+  #likeStore .restaurantContainer {
+    width: 85vw;
+  }
+  hr {
+    width: 70vw;
+    border: none;
+  }
+
+  .userRestaurant {
+    height: 5vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .userRestaurant button {
+    font-size: 90%;
+  }
+
+  .clicked {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .msg,
+  h1,
+  #userName {
+    color: #fff;
+  }
+
+  br {
+    height: 2px;
+  }
+
+  #none {
+    margin-top: 100px;
+  }
+
+  .userRestaurant {
+    font-size: 80%;
+  }
+
+  .reviewInfo span,
+  .postInfo span {
+    font-size: 80%;
+  }
+
+  .reviews,
+  .posts {
+    margin: 5px 10px 5px 10px;
+    width: 95%;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: solid 1px #4dda67;
+    font-size: 80%;
+  }
+
+  .reviewPage button,
+  .postPage button {
+    font-size: 80%;
+  }
+
+  .reviewPage button,
+  .postPage button {
+    font-size: 60%;
+  }
+}

@@ -1,0 +1,25 @@
+# Node.js 관련
+node_modules/
+/package-lock.json
+.env
+npm-debug.log
+
+# IDE 관련
+.vscode/
+.idea/
+*.swp
+
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 빌드/배포 관련
+dist/
+.build/
+config/
+
+# Heroku 관련
+Procfile.lock
+
+# MySQL 관련
+*.sql

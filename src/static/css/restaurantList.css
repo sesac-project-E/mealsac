@@ -1,0 +1,429 @@
+/* global.css 생성시 이동 */
+.row * {
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.map {
+  height: calc(100vh - 7vh);
+}
+
+.restaurantList {
+  height: calc(100vh - 7vh);
+  overflow-y: auto;
+  padding: 10px 10px 0 10px;
+}
+
+.search {
+  width: 100%;
+}
+
+.searchName,
+.searchType {
+  display: inline-block;
+  width: 49%;
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 13px;
+}
+
+.formContainer input[type='radio'],
+.styleContainer input[type='radio'] {
+  display: none;
+}
+
+.formContainer input[type='radio'] + label,
+.styleContainer input[type='radio'] + label {
+  display: inline-block;
+  border: 2px solid #989898;
+  border-radius: 25px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.formContainer input[type='radio']:checked + label,
+.styleContainer input[type='radio']:checked + label {
+  color: #0b9324;
+  background-color: #e0f0d1;
+  border: 2px solid #89d83f;
+  border-radius: 25px;
+}
+
+.formContainer #searchInput,
+.styleContainer > input {
+  height: 40px;
+  width: 78%;
+  padding-left: 38px;
+  border: 1px solid #989898;
+  border-radius: 15px;
+
+  background-image: url(../img/explore.png);
+  background-size: 25px;
+  background-position: 7px;
+  background-repeat: no-repeat;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#searchNameMenu div:last-child {
+  display: none;
+}
+
+.search button {
+  height: 40px;
+  width: 20%;
+  min-width: 50px;
+  border: none;
+  border-radius: 15px;
+
+  background-color: #0b9324;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tagNstyle input[type='radio'] {
+  display: none;
+}
+
+.tagNstyle input[type='radio'] + label {
+  display: inline-block;
+  border: 2px solid #989898;
+  border-radius: 25px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.tagNstyle input[type='radio']:checked + label {
+  color: #e0f0d1;
+  background-color: #0b9324;
+  border: 2px solid #0b9324;
+  border-radius: 25px;
+}
+
+.more {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tag {
+  display: inline-block;
+  cursor: pointer;
+  height: 27px;
+  padding: 0 10px;
+  margin-bottom: 5px;
+
+  border: 2px solid #989898;
+  border-radius: 25px;
+}
+
+.tagActive {
+  color: #0b9324;
+  background-color: #e0f0d1;
+  border: 2px solid #89d83f;
+  border-radius: 25px;
+}
+
+.tagContainer,
+.styleContainer {
+  display: flex;
+  height: 30px;
+  margin-bottom: 5px;
+
+  & > div {
+    width: 50px;
+    text-align: end;
+    margin-bottom: 5px;
+  }
+}
+
+.invisible {
+  display: none;
+}
+
+.tagsMore,
+.stylesMore {
+  margin-top: auto;
+  margin-left: auto;
+}
+
+.clicked {
+  border-bottom: 3px solid #0b9324;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.searchInvisible {
+  display: none;
+}
+
+.tagNstyle .tagNstyleBtn {
+  width: 100%;
+  background-color: #0b9324;
+  color: #fff;
+  cursor: pointer;
+}
+
+.result {
+  margin-top: 15px;
+}
+
+.result > div {
+  width: 100%;
+  height: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+
+  &:first-child {
+    width: 100%;
+  }
+}
+
+.result > div > div {
+  display: flex;
+}
+
+.noResult {
+  margin: 15px 0;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.sortType {
+  display: none;
+  list-style: none;
+
+  &.active {
+    display: block;
+  }
+
+  & > li:hover {
+    background-color: #e4e4e4;
+  }
+}
+
+.sortArticle.active {
+  border: 1px solid #989898;
+  background-color: #fff;
+  height: 75px;
+  z-index: 999;
+  position: relative;
+}
+
+.hamburgerIcon {
+  display: none;
+  cursor: grab;
+}
+
+.allRestaurantContainer,
+.restaurants {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  padding: 0 25%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.pagination a {
+  padding: 5px 5px;
+  margin: 10px 0 30px 0;
+}
+
+.pagination .active {
+  font-weight: bold;
+  border-bottom: 3px solid #89d83f;
+}
+
+.pageBtn {
+  margin: 10px 0 10px;
+  display: flex;
+  justify-content: space-around;
+
+  & button {
+    padding: 0 10px;
+    background-color: #e0f0d1;
+    border: 2px solid #89d83f;
+    border-radius: 25px;
+  }
+}
+
+.restaurantContainer {
+  display: flex;
+  padding: 10px 0;
+}
+
+.restaurantImg {
+  width: 170px;
+  height: 170px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: #89d83f;
+  border-radius: 10px;
+}
+
+.restaurantInfo {
+  padding: 0 5px 0 5px;
+  width: 100%;
+}
+
+.restaurantInfo > div:first-child {
+  display: flex;
+  justify-content: space-between;
+}
+
+.restaurantInfo > div:last-child > * {
+  display: inline-block;
+}
+
+p.rate,
+p.review {
+  margin: 5px;
+}
+
+.restaurantInfo h3 {
+  font-size: 1.2rem;
+}
+
+.restaurantInfo .address {
+  font-size: 0.7rem;
+}
+
+.heart {
+  width: 23px;
+  height: 25px;
+}
+
+.rating {
+  width: 15px;
+  height: 15px;
+}
+
+.comment {
+  width: 18px;
+  height: 18px;
+}
+
+.restaurantInfo > div p {
+  font-size: 0.8rem;
+  transform: translateY(2px);
+}
+
+.restaurantBtn {
+  width: 100%;
+  height: 27px;
+  text-align: center;
+  font-size: 0.9rem;
+  border: 2px solid #89d83f;
+  border-radius: 25px;
+
+  &:hover {
+    background-color: #e0f0d1;
+  }
+}
+
+.restaurantLabel input[type='radio']:checked + article {
+  background-color: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+  .restaurantContainer {
+    width: 75vw;
+  }
+
+  .restaurantInfo {
+    width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .restaurantImg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .restaurantInfo h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .heart {
+    width: 20px;
+    height: 22px;
+  }
+
+  .address,
+  .type {
+    margin-bottom: 5px;
+  }
+
+  .restaurantInfo > div:nth-child(4) {
+    margin-top: 5px;
+  }
+
+  .restaurantBtn {
+    padding: 0 5px;
+    overflow: hidden;
+    transform: translateY(-10px);
+  }
+}
+
+/* 뷰포트가 576px 이하인 경우 */
+@media (max-width: 767px) {
+  .search {
+    width: 75vw;
+  }
+
+  .result > div:first-child {
+    width: 75vw;
+  }
+
+  .map {
+    height: calc(50vh - 7vh);
+    transition: height 1s ease;
+  }
+
+  .restaurantList {
+    width: 100vw;
+    height: 50vh;
+    padding-top: 10px;
+    border: 1px solid #989898;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: height 1s ease;
+  }
+
+  .hamburgerIcon {
+    display: block;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (max-width: 430px) {
+  .search {
+    width: 100vw;
+  }
+
+  .searchName,
+  .searchType {
+    font-size: 0.9rem;
+  }
+
+  .allRestaurantContainer .restaurantContainer {
+    width: 95vw;
+  }
+}

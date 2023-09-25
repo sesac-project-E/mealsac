@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./common/commonHead.ejs') %>
+    <title>mainPage</title>
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <script defer src="../static/js/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <%- include('./common/header.ejs') %>
+    <div class="mainBanner">
+      <div
+        id="mainCarousel"
+        class="carousel slide carousel-fade"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="2000">
+            <img
+              src="../static/img/main_banner(2).jpg"
+              class="d-block w-100"
+              alt="메인이미지"
+            />
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <img
+              src="../static/img/main_banner(1).jpg"
+              class="d-block w-100"
+              alt="메인이미지"
+            />
+          </div>
+          <div class="carousel-item" data-bs-interval="2000">
+            <img
+              src="../static/img/main_banner.jpg"
+              class="d-block w-100"
+              alt="메인이미지"
+            />
+          </div>
+        </div>
+      </div>
+      <div id="mainInfo">
+        <div id="infoContainer">
+          <div>
+            <p>Taste the World Near You</p>
+            <p>With <span>MEALSAC</span></p>
+          </div>
+          <!-- <div class="search">
+            <img src="../static/img/explore.png" alt="검색" />
+            <input
+              type="text"
+              class="searchInput"
+              placeholder="What is today's menu?"
+            />
+          </div> -->
+        </div>
+      </div>
+      <button id="scroll">
+        <p>MORE</p>
+        <p>SCROLL</p>
+        <img src="../static/img/navigate_next.svg" alt="스크롤이미지" />
+      </button>
+    </div>
+    <!-- 모바일 메뉴 -->
+    <div class="mobileMenuBar">
+      <div>
+        <button
+          class="mobileMenu"
+          id="menuRandom"
+          onclick="window.location.href='/random'"
+        >
+          <img src="../static/img/random.png" alt="랜덤메뉴" />
+          <p>RANDOM</p>
+        </button>
+        <button
+          class="mobileMenu"
+          id="menuBoard"
+          onclick="window.location.href='/board'"
+        >
+          <img src="../static/img/board.png" alt="게시판" />
+          <p>BOARD</p>
+        </button>
+        <button
+          class="mobileMenu"
+          id="menuRestaurant"
+          onclick="window.location.href='/restaurants'"
+        >
+          <img src="../static/img/restaurant.png" alt="식당" />
+          <p>RESTAURANT</p>
+        </button>
+      </div>
+    </div>
+    <!-- 리스트 -->
+    <div class="container">
+      <!-- 인기 식당 -->
+      <div
+        class="best"
+        data-aos="fade-up"
+        data-aos-anchor-placement="top-bottom"
+        data-aos-duration="1500"
+      >
+        <h3 class="listName">BEST</h3>
+        <div class="slide-container">
+          <div class="cardMenu">
+            <% popularRestaurants.forEach(function(restaurant) { %>
+            <div class="card-container">
+              <div
+                class="card"
+                onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
+              >
+                <img
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+                  alt="<%= restaurant.restaurant_name %>"
+                />
+                <p class="restaurantName"><%= restaurant.restaurant_name %></p>
+                <div class="categoryRating">
+                  <p class="category"><%= restaurant.category %></p>
+                  <div class="ratingReview">
+                    <p class="rating">
+                      <img src="../static/img/rating.png" alt="Rating" /> <%=
+                      restaurant.rating.toFixed(1); %>
+                    </p>
+                    <p class="review">
+                      <img src="../static/img/speechBalloon.png" alt="Review" />
+                      <%= restaurant.reviews_count %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %> <% popularRestaurants.forEach(function(restaurant) { %>
+            <div class="card-container">
+              <div
+                class="card"
+                onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
+              >
+                <img
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+                  alt="<%= restaurant.restaurant_name %>"
+                />
+                <p class="restaurantName"><%= restaurant.restaurant_name %></p>
+                <div class="categoryRating">
+                  <p class="category"><%= restaurant.category %></p>
+                  <div class="ratingReview">
+                    <p class="rating">
+                      <img src="../static/img/rating.png" alt="Rating" /> <%=
+                      restaurant.rating.toFixed(1); %>
+                    </p>
+                    <p class="review">
+                      <img src="../static/img/speechBalloon.png" alt="Review" />
+                      <%= restaurant.reviews_count %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신규 식당 -->
+      <div
+        class="new"
+        data-aos="fade-up"
+        data-aos-anchor-placement="top-bottom"
+        data-aos-duration="1500"
+      >
+        <h3 class="listName">NEW</h3>
+        <div class="slide-container">
+          <div class="cardMenu">
+            <% recentRestaurants.forEach(function(restaurant) { %>
+
+            <div class="card-container">
+              <div
+                class="card"
+                onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
+              >
+                <% if (restaurant.RestaurantImages &&
+                restaurant.RestaurantImages.length > 0) { %>
+                <img
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+                  alt="<%= restaurant.restaurant_name %>"
+                />
+                <% } else { %>
+                <img src="../static/img/commingsoon.jpg" alt="이미지 준비중" />
+                <% } %>
+                <p class="restaurantName"><%= restaurant.restaurant_name %></p>
+                <div class="categoryRating">
+                  <p class="category"><%= restaurant.category %></p>
+                  <div class="ratingReview">
+                    <p class="rating">
+                      <img src="../static/img/rating.png" alt="Rating" /> <%=
+                      restaurant.rating.toFixed(1); %>
+                    </p>
+                    <p class="review">
+                      <img src="../static/img/speechBalloon.png" alt="Review" />
+                      <%= restaurant.reviews_count %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% }); %><% recentRestaurants.forEach(function(restaurant) { %>
+
+            <div class="card-container">
+              <div
+                class="card"
+                onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
+              >
+                <% if (restaurant.RestaurantImages &&
+                restaurant.RestaurantImages.length > 0) { %>
+                <img
+                  src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+                  alt="<%= restaurant.restaurant_name %>"
+                />
+                <% } else { %>
+                <img src="../static/img/commingsoon.jpg" alt="이미지 준비중" />
+                <% } %>
+                <p class="restaurantName"><%= restaurant.restaurant_name %></p>
+                <div class="categoryRating">
+                  <p class="category"><%= restaurant.category %></p>
+                  <div class="ratingReview">
+                    <p class="rating">
+                      <img src="../static/img/rating.png" alt="Rating" /> <%=
+                      restaurant.rating.toFixed(1); %>
+                    </p>
+                    <p class="review">
+                      <img src="../static/img/speechBalloon.png" alt="Review" />
+                      <%= restaurant.reviews_count %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 디자인 요소 -->
+    <div class="animateTitle" data-aos="fade-up">
+      <div class="track">
+        <div class="animateContent">
+          &nbsp;Let's grab a bite! What's for lunch?&nbsp;Let's grab a bite!
+          What's for lunch?&nbsp;Let's grab a bite! What's for lunch?&nbsp;Let's
+          grab a bite! What's for lunch?
+        </div>
+      </div>
+    </div>
+
+    <!-- 찜가게 -->
+    <% if (typeof userLikeRestaurants !== 'undefined') { %>
+    <div
+      class="likeList"
+      data-aos="fade-up"
+      data-aos-anchor-placement="top-bottom"
+      data-aos-duration="1500"
+    >
+      <div style="display: flex; position: relative">
+        <div class="container">
+          <div class="likes">
+            <div class="likeTitle">
+              <div>
+                <p>MY</p>
+                <p>FAVORITE</p>
+                <p>RESTAURANT</p>
+                <span>내가 찜한 식당 바로가기</span>
+              </div>
+              <br />
+              <button type="button" onclick="window.location.href='/mypage'">
+                VIEW MORE >
+              </button>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <div class="like">
+                <div class="likeCards">
+                  <% userLikeRestaurants.forEach(function(restaurant) { %>
+
+                  <div class="cardContainer">
+                    <div
+                      class="likeCard"
+                      onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
+                    >
+                      <img
+                        src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+                        alt="<%= restaurant.restaurant_name %>"
+                      />
+                      <p class="restaurantName">
+                        <%= restaurant.restaurant_name %>
+                      </p>
+                      <div class="categoryRating">
+                        <p class="category"><%= restaurant.category %></p>
+                        <div class="ratingReview">
+                          <p class="rating">
+                            <img src="../static/img/rating.png" alt="Rating" />
+                            <%= restaurant.rating.toFixed(1); %>
+                          </p>
+                          <p class="review">
+                            <img
+                              src="../static/img/speechBalloon.png"
+                              alt="Review"
+                            />
+                            <%= restaurant.reviews_count %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% }); %>
+                </div>
+              </div>
+              <div>
+                <button class="slide-btn prev">&lt;</button>
+                <button class="slide-btn next">&gt;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- 플로팅 메뉴 -->
+    <div class="floating">
+      <div>
+        <button
+          class="floatingMenu"
+          id="menuRandom"
+          onclick="window.location.href='/random'"
+        >
+          <img src="../static/img/random.png" alt="랜덤메뉴" />
+          <p>RANDOM</p>
+        </button>
+        <button
+          class="floatingMenu"
+          id="menuBoard"
+          onclick="window.location.href='/board'"
+        >
+          <img src="../static/img/board.png" alt="게시판" />
+          <p>BOARD</p>
+        </button>
+        <button
+          class="floatingMenu"
+          id="menuRestaurant"
+          onclick="window.location.href='/restaurants'"
+        >
+          <img src="../static/img/restaurant.png" alt="식당" />
+          <p>RESTAURANT</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('./common/footer.ejs') %>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>

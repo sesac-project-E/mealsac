@@ -1,0 +1,53 @@
+<!-- Header -->
+<div class="header">
+  <!-- Desktop Logo -->
+  <img class="desktop-logo" src="../../static/img/logo2.png" alt="로고" onclick="document.location.href='/'" />
+  <!-- Mobile Logo -->
+  <img class="mobile-logo" src="../../static/img/logo1.png" alt="모바일로고" onclick="document.location.href='/'"/>
+
+  <!-- 로그인 전 -->
+  <div class="logged-out">
+    <button class="login" onclick="document.location.href='/login'">
+      로그인
+    </button>
+    <button
+      class="register"
+      onclick="document.location.href='/register'"
+    >
+      회원가입
+    </button>
+    <!-- 모바일 화면 -->
+    <div>
+      <button
+        class="mobile-login"
+        onclick="document.location.href='/login'"
+      >
+        로그인
+      </button>
+    </div>
+    
+    </div>
+
+  <!-- 로그인 후 -->
+    <div class="logged-in">
+      <button class="logout" onclick="document.location.href='/'">
+        로그아웃
+      </button>
+      <button
+        class="mypage"
+        onclick="document.location.href='/mypage'"
+      >
+        마이페이지
+      </button>
+      <!-- 모바일 화면 -->
+      <i class="fas fa-bars hamburger"></i>
+      <div class="dropdown-content">
+        <a href="/mypage">마이페이지</a>
+        <a href="/" class="mobileLogout">로그아웃</a>
+        <!-- 다른 메뉴 아이템 필요한거 추가 가능 -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../../static/js/header.js"></script>
+</div>

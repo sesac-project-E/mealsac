@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 게시판</title>
+    <!-- ckeditor -->
+    <link rel="stylesheet" href="/static/css/boardModify.css" />
+    <link rel="stylesheet" href="/static/css/editStyle.css" />
+    <script src="/static/js/ckeditor.js"></script>
+    <script defer src="/static/js/boardModify.js"></script>
+  </head>
+  <body>
+    <%- include('../common/header.ejs') %>
+    <div class="container" id="container">
+      <div class="topBox">
+        <div>
+          <h1>SAC BOARD</h1>
+          <p id="msg">새싹님들의 자유로운 밥 이야기를 들려주세요!</p>
+        </div>
+      </div>
+
+      <form method="post" class="postBox" id="<%= post.board_id %>">
+        <div class="title">
+          <input
+            class="inputTitle"
+            id="<%= post.post_id %>"
+            placeholder="제목을 작성해주세요"
+            value="<%= post.title%>"
+          />
+        </div>
+        <div class="editor"><%- post.content %></div>
+        <div class="btns">
+          <button type="button" id="modifyBtn">수정</button>
+          <button type="button" id="backBtn">취소</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

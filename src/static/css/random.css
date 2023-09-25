@@ -1,0 +1,440 @@
+/* 전체 페이지의 기본 스타일 */
+* {
+  font-family: Inter;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.random-container {
+  position: relative;
+  margin: 5% 10%;
+  height  : 70vh;   
+  align-items: center; 
+  overflow: hidden;
+}
+
+.random-content {
+  min-width: inherit;
+  height: inherit;
+  display: flex;
+  padding: 0 2.5%;
+}
+
+.none {
+  visibility: hidden;
+}
+
+#random-intro {
+  display: flex;
+  flex-direction: column;
+  min-width: 70%;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-right: 5%;
+  padding: 10% 0;
+  transition: .3s ease-out;
+  opacity: 0;
+  animation: random-init-animation 1s ease-out forwards;
+  animation-delay: 1s;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 3%;
+}
+
+.random-intro-description {
+  height: 40%;
+  font-size: 0.5rem;
+  display: flex;
+  list-style: none;
+}
+
+.random-intro-column {
+  list-style: none;
+  height: 30%;
+  margin-bottom: 5%;
+  display: flex;
+  align-items: center;
+  width: 150%;
+}
+
+.random-intro-marker {
+  width: 3rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  margin-right: 5%;
+}
+
+#button-intro-group {
+  width: 50%;
+  margin-top: 10%;
+  border-top: 1px solid black;
+  margin-left : 2rem;
+  padding-top: 3%;
+}
+
+.button {
+  z-index: 2;
+  background-color: transparent;
+  border: 1px solid gray;
+  border-radius: 1.25rem;
+  min-height: 3.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 12.5rem;
+}
+
+#randomStartBtn {
+  width: 5rem;
+  transition: 0.5s ease;
+}
+
+#randomStartBtn:hover{
+  width: 12.5rem;
+  transition: 0.75s ease;
+  color :white;
+  background-color: rgb(21, 173, 21);
+}
+
+#random-question {
+  display: none;
+  flex-direction: column;
+  min-width: 70%;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin-right: 5%;
+  padding-top: 5%;
+}
+
+form {
+  width: 100%;
+  min-height: 100%;
+  display: none;
+}
+.question {
+  width: 80%;
+  margin-bottom: 5%;
+}
+
+.options {
+  display: flex;
+  width: 80%;
+  min-height: 65%;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: gray;
+}
+
+.input-none {
+  width: inherit;
+  height: inherit;
+  vertical-align: middle;
+  appearance: none;
+  cursor: pointer;
+}
+
+.option > label > img {
+  width: 100%;
+  margin-bottom: 30%;
+  cursor: pointer;
+}
+
+.option > label {
+  font-size: 1rem;
+  margin-bottom: 10%;
+  cursor: pointer;
+}
+
+.random-result {
+  display: flex;
+  flex-direction: column-reverse;
+  min-width: 80%;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20% 0;
+}
+
+
+
+.next-button {
+  margin-right: 2.5%;
+}
+
+.bg-green-hover:hover {
+  color: white;
+  background-color: rgb(21, 173, 21);
+}
+.disabled {
+  pointer-events: none;
+}
+
+.bg-blue-hover:hover {
+  color: white;
+  background-color: blue;
+}
+.prev-button {
+  cursor: default;
+}
+
+.bg-gray-hover:hover {
+  background-color: gray;
+  color: white;
+}
+
+
+#randomResultBtn {
+  display: none;
+}
+.button-group {
+  width: 80%;
+  border-top: 1px solid black;
+  height: 20%;
+}
+.button-group-question {
+  display: flex;
+  padding-top: 3%;
+}
+.question-button {
+  width: 10%;
+  height: 48px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.random-border:nth-of-type(1) {
+  position: absolute;
+  top : 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  background: #85bc4f;
+  animation: col 1000ms forwards;
+}
+
+.random-border:nth-of-type(2) {
+  position: absolute;
+  top : 0;
+  left : 0;
+  /* transform: translateX(-25%); */
+  height: 10px;
+  background:#85bc4f;
+  animation: row 1000ms forwards;
+  animation-delay: 1000ms;
+}
+
+.random-border:nth-of-type(3) {
+  position: absolute;
+  bottom : 0;
+  left : 0;
+  /* transform: translateX(-25%); */
+  height: 10px;
+  background: #85bc4f;
+  animation: row 1000ms forwards;
+  animation-delay: 1000ms;
+}
+
+.random-border:nth-of-type(4) {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 10px;
+  background: #85bc4f;
+  animation: col 1000ms forwards;
+  animation-delay: 250ms;
+}
+#toRandomBtn {
+  min-width: 10rem;
+  min-height: 3.5rem;
+  border-radius: 25px;
+  border: 1px solid #1b63e7;
+  background-color: white;
+  margin: 5px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: none;
+}
+
+#toRandomBtn:hover {
+  background-color: #1b63e7;
+  color: white;
+}
+
+#toMainBtn{
+  min-width: 10rem;
+  min-height: 3.5rem;
+  border-radius: 25px;
+  border: 1px solid #a5e467;
+  background-color: white;
+  margin: 5px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: none;
+}
+#toMainBtn:hover {
+  background: #a5e467;
+  color: white;
+
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  
+}
+@keyframes random-init-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes row {
+  from {
+    width: 0
+  }
+  
+  to {
+    width: 75%
+  }
+}
+
+@keyframes col {
+  from {
+    height: 0
+  }
+  
+  to {
+    height: 100%
+  }
+}
+@keyframes colDelete {
+  from {
+    height: 100%
+  }
+  
+  to {
+    height: 0
+  }
+}
+
+@keyframes moveRowRight {
+  from {
+    /* transform: translateX(-25%); */
+    left : 0;
+    width : 0%;
+  }
+  to {
+    /* transform: translateX(75%); */
+    left : 75%;
+    width:  25%;
+  }
+}
+
+@keyframes fillFullContainer {
+  from {
+    width  : 25%;
+    left : 75%;
+  }
+  to {
+    width : 100%;
+    right : 0;
+  }
+}
+
+/* font-size relative */
+@media (max-width: 1200px) {
+  * {
+    font-size: 16px;
+  }
+}
+
+
+@media screen and (max-width : 768px) {
+  html {
+    font-size: 10px;
+  }
+  .random-result {
+    display: none;
+  }
+  .random-border{
+    display : none
+  }
+  .random-container {
+    margin: 5%;
+  }
+  form {
+    min-width: 100%;
+  }
+  .question {
+    width: 100%;
+    text-align: center;
+  }
+  .options {
+    width: 100%;
+    text-align: center;
+  }
+  .button-group {
+    border-top: 0;
+  }
+  #randomNextBtn #toMainBtn #toRandomBtn{
+    width: 30%;
+    height: 5rem;
+  }
+  #button-intro-group {
+    border-top : 0;
+  }
+  h4 {
+    font-weight: 900;
+  }
+}
+
+
+@media screen and (max-width: 280px) {
+  .random-intro-marker {
+    display: none;
+  }
+  
+  span {
+    font-size: 10px;
+  }
+}

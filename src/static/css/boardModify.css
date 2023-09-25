@@ -1,0 +1,70 @@
+html {
+  margin: 0px 20px 0px 20px;
+}
+
+.container {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topBox {
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  padding-top: 5vh;
+}
+
+h1 {
+  font-weight: 900;
+}
+
+.inputTitle {
+  border: none;
+  outline: none;
+}
+
+.title {
+  height: 50px;
+  align-items: center;
+  border-bottom: solid black;
+  margin: 15px 0;
+}
+
+#editor {
+  margin-top: 10px;
+}
+
+.ck-editor__editable {
+  min-height: 400px;
+}
+
+button {
+  text-decoration: none;
+  background-color: inherit;
+  border: none;
+}
+
+.btns {
+  margin-top: 30px;
+  text-align: center;
+}
+
+form {
+  margin-bottom: 100px;
+}
+
+#modifyBtn,
+#backBtn {
+  width: 80px;
+  margin: 5px;
+  border-radius: 30px;
+  border: solid 1px #ffe0b6;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

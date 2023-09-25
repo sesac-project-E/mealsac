@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 게시판</title>
+    <link rel="stylesheet" href="/static/css/boardPost.css" />
+    <script defer src="/static/js/post.js"></script>
+  </head>
+  <body>
+    <%- include('../common/header.ejs') %>
+    <div class="container">
+      <div class="topBox">
+        <div>
+          <h1>SAC BOARD</h1>
+          <p id="msg">새싹님들의 자유로운 밥 이야기를 들려주세요!</p>
+        </div>
+      </div>
+
+      <div class="category">
+        <button
+          type="button"
+          class="boardType"
+          name="boardType"
+          onclick="location.href='/board'"
+        >
+          <% if(post.board_id===1) {%> 공지사항 <% } else { %> 자유게시판 <% }
+          %>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="5vh"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
+              fill="#4DDA67"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div class="postBox" id="<%= post.post_id%>">
+        <div class="titleBox">
+          <h3 class="title"><%= post.title%></h3>
+          <div class="postInfo">
+            <p><%= post.User.user_name %></p>
+            <p></p>
+            <p><%= formatDate(post.createdAt)%></p>
+          </div>
+        </div>
+        <div class="postContent"><%- post.content %></div>
+      </div>
+
+      <div class="btnBox">
+        <button type="button" id="modify" name="modify" onclick="modifyBtn()">
+          수정
+        </button>
+        <button type="button" id="delete" name="delete" onclick="deleteBtn()">
+          삭제
+        </button>
+      </div>
+
+      <div class="replyBox">
+        <form class="textReply" id="replyForm" style="display: none">
+          <span>댓글</span>
+          <!-- <span><= Post.reply %></span> -->
+          <textarea
+            name="replyContent"
+            id="replyContent"
+            placeholder="댓글을 입력해 주세요."
+          ></textarea>
+          <button type="submit" id="replyBtn" onclick="enterReply()">
+            등록
+          </button>
+        </form>
+        <div class="replyList">
+          <div class="reply">
+            <div class="replyInfo">
+              <p>replyUserName</p>
+              <p>replyDate</p>
+            </div>
+            <div class="replycontent">으아앙</div>
+          </div>
+          <div class="reply">
+            <div class="replyInfo">
+              <p>replyUserName</p>
+              <p>replyDate</p>
+            </div>
+            <div class="replycontent">으아앙</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

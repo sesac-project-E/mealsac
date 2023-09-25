@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 게시판</title>
+    <link rel="stylesheet" href="/static/css/board.css" />
+    <script defer src="/static/js/board.js"></script>
+  </head>
+  <body>
+    <%- include('../common/header.ejs') %>
+    <div class="container">
+      <div class="topBox">
+        <div>
+          <h1>SAC BOARD</h1>
+          <p id="msg">새싹님들의 자유로운 밥 이야기를 들려주세요!</p>
+        </div>
+      </div>
+
+      <div class="btnBox">
+        <button
+          type="button"
+          class="clicked"
+          id="freeBoard"
+          name="freeBoard"
+          onclick="switchToFreeBoard()"
+        >
+          자유게시판
+        </button>
+        <button
+          type="button"
+          id="noticeBoard"
+          name="noticeBoard"
+          onclick="switchToNoticeBoard()"
+        >
+          공지사항
+        </button>
+      </div>
+
+      <div class="boardList" id="freeBoardList">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="cols" class="idx">#</th>
+              <th scope="cols" class="title">제목</th>
+              <th scope="cols" class="writer">작성자</th>
+              <th scope="cols" class="date">날짜</th>
+            </tr>
+          </thead>
+          <tbody class="freeBoardTable"></tbody>
+        </table>
+
+        <button
+          type="button"
+          class="write"
+          id="freeWrite"
+          name="write"
+          onclick="location.href='/post/write'"
+        >
+          글쓰기
+        </button>
+
+        <!-- 자유게시판 페이지네이션 수정 -->
+        <div class="boardPage">
+          <ul class="pagination" id="pagination-container-freeBoard"></ul>
+        </div>
+      </div>
+
+      <div class="boardList" id="noticeBoardList" style="display: none">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="cols" class="idx">#</th>
+              <th scope="cols" class="title">제목</th>
+              <th scope="cols" class="writer">작성자</th>
+              <th scope="cols" class="date">날짜</th>
+            </tr>
+          </thead>
+          <tbody class="noticeBoardTable"></tbody>
+        </table>
+
+        <button
+          type="button"
+          class="write"
+          id="noticeWrite"
+          name="write"
+          onclick="location.href='/post/write'"
+        >
+          글쓰기
+        </button>
+
+        <!-- 공지사항 페이지네이션 수정 -->
+        <div class="boardPage" id="noticePage">
+          <ul class="pagination" id="pagination-container-noticeBoard"></ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,179 @@
+/* 기본 스타일 (데스크탑 뷰) */
+.header {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.desktop-logo {
+  height: 40px;
+}
+.mobile-logo,
+.hamburger,  /* 추가 */
+.logged-out .mobile-login {
+  /* 추가 */
+  display: none;
+}
+.dropdown-content {
+  display: none;
+}
+.logged-out {
+  display: none;
+}
+.logged-in {
+  display: block;
+}
+
+.login,
+.logout,
+.register,
+.mypage,
+.mobile-login {
+  height: 30px;
+  width: 100px;
+  font-size: medium;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+}
+
+.login,
+.logout {
+  background-color: #f7f7f7;
+}
+
+.register,
+.mypage,
+.mobile-login {
+  background-color: #a5e467;
+}
+
+.logout,
+.mypage,
+.mobile-login {
+  display: none;
+}
+
+* {
+  font-family: Inter;
+}
+
+/* 데스크탑 뷰에서의 스타일 */
+.login,
+.register {
+  display: inline-block;
+}
+
+/* 모바일 및 폴드 뷰에서의 스타일 */
+@media only screen and (max-width: 480px) {
+  .login,
+  .register {
+    display: none;
+  }
+
+  .header {
+    padding: 15px;
+  }
+
+  .desktop-logo {
+    display: none;
+  }
+  .mobile-logo {
+    display: block;
+  }
+
+  .hamburger {
+    display: inline-block; /* 로그인 후에만 표시됩니다. */
+    width: 30px;
+    height: 22px;
+    background-image: url('path_to_hamburger_icon.png');
+    background-size: cover;
+    cursor: pointer;
+  }
+
+  .logged-out .mobile-login {
+    display: block; /* 로그인 전에만 표시됩니다. */
+  }
+
+  .header img {
+    height: 180%;
+  }
+
+  .login,
+  .logout,
+  .register,
+  .mypage {
+    height: 25px;
+    width: 80px;
+    font-size: x-small;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+}
+
+/* 갤럭시 폴드 폴드 상태 (280px) */
+@media only screen and (max-width: 280px) {
+  .header img {
+    height: 180%;
+  }
+
+  .login,
+  .logout,
+  .register,
+  .mypage {
+    height: 20px;
+    width: 60px;
+    font-size: xx-small;
+  }
+}
+
+/* footer 스타일 */
+footer {
+  background-color: #f7f7f7;
+  text-align: center;
+  height: 220px;
+}
+
+footer p .contact {
+  font-size: large;
+}
+
+footer p {
+  font-size: small;
+}
+
+/* 모바일 뷰 (280px - 480px) */
+@media only screen and (min-width: 280px) and (max-width: 480px) {
+  .contact .github,
+  .contact .contact-link {
+    display: block;
+  }
+
+  .contact {
+    font-size: medium;
+  }
+
+  footer p {
+    font-size: x-small;
+    margin-bottom: 5px;
+  }
+}
