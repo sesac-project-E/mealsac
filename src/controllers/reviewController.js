@@ -85,8 +85,8 @@ exports.postReview = async (req, res) => {
       { transaction },
     );
 
-    let reviews_count = restaurant.dataValues.reviews_count;
-    let restaurantRating = restaurant.dataValues.rating;
+    const reviews_count = restaurant.dataValues.reviews_count;
+    const restaurantRating = restaurant.dataValues.rating;
 
     const newReview = await Review.create(
       {
@@ -120,12 +120,11 @@ exports.postReview = async (req, res) => {
     });
 
     const images = await Promise.all(imagePromises);
-
+    const updateRating = (restaurantRating * reviews_count + rating) / (reviews_count + 1)
     await Restaurant.update(
       {
         reviews_count: reviews_count + 1,
-        rating:
-          (restaurantRating * reviews_count + rating) / (reviews_count + 1),
+        rating: updateRating
       },
       {
         where: { restaurant_id },
@@ -333,8 +332,9 @@ exports.editReview = async (req, res) => {
       where: { restaurant_id: restaurant_id },
     });
     console.log(restaurant)
-    const updateRating = (restaurant.dataValues.rating - oldReviewRating + currRating) / restaurant.dataValues.reviews_count
-    console.log(updateRating)
+    const reviews_count = restaurant.dataValues.reviews_count
+    const oldRating = restaurant.dataValues.rating
+    const updateRating = ((oldRating * reviews_count) - oldReviewRating + currRating) / reviews_count
     await restaurant.update({
       rating : updateRating
     }, 
