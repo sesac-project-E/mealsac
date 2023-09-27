@@ -314,7 +314,7 @@ exports.editReview = async (req, res) => {
     const review = await Review.findOne({
       where: { review_id, user_id },
     });
-
+    const oldReviewRating = review.dataValues.rating;
     if (!review) {
       return res.status(404).json({
         status: 'error',
@@ -326,7 +326,21 @@ exports.editReview = async (req, res) => {
     review.rating = rating;
 
     await review.save();
-
+    const restaurant_id = review.restaurant_id;
+    const currRating = review.rating;
+    const restaurant = await Restaurant.findOne({
+      attributes: ['restaurant_id', 'reviews_count', 'rating'],
+      where: { restaurant_id: restaurant_id },
+    });
+    console.log(restaurant)
+    const updateRating = (restaurant.dataValues.rating - oldReviewRating + currRating) / restaurant.dataValues.reviews_count
+    console.log(updateRating)
+    await restaurant.update({
+      rating : updateRating
+    }, 
+    {
+      where : {restaurant_id : restaurant.dataValues.restaurant_id}
+    })
     res.json({
       status: 'success',
       message: '리뷰가 성공적으로 업데이트되었습니다.',
@@ -384,14 +398,13 @@ exports.deleteReview = async (req, res) => {
       attributes: ['reviews_count', 'rating'],
       where: { restaurant_id: restaurant_id },
     });
-    let reviews_count = restaurant.dataValues.reviews_count;
-    let restaurantRating = restaurant.dataValues.rating;
-
+    const reviews_count = restaurant.dataValues.reviews_count;
+    const restaurantRating = restaurant.dataValues.rating;
+    const updateRating = (restaurantRating * reviews_count - currRating) / (reviews_count - 1);
     await Restaurant.update(
       {
         reviews_count: reviews_count - 1,
-        rating:
-          (restaurantRating * reviews_count - currRating) / (reviews_count - 1),
+        rating: updateRating  
       },
       { where: { restaurant_id: restaurant_id } },
     );
