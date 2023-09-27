@@ -11,10 +11,12 @@ module.exports = (sequelize, Datatypes) => {
       restaurant_type: {
         type: Datatypes.STRING(256),
         allowNull: false,
+        unique : true
       },
       restaurant_type_eng: {
         type: Datatypes.STRING(256),
         allowNull: false,
+        unique : true
       },
     },
     {
