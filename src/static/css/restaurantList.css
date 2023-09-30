@@ -32,12 +32,12 @@ a {
 }
 
 .formContainer input[type='radio'],
-.styleContainer input[type='radio'] {
+.categoryContainer input[type='radio'] {
   display: none;
 }
 
 .formContainer input[type='radio'] + label,
-.styleContainer input[type='radio'] + label {
+.categoryContainer input[type='radio'] + label {
   display: inline-block;
   border: 2px solid #989898;
   border-radius: 25px;
@@ -46,7 +46,7 @@ a {
 }
 
 .formContainer input[type='radio']:checked + label,
-.styleContainer input[type='radio']:checked + label {
+.categoryContainer input[type='radio']:checked + label {
   color: #0b9324;
   background-color: #e0f0d1;
   border: 2px solid #89d83f;
@@ -54,7 +54,7 @@ a {
 }
 
 .formContainer #searchInput,
-.styleContainer > input {
+.categoryContainer > input {
   height: 40px;
   width: 78%;
   padding-left: 38px;
@@ -87,11 +87,11 @@ a {
   cursor: pointer;
 }
 
-.tagNstyle input[type='radio'] {
+.tagNcategory input[type='radio'] {
   display: none;
 }
 
-.tagNstyle input[type='radio'] + label {
+.tagNcategory input[type='radio'] + label {
   display: inline-block;
   border: 2px solid #989898;
   border-radius: 25px;
@@ -99,7 +99,7 @@ a {
   margin-bottom: 10px;
 }
 
-.tagNstyle input[type='radio']:checked + label {
+.tagNcategory input[type='radio']:checked + label {
   color: #e0f0d1;
   background-color: #0b9324;
   border: 2px solid #0b9324;
@@ -130,7 +130,7 @@ a {
 }
 
 .tagContainer,
-.styleContainer {
+.categoryContainer {
   display: flex;
   height: 30px;
   margin-bottom: 5px;
@@ -147,7 +147,7 @@ a {
 }
 
 .tagsMore,
-.stylesMore {
+.categoryMore {
   margin-top: auto;
   margin-left: auto;
 }
@@ -162,7 +162,7 @@ a {
   display: none;
 }
 
-.tagNstyle .tagNstyleBtn {
+.tagNcategory .tagNcategoryBtn {
   width: 100%;
   background-color: #0b9324;
   color: #fff;
@@ -268,7 +268,6 @@ a {
   height: 170px;
   flex-grow: 0;
   flex-shrink: 0;
-  background-color: #89d83f;
   border-radius: 10px;
 }
 
