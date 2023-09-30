@@ -2,6 +2,12 @@ const mainElement = document.querySelector('main');
 const callButton = document.getElementById('callButton');
 const reviewForm = document.getElementById('reviewForm');
 const renderReviews = document.querySelector('.renderReviews');
+const reviewsElement = document.querySelector('.renderReviews');
+const prevPage = document.querySelector('#prevPage');
+const nextPage = document.querySelector('#nextPage');
+
+const reviewsPerPage = 5;
+let currentPage = 1;
 
 // 갤럭시 폴드를 위한 코드
 const checkWidth = () => {
@@ -61,7 +67,7 @@ document.querySelector('.heart').addEventListener('click', async e => {
 });
 
 // 전화 걸기 or 전화번호 복사
-callButton.addEventListener('click', function () {
+callButton.addEventListener('click', () => {
   const phoneNumber = restaurant.restaurant_phone;
 
   if (!phoneNumber || phoneNumber.trim() === '') {
@@ -88,25 +94,20 @@ callButton.addEventListener('click', function () {
 });
 
 // 리뷰 작성 폼 토글
-document
-  .getElementById('showReviewForm')
-  .addEventListener('click', function () {
-    if (!userInfo) {
-      alert('로그인 후 리뷰 작성이 가능합니다.');
-      return;
-    }
-    if (
-      reviewForm.style.display === 'none' ||
-      reviewForm.style.display === ''
-    ) {
-      reviewForm.style.display = 'block';
-    } else {
-      reviewForm.style.display = 'none';
-    }
-  });
+document.getElementById('showReviewForm').addEventListener('click', () => {
+  if (!userInfo) {
+    alert('로그인 후 리뷰 작성이 가능합니다.');
+    return;
+  }
+  if (reviewForm.style.display === 'none' || reviewForm.style.display === '') {
+    reviewForm.style.display = 'block';
+  } else {
+    reviewForm.style.display = 'none';
+  }
+});
 
-reviewForm.addEventListener('submit', function (event) {
-  event.preventDefault();
+reviewForm.addEventListener('submit', e => {
+  e.preventDefault();
   reviewForm.style.display = 'none';
 });
 
@@ -355,13 +356,15 @@ const renderReviewsPage = page => {
   const start = (page - 1) * reviewsPerPage;
   const end = page * reviewsPerPage;
   const reviewsToRender = review.slice(start, end);
-  const reviewsElement = document.querySelector('.renderReviews');
-  reviewsElement.innerHTML = reviewsToRender.length
-    ? reviewsToRender.map(review => renderReview(review, userInfo)).join('')
-    : '<p>후기가 없습니다.</p>';
+  if (review.length) {
+    const reviewsElement = document.querySelector('.renderReviews');
+    reviewsElement.innerHTML = reviewsToRender
+      .map(review => renderReview(review, userInfo))
+      .join('');
+  } else {
+    reviewsElement.innerHTML = '<p>후기가 없습니다.</p>';
+  }
 };
-
-const reviewsElement = document.querySelector('.renderReviews');
 
 reviewsElement.addEventListener('click', async e => {
   const reviewContainer = e.target.closest('.reviewContainer');
@@ -371,23 +374,27 @@ reviewsElement.addEventListener('click', async e => {
 
 renderReviewsPage(currentPage);
 
-document.querySelector('#nextPage').addEventListener('click', () => {
-  if (currentPage * reviewsPerPage < review.length) {
-    currentPage++;
-    renderReviewsPage(currentPage);
-  } else {
-    alert('이전에 작성된 후기가 더이상 없습니다.');
-  }
-});
+if (nextPage) {
+  nextPage.addEventListener('click', () => {
+    if (currentPage * reviewsPerPage < review.length) {
+      currentPage++;
+      renderReviewsPage(currentPage);
+    } else {
+      alert('이전에 작성된 후기가 더이상 없습니다.');
+    }
+  });
+}
 
-document.querySelector('#prevPage').addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
-    renderReviewsPage(currentPage);
-  } else {
-    alert('이후에 작성된 후기가 더이상 없습니다.');
-  }
-});
+if (prevPage) {
+  prevPage.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderReviewsPage(currentPage);
+    } else {
+      alert('이후에 작성된 후기가 더이상 없습니다.');
+    }
+  });
+}
 
 // 리뷰 추천
 document
