@@ -1,6 +1,3 @@
-// const { query } = require('express');
-
-let selectedMarker = null;
 let initialMarker;
 let markers = [];
 let currentExpandedMarker;
@@ -9,8 +6,7 @@ let geocoder;
 let apiUrl;
 let currentPage = 1;
 let totalPages;
-let sortTypeValue = '인기순';
-let style;
+let category;
 let tags = [];
 let tagQuery = '';
 const searchName = document.querySelector('.searchName');
@@ -60,21 +56,8 @@ const addMarker = options => {
     position: { lat: options.lat, lng: options.lng },
     title: options.title,
     icon: options.icon,
-    // restaurantAddress: options.restaurantAddress,
   });
-
   marker.isInitial = options.isInitial || false;
-
-  // marker.addListener('click', function () {
-  //   alert(this.restaurantAddress);
-  //   const associatedRadio = document.querySelector(
-  //     `.restaurantContainer[data-id="${this.restaurantAddress}"] input[type="radio"]`,
-  //   );
-  //   if (associatedRadio) {
-  //     associatedRadio.checked = true;
-  //   }
-  // });
-
   markers.push(marker);
 
   return marker;
@@ -149,7 +132,6 @@ const geocodeAddress = async (address, type) => {
         url: getIconUrlByType(type),
         scaledSize: new google.maps.Size(40, 40),
       },
-      // restaurantAddress: address,
     });
   });
 };
@@ -328,12 +310,6 @@ searchNameMenu.addEventListener('submit', e => {
     .then(response => {
       initMap();
       clearMarkers();
-
-      // if (nameRadio.checked) {
-      //   for (const restaurant of response.data.rows) {
-      //     geocodeAddress(restaurant.restaurant_address);
-      //   }
-      // } else {
 
       for (const data of response.data.rows) {
         if (data.restaurant_address) {
@@ -702,7 +678,7 @@ const createRestaurantArticle = (restaurant, restaurantImg) => {
   ) {
     img.src = restaurantImg[0].restaurant_image_url;
   } else {
-    img.src = '';
+    img.src = '/static/img/commingsoon.jpg';
   }
   img.alt = `${restaurant.restaurant_name} 이미지`;
 
@@ -759,7 +735,7 @@ const createRestaurantArticle = (restaurant, restaurantImg) => {
   const a = document.createElement('a');
   a.className = 'restaurantBtn';
   a.href = `/restaurant/${restaurant.restaurant_id}`;
-  a.textContent = `${restaurant.restaurant_name} 페이지`;
+  a.textContent = '상세 페이지';
 
   divBottom.appendChild(imgRating);
   divBottom.appendChild(pRating);
