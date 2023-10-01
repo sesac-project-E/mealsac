@@ -3,7 +3,7 @@ const {User, Post, Comment} = require('../models')
 
 exports.createComment = (req, res) => {
   try {
-    const {id} = req.session.userInfo
+    const {id} = req?.session?.userInfo
     const {post_id, content} = req.body
     if (!id || !post_id || !content) {
       res.status(400).send()
@@ -20,7 +20,8 @@ exports.createComment = (req, res) => {
       console.log(error)
     })
   } catch (error) {
-    res.send(error)
+    console.error(error)
+    res.status(500).send()
   }
 }
 
