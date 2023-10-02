@@ -9,11 +9,11 @@ a {
 }
 
 .map {
-  height: calc(100vh - 7vh);
+  height: calc(100vh - 50px);
 }
 
 .restaurantList {
-  height: calc(100vh - 7vh);
+  height: calc(100vh - 50px);
   overflow-y: auto;
   padding: 10px 10px 0 10px;
 }
@@ -369,12 +369,6 @@ p.review {
   .restaurantInfo > div:nth-child(4) {
     margin-top: 5px;
   }
-
-  .restaurantBtn {
-    padding: 0 5px;
-    overflow: hidden;
-    transform: translateY(-10px);
-  }
 }
 
 /* 뷰포트가 576px 이하인 경우 */
@@ -388,7 +382,7 @@ p.review {
   }
 
   .map {
-    height: calc(50vh - 7vh);
+    height: calc(50vh - 50px);
     transition: height 1s ease;
   }
 
