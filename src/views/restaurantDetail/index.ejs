@@ -145,10 +145,12 @@
           </form>
           <article class="renderReviews"></article>
 
+          <% if (review.length >= 6) { %>
           <section class="pageBtn">
-            <button id="prevPage">이전</button>
-            <button id="nextPage">다음</button>
+            <button id="prevPage">< 이전</button>
+            <button id="nextPage">다음 ></button>
           </section>
+          <% } %>
         </section>
 
         <section id="mapTap">
@@ -176,9 +178,6 @@
       <% } else { %>
        const userInfo = null;
       <% } %>
-      console.log(`restaurant: ${restaurant}`)
-      console.log(`review: ${review}`)
-      console.log(`userInfo: ${userInfo}`)
     </script>
   </body>
 </html>

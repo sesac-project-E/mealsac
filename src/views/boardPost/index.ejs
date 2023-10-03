@@ -75,20 +75,19 @@
           </button>
         </form>
         <div class="replyList">
-          <div class="reply">
-            <div class="replyInfo">
-              <p>replyUserName</p>
-              <p>replyDate</p>
+          <% for (let reply of post.Comments) { %>
+            <div class="reply">
+              <div class="replyInfo">
+                <p><%= reply.User.user_name %></p>
+                <p>
+                  <%= formatDate(reply.dataValues.updatedAt) %>
+                </p>
+              </div>
+              <div class="replycontent">
+                <%= reply.dataValues.content %>
+              </div>
             </div>
-            <div class="replycontent">으아앙</div>
-          </div>
-          <div class="reply">
-            <div class="replyInfo">
-              <p>replyUserName</p>
-              <p>replyDate</p>
-            </div>
-            <div class="replycontent">으아앙</div>
-          </div>
+            <% }  %>
         </div>
       </div>
     </div>
