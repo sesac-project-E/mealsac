@@ -9,14 +9,15 @@
 .random-container {
   position: relative;
   margin: 5% 10%;
-  height  : 70vh;   
+  min-height : 70vh;   
+  display: flex;
   align-items: center; 
   overflow: hidden;
 }
 
 .random-content {
-  min-width: inherit;
-  height: inherit;
+  min-width: 100%;
+  min-height: inherit;
   display: flex;
   padding: 0 2.5%;
 }
@@ -382,9 +383,15 @@ form {
 }
 
 /* font-size relative */
-@media (max-width: 1200px) {
-  * {
+@media (max-width: 1920px) {
+  html {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 1366px) {
+  html {
+    font-size: 12px;
   }
 }
 
@@ -428,13 +435,17 @@ form {
   }
 }
 
-
-@media screen and (max-width: 280px) {
+@media screen and (max-width: 375px) {
   .random-intro-marker {
     display: none;
   }
-  
-  span {
-    font-size: 10px;
+  html {
+    font-size: 6px;
+  }
+}
+
+@media (orientation : portrait) {
+  #random-intro {
+    padding: 5% 0;
   }
 }
