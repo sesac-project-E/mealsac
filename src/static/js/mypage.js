@@ -121,6 +121,7 @@ const reviewList = async () => {
       } else {
         document.querySelector('#myReviews').innerHTML =
           '<div class="none">남긴 리뷰가 없습니다.</div>';
+        document.querySelector('.reviewPage').style.display = 'none';
       }
     } else {
       console.log('서버 응답 오류:', res.data.message);
@@ -314,6 +315,7 @@ const postList = async () => {
     } else {
       document.querySelector('#myPosts').innerHTML =
         '<div class="none">작성한 게시글이 없습니다.</div>';
+      document.querySelector('.postPage').style.display = 'none';
     }
   } catch (error) {
     console.error('서버 응답 오류:', error);
@@ -337,65 +339,6 @@ document.getElementById('postNext').addEventListener('click', () => {
     alert('더 이상 다음 페이지가 없습니다.');
   }
 });
-
-// const postList = async () => {
-//   const postsContainer = document.querySelector('#myPosts');
-//   while (postsContainer.firstChild) {
-//     postsContainer.removeChild(postsContainer.firstChild);
-//   }
-
-//   document.getElementById('myPost').classList.add('clicked');
-//   document.getElementById('myReview').classList.remove('clicked');
-//   document.getElementById('myLike').classList.remove('clicked');
-//   document.getElementById('myReviews').style.display = 'none';
-//   document.getElementById('myLikes').style.display = 'none';
-//   document.getElementById('myPosts').style.display = 'block';
-//   document.querySelector('.reviewPage').style.display = 'none';
-//   document.querySelector('.postPage').style.display = 'block';
-
-//   fetch('/api/post/my/post')
-//     .then(response => response.json())
-//     .then(data => {
-//       const myPostsDiv = document.getElementById('myPosts');
-
-//       // 데이터 배열을 순환하며 요소 추가
-//       data.forEach(post => {
-//         const postContainer = document.createElement('div');
-//         postContainer.className = 'postContainer'; // 필요한 클래스를 추가하세요
-
-//         // 포스트 정보를 포함하는 div 추가
-//         postContainer.innerHTML = `
-//         <div class="postInfo">
-//           <div><a href="/post/${post.post_id}">
-//             <span class="titleName">${post.title}</span>
-//             <svg
-//               xmlns="http://www.w3.org/2000/svg"
-//               width="24"
-//               height="30"
-//               viewBox="0 0 24 24"
-//               fill="none"
-//             >
-//               <path
-//                 d="M9.70492 6L8.29492 7.41L12.8749 12L8.29492 16.59L9.70492 18L15.7049 12L9.70492 6Z"
-//                 fill="#4DDA67"
-//               />
-//             </svg>
-//           </a></div>
-//           <span class="date">${post.createdAt}</span>
-//         </div>
-//         <p>${post.content}</p>
-//       `;
-
-//         myPostsDiv.appendChild(postContainer);
-//       });
-
-//       // 데이터를 받아오면 myPosts를 보여줌
-//       myPostsDiv.style.display = 'block';
-//     })
-//     .catch(error => {
-//       console.error('데이터를 불러오는 중 오류 발생:', error);
-//     });
-// };
 
 // 찜삭제
 const heartElements = document.querySelectorAll('.heart');

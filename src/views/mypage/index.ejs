@@ -48,26 +48,84 @@
           <% if (Array.isArray(restaurant) && restaurant.length > 0) { %> <%
           restaurant.forEach(restaurant => { %>
           <div id="likeStore">
-            <%- include('../common/restaurantComponent.ejs', { restaurant:
-            restaurant }) %>
-            <p style="display: none"><%= restaurant.restaurant_id%></p>
+            <article
+              class="restaurantContainer"
+              data-id="<%= restaurant.restaurant_address %>"
+            >
+              <img
+                src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+                alt="<%= restaurant.restaurant_name %> 이미지"
+                class="restaurantImg"
+              />
+              <div class="restaurantInfo">
+                <div>
+                  <h3 class="restaurantName">
+                    <%= restaurant.restaurant_name %>
+                  </h3>
+                  <img
+                    src="<% if (restaurant.Users && restaurant.Users.length === 0) { %> /static/img/heart.png <% } else { %> /static/img/heartFilled.png <% } %>"
+                    alt="찜 아이콘"
+                    class="heart"
+                    id="<%= restaurant.restaurant_id %>"
+                  />
+                </div>
+                <p class="address">
+                  <%= (restaurant.restaurant_address &&
+                  restaurant.restaurant_address) ? restaurant.restaurant_address
+                  : '식당 주소 없음' %> <%= restaurant.restaurant_address %>
+                </p>
+                <p class="type">
+                  <%= (restaurant.restaurant_type_id &&
+                  restaurant.restaurant_type_id) ? restaurant.restaurant_type_id
+                  : '식당 타입 없음' %>
+                </p>
+
+                <div>
+                  <img
+                    src="/static/img/star.png"
+                    alt="평점 아이콘"
+                    class="rating"
+                  />
+                  <p class="rate"><%= restaurant.rating %></p>
+                  <img
+                    src="/static/img/speechBalloon.png"
+                    alt="댓글 아이콘"
+                    class="comment"
+                  />
+                  <p class="review"><%= restaurant.reviews_count %></p>
+                  <a
+                    href="/restaurant/<%= restaurant.restaurant_id %>"
+                    class="restaurantBtn"
+                  >
+                    <%= restaurant.restaurant_name %> 페이지
+                  </a>
+                </div>
+              </div>
+            </article>
+            <p style="display: none"><% restaurant.restaurant_id %></p>
           </div>
-          <% }) %> <% } else { %>
-          <div class="none"><p>찜한 식당이 없습니다.</p></div>
-          <% } %>
+          <% }) %> <% } else { %> div class="none">
+          <p>찜한 식당이 없습니다.</p>
+          <div>
+            <% } %>
+            <div class="LikePage">
+              <button class="prevPage" id="likePrev">이전</button>
+              <button class="nextPage" id="likeNext">다음</button>
+            </div>
+          </div>
         </div>
         <div>
           <div id="myReviews" style="display: none"></div>
           <div class="reviewPage" style="display: none">
-            <button class="prevPage" id="reviewPrev">< 이전</button>
-            <button class="nextPage" id="reviewNext">다음 ></button>
+            <button class="prevPage" id="reviewPrev">이전</button>
+            <button class="nextPage" id="reviewNext">다음</button>
           </div>
         </div>
         <div>
           <div id="myPosts" style="display: none"></div>
           <div class="postPage" style="display: none">
-            <button class="prevPage" id="postPrev">< 이전</button>
-            <button class="nextPage" id="postNext">다음 ></button>
+            <button class="prevPage" id="postPrev">이전</button>
+            <button class="nextPage" id="postNext">다음</button>
           </div>
         </div>
       </div>
