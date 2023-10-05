@@ -77,7 +77,7 @@ const toggleReply = (commentId, content) => {
     replyContent.remove()
     const replyContentContainer = document.querySelector(`#replyContentContainer_${commentId}`)
     replyContentContainer.innerHTML = `
-    <input autofocus type="text" class="replycontent" value="${content}" id="replyContent_${commentId}">
+    <input autofocus style="width: 80%; border: 1px solid gray; border-radius:8px; padding:3.5px;" type="text" class="replyContent" value="${content}" id="replyContent_${commentId}">
     <div class="replyBtnGroup" id="replyBtnGroup_${commentId}">
       <button class="replyBtn replyModifyBtn" onclick="editReply(${commentId})" >수정</button>
       <button class="replyBtn replyDeleteBtn" onclick="deleteReply(${commentId})">삭제</button>
@@ -85,7 +85,7 @@ const toggleReply = (commentId, content) => {
     `
   } else {
     const replyContentContainer = document.querySelector(`#replyContentContainer_${commentId}`)
-    replyContentContainer.innerHTML = `<div style="" class="replyContent notEdit" id="replyContent_${commentId}"> ${content}</div>`
+    replyContentContainer.innerHTML = `<div style="width: 90%; border: none; overflow: auto; white-space: nowrap;" class="replyContent notEdit" id="replyContent_${commentId}"> ${content}</div>`
   }
 }
 // reply Edit
