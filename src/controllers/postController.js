@@ -244,18 +244,18 @@ exports.getEditPost = async (req, res) => {
     ],
   });
 
-  //작성자가 아니거나 관리자가 아닌경우 에러 메세지 반환
+  //작성자가 이거나 관리자인경우 수정 창 가져오기
   if (
-    result.user_id != req.session.userInfo.user_id ||
-    !req.session.userInfo.isAdmin
+    result.user_id == req.session.userInfo.id ||
+    req.session.userInfo.isAdmin
   ) {
+    res.render('boardModify', { post: result });
+  } else {
     return res.status(403).json({
       status: 'error',
       message: '포스팅을 수정할 권한이 없습니다.',
     });
   }
-
-  res.render('boardModify', { post: result });
 };
 //게시글 수정
 exports.updatePost = async (req, res) => {
@@ -270,7 +270,7 @@ exports.updatePost = async (req, res) => {
   try {
     const post = await Post.findOne({
       where: { post_id: post_id },
-      attributes: ['user_id'],
+      attributes: ['user_id', 'post_id'],
       include: [
         {
           model: PostImage,
@@ -279,17 +279,6 @@ exports.updatePost = async (req, res) => {
       ],
     });
 
-    //작성자가 아니거나 관리자가 아닌경우 에러 메세지 반환
-    if (
-      post.user_id != req.session.userInfo.user_id ||
-      !req.session.userInfo.isAdmin
-    ) {
-      return res.status(403).json({
-        status: 'error',
-        message: '포스팅을 수정할 권한이 없습니다.',
-      });
-    }
-
     if (!post) {
       return res.status(404).json({
         status: 'error',
@@ -297,43 +286,54 @@ exports.updatePost = async (req, res) => {
       });
     }
 
-    // 기존에 연결된 이미지 삭제
-    if (post.PostImages && post.PostImages.length) {
-      post.PostImages.forEach(img => {
-        fs.unlink(
-          path.join(__dirname, '../static/img/postImage', img.image_url),
-          err => {
-            if (err) console.error(err);
-          },
-        );
+    // 작성자가 이거나 관리자인경우 수정
+    if (
+      post.user_id === req.session.userInfo.id ||
+      req.session.userInfo.isAdmin
+    ) {
+      // 기존에 연결된 이미지 삭제
+      if (post.PostImages && post.PostImages.length) {
+        post.PostImages.forEach(img => {
+          fs.unlink(
+            path.join(__dirname, '../static/img/postImage', img.image_url),
+            err => {
+              if (err) console.error(err);
+            },
+          );
+        });
+        await PostImage.destroy({ where: { post_id } });
+      }
+
+      // 새로운 이미지 저장
+      const imagePromises = (req.files || []).map(file => {
+        const filePath = path.join('/static/img/postImage', file.filename);
+        return PostImage.create({
+          post_id: post_id,
+          image_url: filePath,
+        });
       });
-      await PostImage.destroy({ where: { post_id } });
+      await Promise.all(imagePromises);
+
+      post.title = title;
+      post.content = content;
+      // post.board_id = board_id;
+      await post.save();
+
+      res.status(200).json({
+        status: 'success',
+        message: '게시글이 성공적으로 수정되었습니다.',
+        post: {
+          post_id: post_id,
+          content: post.content,
+          user_id: post.user_id,
+        },
+      });
+    } else {
+      return res.status(403).json({
+        status: 'error',
+        message: '포스팅을 수정할 권한이 없습니다.',
+      });
     }
-
-    // 새로운 이미지 저장
-    const imagePromises = (req.files || []).map(file => {
-      const filePath = path.join('/static/img/postImage', file.filename);
-      return PostImage.create({
-        post_id: post_id,
-        image_url: filePath,
-      });
-    });
-    await Promise.all(imagePromises);
-
-    post.title = title;
-    post.content = content;
-    // post.board_id = board_id;
-    await post.save();
-
-    res.status(200).json({
-      status: 'success',
-      message: '게시글이 성공적으로 수정되었습니다.',
-      post: {
-        post_id: post_id,
-        content: post.content,
-        user_id: post.user_id,
-      },
-    });
   } catch (error) {
     console.error('에러 정보: ', error);
     res.status(500).json({
