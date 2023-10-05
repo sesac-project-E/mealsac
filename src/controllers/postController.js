@@ -60,7 +60,7 @@ exports.getMyPosts = async (req, res) => {
   const user_id = userInfo.id;
 
   try {
-    //포스트 제목, 작성날짜, 게시판 종류
+    // 포스트 제목, 작성날짜, 게시판 종류
     const myPosts = await Post.findAll({
       where: { user_id },
       attributes: ['title', 'content', 'post_id', 'createdAt'],
@@ -70,10 +70,10 @@ exports.getMyPosts = async (req, res) => {
           attributes: ['image_url'],
         },
       ],
-      //작성날짜 최신순 정렬
+      // 작성날짜 최신순 정렬
       order: [['createdAt', 'DESC']],
     });
-    //포스트가 없는 경우
+    // 포스트가 없는 경우
     if (myPosts.length === 0) {
       return res.json({
         status: 'success',
@@ -81,7 +81,7 @@ exports.getMyPosts = async (req, res) => {
         data: [],
       });
     }
-    //내 게시물 전송
+    // 내 게시물 전송
     res.send(myPosts);
   } catch (error) {
     console.error(error);
@@ -92,7 +92,7 @@ exports.getMyPosts = async (req, res) => {
   }
 };
 
-//게시글 작성
+// 게시글 작성
 exports.postCreatePost = async (req, res) => {
   const { id } =
     req.session && req.session.userInfo ? req.session.userInfo : -1;
@@ -107,8 +107,8 @@ exports.postCreatePost = async (req, res) => {
   // const transaction = await sequelize.transaction();
   const { title, content, board_id } = req.body;
 
-  //만약 board_id가 1이면 req.session.userInfo.admin_id가 0일경우 400에러
-  //공지게시물에 올리려고 할 때 어드민아 아니라면 오류메세지 출력
+  // 만약 board_id가 1이면 req.session.userInfo.admin_id가 0일경우 400에러
+  // 공지게시물에 올리려고 할 때 어드민아 아니라면 오류메세지 출력
   if (req.body.board_id == 1) {
     if (req.body.board_id == req.session.userInfo.isAdmin + 1) {
       return res.status(400).json({
@@ -251,16 +251,13 @@ exports.getEditPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
   const { post_id } = req.params;
-
   const { title, content, board_id } = req.body;
-
   if (!req.session.userInfo) {
     return res.status(400).json({
       status: 'error',
       message: '로그인이 필요합니다.',
     });
   }
-
   try {
     const post = await Post.findOne({
       where: { post_id },
