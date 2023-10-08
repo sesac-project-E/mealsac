@@ -104,15 +104,16 @@
             </article>
             <p style="display: none"><% restaurant.restaurant_id %></p>
           </div>
-          <% }) %> <% } else { %> div class="none">
-          <p>찜한 식당이 없습니다.</p>
+          <% }) %>
           <div>
-            <% } %>
             <div class="LikePage">
               <button class="prevPage" id="likePrev">이전</button>
               <button class="nextPage" id="likeNext">다음</button>
             </div>
           </div>
+          <% } else { %>
+          <p>찜한 식당이 없습니다.</p>
+          <% } %>
         </div>
         <div>
           <div id="myReviews" style="display: none"></div>

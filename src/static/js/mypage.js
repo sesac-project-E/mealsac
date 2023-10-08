@@ -2,6 +2,9 @@ let currentPage = 1;
 let totalPages = 1;
 const reviewsPerPage = 5;
 const postsPerPage = 5;
+const itemsPerPage = 5;
+const restaurantList = document.querySelectorAll('.restaurantContainer');
+const totalItems = restaurantList.length;
 
 const likeList = () => {
   document.getElementById('myLike').classList.add('clicked');
@@ -31,6 +34,33 @@ function paginateLikes(likes, page, perPage) {
   const endIndex = startIndex + perPage;
   return likes.slice(startIndex, endIndex);
 }
+
+function updatePage() {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  restaurantList.forEach((restaurant, index) => {
+    if (index >= startIndex && index < endIndex) {
+      restaurant.style.display = 'block';
+    } else {
+      restaurant.style.display = 'none';
+    }
+  });
+}
+
+document.getElementById('likeNext').addEventListener('click', function () {
+  if (currentPage < Math.ceil(totalItems / itemsPerPage)) {
+    currentPage++;
+    updatePage();
+  }
+});
+
+document.getElementById('likePrev').addEventListener('click', function () {
+  if (currentPage > 1) {
+    currentPage--;
+    updatePage();
+  }
+});
 
 const reviewList = async () => {
   const reviewsContainer = document.querySelector('#myReviews');
