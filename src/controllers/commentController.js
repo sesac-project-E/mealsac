@@ -17,7 +17,7 @@ exports.createComment = (req, res) => {
       res.send("잘 생성되었습니다.")
     })
     .catch((error) => {
-      console.log(error)
+      console.error(error)
     })
   } catch (error) {
     console.error(error)
@@ -33,7 +33,7 @@ exports.updateComment = (req, res) => {
         where : {comment_id : comment_id}
       })
       .then((response) => {
-        if (response.dataValues && (response.dataValues.user_id === req.session.userInfo.id)) {
+        if (response.dataValues && (response.dataValues.user_id === Number(req.session.userInfo.id))) {
           Comment.update(
             {
               content : content
@@ -43,13 +43,14 @@ exports.updateComment = (req, res) => {
             }
           )
           .then(() => {
-            res.send("잘 수정되었습니다.")
+            res.status(201).send()
           })
           .catch((error) => {
             console.log(error)
+            res.status(500).send()
         })}
         else {
-          res.status(400).send()
+          res.status(403).send()
         }
       })
     } else {
@@ -57,7 +58,7 @@ exports.updateComment = (req, res) => {
     }
   } catch (error) {
     console.log(error)
-    res.send(error)
+    res.status(400).send(error)
   }
 }
 
@@ -69,7 +70,7 @@ exports.deleteComment = async (req, res) => {
         where : {comment_id : comment_id}
       })
       .then((response) => {
-        if (response && (response.dataValues.user_id === req.session.userInfo.id)) {
+        if (response.dataValues?.user_id === Number(req.session?.userInfo?.id)) {
           Comment.destroy({
             where : {comment_id : comment_id}
           })
@@ -80,7 +81,7 @@ exports.deleteComment = async (req, res) => {
             throw Error()
           })
         } else {
-          res.status(400).send()
+          res.status(400).send("세션에 유저 정보가 없습니다.")
         }
       })
     } else {

@@ -110,7 +110,63 @@ textarea {
 
 .reply {
   border-bottom: solid rgb(167, 167, 167) 0.5px;
-  padding: 10px;
+  padding-bottom: 10px;
   margin-bottom: 5px;
   font-size: 15px;
 }
+
+.replyToggleBtn {
+  position : relative;
+  all: unset;
+  font-size: 15px;
+}
+.replyContentContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: auto;
+}
+
+.replyContent {
+  width: 80%;
+  border: 0;
+
+  padding: 3.5px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.replyContent::-webkit-scrollbar {
+  height: 3px;
+}
+.replyContent::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+}    
+
+.commentDropDown{
+  position: absolute;
+  min-width: 10vw;
+  z-index: 3;
+}
+
+.replyBtn {
+  align-self: flex-end;
+  border: none;
+  border-radius: 30px;
+  width: 50px;
+  background-color: transparent;
+}
+.replyModifyBtn {
+  border: solid #35aa03 1px;
+}
+.replyDeleteBtn {
+  border: solid #ec4524 1px;
+}
+
+.remove {
+  display: none;
+}
+.block {
+  display: block;
+}
+

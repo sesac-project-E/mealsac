@@ -28,11 +28,11 @@ exports.getPost = async (req, res) => {
     ],
   });
   const comments = await Comment.findAll({
-    where : {post_id : post_id},
-    order : [['comment_id', 'DESC']],
-    include : [{model : User}]
-  })
-  result.Comments = [...comments]
+    where: { post_id: post_id },
+    order: [['comment_id', 'DESC']],
+    include: [{ model: User }],
+  });
+  result.Comments = [...comments];
   res.render('boardPost', {
     post: result,
     formatDate: function (dateString) {
@@ -60,7 +60,7 @@ exports.getMyPosts = async (req, res) => {
   const user_id = userInfo.id;
 
   try {
-    //포스트 제목, 작성날짜, 게시판 종류
+    // 포스트 제목, 작성날짜, 게시판 종류
     const myPosts = await Post.findAll({
       where: { user_id },
       attributes: ['title', 'content', 'post_id', 'createdAt'],
@@ -70,10 +70,10 @@ exports.getMyPosts = async (req, res) => {
           attributes: ['image_url'],
         },
       ],
-      //작성날짜 최신순 정렬
+      // 작성날짜 최신순 정렬
       order: [['createdAt', 'DESC']],
     });
-    //포스트가 없는 경우
+    // 포스트가 없는 경우
     if (myPosts.length === 0) {
       return res.json({
         status: 'success',
@@ -81,7 +81,7 @@ exports.getMyPosts = async (req, res) => {
         data: [],
       });
     }
-    //내 게시물 전송
+    // 내 게시물 전송
     res.send(myPosts);
   } catch (error) {
     console.error(error);
@@ -92,7 +92,7 @@ exports.getMyPosts = async (req, res) => {
   }
 };
 
-//게시글 작성
+// 게시글 작성
 exports.postCreatePost = async (req, res) => {
   const { id } =
     req.session && req.session.userInfo ? req.session.userInfo : -1;
@@ -104,11 +104,9 @@ exports.postCreatePost = async (req, res) => {
     });
   }
 
-  // const transaction = await sequelize.transaction();
   const { title, content, board_id } = req.body;
 
-  //만약 board_id가 1이면 req.session.userInfo.admin_id가 0일경우 400에러
-  //공지게시물에 올리려고 할 때 어드민아 아니라면 오류메세지 출력
+  // 공지게시물에 올리려고 할 때 관리자가 아니라면 오류메세지 출력
   if (req.body.board_id == 1) {
     if (req.body.board_id == req.session.userInfo.isAdmin + 1) {
       return res.status(400).json({
@@ -173,7 +171,6 @@ exports.postCreatePost = async (req, res) => {
 
 // 본인포스팅 삭제 or 관리자가 특정포스팅 삭제
 exports.deletePost = async (req, res) => {
-  console.log(req.session.userInfo);
   const userInfo = req.session ? req.session.userInfo : null;
 
   if (!userInfo || (!userInfo.id && !userInfo.isAdmin)) {
@@ -200,11 +197,11 @@ exports.deletePost = async (req, res) => {
       });
     }
 
-    // 리뷰 작성자 또는 관리자만 리뷰를 삭제할 수 있도록 함
+    // 포스트 작성자 또는 관리자만 포스트를 삭제할 수 있도록 함
     if (post.user_id !== user_id && !userInfo.isAdmin) {
       return res.status(403).json({
         status: 'error',
-        message: '리뷰를 포스팅을 삭제할 권한이 없습니다.',
+        message: '포스팅을 삭제할 권한이 없습니다.',
       });
     }
     await PostImage.destroy({ where: { post_id } });
@@ -222,7 +219,7 @@ exports.deletePost = async (req, res) => {
     });
   }
 };
-
+//게시글 수정 페이지 조회
 exports.getEditPost = async (req, res) => {
   const { post_id } = req.params;
   const result = await Post.findOne({
@@ -246,24 +243,34 @@ exports.getEditPost = async (req, res) => {
       },
     ],
   });
-  res.render('boardModify', { post: result });
-};
 
+  //작성자가 이거나 관리자인경우 수정 창 가져오기
+  if (
+    result.user_id == req.session.userInfo.id ||
+    req.session.userInfo.isAdmin
+  ) {
+    res.render('boardModify', { post: result });
+  } else {
+    return res.status(403).json({
+      status: 'error',
+      message: '포스팅을 수정할 권한이 없습니다.',
+    });
+  }
+};
+//게시글 수정
 exports.updatePost = async (req, res) => {
   const { post_id } = req.params;
-
   const { title, content, board_id } = req.body;
-
   if (!req.session.userInfo) {
     return res.status(400).json({
       status: 'error',
       message: '로그인이 필요합니다.',
     });
   }
-
   try {
     const post = await Post.findOne({
-      where: { post_id },
+      where: { post_id: post_id },
+      attributes: ['user_id', 'post_id'],
       include: [
         {
           model: PostImage,
@@ -279,43 +286,54 @@ exports.updatePost = async (req, res) => {
       });
     }
 
-    // 기존에 연결된 이미지 삭제
-    if (post.PostImages && post.PostImages.length) {
-      post.PostImages.forEach(img => {
-        fs.unlink(
-          path.join(__dirname, '../static/img/postImage', img.image_url),
-          err => {
-            if (err) console.error(err);
-          },
-        );
+    // 작성자가 이거나 관리자인경우 수정
+    if (
+      post.user_id === req.session.userInfo.id ||
+      req.session.userInfo.isAdmin
+    ) {
+      // 기존에 연결된 이미지 삭제
+      if (post.PostImages && post.PostImages.length) {
+        post.PostImages.forEach(img => {
+          fs.unlink(
+            path.join(__dirname, '../static/img/postImage', img.image_url),
+            err => {
+              if (err) console.error(err);
+            },
+          );
+        });
+        await PostImage.destroy({ where: { post_id } });
+      }
+
+      // 새로운 이미지 저장
+      const imagePromises = (req.files || []).map(file => {
+        const filePath = path.join('/static/img/postImage', file.filename);
+        return PostImage.create({
+          post_id: post_id,
+          image_url: filePath,
+        });
       });
-      await PostImage.destroy({ where: { post_id } });
+      await Promise.all(imagePromises);
+
+      post.title = title;
+      post.content = content;
+      // post.board_id = board_id;
+      await post.save();
+
+      res.status(200).json({
+        status: 'success',
+        message: '게시글이 성공적으로 수정되었습니다.',
+        post: {
+          post_id: post_id,
+          content: post.content,
+          user_id: post.user_id,
+        },
+      });
+    } else {
+      return res.status(403).json({
+        status: 'error',
+        message: '포스팅을 수정할 권한이 없습니다.',
+      });
     }
-
-    // 새로운 이미지 저장
-    const imagePromises = (req.files || []).map(file => {
-      const filePath = path.join('/static/img/postImage', file.filename);
-      return PostImage.create({
-        post_id: post_id,
-        image_url: filePath,
-      });
-    });
-    await Promise.all(imagePromises);
-
-    post.title = title;
-    post.content = content;
-    // post.board_id = board_id;
-    await post.save();
-
-    res.status(200).json({
-      status: 'success',
-      message: '게시글이 성공적으로 수정되었습니다.',
-      post: {
-        post_id: post_id,
-        content: post.content,
-        user_id: post.user_id,
-      },
-    });
   } catch (error) {
     console.error('에러 정보: ', error);
     res.status(500).json({
