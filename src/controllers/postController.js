@@ -221,6 +221,16 @@ exports.deletePost = async (req, res) => {
 };
 //게시글 수정 페이지 조회
 exports.getEditPost = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
+
+  //로그인 안되어 있는경우
+  if (!userInfo || !userInfo.id) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
   const { post_id } = req.params;
   const result = await Post.findOne({
     where: { post_id: post_id },
@@ -244,11 +254,8 @@ exports.getEditPost = async (req, res) => {
     ],
   });
 
-  //작성자가 이거나 관리자인경우 수정 창 가져오기
-  if (
-    result.user_id == req.session.userInfo.id ||
-    req.session.userInfo.isAdmin
-  ) {
+  //작성자인경우 수정 창 가져오기
+  if (result.user_id == req.session.userInfo.id) {
     res.render('boardModify', { post: result });
   } else {
     return res.status(403).json({
