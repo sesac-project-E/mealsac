@@ -37,26 +37,26 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // 검색 기능
-document.addEventListener('DOMContentLoaded', function () {
-  const searchInput = document.querySelector('.searchInput');
-  let mainSearch = null;
+// document.addEventListener('DOMContentLoaded', function () {
+//   const searchInput = document.querySelector('.searchInput');
+//   let mainSearch = null;
 
-  searchInput.addEventListener('keyup', function (event) {
-    if (event.key === 'Enter') {
-      const apiUrl = `/api/menu/search?q=${searchInput.value}&page=1`;
+//   searchInput.addEventListener('keyup', function (event) {
+//     if (event.key === 'Enter') {
+//       const apiUrl = `/api/menu/search?q=${searchInput.value}&page=1`;
 
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          mainSearch = data;
-          console.log(mainSearch);
-        })
-        .catch(error => {
-          console.error('API 요청 실패:', error);
-        });
-    }
-  });
-});
+//       fetch(apiUrl)
+//         .then(response => response.json())
+//         .then(data => {
+//           mainSearch = data;
+//           console.log(mainSearch);
+//         })
+//         .catch(error => {
+//           console.error('API 요청 실패:', error);
+//         });
+//     }
+//   });
+// });
 
 // ===============================
 // document.addEventListener('DOMContentLoaded', function () {
