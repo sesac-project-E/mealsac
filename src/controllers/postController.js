@@ -4,7 +4,7 @@ const { User, Post, PostImage, Comment } = require('../models');
 
 //post_id 값으로 특정 게시물 조회
 exports.getPost = async (req, res) => {
-  const userInfo = req.session.userInfo ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : false;
   // [after]
   const { post_id } = req.params;
   const result = await Post.findOne({
