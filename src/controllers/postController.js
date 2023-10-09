@@ -4,6 +4,7 @@ const { User, Post, PostImage, Comment } = require('../models');
 
 //post_id 값으로 특정 게시물 조회
 exports.getPost = async (req, res) => {
+  const userInfo = req.session ? req.session.userInfo : null;
   // [after]
   const { post_id } = req.params;
   const result = await Post.findOne({
@@ -42,6 +43,7 @@ exports.getPost = async (req, res) => {
       const day = String(dateObj.getDate()).padStart(2, '0');
       return `${year}.${month}.${day}`;
     },
+    userInfo,
   });
 };
 
@@ -293,11 +295,8 @@ exports.updatePost = async (req, res) => {
       });
     }
 
-    // 작성자가 이거나 관리자인경우 수정
-    if (
-      post.user_id === req.session.userInfo.id ||
-      req.session.userInfo.isAdmin
-    ) {
+    // 작성자인경우 수정
+    if (post.user_id === req.session.userInfo.id) {
       // 기존에 연결된 이미지 삭제
       if (post.PostImages && post.PostImages.length) {
         post.PostImages.forEach(img => {
