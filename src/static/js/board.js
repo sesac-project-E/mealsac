@@ -32,9 +32,6 @@ async function fetchAndDisplayPosts(
   pageSelector,
   currentPage = 1,
 ) {
-  console.log(
-    `Function called with boardId: ${boardId}, currentPage: ${currentPage}`,
-  ); // 이 로그 추가
   const tableBody = document.querySelector(tableSelector);
   const pagination = document.querySelector(pageSelector);
   const postsPerPage = 10;
@@ -48,9 +45,6 @@ async function fetchAndDisplayPosts(
     const res = await axios.get(endpoint);
     const posts = res.data.rows;
     const totalPosts = res.data.count;
-
-    console.log('API Response:', res.data);
-    console.log('Posts:', posts);
 
     if (!Array.isArray(posts)) {
       console.error('Unexpected response format.');
@@ -113,9 +107,6 @@ function updatePagination(
   pageSelector, // 변수 추가
 ) {
   const totalPages = Math.ceil(totalPosts / postsPerPage);
-  console.log('Total Posts:', totalPosts);
-  console.log('Posts Per Page:', postsPerPage);
-  console.log('Total Pages:', totalPages);
 
   pagination.innerHTML = '';
 
@@ -129,7 +120,6 @@ function updatePagination(
     pageLink.addEventListener('click', event => {
       event.preventDefault();
       const clickedPage = parseInt(event.target.dataset.page, 10);
-      console.log(`Fetching data for page: ${clickedPage}`);
       fetchAndDisplayPosts(boardId, tableSelector, pageSelector, clickedPage);
     });
 
