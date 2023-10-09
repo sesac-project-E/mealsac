@@ -85,6 +85,11 @@ document.querySelector('#modifyBtn').addEventListener('click', async e => {
   const title = document.querySelector('.inputTitle').value;
   const board_id = document.querySelector('form').id;
 
+  if (title.trim().length < 1) {
+    alert('제목을 입력해주세요.');
+    return;
+  }
+
   try {
     const res = await axios({
       method: 'PATCH',

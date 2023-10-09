@@ -84,6 +84,12 @@ document.getElementById('postBtn').addEventListener('click', function (event) {
   const title = document.getElementById('inputTitle').value;
   const boardType = document.getElementById('boardType').value;
   let board_id;
+
+  if (title.trim().length < 1) {
+    alert('제목을 입력해주세요.');
+    return;
+  }
+
   if (boardType === 'notice') {
     board_id = 1;
   } else {
