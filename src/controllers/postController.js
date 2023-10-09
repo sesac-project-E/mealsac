@@ -36,6 +36,7 @@ exports.getPost = async (req, res) => {
   result.Comments = [...comments];
   res.render('boardPost', {
     post: result,
+    userInfo: userInfo,
     formatDate: function (dateString) {
       const dateObj = new Date(dateString);
       const year = dateObj.getFullYear();
@@ -43,7 +44,6 @@ exports.getPost = async (req, res) => {
       const day = String(dateObj.getDate()).padStart(2, '0');
       return `${year}.${month}.${day}`;
     },
-    userInfo: userInfo,
   });
 };
 
