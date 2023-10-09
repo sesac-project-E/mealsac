@@ -4,8 +4,7 @@ const { User, Post, PostImage, Comment } = require('../models');
 
 //post_id 값으로 특정 게시물 조회
 exports.getPost = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
-  console.log(userInfo);
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
   // [after]
   const { post_id } = req.params;
   const result = await Post.findOne({
@@ -50,7 +49,7 @@ exports.getPost = async (req, res) => {
 
 //내가 작성한 게시물 조회
 exports.getMyPosts = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   //로그인 안되어 있는경우
   if (!userInfo || !userInfo.id) {
@@ -174,7 +173,7 @@ exports.postCreatePost = async (req, res) => {
 
 // 본인포스팅 삭제 or 관리자가 특정포스팅 삭제
 exports.deletePost = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || (!userInfo.id && !userInfo.isAdmin)) {
     return res.status(400).json({
@@ -224,7 +223,7 @@ exports.deletePost = async (req, res) => {
 };
 //게시글 수정 페이지 조회
 exports.getEditPost = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   //로그인 안되어 있는경우
   if (!userInfo || !userInfo.id) {
