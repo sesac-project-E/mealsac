@@ -68,7 +68,6 @@
       <div class="replyBox">
         <form class="textReply" id="replyForm" style="display: none">
           <span>댓글</span>
-          <!-- <span><= Post.reply %></span> -->
           <textarea
             name="replyContent"
             id="replyContent"
@@ -112,9 +111,9 @@
     <script>
       const postUser = <%- JSON.stringify(post.User) %>;
       <% if (userInfo !== null) { %>
-        const userInfo = JSON.parse('<%- JSON.stringify(userInfo) %>');
+        const loginUser = JSON.parse('<%- JSON.stringify(userInfo) %>');
       <% } else { %>
-       const userInfo = null;
+       const loginUser = null;
       <% } %>
     </script>
   </body>

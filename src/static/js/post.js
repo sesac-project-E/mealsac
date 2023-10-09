@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 리뷰 등록
 const enterReply = async e => {
-  if (!userInfo) {
+  if (!loginUser) {
     alert('로그인 후 댓글 작성 가능합니다.');
     return;
   }
@@ -58,20 +58,18 @@ replyForm.addEventListener('submit', enterReply);
 
 // 수정
 const modifyBtn = () => {
-  if (replyContent.trim().length < 1) {
-    alert('댓글의 내용을 입력해주세요.');
-  } else if (userInfo && postUser === userInfo.user_name) {
+  if (postUser.user_name === loginUser.user_name) {
     const postId = document.querySelector('.postBox').id;
     location.href = `/post/edit/${postId}`;
   } else {
     alert('작성자 본인만 수정할 수 있습니다.');
   }
 };
-
+console.log(loginUser.isAdmin);
 // 삭제
 const deleteBtn = async () => {
   const postId = document.querySelector('.postBox').id;
-  if (userInfo && postUser === userInfo.user_name && userInfo.is_admin) {
+  if (postUser.user_name === loginUser.user_name || loginUser.isAdmin) {
     try {
       const res = await axios({
         method: 'DELETE',
