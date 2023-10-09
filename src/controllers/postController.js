@@ -5,6 +5,7 @@ const { User, Post, PostImage, Comment } = require('../models');
 //post_id 값으로 특정 게시물 조회
 exports.getPost = async (req, res) => {
   const userInfo = req.session.userInfo ? req.session.userInfo : false;
+  console.log(userInfo);
   // [after]
   const { post_id } = req.params;
   const result = await Post.findOne({
@@ -34,8 +35,10 @@ exports.getPost = async (req, res) => {
     include: [{ model: User }],
   });
   result.Comments = [...comments];
+
   res.render('boardPost', {
     post: result,
+    userInfo,
     formatDate: function (dateString) {
       const dateObj = new Date(dateString);
       const year = dateObj.getFullYear();
@@ -43,7 +46,6 @@ exports.getPost = async (req, res) => {
       const day = String(dateObj.getDate()).padStart(2, '0');
       return `${year}.${month}.${day}`;
     },
-    userInfo,
   });
 };
 

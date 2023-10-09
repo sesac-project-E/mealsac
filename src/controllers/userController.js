@@ -153,6 +153,28 @@ exports.postLogin = async (req, res) => {
   }
 };
 
+exports.postLogout = (req, res) => {
+  try {
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Logout error: ', err);
+        res.status(500).json({
+          status: 'error',
+          message: '로그아웃 도중 에러가 발생했습니다',
+        });
+      } else {
+        res.redirect('/');
+      }
+    });
+  } catch (err) {
+    console.error('Error: ', err);
+    res.status(500).json({
+      status: 'error',
+      message: '로그아웃 도중 에러가 발생했습니다.',
+    });
+  }
+};
+
 exports.patchProfile = async (req, res) => {
   try {
     const { user_name, password, id } = req.body;

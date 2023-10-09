@@ -69,23 +69,24 @@ function getCookie(name) {
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+function logout() {
+  axios
+    .post('/api/user/logout')
+    .then(() => {
+      document.cookie = 'loginStatus=; path=/';
+      toggleLoginStatus(false);
+      window.location.href = '/';
+    })
+    .catch(() => {
+      alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
+    });
+}
+
 isLoggedIn = getLoginStatusFromCookie();
 updateButtonVisibility();
 
-loginBtn.addEventListener('click', () => {
-  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600';
-  toggleLoginStatus(true);
-});
-
-logoutBtn.addEventListener('click', () => {
-  document.cookie =
-    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  toggleLoginStatus(false);
-  window.location.reload();
-});
-
 mobileLoginBtn.addEventListener('click', () => {
-  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600';
+  document.cookie = 'loginStatus=loggedIn; path=/; max-age=86400';
   toggleLoginStatus(true);
 });
 
@@ -95,12 +96,5 @@ hamburgerMenu.addEventListener('click', () => {
 });
 
 const mobileLogout = document.querySelector('.mobileLogout');
-
-mobileLogout.addEventListener('click', () => {
-  document.cookie =
-    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  toggleLoginStatus(false);
-  window.location.reload();
-});
 
 window.addEventListener('resize', updateButtonVisibility); // 반응형 사이즈 변경에 대응

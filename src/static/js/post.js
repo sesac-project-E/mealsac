@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 리뷰 등록
 const enterReply = async e => {
-  if (!userInfo) {
+  if (!loginUser) {
     alert('로그인 후 댓글 작성 가능합니다.');
     return;
   }
@@ -58,9 +58,7 @@ replyForm.addEventListener('submit', enterReply);
 
 // 수정
 const modifyBtn = () => {
-  if (replyContent.trim().length < 1) {
-    alert('댓글의 내용을 입력해주세요.');
-  } else if (userInfo && postUser === userInfo.user_name) {
+  if (postUser.user_name === loginUser.user_name) {
     const postId = document.querySelector('.postBox').id;
     location.href = `/post/edit/${postId}`;
   } else {
@@ -71,7 +69,7 @@ const modifyBtn = () => {
 // 삭제
 const deleteBtn = async () => {
   const postId = document.querySelector('.postBox').id;
-  if (userInfo && postUser === userInfo.user_name && userInfo.is_admin) {
+  if (postUser.user_name === loginUser.user_name || loginUser.isAdmin) {
     try {
       const res = await axios({
         method: 'DELETE',
@@ -89,6 +87,10 @@ const deleteBtn = async () => {
 };
 
 const toggleReply = (commentId, content) => {
+  if (postUser.user_name !== loginUser.user_name || !loginUser.isAdmin) {
+    alert('로그인 후 이용 가능합니다.');
+    return;
+  }
   const replyContent = document.querySelector(`#replyContent_${commentId}`);
   if (replyContent.classList.contains('notEdit')) {
     replyContent.remove();
@@ -111,12 +113,13 @@ const toggleReply = (commentId, content) => {
 };
 // reply Edit
 const editReply = commentId => {
+  const replyInput = document.querySelector(`#replyContent_${commentId}`);
+
+  if (replyInput.value.trim().length < 1) {
+    alert('댓글의 내용을 입력해주세요.');
+    return;
+  }
   if (confirm('수정하시겠습니까?')) {
-    const replyInput = document.querySelector(`#replyContent_${commentId}`);
-    if (replyContent.trim().length < 1) {
-      alert('댓글의 내용을 입력해주세요.');
-      return;
-    }
     axios({
       method: 'put',
       url: '/api/comment',
@@ -137,6 +140,9 @@ const editReply = commentId => {
 // reply Delete
 const deleteReply = commentId => {
   if (confirm('정말로 삭제하시겠습니까?')) {
+    if (postUser.user_name !== loginUser.user_name || !loginUser.isAdmin) {
+      alert('작성자 본인만 삭제 가능합니다.');
+    }
     axios({
       method: 'delete',
       url: '/api/comment/',
@@ -151,6 +157,5 @@ const deleteReply = commentId => {
       .catch(error => {
         console.error(error);
       });
-    console.log(commentId);
   }
 };
