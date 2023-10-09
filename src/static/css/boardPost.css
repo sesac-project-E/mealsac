@@ -51,7 +51,16 @@ h1 {
 
 .postContent {
   min-height: 300px;
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
   border-bottom: solid black 1px;
+}
+.postContent::-webkit-scrollbar {
+  height: 10px;
+}
+.postContent::-webkit-scrollbar-thumb {
+  background-color: lightgray;
 }
 
 .btnBox {
@@ -116,7 +125,7 @@ textarea {
 }
 
 .replyToggleBtn {
-  position : relative;
+  position: relative;
   all: unset;
   font-size: 15px;
 }
@@ -141,9 +150,9 @@ textarea {
 }
 .replyContent::-webkit-scrollbar-thumb {
   background-color: lightgray;
-}    
+}
 
-.commentDropDown{
+.commentDropDown {
   position: absolute;
   min-width: 10vw;
   z-index: 3;
@@ -169,4 +178,3 @@ textarea {
 .block {
   display: block;
 }
-
