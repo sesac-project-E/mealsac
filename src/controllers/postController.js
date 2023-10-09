@@ -43,7 +43,7 @@ exports.getPost = async (req, res) => {
       const day = String(dateObj.getDate()).padStart(2, '0');
       return `${year}.${month}.${day}`;
     },
-    userInfo,
+    userInfo: userInfo,
   });
 };
 
