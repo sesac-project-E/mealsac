@@ -52,7 +52,7 @@
         <div class="postContent"><%- post.content %></div>
       </div>
 
-      <% if(userInfo !== null || post.User.user_name === userInfo.user_name &&
+      <% if(userInfo !== null && post.User.user_name === userInfo.user_name &&
       userInfo.is_admin) {%>
       <div class="btnBox">
         <button type="button" id="modify" name="modify" onclick="modifyBtn()">
