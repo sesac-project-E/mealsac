@@ -65,7 +65,7 @@ const modifyBtn = () => {
     alert('작성자 본인만 수정할 수 있습니다.');
   }
 };
-console.log(loginUser.isAdmin);
+
 // 삭제
 const deleteBtn = async () => {
   const postId = document.querySelector('.postBox').id;
@@ -87,6 +87,10 @@ const deleteBtn = async () => {
 };
 
 const toggleReply = (commentId, content) => {
+  if (postUser.user_name !== loginUser.user_name || !loginUser.isAdmin) {
+    alert('로그인 후 이용 가능합니다.');
+    return;
+  }
   const replyContent = document.querySelector(`#replyContent_${commentId}`);
   if (replyContent.classList.contains('notEdit')) {
     replyContent.remove();
@@ -136,6 +140,9 @@ const editReply = commentId => {
 // reply Delete
 const deleteReply = commentId => {
   if (confirm('정말로 삭제하시겠습니까?')) {
+    if (postUser.user_name !== loginUser.user_name || !loginUser.isAdmin) {
+      alert('작성자 본인만 삭제 가능합니다.');
+    }
     axios({
       method: 'delete',
       url: '/api/comment/',
@@ -150,6 +157,5 @@ const deleteReply = commentId => {
       .catch(error => {
         console.error(error);
       });
-    console.log(commentId);
   }
 };
