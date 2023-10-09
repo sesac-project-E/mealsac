@@ -110,7 +110,7 @@
     </div>
     <script>
       const postUser = <%- JSON.stringify(post.User) %>;
-      <% if (userInfo !== null) { %>
+      <% if (typeof userInfo !== "undefined") { %>
         const loginUser = JSON.parse('<%- JSON.stringify(userInfo) %>');
       <% } else { %>
        const loginUser = false;
