@@ -52,13 +52,13 @@
         <div class="postContent"><%- post.content %></div>
       </div>
       <div class="btnBox">
-        <% if(typeof userInfo !== "undefined") { %> <% if(post.User.user_name
-        === userInfo.user_name) { %>
+        <% if(post.loginUser) { %> <% if(post.User.user_name ===
+        post.loginUser.user_name) { %>
         <button type="button" id="modify" name="modify" onclick="modifyBtn()">
           수정
         </button>
-        <% } %> <% if(post.User.user_name === userInfo.user_name ||
-        userInfo.isAdmin) { %>
+        <% } %> <% if(post.User.user_name === post.loginUser.user_name ||
+        post.loginUser.isAdmin) { %>
         <button type="button" id="delete" name="delete" onclick="deleteBtn()">
           삭제
         </button>
@@ -110,8 +110,8 @@
     </div>
     <script>
       const postUser = <%- JSON.stringify(post.User) %>;
-      <% if (typeof userInfo !== "undefined") { %>
-        const loginUser = JSON.parse('<%- JSON.stringify(userInfo) %>');
+      <% if (post.loginUser) { %>
+        const loginUser = <%- JSON.stringify(post.loginUser) %>;
       <% } else { %>
        const loginUser = false;
       <% } %>

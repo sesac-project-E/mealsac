@@ -34,9 +34,10 @@ exports.getPost = async (req, res) => {
     include: [{ model: User }],
   });
   result.Comments = [...comments];
+  result.loginUser = userInfo;
+
   res.render('boardPost', {
     post: result,
-    userInfo: userInfo,
     formatDate: function (dateString) {
       const dateObj = new Date(dateString);
       const year = dateObj.getFullYear();

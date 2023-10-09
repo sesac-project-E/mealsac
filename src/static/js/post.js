@@ -109,12 +109,13 @@ const toggleReply = (commentId, content) => {
 };
 // reply Edit
 const editReply = commentId => {
+  const replyInput = document.querySelector(`#replyContent_${commentId}`);
+
+  if (replyInput.value.trim().length < 1) {
+    alert('댓글의 내용을 입력해주세요.');
+    return;
+  }
   if (confirm('수정하시겠습니까?')) {
-    const replyInput = document.querySelector(`#replyContent_${commentId}`);
-    if (replyContent.trim().length < 1) {
-      alert('댓글의 내용을 입력해주세요.');
-      return;
-    }
     axios({
       method: 'put',
       url: '/api/comment',
