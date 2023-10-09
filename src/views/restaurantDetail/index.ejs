@@ -18,11 +18,20 @@
           class="restaurantContainer"
           data-id="<%= restaurant.restaurant_address %>"
         >
+          <% if (restaurant.RestaurantImages &&
+          restaurant.RestaurantImages.length > 0) { %>
           <img
             src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
-            alt="<%= restaurant.restaurant_name %> 이미지"
+            alt="<%= restaurant.restaurant_name %>"
             class="restaurantImg"
           />
+          <% } else { %>
+          <img
+            src="../static/img/commingsoon.jpg"
+            alt="이미지 준비중"
+            class="restaurantImg"
+          />
+          <% } %>
           <div class="restaurantInfo">
             <div>
               <h3 class="restaurantName"><%= restaurant.restaurant_name %></h3>
