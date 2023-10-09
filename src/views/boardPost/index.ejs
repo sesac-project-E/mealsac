@@ -51,18 +51,19 @@
         </div>
         <div class="postContent"><%- post.content %></div>
       </div>
-
-      <% if(userInfo !== null && post.User.user_name === userInfo.user_name &&
-      userInfo.is_admin) {%>
       <div class="btnBox">
+        <% if(userInfo) { %> <% if(post.User.user_name === userInfo.user_name) {
+        %>
         <button type="button" id="modify" name="modify" onclick="modifyBtn()">
           수정
         </button>
+        <% } %> <% if(post.User.user_name === userInfo.user_name ||
+        userInfo.isAdmin) { %>
         <button type="button" id="delete" name="delete" onclick="deleteBtn()">
           삭제
         </button>
+        <% } %> <% } %>
       </div>
-      <% } %>
 
       <div class="replyBox">
         <form class="textReply" id="replyForm" style="display: none">
@@ -110,7 +111,7 @@
     </div>
     <script>
       const postUser = <%- JSON.stringify(post.User) %>;
-      <% if (userInfo) { %>
+      <% if (userInfo !== null) { %>
         const userInfo = JSON.parse('<%- JSON.stringify(userInfo) %>');
       <% } else { %>
        const userInfo = null;
