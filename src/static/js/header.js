@@ -58,32 +58,48 @@ const toggleLoginStatus = status => {
   updateButtonVisibility();
 };
 
-function getLoginStatusFromCookie() {
-  let loginStatus = getCookie('loginStatus');
-  return loginStatus === 'loggedIn';
-}
-
 function getCookie(name) {
   let value = '; ' + document.cookie;
   let parts = value.split('; ' + name + '=');
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
+isLoggedIn = getCookie('loginStatus');
+updateButtonVisibility();
+
 function logout() {
+  if (document.cookie.indexOf('loginStatus') === -1) {
+    alert('이미 로그아웃 상태입니다.');
+    document.cookie =
+      'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    toggleLoginStatus(false);
+    window.location.href = '/';
+    return;
+  }
+
   axios
     .post('/api/user/logout')
     .then(() => {
-      document.cookie = 'loginStatus=; path=/';
+      document.cookie =
+        'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
       toggleLoginStatus(false);
       window.location.href = '/';
     })
-    .catch(() => {
-      alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
+    .catch(error => {
+      console.error('Logout Error:', error);
+      if (error.response && error.response.status === 400) {
+        alert(
+          '이미 로그아웃 상태이거나 세션이 만료되어 로그아웃에 실패했습니다.',
+        );
+        document.cookie =
+          'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        toggleLoginStatus(false);
+        window.location.href = '/';
+      } else {
+        alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
+      }
     });
 }
-
-isLoggedIn = getLoginStatusFromCookie();
-updateButtonVisibility();
 
 mobileLoginBtn.addEventListener('click', () => {
   document.cookie = 'loginStatus=loggedIn; path=/; max-age=86400';
