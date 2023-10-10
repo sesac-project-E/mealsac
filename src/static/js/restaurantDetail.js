@@ -144,49 +144,13 @@ document.getElementById('submitbtn').addEventListener('click', async e => {
       document.querySelector('.review').innerText =
         Number(document.querySelector('.review').innerText) + 1;
 
-      const newReviewData = response.data.review;
-      addNewReview(newReviewData);
+      location.reload();
     }
   } catch (error) {
     console.error('에러 정보:', error);
     alert('리뷰를 등록하는 동안 오류가 발생했습니다.');
   }
 });
-
-// 리뷰 등록 후 등록한 리뷰 바로 보여지도록 하는 함수
-const addNewReview = reviewData => {
-  const newReviewElement = document.createElement('section');
-  newReviewElement.classList.add('reviewContainer');
-
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-  const dd = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${yyyy}.${mm}.${dd}`;
-
-  let imagesHTML = '';
-
-  reviewData.images.forEach(image => {
-    imagesHTML += `<img src="${image}" alt="후기 이미지">`;
-  });
-
-  newReviewElement.innerHTML = `
-  <div>
-    <div>
-     <p>${userInfo.user_name}</p>
-    </div>
-     <div>
-     <p><img src="/static/img/star.png" alt="평점" class="starIcon"> ${reviewData.rating}</p>
-     <p><img src="/static/img/like.png" alt="추천하기" class="thumbsIcon" id=${review.review_id}> <span>0<span></p>
-     <p>${formattedDate}</p>
-    </div>
-    </div>
-    <div class="reviewImg">${imagesHTML}</div>
-    <p class="reviewContent">${reviewData.content}</p>
-  `;
-
-  renderReviews.prepend(newReviewElement);
-};
 
 const renderReview = review => {
   const imagesHTML = review.ReviewImages
