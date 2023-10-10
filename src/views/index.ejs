@@ -296,10 +296,18 @@
                       class="likeCard"
                       onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
                     >
+                      <% if (restaurant.RestaurantImages &&
+                      restaurant.RestaurantImages.length > 0) { %>
                       <img
                         src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                         alt="<%= restaurant.restaurant_name %>"
                       />
+                      <% } else { %>
+                      <img
+                        src="../static/img/commingsoon.jpg"
+                        alt="이미지 준비중"
+                      />
+                      <% } %>
                       <p class="restaurantName">
                         <%= restaurant.restaurant_name %>
                       </p>

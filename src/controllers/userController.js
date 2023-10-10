@@ -155,22 +155,32 @@ exports.postLogin = async (req, res) => {
 
 exports.postLogout = (req, res) => {
   try {
-    req.session.destroy(err => {
-      if (err) {
-        console.error('Logout error: ', err);
-        res.status(500).json({
-          status: 'error',
-          message: '로그아웃 도중 에러가 발생했습니다',
+    if (req.session.userInfo) {
+      req.session.destroy(err => {
+        if (err) {
+          console.error('세션 삭제 도중 에러가 발생했습니다.');
+          return res.status(500).json({
+            status: 'error',
+            message: '로그아웃 중 문제가 발생했습니다.',
+          });
+        }
+
+        res.json({
+          status: 'success',
+          message: '로그아웃 되었습니다.',
         });
-      } else {
-        res.redirect('/');
-      }
-    });
+      });
+    } else {
+      res.status(400).json({
+        status: 'fail',
+        message: '로그인 상태가 아닙니다.',
+      });
+    }
   } catch (err) {
-    console.error('Error: ', err);
+    console.error('에러 정보: ', err);
     res.status(500).json({
       status: 'error',
-      message: '로그아웃 도중 에러가 발생했습니다.',
+      message: '로그아웃 도중 문제가 발생했습니다.',
     });
   }
 };
