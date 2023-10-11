@@ -93,6 +93,9 @@ restaurantRouter.get('/like', restaurantController.getLikeRestaurants)
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
 restaurantRouter.get('/search', restaurantController.getSearchRestaurantByName)
+
+restaurantRouter.get('/search/data', restaurantController.getSearchDataRestaurantByName)
+
 /**
  * @swagger
  * tags:
