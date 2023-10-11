@@ -423,3 +423,20 @@ heartElements.forEach(heartElement => {
     }
   });
 });
+
+// 카카오 로그인의 경우 회원정보 버튼 보이지 않도록 수정
+function getCookie(name) {
+  let value = '; ' + document.cookie;
+  let parts = value.split('; ' + name + '=');
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+const cookieValue = getCookie('loginStatus');
+
+if (cookieValue === 'loggedIn') {
+  const profile = `<button type="button" id="profile" onclick="location.href='profile'">
+  회원정보
+</button>`;
+
+  document.querySelector('.container').insertAdjacentHTML('beforeend', profile);
+}
