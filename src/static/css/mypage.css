@@ -51,9 +51,6 @@ h1 {
 #myLikes {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin: 20px 0;
 }
 
 #likeStore .restaurantContainer {
@@ -89,14 +86,7 @@ span {
   align-items: stretch;
 }
 
-#likeStore {
-  border-radius: 21px;
-  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px 10px;
-  width: 70vw;
-  margin-bottom: 20px;
-}
-
+.likes,
 .reviews,
 .posts {
   width: 95%;
@@ -111,6 +101,7 @@ span {
   margin-bottom: 4vh;
 }
 
+#myLikes,
 #myReviews,
 #myPosts {
   margin: 20px;
@@ -182,11 +173,13 @@ a {
   margin-left: auto;
 }
 
+.likePage,
 .reviewPage,
 .postPage {
   text-align: center;
 }
 
+.likePage button,
 .reviewPage button,
 .postPage button {
   border: none;
@@ -195,14 +188,15 @@ a {
   color: #4dda67;
   margin: 20px 50px 50px 50px;
 }
+
 .restaurantContainer {
   display: flex;
   padding: 10px 0;
 }
 
 .restaurantImg {
-  width: 170px;
-  height: 170px;
+  width: 150px;
+  height: 150px;
   flex-grow: 0;
   flex-shrink: 0;
   background-color: #89d83f;
@@ -211,6 +205,7 @@ a {
 
 .restaurantInfo {
   padding: 0 5px 0 5px;
+  margin-left: 10px;
   width: 100%;
 }
 
@@ -251,61 +246,6 @@ a {
   transform: translateY(2px);
 }
 
-.restaurantBtn {
-  width: 100%;
-  height: 27px;
-  text-align: center;
-  font-size: 0.9rem;
-  border: 2px solid #89d83f;
-  border-radius: 25px;
-
-  &:hover {
-    background-color: #e0f0d1;
-  }
-}
-
-@media (max-width: 768px) {
-  .restaurantContainer {
-    width: 75vw;
-  }
-
-  .restaurantInfo {
-    width: 100%;
-  }
-}
-
-@media (max-width: 430px) {
-  .restaurantImg {
-    width: 120px;
-    height: 120px;
-  }
-
-  .restaurantInfo h3 {
-    font-size: 1rem;
-    margin: 0;
-  }
-
-  .heart {
-    width: 20px;
-    height: 22px;
-  }
-
-  .address,
-  .type {
-    margin-bottom: 5px;
-  }
-
-  .restaurantInfo > div:nth-child(4) {
-    margin-top: 5px;
-  }
-
-  .restaurantBtn {
-    padding: 0 5px;
-    overflow: hidden;
-    transform: translateY(-10px);
-  }
-}
-/* width: 360~768 */
 @media (max-width: 768px) {
   html {
     margin: 0;
@@ -331,17 +271,13 @@ a {
     background-color: #fff;
   }
 
-  #likeStore {
-    border-radius: initial;
-    box-shadow: none;
-    margin-bottom: 20px;
-    padding: 0;
-    width: 85vw;
-  }
-
   hr {
     width: 70vw;
     border: none;
+  }
+
+  .userRestaurant {
+    font-size: 0.9rem;
   }
 
   .clicked {
@@ -360,6 +296,7 @@ a {
     font-size: 90%;
   }
 
+  .likes,
   .reviews,
   .posts {
     margin: 5px 10px 5px 10px;
@@ -377,6 +314,28 @@ a {
   .reviewPage button,
   .postPage button {
     font-size: 80%;
+  }
+
+  .restaurantImg {
+    width: 100px;
+    height: 100px;
+  }
+
+  .restaurantInfo h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .heart {
+    width: 20px;
+    height: 22px;
+  }
+
+  .likePage button,
+  .reviewPage button,
+  .postPage button {
+    font-size: 18px;
+    margin: 20px 30px 30px 30px;
   }
 }
 
@@ -399,17 +358,6 @@ a {
     background-color: #fff;
   }
 
-  #likeStore {
-    border-radius: initial;
-    box-shadow: none;
-    margin-bottom: 20px;
-    padding: 0;
-    width: 85vw;
-  }
-
-  #likeStore .restaurantContainer {
-    width: 85vw;
-  }
   hr {
     width: 70vw;
     border: none;
@@ -471,5 +419,45 @@ a {
   .reviewPage button,
   .postPage button {
     font-size: 60%;
+  }
+
+  .likes {
+    padding: 5px 0;
+  }
+
+  .restaurantContainer {
+    padding: 0;
+  }
+  .restaurantInfo {
+    margin: 2px;
+    font-size: 0.8rem;
+  }
+
+  .restaurantInfo .address,
+  .rate,
+  .review {
+    font-size: 0.5rem;
+  }
+
+  .heart {
+    width: 18px;
+    height: 20px;
+  }
+
+  .rating {
+    width: 10px;
+    height: 10px;
+  }
+
+  .comment {
+    width: 12px;
+    height: 12px;
+  }
+
+  .likePage button,
+  .reviewPage button,
+  .postPage button {
+    font-size: 15px;
+    margin: 20px 30px 30px 30px;
   }
 }

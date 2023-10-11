@@ -17,6 +17,30 @@ function paginatePosts(posts, page, perPage) {
   return posts.slice(startIndex, endIndex);
 }
 
+// 찜삭제
+const canceledHeart = async (restaurant_id, heartElement) => {
+  try {
+    const response = await axios({
+      method: 'DELETE',
+      url: `/api/like`,
+      data: { restaurant_id: restaurant_id },
+    });
+
+    if (response.status === 200) {
+      alert('찜 목록에서 삭제되었습니다.');
+      heartElement.setAttribute('src', '/static/img/heart.png');
+      window.location.reload();
+    } else {
+      console.error('서버 응답 오류:', response.data.message);
+      alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+    }
+  } catch (error) {
+    console.error('에러 정보:', error);
+    alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+  }
+};
+
+// 찜목록
 const likeStore = async () => {
   const likesContainer = document.querySelector('#myLikes');
 
@@ -42,20 +66,24 @@ const likeStore = async () => {
           like.RestaurantImages && like.RestaurantImages.length > 0
             ? like.RestaurantImages[0].restaurant_image_url
             : '/static/img/commingsoon.jpg';
-
+        const roundedRating = like.rating.toFixed(1);
         likeContainer.innerHTML = `
-          <article class="restaurantContainer" data-id="${
+          <div class="restaurantContainer" data-id="${
             like.restaurant_address
-          }">
+          }" >
             <img src="${imageUrl}" alt="${
           like.restaurant_name
-        } 이미지" class="restaurantImg" />
-            <div class="restaurantInfo">
+        } 이미지" class="restaurantImg" onclick="location.href='/restaurant/${
+          like.restaurant_id
+        }'"
+        style=" cursor: pointer;" />
+            <div class="restaurantInfo" onclick="location.href='/restaurant/${
+              like.restaurant_id
+            }'"
+            style=" cursor: pointer;" >
               <div>
-                <h3 class="restaurantName">${like.restaurant_name}</h3>
-                <img src="/static/img/heartFilled.png" alt="찜 아이콘" class="heart" id="${
-                  like.restaurant_id
-                }" />
+                <h3 class="restaurantName" >${like.restaurant_name}</h3>
+                
               </div>
               <p class="address">${
                 like.restaurant_address && like.restaurant_address
@@ -64,45 +92,28 @@ const likeStore = async () => {
               }</p>
                <div>
                   <img src="/static/img/star.png" alt="평점 아이콘" class="rating" />
-                  <p class="rate">${like.rating}</p>
+                  <p class="rate">${roundedRating}</p>
                   <img src="/static/img/speechBalloon.png" alt="댓글 아이콘" class="comment" />
                   <p class="review">${like.reviews_count}</p>
-                  <a href="/restaurant/${
-                    like.restaurant_id
-                  }" class="restaurantBtn">${like.restaurant_name} 페이지</a>
                 </div>
+                
             </div>
-          </article>
+            <img src="/static/img/heartFilled.png" alt="찜 아이콘" class="heart" id="${
+              like.restaurant_id
+            }" style=" cursor: pointer;"/>
+          </div>
         `;
 
-        // 찜삭제
-        const heartElements = document.querySelectorAll('.heart');
-        heartElements.forEach(heartElement => {
-          heartElement.addEventListener('click', async () => {
-            const restaurant_id = heartElement.id;
-            try {
-              const response = await axios({
-                method: 'DELETE',
-                url: `/api/like`,
-                data: { restaurant_id: restaurant_id },
-              });
-
-              if (response.status === 200) {
-                alert('찜 목록에서 삭제되었습니다.');
-                heartElement.setAttribute('src', '/static/img/heart.png');
-                window.location.reload();
-              } else {
-                console.error('서버 응답 오류:', response.data.message);
-                alert('찜 목록에서 삭제하는 것을 실패했습니다.');
-              }
-            } catch (error) {
-              console.error('에러 정보:', error);
-              alert('찜 목록에서 삭제하는 것을 실패했습니다.');
-            }
-          });
-        });
-
         likesContainer.appendChild(likeContainer);
+      });
+
+      // 찜삭제
+      const heartElements = document.querySelectorAll('.heart');
+      heartElements.forEach(heartElement => {
+        heartElement.addEventListener('click', async () => {
+          const restaurant_id = heartElement.id;
+          canceledHeart(restaurant_id, heartElement);
+        });
       });
     } else {
       likesContainer.innerHTML =
@@ -121,6 +132,7 @@ const likeList = () => {
   document.getElementById('myLikes').style.display = 'flex';
   document.getElementById('myReviews').style.display = 'none';
   document.getElementById('myPosts').style.display = 'none';
+  document.querySelector('.likePage').style.display = 'block';
   document.querySelector('.reviewPage').style.display = 'none';
   document.querySelector('.postPage').style.display = 'none';
   likeStore();
@@ -159,6 +171,7 @@ const reviewList = async () => {
   document.getElementById('myReviews').style.display = 'block';
   document.getElementById('myLikes').style.display = 'none';
   document.getElementById('myPosts').style.display = 'none';
+  document.querySelector('.likePage').style.display = 'none';
   document.querySelector('.reviewPage').style.display = 'block';
   document.querySelector('.postPage').style.display = 'none';
 
@@ -369,6 +382,7 @@ const postList = async () => {
   document.getElementById('myReviews').style.display = 'none';
   document.getElementById('myLikes').style.display = 'none';
   document.getElementById('myPosts').style.display = 'block';
+  document.querySelector('.likePage').style.display = 'none';
   document.querySelector('.reviewPage').style.display = 'none';
   document.querySelector('.postPage').style.display = 'block';
 
