@@ -40,30 +40,25 @@
     <hr />
     <div class="listContainer">
       <div class="list">
-        <div id="myLikes">
-          <% if (Array.isArray(restaurant) && restaurant.length > 0) { %> <%
-          restaurant.forEach(restaurant => { %>
-          <div id="likeStore">
-            <%- include('../common/restaurantComponent.ejs', { restaurant:
-            restaurant }) %>
-            <p style="display: none"><%= restaurant.restaurant_id%></p>
+        <div>
+          <div id="myLikes"></div>
+          <div class="likePage">
+            <button class="prevPage" id="likePrev">이전</button>
+            <button class="nextPage" id="likeNext">다음</button>
           </div>
-          <% }) %> <% } else { %>
-          <div class="none"><p>찜한 식당이 없습니다.</p></div>
-          <% } %>
         </div>
         <div>
           <div id="myReviews" style="display: none"></div>
           <div class="reviewPage" style="display: none">
-            <button class="prevPage" id="reviewPrev">< 이전</button>
-            <button class="nextPage" id="reviewNext">다음 ></button>
+            <button class="prevPage" id="reviewPrev">이전</button>
+            <button class="nextPage" id="reviewNext">다음</button>
           </div>
         </div>
         <div>
           <div id="myPosts" style="display: none"></div>
           <div class="postPage" style="display: none">
-            <button class="prevPage" id="postPrev">< 이전</button>
-            <button class="nextPage" id="postNext">다음 ></button>
+            <button class="prevPage" id="postPrev">이전</button>
+            <button class="nextPage" id="postNext">다음</button>
           </div>
         </div>
       </div>

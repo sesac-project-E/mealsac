@@ -78,15 +78,12 @@ label {
   height: 40px;
 }
 
-.already {
+#register {
   display: flex;
-  justify-content: space-between;
-  color: #989898;
-  margin-top: 10px;
 }
-
 a {
   color: #989898;
+  margin-left: auto;
 }
 
 #loginMsg {
@@ -101,8 +98,7 @@ a {
   .container {
     width: 80vw;
   }
-
-  .already {
-    font-size: 80%;
+  #register {
+    font-size: 0.9rem;
   }
 }
