@@ -137,5 +137,6 @@ likeRestaurantRouter.delete("", likeRestaurantController.deleteLike)
  * */
 likeRestaurantRouter.get("/user", likeRestaurantController.getUserLikes)
 
+likeRestaurantRouter.get('/mypage', likeRestaurantController.getMyPageUserLikes)
 
 module.exports = likeRestaurantRouter
