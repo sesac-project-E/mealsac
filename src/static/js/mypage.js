@@ -2,20 +2,7 @@ let currentPage = 1;
 let totalPages = 1;
 const reviewsPerPage = 5;
 const postsPerPage = 5;
-const itemsPerPage = 5;
-const restaurantList = document.querySelectorAll('.restaurantContainer');
-const totalItems = restaurantList.length;
-
-const likeList = () => {
-  document.getElementById('myLike').classList.add('clicked');
-  document.getElementById('myReview').classList.remove('clicked');
-  document.getElementById('myPost').classList.remove('clicked');
-  document.getElementById('myLikes').style.display = 'flex';
-  document.getElementById('myReviews').style.display = 'none';
-  document.getElementById('myPosts').style.display = 'none';
-  document.querySelector('.reviewPage').style.display = 'none';
-  document.querySelector('.postPage').style.display = 'none';
-};
+const likesPerPage = 5;
 
 function paginateReviews(reviews, page, perPage) {
   const startIndex = (page - 1) * perPage;
@@ -35,32 +22,129 @@ function paginateLikes(likes, page, perPage) {
   return likes.slice(startIndex, endIndex);
 }
 
-function updatePage() {
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  restaurantList.forEach((restaurant, index) => {
-    if (index >= startIndex && index < endIndex) {
-      restaurant.style.display = 'block';
-    } else {
-      restaurant.style.display = 'none';
-    }
-  });
-}
-
-document.getElementById('likeNext').addEventListener('click', function () {
-  if (currentPage < Math.ceil(totalItems / itemsPerPage)) {
-    currentPage++;
-    updatePage();
+const likeStore = async () => {
+  const likesContainer = document.querySelector('#myLikes');
+  while (likesContainer.firstChild) {
+    likesContainer.removeChild(likesContainer.firstChild);
   }
-});
+  try {
+    const response = await fetch('/api/like/mypage');
+    const likesData = await response.json();
 
-document.getElementById('likePrev').addEventListener('click', function () {
+    if (Array.isArray(likesData) && likesData.length > 0) {
+      totalPages = Math.ceil(likesData.length / 5);
+      const paginatedLikes = paginateLikes(
+        likesData,
+        currentPage,
+        likesPerPage,
+      );
+
+      paginatedLikes.forEach(like => {
+        const likeContainer = document.createElement('div');
+        likeContainer.classList.add('likes');
+        likeContainer.id = `like_${like.restaurant_id}`;
+        likeContainer.innerHTML = `
+          <article class="restaurantContainer" data-id="${
+            like.restaurant_address
+          }">
+            <img src="${like.RestaurantImages[0].restaurant_image_url}" alt="${
+          like.restaurant_name
+        } 이미지" class="restaurantImg" />
+            <div class="restaurantInfo">
+              <div>
+                <h3 class="restaurantName">${like.restaurant_name}</h3>
+                <img src="/static/img/heartFilled.png" alt="찜 아이콘" class="heart" id="${
+                  like.restaurant_id
+                }" />
+              </div>
+              <p class="address">${
+                like.restaurant_address && like.restaurant_address
+                  ? like.restaurant_address
+                  : '식당 주소 없음'
+              }</p>
+               <div>
+                  <img src="/static/img/star.png" alt="평점 아이콘" class="rating" />
+                  <p class="rate">${like.rating}</p>
+                  <img src="/static/img/speechBalloon.png" alt="댓글 아이콘" class="comment" />
+                  <p class="review">${like.reviews_count}</p>
+                  <a href="/restaurant/${
+                    like.restaurant_id
+                  }" class="restaurantBtn">${like.restaurant_name} 페이지</a>
+                </div>
+            </div>
+          </article>
+        `;
+
+        // 찜삭제
+        const heartElements = document.querySelectorAll('.heart');
+        heartElements.forEach(heartElement => {
+          heartElement.addEventListener('click', async () => {
+            const restaurant_id = heartElement.id;
+            try {
+              const response = await axios({
+                method: 'DELETE',
+                url: `/api/like`,
+                data: { restaurant_id: restaurant_id },
+              });
+
+              if (response.status === 200) {
+                alert('찜 목록에서 삭제되었습니다.');
+                heartElement.setAttribute('src', '/static/img/heart.png');
+                window.location.reload();
+              } else {
+                console.error('서버 응답 오류:', response.data.message);
+                alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+              }
+            } catch (error) {
+              console.error('에러 정보:', error);
+              alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+            }
+          });
+        });
+
+        likesContainer.appendChild(likeContainer);
+      });
+    } else {
+      likesContainer.innerHTML =
+        '<div class="none">찜한 식당이 없습니다.</div>';
+      document.querySelector('.likePage').style.display = 'none';
+    }
+  } catch (error) {
+    console.error('서버 응답 오류:', error);
+  }
+};
+
+const likeList = () => {
+  document.getElementById('myLike').classList.add('clicked');
+  document.getElementById('myReview').classList.remove('clicked');
+  document.getElementById('myPost').classList.remove('clicked');
+  document.getElementById('myLikes').style.display = 'flex';
+  document.getElementById('myReviews').style.display = 'none';
+  document.getElementById('myPosts').style.display = 'none';
+  document.querySelector('.reviewPage').style.display = 'none';
+  document.querySelector('.postPage').style.display = 'none';
+  likeStore();
+};
+
+document.getElementById('likePrev').addEventListener('click', () => {
   if (currentPage > 1) {
     currentPage--;
-    updatePage();
+    likeList();
+  } else {
+    alert('더 이상 이전 페이지가 없습니다.');
   }
 });
+
+document.getElementById('likeNext').addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    likeList();
+  } else {
+    alert('더 이상 다음 페이지가 없습니다.');
+  }
+});
+
+likeStore();
 
 const reviewList = async () => {
   const reviewsContainer = document.querySelector('#myReviews');
@@ -368,31 +452,4 @@ document.getElementById('postNext').addEventListener('click', () => {
   } else {
     alert('더 이상 다음 페이지가 없습니다.');
   }
-});
-
-// 찜삭제
-const heartElements = document.querySelectorAll('.heart');
-heartElements.forEach(heartElement => {
-  heartElement.addEventListener('click', async () => {
-    const restaurant_id = heartElement.id;
-    try {
-      const response = await axios({
-        method: 'DELETE',
-        url: `/api/like`,
-        data: { restaurant_id: restaurant_id },
-      });
-
-      if (response.status === 200) {
-        alert('찜 목록에서 삭제되었습니다.');
-        heartElement.setAttribute('src', '/static/img/heart.png');
-        window.location.reload();
-      } else {
-        console.error('서버 응답 오류:', response.data.message);
-        alert('찜 목록에서 삭제하는 것을 실패했습니다.');
-      }
-    } catch (error) {
-      console.error('에러 정보:', error);
-      alert('찜 목록에서 삭제하는 것을 실패했습니다.');
-    }
-  });
 });
