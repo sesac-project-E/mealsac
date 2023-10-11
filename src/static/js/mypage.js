@@ -3,6 +3,7 @@ let totalPages = 1;
 const reviewsPerPage = 5;
 const postsPerPage = 5;
 const likesPerPage = 5;
+let likesData = [];
 
 function paginateReviews(reviews, page, perPage) {
   const startIndex = (page - 1) * perPage;
@@ -16,38 +17,37 @@ function paginatePosts(posts, page, perPage) {
   return posts.slice(startIndex, endIndex);
 }
 
-function paginateLikes(likes, page, perPage) {
-  const startIndex = (page - 1) * perPage;
-  const endIndex = startIndex + perPage;
-  return likes.slice(startIndex, endIndex);
-}
-
 const likeStore = async () => {
   const likesContainer = document.querySelector('#myLikes');
+
   while (likesContainer.firstChild) {
     likesContainer.removeChild(likesContainer.firstChild);
   }
   try {
-    const response = await fetch('/api/like/mypage');
-    const likesData = await response.json();
+    if (likesData.length === 0) {
+      const response = await fetch('/api/like/mypage');
+      likesData = await response.json();
+    }
+
+    const startIndex = (currentPage - 1) * likesPerPage;
+    const endIndex = startIndex + likesPerPage;
+    const paginatedLikes = likesData.slice(startIndex, endIndex);
 
     if (Array.isArray(likesData) && likesData.length > 0) {
-      totalPages = Math.ceil(likesData.length / 5);
-      const paginatedLikes = paginateLikes(
-        likesData,
-        currentPage,
-        likesPerPage,
-      );
-
       paginatedLikes.forEach(like => {
         const likeContainer = document.createElement('div');
         likeContainer.classList.add('likes');
         likeContainer.id = `like_${like.restaurant_id}`;
+        const imageUrl =
+          like.RestaurantImages && like.RestaurantImages.length > 0
+            ? like.RestaurantImages[0].restaurant_image_url
+            : '/static/img/commingsoon.jpg';
+
         likeContainer.innerHTML = `
           <article class="restaurantContainer" data-id="${
             like.restaurant_address
           }">
-            <img src="${like.RestaurantImages[0].restaurant_image_url}" alt="${
+            <img src="${imageUrl}" alt="${
           like.restaurant_name
         } 이미지" class="restaurantImg" />
             <div class="restaurantInfo">
@@ -129,16 +129,17 @@ const likeList = () => {
 document.getElementById('likePrev').addEventListener('click', () => {
   if (currentPage > 1) {
     currentPage--;
-    likeList();
+    likeStore();
   } else {
     alert('더 이상 이전 페이지가 없습니다.');
   }
 });
 
 document.getElementById('likeNext').addEventListener('click', () => {
+  const totalPages = Math.ceil(likesData.length / likesPerPage);
   if (currentPage < totalPages) {
     currentPage++;
-    likeList();
+    likeStore();
   } else {
     alert('더 이상 다음 페이지가 없습니다.');
   }
