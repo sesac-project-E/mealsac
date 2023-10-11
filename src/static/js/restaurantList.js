@@ -383,6 +383,8 @@ searchName.addEventListener('click', e => {
   tagNcategory.classList.add('searchInvisible');
   allRestaurants1.checked = true;
   sortContainer.style.display = 'flex';
+  $('#searchNameMenu div:nth-child(2)').style.display = 'none';
+  allRestaurants1.checked = true;
   fetchData();
   drawPagination(1);
 });
