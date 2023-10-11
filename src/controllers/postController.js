@@ -4,6 +4,8 @@ const { User, Post, PostImage, Comment } = require('../models');
 
 //post_id 값으로 특정 게시물 조회
 exports.getPost = async (req, res) => {
+  const userInfo = req.session.userInfo ? req.session.userInfo : false;
+  console.log(userInfo);
   // [after]
   const { post_id } = req.params;
   const result = await Post.findOne({
@@ -33,8 +35,10 @@ exports.getPost = async (req, res) => {
     include: [{ model: User }],
   });
   result.Comments = [...comments];
+
   res.render('boardPost', {
     post: result,
+    userInfo,
     formatDate: function (dateString) {
       const dateObj = new Date(dateString);
       const year = dateObj.getFullYear();
@@ -47,7 +51,7 @@ exports.getPost = async (req, res) => {
 
 //내가 작성한 게시물 조회
 exports.getMyPosts = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   //로그인 안되어 있는경우
   if (!userInfo || !userInfo.id) {
@@ -171,7 +175,7 @@ exports.postCreatePost = async (req, res) => {
 
 // 본인포스팅 삭제 or 관리자가 특정포스팅 삭제
 exports.deletePost = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || (!userInfo.id && !userInfo.isAdmin)) {
     return res.status(400).json({
@@ -221,6 +225,16 @@ exports.deletePost = async (req, res) => {
 };
 //게시글 수정 페이지 조회
 exports.getEditPost = async (req, res) => {
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
+
+  //로그인 안되어 있는경우
+  if (!userInfo || !userInfo.id) {
+    return res.status(400).json({
+      status: 'error',
+      message: '세션에서 사용자 정보를 찾을 수 없습니다.',
+    });
+  }
+
   const { post_id } = req.params;
   const result = await Post.findOne({
     where: { post_id: post_id },
@@ -244,11 +258,8 @@ exports.getEditPost = async (req, res) => {
     ],
   });
 
-  //작성자가 이거나 관리자인경우 수정 창 가져오기
-  if (
-    result.user_id == req.session.userInfo.id ||
-    req.session.userInfo.isAdmin
-  ) {
+  //작성자인경우 수정 창 가져오기
+  if (result.user_id == req.session.userInfo.id) {
     res.render('boardModify', { post: result });
   } else {
     return res.status(403).json({
@@ -286,11 +297,8 @@ exports.updatePost = async (req, res) => {
       });
     }
 
-    // 작성자가 이거나 관리자인경우 수정
-    if (
-      post.user_id === req.session.userInfo.id ||
-      req.session.userInfo.isAdmin
-    ) {
+    // 작성자인경우 수정
+    if (post.user_id === req.session.userInfo.id) {
       // 기존에 연결된 이미지 삭제
       if (post.PostImages && post.PostImages.length) {
         post.PostImages.forEach(img => {

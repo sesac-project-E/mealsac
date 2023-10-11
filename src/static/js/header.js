@@ -58,34 +58,51 @@ const toggleLoginStatus = status => {
   updateButtonVisibility();
 };
 
-function getLoginStatusFromCookie() {
-  let loginStatus = getCookie('loginStatus');
-  return loginStatus === 'loggedIn';
-}
-
 function getCookie(name) {
   let value = '; ' + document.cookie;
   let parts = value.split('; ' + name + '=');
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-isLoggedIn = getLoginStatusFromCookie();
+isLoggedIn = getCookie('loginStatus');
 updateButtonVisibility();
 
-loginBtn.addEventListener('click', () => {
-  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600';
-  toggleLoginStatus(true);
-});
+function logout() {
+  if (document.cookie.indexOf('loginStatus') === -1) {
+    alert('이미 로그아웃 상태입니다.');
+    document.cookie =
+      'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    toggleLoginStatus(false);
+    window.location.href = '/';
+    return;
+  }
 
-logoutBtn.addEventListener('click', () => {
-  document.cookie =
-    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  toggleLoginStatus(false);
-  window.location.reload();
-});
+  axios
+    .post('/api/user/logout')
+    .then(() => {
+      document.cookie =
+        'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      toggleLoginStatus(false);
+      window.location.href = '/';
+    })
+    .catch(error => {
+      console.error('Logout Error:', error);
+      if (error.response && error.response.status === 400) {
+        alert(
+          '이미 로그아웃 상태이거나 세션이 만료되어 로그아웃에 실패했습니다.',
+        );
+        document.cookie =
+          'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        toggleLoginStatus(false);
+        window.location.href = '/';
+      } else {
+        alert('로그아웃에 실패했습니다. 다시 시도해주세요.');
+      }
+    });
+}
 
 mobileLoginBtn.addEventListener('click', () => {
-  document.cookie = 'loginStatus=loggedIn; path=/; max-age=3600';
+  document.cookie = 'loginStatus=loggedIn; path=/; max-age=86400';
   toggleLoginStatus(true);
 });
 
@@ -95,12 +112,5 @@ hamburgerMenu.addEventListener('click', () => {
 });
 
 const mobileLogout = document.querySelector('.mobileLogout');
-
-mobileLogout.addEventListener('click', () => {
-  document.cookie =
-    'loginStatus=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  toggleLoginStatus(false);
-  window.location.reload();
-});
 
 window.addEventListener('resize', updateButtonVisibility); // 반응형 사이즈 변경에 대응

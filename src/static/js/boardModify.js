@@ -52,7 +52,6 @@ class UploadAdapter {
   _sendRequest(file) {
     const data = new FormData();
     data.append('imageFiles', file);
-    console.log(data);
     this.xhr.send(data);
   }
 }
@@ -84,6 +83,11 @@ document.querySelector('#modifyBtn').addEventListener('click', async e => {
   const editorData = editor.getData();
   const title = document.querySelector('.inputTitle').value;
   const board_id = document.querySelector('form').id;
+
+  if (title.trim().length < 1) {
+    alert('제목을 입력해주세요.');
+    return;
+  }
 
   try {
     const res = await axios({

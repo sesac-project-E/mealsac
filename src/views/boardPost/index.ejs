@@ -51,48 +51,66 @@
         </div>
         <div class="postContent"><%- post.content %></div>
       </div>
-
       <div class="btnBox">
+        <% if(userInfo) { %> <% if(post.User.user_name === userInfo.user_name) {
+        %>
         <button type="button" id="modify" name="modify" onclick="modifyBtn()">
           수정
         </button>
+        <% } %> <% if(post.User.user_name === userInfo.user_name ||
+        userInfo.isAdmin) { %>
         <button type="button" id="delete" name="delete" onclick="deleteBtn()">
           삭제
         </button>
+        <% } %> <% } %>
       </div>
 
       <div class="replyBox">
         <form class="textReply" id="replyForm" style="display: none">
           <span>댓글</span>
-          <!-- <span><= Post.reply %></span> -->
           <textarea
             name="replyContent"
             id="replyContent"
             placeholder="댓글을 입력해 주세요."
           ></textarea>
-          <button type="submit" id="replyBtn" onclick="enterReply()">
+          <button type="button" id="replyBtn" onclick="enterReply()">
             등록
           </button>
         </form>
         <div class="replyList">
           <% for (let reply of post.Comments) { %>
-            <div class="reply" id="reply_<%= reply.dataValues.comment_id %>">
-              <div class="replyInfo">
-                <p ><%= reply.User.user_name %></p>
-                <p>
-                  <%= formatDate(reply.dataValues.updatedAt) %>
-                  <button class="replyToggleBtn" onclick="toggleReply('<%= reply.dataValues.comment_id %>', '<%= reply.dataValues.content %>')">
-                    <i class="fa fa-bars"></i>
-                  </button>
-                </p>
-              </div>
-              <div class="replyContentContainer" id="replyContentContainer_<%=reply.dataValues.comment_id %>">                
-                <div class="replyContent notEdit" id="replyContent_<%= reply.dataValues.comment_id %>"> <%= reply.dataValues.content %></div>
+          <div class="reply" id="reply_<%= reply.dataValues.comment_id %>">
+            <div class="replyInfo">
+              <p><%= reply.User.user_name %></p>
+              <p>
+                <%= formatDate(reply.dataValues.updatedAt) %>
+                <button
+                  class="replyToggleBtn"
+                  onclick="toggleReply('<%= reply.dataValues.comment_id %>', '<%= reply.dataValues.content %>')"
+                >
+                  <i class="fa fa-bars"></i>
+                </button>
+              </p>
+            </div>
+            <div
+              class="replyContentContainer"
+              id="replyContentContainer_<%=reply.dataValues.comment_id %>"
+            >
+              <div
+                class="replyContent notEdit"
+                id="replyContent_<%= reply.dataValues.comment_id %>"
+              >
+                <%= reply.dataValues.content %>
               </div>
             </div>
-            <% }  %>
+          </div>
+          <% } %>
         </div>
       </div>
     </div>
+    <script>
+      const postUser = <%- JSON.stringify(post.User) %>;
+      const loginUser = <%- JSON.stringify(userInfo) %>;
+    </script>
   </body>
 </html>

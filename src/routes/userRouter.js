@@ -38,6 +38,7 @@ router.post('/overlapname', controller.postOverLapName);
 
 router.get('/login', controller.getLogin);
 router.post('/login', controller.postLogin);
+router.post('/logout', controller.postLogout);
 
 router.get('/profile', controller.getProfile);
 router.patch('/patch', controller.patchProfile);
