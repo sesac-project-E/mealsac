@@ -148,7 +148,7 @@ exports.getMyPageUserLikes = async (req, res) => {
     for (let [k, v] in Object.entries(response)) {
       ret.push(response[k].dataValues);
     }
-    return ret
+    res.json(ret)
   } else {
     res.send('session에 저장된 정보가 없습니다.').status(400);
   }
