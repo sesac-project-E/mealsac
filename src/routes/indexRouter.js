@@ -75,6 +75,15 @@ indexRouter.get('/restaurants', (req, res) => {
   });
 });
 
+indexRouter.get('/search/menu', async (req, res) => {
+  const query = req.query.q;
+  const restaurants = await restaurantController.getSearchDataRestaurantByName(
+    req,
+    res,
+  );
+  res.render('searchMenu', { query, restaurants });
+});
+
 indexRouter.get('/restaurant/:restaurant_id', async (req, res) => {
   const userInfo = req.session.userInfo;
   const restaurantData = await restaurantController.getRestaurant(req, res);

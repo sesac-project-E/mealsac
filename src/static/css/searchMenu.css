@@ -1,0 +1,201 @@
+a {
+  color: black;
+  text-decoration: none;
+}
+
+#searchContainer {
+  background-color: #e0f0d1;
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#searchContainer p {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 0;
+  font-weight: 900;
+  text-align: center;
+}
+
+#searchContainer p span {
+  color: #317630;
+}
+
+.search {
+  background-color: white;
+  border-radius: 50px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.search img {
+  height: 25px;
+  margin: 0 10px;
+}
+
+.search input {
+  border: none;
+  outline: none;
+  width: 80%;
+}
+
+.none {
+  height: calc(70vh - 290px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restaurantContainer {
+  width: 75vw;
+  padding: 10px 0;
+  display: flex;
+  flex-basis: 70vw;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.restaurantImg {
+  width: 170px;
+  height: 170px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+.restaurantInfo {
+  padding: 0 5px 0 5px;
+  width: 526px;
+  flex-basis: 526px;
+}
+
+.restaurantInfo > div:last-child > * {
+  display: inline-block;
+}
+
+.restaurantInfo h3 {
+  font-size: 1.2rem;
+}
+
+.restaurantInfo .address {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.7rem;
+}
+
+.rating {
+  width: 15px;
+  height: 15px;
+}
+
+.comment {
+  width: 18px;
+  height: 18px;
+}
+
+.restaurantInfo > div p {
+  font-size: 0.8rem;
+  transform: translateY(2px);
+}
+
+.restaurantBtn {
+  width: 100%;
+  height: 27px;
+  text-align: center;
+  font-size: 0.9rem;
+  border: 2px solid #89d83f;
+  border-radius: 25px;
+
+  &:hover {
+    background-color: #e0f0d1;
+  }
+}
+
+@media (max-width: 920px) {
+  .restaurantContainer {
+    width: auto;
+  }
+  .restaurantInfo {
+    width: 60%;
+  }
+}
+
+@media (max-width: 430px) {
+  #searchContainer p {
+    font-size: 1.5rem;
+  }
+
+  .restaurantImg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .restaurantInfo h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  .address,
+  .restaurantName {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .address,
+  .type {
+    margin-bottom: 5px;
+  }
+
+  .restaurantInfo > div:nth-child(4) {
+    margin-top: 5px;
+  }
+
+  .restaurantBtn {
+    padding: 0 5px;
+    overflow: hidden;
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 340px) {
+  #searchContainer p {
+    font-size: 1.3rem;
+  }
+
+  .search input {
+    width: 70%;
+  }
+
+  .restaurantContainer {
+    flex-direction: column;
+    align-items: center;
+    height: 140vw;
+  }
+
+  .restaurantImg {
+    width: 80vw;
+    height: 80vw;
+    margin-bottom: 5px;
+  }
+
+  .restaurantInfo {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 260px) {
+  #searchContainer p {
+    font-size: 1rem;
+  }
+
+  .restaurantContainer {
+    height: 333px;
+  }
+}
