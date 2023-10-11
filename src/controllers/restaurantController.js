@@ -162,6 +162,42 @@ exports.getSearchRestaurantByName = async (req, res) => {
   }
 };
 
+exports.getSearchDataRestaurantByName = async (req, res) => {
+  try {
+    const { q } = req.query;
+    const response = await Restaurant.findAndCountAll({
+      where: { 
+      restaurant_name: { 
+        [Op.like] : `%` + `${q}` + `%`
+      }},
+      order: [
+        ['rating', 'DESC'],
+        ['likes_count', 'DESC'],
+        ['reviews_count', 'DESC'],
+      ],
+      include: [
+        {
+          model: RestaurantImage,
+          attributes: ['restaurant_image_url'],
+          limit: 1,
+        },
+      ],
+    });
+    if (response.rows.length === 0) {
+      throw Error();
+    }
+    const ret = [];
+    const data = response['rows']
+    for (let d of data) {
+      ret.push(d.dataValues)
+    }
+    return ret
+  } catch (error) {
+    console.log(error);
+    res.status(404).send();
+  }
+};
+
 exports.getRestaurant = async (req, res) => {
   const { id } = req.session && req.session.userInfo ? req.session.userInfo : 0;
   const { restaurant_id } = req.params;
