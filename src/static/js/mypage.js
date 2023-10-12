@@ -1,4 +1,6 @@
-let currentPage = 1;
+let currentLikePage = 1;
+let currentReviewPage = 1;
+let currentPostPage = 1;
 let totalPages = 1;
 const reviewsPerPage = 5;
 const postsPerPage = 5;
@@ -53,7 +55,7 @@ const likeStore = async () => {
       likesData = await response.json();
     }
 
-    const startIndex = (currentPage - 1) * likesPerPage;
+    const startIndex = (currentLikePage - 1) * likesPerPage;
     const endIndex = startIndex + likesPerPage;
     const paginatedLikes = likesData.slice(startIndex, endIndex);
 
@@ -135,12 +137,14 @@ const likeList = () => {
   document.querySelector('.likePage').style.display = 'block';
   document.querySelector('.reviewPage').style.display = 'none';
   document.querySelector('.postPage').style.display = 'none';
+  currentReviewPage = 1;
+  currentPostPage = 1;
   likeStore();
 };
 
 document.getElementById('likePrev').addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
+  if (currentLikePage > 1) {
+    currentLikePage--;
     likeStore();
   } else {
     alert('더 이상 이전 페이지가 없습니다.');
@@ -149,8 +153,8 @@ document.getElementById('likePrev').addEventListener('click', () => {
 
 document.getElementById('likeNext').addEventListener('click', () => {
   const totalPages = Math.ceil(likesData.length / likesPerPage);
-  if (currentPage < totalPages) {
-    currentPage++;
+  if (currentLikePage < totalPages) {
+    currentLikePage++;
     likeStore();
   } else {
     alert('더 이상 다음 페이지가 없습니다.');
@@ -174,6 +178,8 @@ const reviewList = async () => {
   document.querySelector('.likePage').style.display = 'none';
   document.querySelector('.reviewPage').style.display = 'block';
   document.querySelector('.postPage').style.display = 'none';
+  currentLikePage = 1;
+  currentPostPage = 1;
 
   try {
     const res = await axios.get('/api/review/myreview');
@@ -185,7 +191,7 @@ const reviewList = async () => {
 
         const paginatedReviews = paginateReviews(
           reviews,
-          currentPage,
+          currentReviewPage,
           reviewsPerPage,
         );
 
@@ -260,8 +266,8 @@ const reviewList = async () => {
 };
 
 document.getElementById('reviewPrev').addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
+  if (currentReviewPage > 1) {
+    currentReviewPage--;
     reviewList();
   } else {
     alert('더 이상 이전 페이지가 없습니다.');
@@ -269,8 +275,8 @@ document.getElementById('reviewPrev').addEventListener('click', () => {
 });
 
 document.getElementById('reviewNext').addEventListener('click', () => {
-  if (currentPage < totalPages) {
-    currentPage++;
+  if (currentReviewPage < totalPages) {
+    currentReviewPage++;
     reviewList();
   } else {
     alert('더 이상 다음 페이지가 없습니다.');
@@ -372,6 +378,7 @@ const editDone = async reviewId => {
 // 게시글
 const postList = async () => {
   const postsContainer = document.querySelector('#myPosts');
+
   while (postsContainer.firstChild) {
     postsContainer.removeChild(postsContainer.firstChild);
   }
@@ -385,6 +392,8 @@ const postList = async () => {
   document.querySelector('.likePage').style.display = 'none';
   document.querySelector('.reviewPage').style.display = 'none';
   document.querySelector('.postPage').style.display = 'block';
+  currentLikePage = 1;
+  currentReviewPage = 1;
 
   try {
     const response = await fetch('/api/post/my/post');
@@ -393,7 +402,7 @@ const postList = async () => {
     if (Array.isArray(data) && data.length > 0) {
       totalPages = Math.ceil(data.length / 5);
 
-      const paginatedPosts = paginatePosts(data, currentPage, postsPerPage);
+      const paginatedPosts = paginatePosts(data, currentPostPage, postsPerPage);
 
       function formatDateToKorean(dateString) {
         const date = new Date(dateString);
@@ -452,8 +461,8 @@ const postList = async () => {
 };
 
 document.getElementById('postPrev').addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
+  if (currentPostPage > 1) {
+    currentPostPage--;
     postList();
   } else {
     alert('더 이상 이전 페이지가 없습니다.');
@@ -461,8 +470,8 @@ document.getElementById('postPrev').addEventListener('click', () => {
 });
 
 document.getElementById('postNext').addEventListener('click', () => {
-  if (currentPage < totalPages) {
-    currentPage++;
+  if (currentPostPage < totalPages) {
+    currentPostPage++;
     postList();
   } else {
     alert('더 이상 다음 페이지가 없습니다.');
