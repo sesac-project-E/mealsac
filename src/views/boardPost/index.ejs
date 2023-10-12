@@ -83,13 +83,15 @@
             <div class="replyInfo">
               <p><%= reply.User.user_name %></p>
               <p>
-                <%= formatDate(reply.dataValues.updatedAt) %>
+                <%= formatDate(reply.dataValues.updatedAt) %> <% if(userInfo &&
+                reply.User.user_name === userInfo.user_name) { %>
                 <button
                   class="replyToggleBtn"
                   onclick="toggleReply('<%= reply.dataValues.comment_id %>', '<%= reply.dataValues.content %>')"
                 >
                   <i class="fa fa-bars"></i>
                 </button>
+                <% } %>
               </p>
             </div>
             <div
