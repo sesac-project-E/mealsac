@@ -324,7 +324,7 @@ exports.updatePost = async (req, res) => {
 
       post.title = title;
       post.content = content;
-      // post.board_id = board_id;
+
       await post.save();
 
       res.status(200).json({

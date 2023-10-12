@@ -27,7 +27,6 @@ exports.getNotice = async (req, res) => {
     }
     res.send(response);
   } catch (error) {
-    console.log(error);
     res.status(404).send();
   }
 };
@@ -59,7 +58,6 @@ exports.getFree = async (req, res) => {
     }
     res.send(response);
   } catch (error) {
-    console.log(error);
     res.status(404).send();
   }
 };

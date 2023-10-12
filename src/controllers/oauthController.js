@@ -51,7 +51,7 @@ exports.kakaoResult = async (req, res) => {
     id: `${user.dataValues.id}`,
   };
 
-  res.cookie('loginStatus', 'loggedIn', {
+  res.cookie('loginStatus', 'kakaoLoggedIn', {
     maxAge: 86400 * 1000,
     // httpOnly: true,
     // secure: true,
