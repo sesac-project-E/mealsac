@@ -62,6 +62,9 @@ async function fetchAndDisplayPosts(
       tableSelector, // 변수 추가
       pageSelector, // 변수 추가
     );
+    document
+      .querySelectorAll('.page-link')
+      [currentPage - 1].classList.add('clicked');
   } catch (error) {
     console.error('Error fetching posts:', error);
   }
