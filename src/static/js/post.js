@@ -57,11 +57,8 @@ const deleteBtn = async () => {
   }
 };
 
+// 댓글 수정, 삭제 버튼 토글
 const toggleReply = (commentId, content) => {
-  if (postUser.user_name !== loginUser.user_name || !loginUser.isAdmin) {
-    alert('로그인 후 이용 가능합니다.');
-    return;
-  }
   const replyContent = document.querySelector(`#replyContent_${commentId}`);
   if (replyContent.classList.contains('notEdit')) {
     replyContent.remove();
@@ -69,7 +66,7 @@ const toggleReply = (commentId, content) => {
       `#replyContentContainer_${commentId}`,
     );
     replyContentContainer.innerHTML = `
-    <input autofocus style="width: 80%; border: 1px solid gray; border-radius:8px; padding:3.5px;" type="text" class="replyContent" value="${content}" id="replyContent_${commentId}">
+    <input autofocus style="border: 1px solid gray; border-radius:8px; padding:3.5px;" type="text" class="replyContent" value="${content}" id="replyContent_${commentId}">
     <div class="replyBtnGroup" id="replyBtnGroup_${commentId}">
       <button class="replyBtn replyModifyBtn" onclick="editReply(${commentId})" >수정</button>
       <button class="replyBtn replyDeleteBtn" onclick="deleteReply(${commentId})">삭제</button>
