@@ -62,6 +62,9 @@ async function fetchAndDisplayPosts(
       tableSelector, // 변수 추가
       pageSelector, // 변수 추가
     );
+    document
+      .querySelectorAll('.page-link')
+      [currentPage - 1].classList.add('clicked');
   } catch (error) {
     console.error('Error fetching posts:', error);
   }
@@ -144,10 +147,9 @@ function getCookie(name) {
 window.addEventListener('load', () => {
   switchToFreeBoard();
   const loginStatus = getCookie('loginStatus');
-  const userId = 'admin'; // 임시 설정
 
-  if (loginStatus === 'loggedIn') {
-    if (userId === 'admin') {
+  if (loginStatus === 'loggedIn' && userInfo) {
+    if (userInfo.isAdmin) {
       document.querySelector('#freeWrite').style.display = 'block';
       document.querySelector('#noticeWrite').style.display = 'block';
     } else {

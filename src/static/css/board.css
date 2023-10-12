@@ -86,6 +86,16 @@ table .date {
   margin: 50px auto;
 }
 
+.boardPage .pagination .page-item .page-link {
+  color: black;
+  border: none;
+  border-radius: 0;
+
+  &.clicked {
+    border-bottom: 3px solid #89d83f;
+  }
+}
+
 #noticePage {
   margin: 50px auto;
 }

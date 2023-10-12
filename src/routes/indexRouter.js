@@ -98,7 +98,9 @@ indexRouter.get('/restaurant/:restaurant_id', async (req, res) => {
 });
 
 indexRouter.get('/board', (req, res) => {
-  res.render('board');
+  const userInfo = req.session.userInfo ? req.session.userInfo : false;
+
+  res.render('board', { userInfo });
 });
 
 indexRouter.get('/post/write', (req, res) => {
