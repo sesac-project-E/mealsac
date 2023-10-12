@@ -90,10 +90,8 @@ exports.postRegister = async (req, res) => {
     });
     if (userid) {
       res.json({ result: false, message: '아이디 중복체크를 해주세요' });
-
     } else if (username) {
       res.json({ result: false, message: '닉네임 중복체크를 해주세요' });
-
     } else {
       const hash = await bcryptPassword(password); // 비밀번호 암호화하여 저장
 
@@ -115,7 +113,6 @@ exports.postLogin = async (req, res) => {
     const user = await User.findOne({
       where: { user_id },
     });
-
 
     // Step2. 입력된 비밀번호 암호화하여 기존 데이터와 비교
     if (user) {

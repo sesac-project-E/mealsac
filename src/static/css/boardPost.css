@@ -139,8 +139,6 @@ textarea {
 
 .replyContent {
   width: 80%;
-  border: 0;
-
   padding: 3.5px;
   overflow-x: scroll;
   white-space: nowrap;
@@ -161,15 +159,14 @@ textarea {
 .replyBtn {
   align-self: flex-end;
   border: none;
-  border-radius: 30px;
-  width: 50px;
+  padding: 1px 3px;
   background-color: transparent;
 }
 .replyModifyBtn {
-  border: solid #35aa03 1px;
+  color: #989898;
 }
 .replyDeleteBtn {
-  border: solid #ec4524 1px;
+  color: #989898;
 }
 
 .remove {
@@ -177,4 +174,19 @@ textarea {
 }
 .block {
   display: block;
+}
+
+@media (max-width: 400px) {
+  .replyContentContainer {
+    display: block;
+  }
+
+  .replyContentContainer .replyContent {
+    width: 100%;
+  }
+
+  .replyBtnGroup {
+    margin-top: 5px;
+    text-align: end;
+  }
 }

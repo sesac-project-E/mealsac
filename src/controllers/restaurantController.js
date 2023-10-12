@@ -1,10 +1,7 @@
-const { Sequelize, Op } = require('sequelize');
+const { Op } = require('sequelize');
 const {
-  ReviewUsefulness,
-  ReviewImage,
   RestaurantType,
   Menu,
-  Review,
   Tag,
   User,
   Restaurant,
@@ -13,7 +10,6 @@ const {
 } = require('../models');
 const dotenv = require('dotenv');
 dotenv.config();
-const { formatDate } = require('../utils/formatDate');
 
 exports.getAllRestaurants = async (req, res) => {
   try {
@@ -21,7 +17,6 @@ exports.getAllRestaurants = async (req, res) => {
     const { id } =
       req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
-      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit: 20,
       offset: 20 * (page - 1),
       include: [
@@ -53,7 +48,6 @@ exports.getLikeRestaurants = async (req, res) => {
     const { id } =
       req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
-      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit: 20,
       offset: 20 * (page - 1),
       order: [
@@ -91,7 +85,6 @@ exports.getRatingRestaurants = async (req, res) => {
     const { id } =
       req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
-      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit: 20,
       offset: 20 * (page - 1),
       order: [
@@ -127,7 +120,6 @@ exports.getSearchRestaurantByName = async (req, res) => {
     const { id } =
       req.session && req.session.userInfo ? req.session.userInfo : -1;
     const response = await Restaurant.findAndCountAll({
-      // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
       limit: 20,
       where: {
         restaurant_name: {
@@ -215,18 +207,6 @@ exports.getRestaurant = async (req, res) => {
         attributes: ['tag_id', 'tag_name'],
         required: false,
       },
-      // {
-      //   model: Review,
-      //   attributes: ['review_id', 'user_id', 'rating', 'content', 'updatedAt'],
-      //   order: [['updatedAt', 'DESC']],
-      //   include: [
-      //     {
-      //       model: ReviewImage,
-      //       limit: 1,
-      //     },
-      //   ],
-      //   required: false,
-      // },
       {
         model: Menu,
         attributes: ['menu_name', 'menu_price'],
@@ -245,13 +225,6 @@ exports.getRestaurant = async (req, res) => {
     ],
     where: { restaurant_id: restaurant_id },
   });
-  // .then(restaurant => {
-  //   res.render('restaurantDetail/index', {
-  //     restaurant,
-  //     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-  //   });
-  //   res.send(restaurant);
-  // });
   return restaurant;
 };
 

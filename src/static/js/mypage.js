@@ -238,7 +238,6 @@ const reviewList = async () => {
             const imgElement = document.createElement('img');
             imgElement.src = image.image_url;
             imgElement.alt = 'Review Image';
-            console.log('Image URL:', image.image_url);
             reviewImgContainer.appendChild(imgElement);
 
             imgElement.onload = () => {

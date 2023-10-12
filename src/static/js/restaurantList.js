@@ -86,9 +86,6 @@ const geocodeAddress = async (address, type) => {
 
   geocoder.geocode({ address: address }, (results, status) => {
     if (status !== 'OK') {
-      // console.error(
-      //   'Geocode was not successful for the following reason: ' + status,
-      // );
       return;
     }
 
@@ -383,6 +380,8 @@ searchName.addEventListener('click', e => {
   tagNcategory.classList.add('searchInvisible');
   allRestaurants1.checked = true;
   sortContainer.style.display = 'flex';
+  $('#searchNameMenu div:nth-child(2)').style.display = 'none';
+  allRestaurants1.checked = true;
   fetchData();
   drawPagination(1);
 });

@@ -1,6 +1,6 @@
-const express = require('express')
-const menuRouter = express.Router()
-const menuController = require('../controllers/menuController.js')
+const express = require('express');
+const menuRouter = express.Router();
+const menuController = require('../controllers/menuController.js');
 /**
  * @swagger
  * tags:
@@ -24,7 +24,7 @@ const menuController = require('../controllers/menuController.js')
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                count:
  *                  type: int
  *                  example: 35
@@ -32,8 +32,7 @@ const menuController = require('../controllers/menuController.js')
  *                  type: array
  *                  example: [{"menu_id": 797,"menu_name": "아메리카노","menu_price": 4800,"restaurant_id": 474,"Restaurant": {"restaurant_name": "극락왕생","likes_count": 0,"reviews_count": 0,"rating": 0}},         {"menu_id": 869,"menu_name": "아메리카노","menu_price": 2500,"restaurant_id": 541,"Restaurant": {"restaurant_name": "미태리 파스타 문래점","likes_count": 0,"reviews_count": 0,"rating": 0}}]
  * */
-menuRouter.get('/search', menuController.searchMenu)
-
+menuRouter.get('/search', menuController.searchMenu);
 
 /**
  * @swagger
@@ -46,18 +45,17 @@ menuRouter.get('/search', menuController.searchMenu)
  *   tags : [Menu]
  *   responses:
  *     200:
- *      description : 검색한 식당에서 
+ *      description : 검색한 식당에서
  *      content:
  *        application/json:
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                data:
  *                  type: array
  *                  example: [{"menu_id": 1,"menu_name": "칼국수","menu_price": 8000,"restaurant_id": 4}]
  * */
-menuRouter.get('/restaurant/:restaurant_id', menuController.getRestaurantMenu)
+menuRouter.get('/restaurant/:restaurant_id', menuController.getRestaurantMenu);
 
-
-module.exports = menuRouter
+module.exports = menuRouter;
