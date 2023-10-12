@@ -1,20 +1,19 @@
-const express = require("express")
-const tagRouter = express.Router()
-const tagController = require("../controllers/tagController.js")
+const express = require('express');
+const tagRouter = express.Router();
+const tagController = require('../controllers/tagController.js');
 /**
  * @swagger
  * tags:
  *   name: Tag
  */
 
+tagRouter.get('/all', tagController.getAllTags);
 
-
-tagRouter.get('/all',tagController.getAllTags)
 /**
  * @swagger
  * tags:
  *   name: Tag
- * 
+ *
  * /api/tag/search?tag1=""&tag2=""&page=1:
  *  get:
  *   summary: 태그로 지정된 식당 가져오기. 만약 Users === []이면 로그인 되어 있지 않은 상태이거나 like를 누르지 않은 것입니다.
@@ -27,7 +26,7 @@ tagRouter.get('/all',tagController.getAllTags)
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                count:
  *                  type: int
  *                  example : 27
@@ -43,10 +42,10 @@ tagRouter.get('/all',tagController.getAllTags)
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                data:
  *                  type: string
  *                  example: "알 수 없는 에러"
  * */
-tagRouter.get('/search', tagController.getRestaurantsByTag)
-module.exports = tagRouter
+tagRouter.get('/search', tagController.getRestaurantsByTag);
+module.exports = tagRouter;

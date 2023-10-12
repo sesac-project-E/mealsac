@@ -43,7 +43,6 @@ class UploadAdapter {
       }
 
       resolve({
-        // response = { "success": true, "msg": "파일이 성공적으로 업로드되었습니다.", url: "http://localhost:8000/static/profileImg/qwodqwo.jpg"}
         default: response.url, //업로드된 파일 주소
       });
     });

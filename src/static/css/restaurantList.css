@@ -1,4 +1,3 @@
-/* global.css 생성시 이동 */
 .row * {
   padding: 0;
 }
@@ -371,7 +370,6 @@ p.review {
   }
 }
 
-/* 뷰포트가 576px 이하인 경우 */
 @media (max-width: 767px) {
   .search {
     width: 75vw;

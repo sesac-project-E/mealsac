@@ -36,6 +36,7 @@ const restaurantController = require('../controllers/restaurantController.js');
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
 restaurantRouter.get('/all', restaurantController.getAllRestaurants);
+
 /**
  * @swagger
  * tags:
@@ -189,8 +190,8 @@ restaurantRouter.get('/rating', restaurantController.getRatingRestaurants);
  *       500:
  *         description: 알 수 없는 오류의 경우 500이 전송됩니다.
  * */
-
 restaurantRouter.get('/:restaurant_id', restaurantController.getRestaurant);
+
 restaurantRouter.delete(
   '/:restaurant_id',
   restaurantController.deleteRestaurant,

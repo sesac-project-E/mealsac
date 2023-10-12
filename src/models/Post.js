@@ -26,16 +26,6 @@ module.exports = (sequelize, Datatypes) => {
         type: Datatypes.TEXT(),
         allowNull: false,
       },
-      // created_at: {
-      //   type: Datatypes.DATE,
-      //   allowNull: false,
-      //   defaultValue: sequelize.literal('now()'),
-      // },
-      // updated_at: {
-      //   type: Datatypes.DATE,
-      //   allowNull: false,
-      //   defaultValue: sequelize.literal('now()'),
-      // },
     },
     {
       tableName: 'Post',

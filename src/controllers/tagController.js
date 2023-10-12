@@ -1,11 +1,4 @@
-const {
-  User,
-  Tag,
-  Restaurant,
-  TagRestaurant,
-  LikeRestaurant,
-  RestaurantImage,
-} = require('../models');
+const { User, Tag, Restaurant, RestaurantImage } = require('../models');
 const { Op } = require('sequelize');
 
 exports.getAllTags = (req, res) => {
@@ -43,7 +36,6 @@ exports.getRestaurantsByTag = async (req, res) => {
     }
     if (page > 0) {
       Restaurant.findAndCountAll({
-        // attributes : ["restaurant_id", "restaurant_name", "likes_count", "reviews_count", "rating"],
         include: [
           {
             model: Tag,
@@ -83,18 +75,3 @@ exports.getRestaurantsByTag = async (req, res) => {
     res.status(500).send('알 수 없는 에러');
   }
 };
-// exports.getTagRestaurant = (req, res) => {
-//   const {tag} = req.params
-//   tagModels.findOne({
-//     where : {tag_name : tag}
-//   })
-//   .then((response) => {
-//     const tagId = response.dataValues.id
-//     tagRestaurantModels.findAll({
-//       where : {tag_id : tagId}
-//     })
-//     .then((response) => {
-//       res.send(response.dataValues)
-//     })
-//   })
-// }

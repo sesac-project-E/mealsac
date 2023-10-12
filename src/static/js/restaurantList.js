@@ -86,9 +86,6 @@ const geocodeAddress = async (address, type) => {
 
   geocoder.geocode({ address: address }, (results, status) => {
     if (status !== 'OK') {
-      // console.error(
-      //   'Geocode was not successful for the following reason: ' + status,
-      // );
       return;
     }
 

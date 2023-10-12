@@ -107,7 +107,6 @@ indexRouter.get('/post/write', (req, res) => {
 
 indexRouter.get('/post/edit/:post_id', postController.getEditPost);
 
-//post_id로 개별 포스팅 조회
 indexRouter.get('/post/:post_id', postController.getPost);
 
 indexRouter.get('/random', (req, res) => {

@@ -51,7 +51,6 @@ exports.getAllReviews = async (req, res) => {
         is_useful: didIRecommend,
       };
     });
-    // res.json({ status: 'success', data: reviewsWithUsefulness });
     return reviewsWithUsefulness;
   } catch (error) {
     console.error(error);
@@ -332,7 +331,6 @@ exports.editReview = async (req, res) => {
       attributes: ['restaurant_id', 'reviews_count', 'rating'],
       where: { restaurant_id: restaurant_id },
     });
-    console.log(restaurant);
     const reviews_count = restaurant.dataValues.reviews_count;
     const oldRating = restaurant.dataValues.rating;
     const updateRating =

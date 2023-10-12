@@ -53,8 +53,6 @@ exports.kakaoResult = async (req, res) => {
 
   res.cookie('loginStatus', 'kakaoLoggedIn', {
     maxAge: 86400 * 1000,
-    // httpOnly: true,
-    // secure: true,
   });
 
   res.send(`<script>location.href='/'; alert('${alertMsg}');</script>`);

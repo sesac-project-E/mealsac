@@ -7,7 +7,6 @@ const category = () => {
   history.back();
 };
 
-// 컨트롤러 완성 후 주석 풀기
 const myPost = () => {
   const btnBox = document.querySelector('.btnBox');
   if (`${post.user_id}` === `${user.id}`) {
@@ -28,35 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// 리뷰 등록
-const enterReply = async e => {
-  if (!loginUser) {
-    alert('로그인 후 댓글 작성 가능합니다.');
-    return;
-  }
-  const replyForm = document.getElementById('replyForm');
-  const postId = document.querySelector('.postBox').id;
-  const formData = new FormData(replyForm);
-  const replyContent = formData.get('replyContent');
-  if (replyContent.trim().length < 1) {
-    alert('댓글의 내용을 입력해주세요.');
-    return;
-  }
-  await axios
-    .post('/api/comment', {
-      post_id: `${postId}`,
-      content: `${replyContent}`,
-    })
-    .then(() => {
-      location.reload(true);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-};
-replyForm.addEventListener('submit', enterReply);
-
-// 수정
+// 게시글 수정
 const modifyBtn = () => {
   if (postUser.user_name === loginUser.user_name) {
     const postId = document.querySelector('.postBox').id;
@@ -66,7 +37,7 @@ const modifyBtn = () => {
   }
 };
 
-// 삭제
+// 게시글 삭제
 const deleteBtn = async () => {
   const postId = document.querySelector('.postBox').id;
   if (postUser.user_name === loginUser.user_name || loginUser.isAdmin) {
@@ -111,7 +82,36 @@ const toggleReply = (commentId, content) => {
     replyContentContainer.innerHTML = `<div style="width: 90%; border: none; overflow: auto; white-space: nowrap;" class="replyContent notEdit" id="replyContent_${commentId}"> ${content}</div>`;
   }
 };
-// reply Edit
+
+// 댓글 등록
+const enterReply = async e => {
+  if (!loginUser) {
+    alert('로그인 후 댓글 작성 가능합니다.');
+    return;
+  }
+  const replyForm = document.getElementById('replyForm');
+  const postId = document.querySelector('.postBox').id;
+  const formData = new FormData(replyForm);
+  const replyContent = formData.get('replyContent');
+  if (replyContent.trim().length < 1) {
+    alert('댓글의 내용을 입력해주세요.');
+    return;
+  }
+  await axios
+    .post('/api/comment', {
+      post_id: `${postId}`,
+      content: `${replyContent}`,
+    })
+    .then(() => {
+      location.reload(true);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+replyForm.addEventListener('submit', enterReply);
+
+// 댓글 수정
 const editReply = commentId => {
   const replyInput = document.querySelector(`#replyContent_${commentId}`);
 
@@ -137,7 +137,7 @@ const editReply = commentId => {
   }
 };
 
-// reply Delete
+// 댓글 삭제
 const deleteReply = commentId => {
   if (confirm('정말로 삭제하시겠습니까?')) {
     if (postUser.user_name !== loginUser.user_name || !loginUser.isAdmin) {
