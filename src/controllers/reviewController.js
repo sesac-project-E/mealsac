@@ -9,7 +9,7 @@ const {
 } = require('../models');
 
 exports.getAllReviews = async (req, res) => {
-  const user_id = req.session ? req.session.userId : null;
+  const user_id = req.session.userInfo ? req.session.userId : null;
   const { restaurant_id } = req.params;
 
   try {
@@ -51,7 +51,6 @@ exports.getAllReviews = async (req, res) => {
         is_useful: didIRecommend,
       };
     });
-    // res.json({ status: 'success', data: reviewsWithUsefulness });
     return reviewsWithUsefulness;
   } catch (error) {
     console.error(error);
@@ -65,7 +64,7 @@ exports.getAllReviews = async (req, res) => {
 exports.postReview = async (req, res) => {
   const { restaurant_id } = req.params;
   const { content, rating } = req.body;
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || !userInfo.id) {
     return res.status(400).json({
@@ -85,8 +84,8 @@ exports.postReview = async (req, res) => {
       { transaction },
     );
 
-    let reviews_count = restaurant.dataValues.reviews_count;
-    let restaurantRating = restaurant.dataValues.rating;
+    const reviews_count = restaurant.dataValues.reviews_count;
+    const restaurantRating = restaurant.dataValues.rating;
 
     const newReview = await Review.create(
       {
@@ -120,12 +119,12 @@ exports.postReview = async (req, res) => {
     });
 
     const images = await Promise.all(imagePromises);
-
+    const updateRating =
+      (restaurantRating * reviews_count + rating) / (reviews_count + 1);
     await Restaurant.update(
       {
         reviews_count: reviews_count + 1,
-        rating:
-          (restaurantRating * reviews_count + rating) / (reviews_count + 1),
+        rating: updateRating,
       },
       {
         where: { restaurant_id },
@@ -157,7 +156,7 @@ exports.postReview = async (req, res) => {
 };
 
 exports.recommendReview = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || !userInfo.id) {
     return res.status(400).json({
@@ -198,7 +197,7 @@ exports.recommendReview = async (req, res) => {
 };
 
 exports.unrecommendReview = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || !userInfo.id) {
     return res.status(400).json({
@@ -241,7 +240,7 @@ exports.unrecommendReview = async (req, res) => {
 };
 
 exports.getMyReviews = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || !userInfo.id) {
     return res.status(400).json({
@@ -297,7 +296,7 @@ exports.getMyReviews = async (req, res) => {
 };
 
 exports.editReview = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || !userInfo.id) {
     return res.status(400).json({
@@ -314,7 +313,7 @@ exports.editReview = async (req, res) => {
     const review = await Review.findOne({
       where: { review_id, user_id },
     });
-
+    const oldReviewRating = review.dataValues.rating;
     if (!review) {
       return res.status(404).json({
         status: 'error',
@@ -326,7 +325,25 @@ exports.editReview = async (req, res) => {
     review.rating = rating;
 
     await review.save();
-
+    const restaurant_id = review.restaurant_id;
+    const currRating = review.rating;
+    const restaurant = await Restaurant.findOne({
+      attributes: ['restaurant_id', 'reviews_count', 'rating'],
+      where: { restaurant_id: restaurant_id },
+    });
+    const reviews_count = restaurant.dataValues.reviews_count;
+    const oldRating = restaurant.dataValues.rating;
+    const updateRating =
+      (oldRating * reviews_count - oldReviewRating + currRating) /
+      reviews_count;
+    await restaurant.update(
+      {
+        rating: updateRating,
+      },
+      {
+        where: { restaurant_id: restaurant.dataValues.restaurant_id },
+      },
+    );
     res.json({
       status: 'success',
       message: '리뷰가 성공적으로 업데이트되었습니다.',
@@ -342,7 +359,7 @@ exports.editReview = async (req, res) => {
 };
 
 exports.deleteReview = async (req, res) => {
-  const userInfo = req.session ? req.session.userInfo : null;
+  const userInfo = req.session.userInfo ? req.session.userInfo : null;
 
   if (!userInfo || (!userInfo.id && !userInfo.isAdmin)) {
     return res.status(400).json({
@@ -384,14 +401,14 @@ exports.deleteReview = async (req, res) => {
       attributes: ['reviews_count', 'rating'],
       where: { restaurant_id: restaurant_id },
     });
-    let reviews_count = restaurant.dataValues.reviews_count;
-    let restaurantRating = restaurant.dataValues.rating;
-
+    const reviews_count = restaurant.dataValues.reviews_count;
+    const restaurantRating = restaurant.dataValues.rating;
+    const updateRating =
+      (restaurantRating * reviews_count - currRating) / (reviews_count - 1);
     await Restaurant.update(
       {
         reviews_count: reviews_count - 1,
-        rating:
-          (restaurantRating * reviews_count - currRating) / (reviews_count - 1),
+        rating: updateRating,
       },
       { where: { restaurant_id: restaurant_id } },
     );

@@ -105,23 +105,50 @@ exports.getUserLikes = async (req, res) => {
     req.session && req.session.userInfo ? req.session.userInfo : -1;
   if (id > 0) {
     const response = await Restaurant.findAll({
-      include : [
+      include: [
         {
-          model : User,
-          where : {id : id}
+          model: User,
+          where: { id: id },
         },
         {
           model: RestaurantImage,
           attributes: ['restaurant_image_url'],
           limit: 1,
-        }
-      ]
-    })
-    const ret = []
-    for (let [k,v] in Object.entries(response)) {
-      ret.push(response[k].dataValues)
+        },
+      ],
+    });
+    const ret = [];
+    for (let [k, v] in Object.entries(response)) {
+      ret.push(response[k].dataValues);
     }
-    return ret.slice(0, )
+    return ret.slice(0);
+  } else {
+    res.send('session에 저장된 정보가 없습니다.').status(400);
+  }
+};
+
+exports.getMyPageUserLikes = async (req, res) => {
+  const { id } =
+    req.session && req.session.userInfo ? req.session.userInfo : -1;
+  if (id > 0) {
+    const response = await Restaurant.findAll({
+      include: [
+        {
+          model: User,
+          where: { id: id },
+        },
+        {
+          model: RestaurantImage,
+          attributes: ['restaurant_image_url'],
+          limit: 1,
+        },
+      ],
+    });
+    const ret = [];
+    for (let [k, v] in Object.entries(response)) {
+      ret.push(response[k].dataValues);
+    }
+    res.json(ret)
   } else {
     res.send('session에 저장된 정보가 없습니다.').status(400);
   }

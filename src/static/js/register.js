@@ -27,7 +27,6 @@ const overlapId = async () => {
       });
 
       if (res.data.result) {
-        console.log('ok');
         idMsg.innerHTML =
           '<p style="color:green">사용 가능한 아이디입니다.</p>';
         form.checkedId.value = 'Y';

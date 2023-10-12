@@ -4,15 +4,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px;
 }
 
 .desktop-logo {
   height: 40px;
 }
 .mobile-logo,
-.hamburger,  /* 추가 */
+.hamburger,
 .logged-out .mobile-login {
-  /* 추가 */
   display: none;
 }
 .dropdown-content {
@@ -153,12 +153,18 @@ footer {
   height: 220px;
 }
 
-footer p .contact {
-  font-size: large;
+a {
+  text-decoration: none;
+  color: black;
 }
 
-footer p {
+p {
   font-size: small;
+  margin-bottom: 0;
+}
+
+.text {
+  margin: 30px 0;
 }
 
 /* 모바일 뷰 (280px - 480px) */

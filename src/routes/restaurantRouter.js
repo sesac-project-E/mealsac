@@ -1,6 +1,6 @@
-const express = require("express")
-const restaurantRouter = express.Router()
-const restaurantController = require("../controllers/restaurantController.js")
+const express = require('express');
+const restaurantRouter = express.Router();
+const restaurantController = require('../controllers/restaurantController.js');
 
 /**
  * @swagger
@@ -25,7 +25,7 @@ const restaurantController = require("../controllers/restaurantController.js")
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                count:
  *                  type: int
  *                  example: 761
@@ -35,7 +35,8 @@ const restaurantController = require("../controllers/restaurantController.js")
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/all', restaurantController.getAllRestaurants)
+restaurantRouter.get('/all', restaurantController.getAllRestaurants);
+
 /**
  * @swagger
  * tags:
@@ -53,7 +54,7 @@ restaurantRouter.get('/all', restaurantController.getAllRestaurants)
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                count:
  *                  type: int
  *                  example: 761
@@ -63,7 +64,7 @@ restaurantRouter.get('/all', restaurantController.getAllRestaurants)
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/like', restaurantController.getLikeRestaurants)
+restaurantRouter.get('/like', restaurantController.getLikeRestaurants);
 
 /**
  * @swagger
@@ -82,7 +83,7 @@ restaurantRouter.get('/like', restaurantController.getLikeRestaurants)
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                count:
  *                  type: int
  *                  example: 10
@@ -92,7 +93,8 @@ restaurantRouter.get('/like', restaurantController.getLikeRestaurants)
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/search', restaurantController.getSearchRestaurantByName)
+restaurantRouter.get('/search', restaurantController.getSearchRestaurantByName);
+
 /**
  * @swagger
  * tags:
@@ -110,7 +112,7 @@ restaurantRouter.get('/search', restaurantController.getSearchRestaurantByName)
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                count:
  *                  type: int
  *                  example: 761
@@ -120,9 +122,7 @@ restaurantRouter.get('/search', restaurantController.getSearchRestaurantByName)
  *       404:
  *         description: 오류 혹은 잘못된 페이지 번호 입력시 404가 리턴됩니다.
  * */
-restaurantRouter.get('/rating', restaurantController.getRatingRestaurants)
-
-
+restaurantRouter.get('/rating', restaurantController.getRatingRestaurants);
 
 /**
  * @swagger
@@ -141,7 +141,7 @@ restaurantRouter.get('/rating', restaurantController.getRatingRestaurants)
  *          schema:
  *            type: array
  *            items:
- *              properties: 
+ *              properties:
  *                restaurant_id:
  *                  type: int
  *                  example: 4
@@ -173,28 +173,28 @@ restaurantRouter.get('/rating', restaurantController.getRatingRestaurants)
  *                  type: array
  *                  example: [{"user_name": "오렌지","LikeRestaurant": {"restaurant_id": 4,"id": 1}},{"user_name": "moss","LikeRestaurant": {"restaurant_id": 4,"id": 5}}]
  *                Tags:
- *                  type: array 
+ *                  type: array
  *                  example: [{"tag_id": 1, "tag_name": "가성비가 좋은", "TagRestaurant": { "restaurant_id": 4, "tag_id": 1}}, { "tag_id": 2, "tag_name": "점심식사 하기 좋은", "TagRestaurant": { "restaurant_id": 4, "tag_id": 2}}]
  *                Reviews:
- *                  type: array 
+ *                  type: array
  *                  example: [{"review_id": 2, "user_id": 1, "rating": "5.0", "title": "맛있어요", "updatedAt": null, "image_id": [ { "image_id": 2,"image_url": "../static/img/reviews/2/sss.png","review_id": 2}]}]
  *                Menus:
- *                  type: array  
+ *                  type: array
  *                  example : [{"menu_name": "칼국수", "menu_price": 8000},{"menu_name": "소면","menu_price": 8000},{"menu_name": "칼비빔국수","menu_price": 8000},{"menu_name": "소면비빔국수","menu_price": 8000},{"menu_name": "만두","menu_price": 7000}]
  *                restaurant_type:
- *                  type: json 
+ *                  type: json
  *                  example : {"restaurant_type": "분식"}
  *                RestaurantImages:
- *                  type: array  
+ *                  type: array
  *                  example : [{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MjJfMjA1/MDAxNTkyNzg0NjAxMTM5.RKKpCY89B_vyXNkySi8csQcTks_XjLR4LfKJyH4AXXIg.peUl7Q_FMvAhnnudENfNrYwxUW4n2PmKJZjPLowabGgg.JPEG.kyungha926/SE-a6fd1722-f3f0-4a98-9592-e55e9e938b68.jpg?type=w800"},{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MjJfNzYg/MDAxNTkyNzg0NjA2OTY0.X_CT3K5yz-YHtTZCkCbiqIcZ5Ane92nUNZtCQpXsJBog.1-I9RHmy7nqwcoM-KmOq2FrInB0yLU4X5eRzbb2Z5Cwg.JPEG.kyungha926/SE-a31e96e3-68f9-47df-a9e0-3877e370a683.jpg?type=w800"},{"restaurant_image_url": "https://mblogthumb-phinf.pstatic.net/MjAyMDA2MjJfMjU5/MDAxNTkyNzg0NjAzOTcw.mGO_JGlJbaA-M9oRylu3c3g6kbF1PXU8U_HTZubJaO4g.vXEruZMVbGM8Q_4QGTVQJf0sDH5vX7USM9KWPKBAkXMg.JPEG.kyungha926/SE-e84f5a05-bbbd-4e68-a305-7818e64389bb.jpg?type=w800"}]
  *       500:
  *         description: 알 수 없는 오류의 경우 500이 전송됩니다.
  * */
- 
+restaurantRouter.get('/:restaurant_id', restaurantController.getRestaurant);
 
+restaurantRouter.delete(
+  '/:restaurant_id',
+  restaurantController.deleteRestaurant,
+);
 
-restaurantRouter.get('/:restaurant_id', restaurantController.getRestaurant)
-restaurantRouter.delete('/:restaurant_id', restaurantController.deleteRestaurant)
-
-
-module.exports = restaurantRouter
+module.exports = restaurantRouter;

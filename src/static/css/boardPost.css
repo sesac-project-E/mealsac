@@ -51,7 +51,16 @@ h1 {
 
 .postContent {
   min-height: 300px;
+  width: 100%;
+  overflow: auto;
+  white-space: nowrap;
   border-bottom: solid black 1px;
+}
+.postContent::-webkit-scrollbar {
+  height: 10px;
+}
+.postContent::-webkit-scrollbar-thumb {
+  background-color: lightgray;
 }
 
 .btnBox {
@@ -110,7 +119,74 @@ textarea {
 
 .reply {
   border-bottom: solid rgb(167, 167, 167) 0.5px;
-  padding: 10px;
+  padding-bottom: 10px;
   margin-bottom: 5px;
   font-size: 15px;
+}
+
+.replyToggleBtn {
+  position: relative;
+  all: unset;
+  font-size: 15px;
+}
+.replyContentContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  margin-left: auto;
+}
+
+.replyContent {
+  width: 80%;
+  padding: 3.5px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.replyContent::-webkit-scrollbar {
+  height: 3px;
+}
+.replyContent::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+}
+
+.commentDropDown {
+  position: absolute;
+  min-width: 10vw;
+  z-index: 3;
+}
+
+.replyBtn {
+  align-self: flex-end;
+  border: none;
+  padding: 1px 3px;
+  background-color: transparent;
+}
+.replyModifyBtn {
+  color: #989898;
+}
+.replyDeleteBtn {
+  color: #989898;
+}
+
+.remove {
+  display: none;
+}
+.block {
+  display: block;
+}
+
+@media (max-width: 400px) {
+  .replyContentContainer {
+    display: block;
+  }
+
+  .replyContentContainer .replyContent {
+    width: 100%;
+  }
+
+  .replyBtnGroup {
+    margin-top: 5px;
+    text-align: end;
+  }
 }

@@ -1,6 +1,3 @@
-// const { query } = require('express');
-
-let selectedMarker = null;
 let initialMarker;
 let markers = [];
 let currentExpandedMarker;
@@ -9,32 +6,38 @@ let geocoder;
 let apiUrl;
 let currentPage = 1;
 let totalPages;
-let sortTypeValue = '인기순';
-let style;
+let category;
 let tags = [];
 let tagQuery = '';
-const searchName = document.querySelector('.searchName');
-const searchType = document.querySelector('.searchType');
-const nameRadio = document.querySelector('#name');
-const menuRadio = document.querySelector('#menu');
-const searchInput = document.querySelector('#searchInput');
-const searchNameMenu = document.querySelector('#searchNameMenu');
-const tagRadio = document.querySelector('#tag');
-const styleRadio = document.querySelector('#category');
-const styleContainer = document.querySelector('.styleContainer');
-const tagContainer = document.querySelector('.tagContainer');
-const searchTagStyle = document.querySelector('#searchTagStyle');
-const tagNstyle = document.querySelector('.tagNstyle');
-const tagsMore = document.querySelector('.tagsMore');
-const stylesMore = document.querySelector('.stylesMore');
-const tagNstyleBtn = document.querySelector('.tagNstyleBtn');
-const formContainer = document.querySelector('.formContainer');
+
+const $ = selector => document.querySelector(selector);
+const $All = selector => document.querySelectorAll(selector);
+
+const searchName = $('.searchName');
+const searchType = $('.searchType');
+const nameRadio = $('#name');
+const menuRadio = $('#menu');
+const searchInput = $('#searchInput');
+const searchNameMenu = $('#searchNameMenu');
+const tagRadio = $('#tag');
+const categoryRadio = $('#category');
+const categoryContainer = $('.categoryContainer');
+const tagContainer = $('.tagContainer');
+const tagNcategory = $('.tagNcategory');
+const tagsMore = $('.tagsMore');
+const categoryMore = $('.categoryMore');
+const tagNcategoryBtn = $('.tagNcategoryBtn');
+const formContainer = $('.formContainer');
+const sortContainer = $('.sortContainer');
+const sorting = $('.sorting');
+const allRestaurants1 = $('#allRestaurants1');
+const allRestaurants2 = $('#allRestaurants2');
 
 // 지도
 const initMap = async () => {
   const { Map } = await google.maps.importLibrary('maps');
 
-  map = new Map(document.querySelector('.map'), {
+  map = new Map($('.map'), {
     zoom: 15,
     center: { lat: 37.51805933031688, lng: 126.8873621375354 },
   });
@@ -60,21 +63,8 @@ const addMarker = options => {
     position: { lat: options.lat, lng: options.lng },
     title: options.title,
     icon: options.icon,
-    // restaurantAddress: options.restaurantAddress,
   });
-
   marker.isInitial = options.isInitial || false;
-
-  // marker.addListener('click', function () {
-  //   alert(this.restaurantAddress);
-  //   const associatedRadio = document.querySelector(
-  //     `.restaurantContainer[data-id="${this.restaurantAddress}"] input[type="radio"]`,
-  //   );
-  //   if (associatedRadio) {
-  //     associatedRadio.checked = true;
-  //   }
-  // });
-
   markers.push(marker);
 
   return marker;
@@ -90,51 +80,12 @@ const clearMarkers = () => {
   markers = markers.filter(marker => marker.isInitial);
 };
 
-// 식당 타입에 따른 지도 마커 아이콘
-const getIconUrlByType = type => {
-  switch (type) {
-    case 1:
-      return '/static/img/korean.png';
-    case 2:
-      return '/static/img/chinese.png';
-    case 3:
-      return '/static/img/street.png';
-    case 4:
-      return '/static/img/japanese.png';
-    case 5:
-      return '/static/img/western.png';
-    case 6:
-      return '/static/img/pub.png';
-    case 7:
-      return '/static/img/chicken.png';
-    case 8:
-      return '/static/img/pork.png';
-    case 9:
-      return '/static/img/cafe.png';
-    case 10:
-      return '/static/img/meat.png';
-    case 11:
-      return '/static/img/asian.png';
-    case 12:
-      return '/static/img/dessert.png';
-    case 13:
-      return '/static/img/fast.png';
-    case 14:
-      return '/static/img/convenience.png';
-    default:
-      return '/static/img/korean.png';
-  }
-};
-
 // 주소를 좌표로 변환
 const geocodeAddress = async (address, type) => {
   if (!address) return;
 
   geocoder.geocode({ address: address }, (results, status) => {
     if (status !== 'OK') {
-      // console.error(
-      //   'Geocode was not successful for the following reason: ' + status,
-      // );
       return;
     }
 
@@ -149,418 +100,70 @@ const geocodeAddress = async (address, type) => {
         url: getIconUrlByType(type),
         scaledSize: new google.maps.Size(40, 40),
       },
-      // restaurantAddress: address,
     });
   });
 };
 
-// 정렬 방식 선택 시 모든 식당 데이터
-document.querySelector('.sort').addEventListener('click', e => {
-  const sortType = document.querySelector('.sortType');
-  const sortArticle = document.querySelector('.sortArticle');
+// 선택된 정렬에 따라 api 요청
+const sortingTextToUrl = {
+  평점순: '/api/restaurant/rating',
+  최신등록순: '/api/restaurant/all',
+  default: '/api/restaurant/like',
+};
 
-  if (e.target.classList.contains('sortingMethod')) {
-    document.querySelector('.sorting').textContent = e.target.textContent;
-    sortTypeValue = e.target.textContent;
-    currentPage = 1;
-    fetchData();
-    drawPagination(currentPage);
-  }
-  sortType.classList.toggle('active');
-  sortArticle.classList.toggle('active');
-});
+const getUrl = () => {
+  const baseUrl =
+    sortingTextToUrl[sorting.textContent] || sortingTextToUrl.default;
+  return `${baseUrl}?page=${currentPage}`;
+};
 
-// 모든 식당 클릭 시 정렬 아이콘 삽입, 모든 식당 데이터 렌더
-document.querySelector('#allRestaurants1').addEventListener('change', () => {
-  currentPage = 1;
-  document.querySelector('#searchNameMenu div:last-child').style.display =
-    'none';
-  document.querySelector('.sortContainer').style.display = 'flex';
-  fetchData();
-  drawPagination(currentPage);
-});
-
-document.querySelector('#allRestaurants2').addEventListener('change', () => {
-  currentPage = 1;
-  styleContainer.classList.add('invisible');
-  tagContainer.classList.add('invisible');
-  tagNstyleBtn.style.display = 'none';
-  document.querySelector('.sortContainer').style.display = 'flex';
-  fetchData();
-  drawPagination(currentPage);
-});
-
-// 검색 방식
-searchName.addEventListener('click', e => {
-  e.target.classList.add('clicked');
-  searchType.classList.remove('clicked');
-  formContainer.classList.remove('searchInvisible');
-  tagNstyle.classList.add('searchInvisible');
-  document.querySelector('#allRestaurants1').checked = true;
-  document.querySelector('.sortContainer').style.display = 'flex';
-  fetchData();
-  drawPagination(currentPage);
-});
-
-searchType.addEventListener('click', e => {
-  e.target.classList.add('clicked');
-  searchName.classList.remove('clicked');
-  tagNstyle.classList.remove('searchInvisible');
-  formContainer.classList.add('searchInvisible');
-  styleContainer.classList.add('invisible');
-  tagContainer.classList.add('invisible');
-  tagNstyleBtn.style.display = 'none';
-  document.querySelector('.sortContainer').style.display = 'flex';
-  document.querySelector('#searchNameMenu div:nth-child(2)').style.display =
-    'none';
-  document.querySelector('#allRestaurants2').checked = true;
-  fetchData();
-  drawPagination(currentPage);
-});
-
-// 검색 방식 세부 설정
-nameRadio.addEventListener('change', () => {
-  searchInput.placeholder = '매장명 검색';
-  document.querySelector('#searchNameMenu div:last-child').style.display =
-    'block';
-  document.querySelector('.sortContainer').style.display = 'none';
-});
-
-menuRadio.addEventListener('change', () => {
-  searchInput.placeholder = '메뉴명 검색';
-  document.querySelector('#searchNameMenu div:last-child').style.display =
-    'block';
-  document.querySelector('.sortContainer').style.display = 'none';
-});
-
-tagRadio.addEventListener('change', () => {
-  tagContainer.classList.remove('invisible');
-  styleContainer.classList.add('invisible');
-
-  tags = [];
-
-  const tagElements = document.querySelectorAll('.tag');
-  tagElements.forEach(tag => {
-    tag.classList.remove('tagActive');
-  });
-
-  tagsMore.innerText = '더보기';
-  tagContainer.style.height = '30px';
-  tagNstyleBtn.style.display = 'inline-block';
-  document.querySelector('.sortContainer').style.display = 'none';
-});
-
-styleRadio.addEventListener('change', () => {
-  styleContainer.classList.remove('invisible');
-  tagContainer.classList.add('invisible');
-
-  const tagElements = document.querySelectorAll('.tag');
-  tagElements.forEach(tag => {
-    tag.classList.remove('tagActive');
-  });
-
-  stylesMore.innerText = '더보기';
-  tagContainer.style.height = '30px';
-  tagNstyleBtn.style.display = 'inline-block';
-  document.querySelector('.sortContainer').style.display = 'none';
-});
-
-// 카테고리 더보기 이벤트
-stylesMore.addEventListener('click', e => {
-  const styleContainer = document.querySelector('.styleContainer');
-
-  if (e.target.innerText === '더보기') {
-    e.target.innerText = '접기';
-    styleContainer.style.height = 'initial';
-  } else {
-    e.target.innerText = '더보기';
-    styleContainer.style.height = '30px';
-  }
-});
-
-// 태그 더보기 이벤트
-tagsMore.addEventListener('click', e => {
-  const tagContainer = document.querySelector('.tagContainer');
-
-  if (e.target.innerText === '더보기') {
-    e.target.innerText = '접기';
-    tagContainer.style.height = 'initial';
-  } else {
-    e.target.innerText = '더보기';
-    tagContainer.style.height = '30px';
-  }
-});
-
-// 선택된 태그 배열화해 저장
-document.addEventListener('click', e => {
-  const tag = e.target.closest('.tag');
-
-  if (tag) {
-    if (tag.classList.contains('tagActive')) {
-      tag.classList.remove('tagActive');
-      if (tag.innerText[0] === '#') {
-        tags = tags.filter(item => item !== tag.id);
-      }
-    } else {
-      tag.classList.add('tagActive');
-      if (tag.innerText[0] === '#') {
-        tags.push(tag.id);
-      }
-    }
-  }
-});
-
-// 매장, 메뉴명 검색 시 데이터 요청
-searchNameMenu.addEventListener('submit', e => {
-  e.preventDefault();
-
-  const query = searchInput.value;
-  let apiUrl;
-
-  if (nameRadio.checked) {
-    apiUrl = `/api/restaurant/search?page=1&q=${query}`;
-  } else if (menuRadio.checked) {
-    apiUrl = `/api/menu/search?q=${query}&page=1`;
-  }
-
-  axios
-    .get(apiUrl)
-    .then(response => {
-      initMap();
-      clearMarkers();
-
-      // if (nameRadio.checked) {
-      //   for (const restaurant of response.data.rows) {
-      //     geocodeAddress(restaurant.restaurant_address);
-      //   }
-      // } else {
-
-      for (const data of response.data.rows) {
-        if (data.restaurant_address) {
-          geocodeAddress(data.restaurant_address, data.restaurant_type_id);
-        } else {
-          geocodeAddress(
-            data.Restaurant.restaurant_address,
-            data.Restaurant.restaurant_type_id,
-          );
-        }
-      }
-      // }
-
-      Math.ceil(response.data.count / 20)
-        ? (totalPages = Math.ceil(response.data.count / 20))
-        : (totalPages = 1);
-
-      updatePage(response.data);
-      drawPagination(1);
-
-      document.querySelector('.sorting').textContent = '인기순';
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
-
-// 카테고리, 태그명 검색 시 데이터 요청
-tagNstyleBtn.addEventListener('click', e => {
-  if (tagRadio.checked) {
-    tagQuery = '';
-    for (let i = 0; i < tags.length; i++) {
-      tagQuery += `tag${i + 1}=${tags[i]}&`;
-    }
-    apiUrl = `/api/tag/search?${tagQuery}page=1`;
-  } else if (styleRadio.checked) {
-    const styleRadio = document.querySelector(
-      '.styleContainer input[type="radio"]:checked',
-    );
-    style = styleRadio.id;
-    apiUrl = `/api/restaurant_type/${style}?page=1`;
-  }
-
-  axios
-    .get(apiUrl)
-    .then(response => {
-      const restaurants = response.data;
-
-      Math.ceil(response.data.count / 20)
-        ? (totalPages = Math.ceil(response.data.count / 20))
-        : (totalPages = 1);
-
-      updatePage(restaurants);
-      drawPagination(1);
-
-      clearMarkers();
-      for (const data of response.data.rows) {
-        if (data.restaurant_address) {
-          geocodeAddress(data.restaurant_address, data.restaurant_type_id);
-        } else {
-          geocodeAddress(
-            data.Restaurant.restaurant_address,
-            data.Restaurant.restaurant_type_id,
-          );
-        }
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-});
-
-// 클릭된 식당 지도 중앙으로 이동, 찜 이벤트
-document
-  .querySelector('.allRestaurantContainer')
-  .addEventListener('click', async e => {
-    const target = e.target;
-
-    const restaurantContainer = target.closest('.restaurantContainer');
-
-    if (restaurantContainer) {
-      const restaurantAddress = restaurantContainer.dataset.id;
-
-      geocoder.geocode({ address: restaurantAddress }, (results, status) => {
-        if (status == 'OK') {
-          map.setCenter(results[0].geometry.location);
-
-          const targetMarker = markers.find(marker =>
-            marker.getPosition().equals(results[0].geometry.location),
-          );
-
-          if (targetMarker) {
-            if (currentExpandedMarker) {
-              // 이전에 확대된 마커를 원래 크기로 복원
-              const originalIcon = {
-                ...currentExpandedMarker.getIcon(),
-                scaledSize: new google.maps.Size(40, 40),
-                anchor: new google.maps.Point(20, 20),
-              };
-              currentExpandedMarker.setIcon(originalIcon);
-              currentExpandedMarker.setZIndex(1); // 원래 zIndex로 복원
-            }
-
-            // 새로운 마커 확대
-            const newIcon = {
-              ...targetMarker.getIcon(),
-              size: new google.maps.Size(50, 50), // 원래 이미지의 크기
-              origin: new google.maps.Point(0, 0), // 이미지의 시작점
-              scaledSize: new google.maps.Size(50, 50), // 화면에 표시될 이미지의 크기
-              anchor: new google.maps.Point(25, 25),
-              optimized: false,
-            };
-            targetMarker.setIcon(newIcon);
-            targetMarker.setZIndex(9999); // 높은 zIndex로 설정하여 가장 위에 올림
-
-            // 현재 확대된 마커 업데이트
-            currentExpandedMarker = targetMarker;
-          }
-        } else {
-          console.log('주소 변환 실패 ' + status);
-        }
-      });
-    }
-
-    if (target.classList.contains('heart')) {
-      const restaurant_id = target.id;
-      const currentSrc = target.getAttribute('src');
-
-      if (!userInfo) {
-        alert('로그인 유저만 가능합니다.');
-      } else if (currentSrc === '/static/img/heart.png') {
-        try {
-          const response = await axios({
-            method: 'POST',
-            url: `/api/like`,
-            data: { restaurant_id },
-          });
-
-          if (response.status === 201) {
-            alert('찜 목록에 추가되었습니다.');
-            e.target.setAttribute('src', '/static/img/heartFilled.png');
-          }
-        } catch (error) {
-          console.error('에러 정보:', error);
-          alert('찜 목록에 추가하는 것을 실패했습니다.');
-        }
-      } else if (currentSrc === '/static/img/heartFilled.png') {
-        try {
-          const response = await axios({
-            method: 'DELETE',
-            url: `/api/like`,
-            data: { restaurant_id },
-          });
-
-          if (response.status === 200) {
-            alert('찜 목록에서 삭제되었습니다.');
-            e.target.setAttribute('src', '/static/img/heart.png');
-          }
-        } catch (error) {
-          console.error('에러 정보:', error);
-          alert('찜 목록에서 삭제하는 것을 실패했습니다.');
-        }
-      }
-    }
-  });
-
-// 서버에 데이터 요청
 const fetchData = async (url = '') => {
-  if (!url) {
-    if (sortTypeValue === '인기순') {
-      url = `/api/restaurant/like?page=${currentPage}`;
-    } else if (sortTypeValue === '평점순') {
-      url = `/api/restaurant/rating?page=${currentPage}`;
-    } else {
-      url = `/api/restaurant/all?page=1`;
-    }
-  }
+  url = url || getUrl();
 
   try {
     const response = await axios.get(url);
-    const restaurants = response.data;
-
     totalPages = Math.ceil(response.data.count / 20);
-    updatePage(restaurants);
-    drawPagination(currentPage);
-
-    await initMap();
-    clearMarkers();
-
-    for (const data of response.data.rows) {
-      if (data.restaurant_address) {
-        geocodeAddress(data.restaurant_address, data.restaurant_type_id);
-      } else {
-        geocodeAddress(
-          data.Restaurant.restaurant_address,
-          data.Restaurant.restaurant_type_id,
-        );
-      }
-    }
-
+    updateUI(response.data);
     return response.data.rows;
   } catch (error) {
     console.error('에러 발생 ', error);
+    alert('데이터를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
   }
 };
 
-// 식당 목록 렌더
+const updateUI = data => {
+  updatePage(data);
+  drawPagination(currentPage);
+  updateMap(data.rows);
+};
+
+const updateMap = async restaurants => {
+  await initMap();
+  clearMarkers();
+  restaurants.forEach(data => {
+    const address =
+      data.restaurant_address ?? data.Restaurant.restaurant_address;
+    const type_id =
+      data.restaurant_type_id ?? data.Restaurant.restaurant_type_id;
+    geocodeAddress(address, type_id);
+  });
+};
+
 const updatePage = data => {
-  const restaurantContainer = document.querySelector('.restaurants');
-  const totalRestaurants = document.querySelector('.totalRestaurants');
-  restaurantContainer.innerHTML = '';
+  const restaurantContainer = $('.restaurants');
+  const totalRestaurants = $('.totalRestaurants');
+
   totalRestaurants.innerText = `${data.count || 0}개의 매장`;
+  restaurantContainer.innerHTML = '';
 
   if (Array.isArray(data.rows) && data.rows.length > 0) {
     data.rows.forEach(item => {
-      if (item.RestaurantImages) {
-        const article = createRestaurantArticle(item, item.RestaurantImages);
-
-        restaurantContainer.appendChild(article);
-      } else {
-        const article = createRestaurantArticle(
-          item.Restaurant,
-          item.Restaurant.RestaurantImages,
-        );
-
-        restaurantContainer.appendChild(article);
-      }
+      const restaurantData = item.RestaurantImages ? item : item.Restaurant;
+      const article = createRestaurantArticle(
+        restaurantData,
+        restaurantData.RestaurantImages,
+      );
+      restaurantContainer.appendChild(article);
     });
   } else {
     restaurantContainer.innerHTML =
@@ -568,13 +171,30 @@ const updatePage = data => {
   }
 };
 
-// 페이지네이션 렌더
+const createPageElement = (pageNumber, isActive) => {
+  const pageElement = document.createElement('a');
+  pageElement.textContent = pageNumber;
+  pageElement.href = '#up';
+  pageElement.className = 'page-number';
+  pageElement.onclick = () => changePage(pageNumber);
+  if (isActive) pageElement.classList.add('active');
+  return pageElement;
+};
+
 const drawPagination = centerPage => {
-  const container = document.querySelector('#pagination-container');
-  const oldPageNumbers = document.querySelectorAll('.page-number');
+  const container = $('#pagination-container');
+  $All('.page-number').forEach(el => el.remove());
+  totalPages = totalPages || 1;
 
-  oldPageNumbers.forEach(el => el.remove());
+  let [startPage, endPage] = getPageRange(centerPage);
 
+  for (let i = startPage; i <= endPage; i++) {
+    const pageElement = createPageElement(i, i === centerPage);
+    container.insertBefore(pageElement, $('#nextPage'));
+  }
+};
+
+const getPageRange = centerPage => {
   if (totalPages === 0) {
     totalPages = 1;
   }
@@ -582,34 +202,43 @@ const drawPagination = centerPage => {
   let startPage;
   let endPage;
 
-  if (totalPages >= 5) {
-    startPage = Math.max(centerPage - 2, 1);
-    endPage = Math.min(centerPage + 2, totalPages);
-
-    if (startPage === 1) {
-      endPage = 5;
-    } else if (endPage === totalPages) {
-      startPage = totalPages - 4;
-    }
-  } else {
+  if (totalPages <= 5) {
     startPage = 1;
     endPage = totalPages;
+  } else {
+    // centerPage가 3 이하일 경우
+    if (centerPage <= 3) {
+      startPage = 1;
+      endPage = 5;
+    }
+    // centerPage가 (totalPages - 2) 이상일 경우
+    else if (centerPage >= totalPages - 2) {
+      startPage = totalPages - 4;
+      endPage = totalPages;
+    }
+    // 그 외의 경우
+    else {
+      startPage = centerPage - 2;
+      endPage = centerPage + 2;
+    }
   }
 
-  for (let i = startPage; i <= endPage; i++) {
-    const pageElement = document.createElement('a');
-    pageElement.textContent = i;
-    pageElement.href = '#up';
-    pageElement.className = 'page-number';
+  return [startPage, endPage];
+};
 
-    pageElement.onclick = () => {
-      changePage(i);
-    };
-
-    if (i === centerPage) {
-      pageElement.classList.add('active');
-    }
-    container.insertBefore(pageElement, document.querySelector('#nextPage'));
+const getSearchUrl = () => {
+  if (nameRadio.checked) {
+    return `/api/restaurant/search?page=${currentPage}&q=${searchInput.value}`;
+  }
+  if (menuRadio.checked) {
+    return `/api/menu/search?q=${searchInput.value}&page=${currentPage}`;
+  }
+  if (categoryRadio.checked) {
+    return `/api/restaurant_type/${category}?page=${currentPage}`;
+  }
+  if (tagRadio.checked) {
+    const query = tags.map((tag, i) => `tag${i + 1}=${tag}`).join('&');
+    return `/api/tag/search?${query}&page=${currentPage}`;
   }
 };
 
@@ -617,64 +246,262 @@ const changePage = newPage => {
   if (newPage < 1 || newPage > totalPages) return;
   currentPage = newPage;
   drawPagination(currentPage);
-
-  let url;
-  let query;
-
-  if (nameRadio.checked) {
-    query = searchInput.value;
-    url = `/api/restaurant/search?page=${currentPage}&q=${query}`;
-    console.log(url);
-  } else if (menuRadio.checked) {
-    query = searchInput.value;
-    url = `/api/menu/search?q=${query}&page=${currentPage}`;
-  } else if (styleRadio.checked) {
-    query = style;
-    url = `/api/restaurant_type/${query}?page=${currentPage}`;
-  } else if (tagRadio.checked) {
-    query = tags.map((tag, i) => `tag${i + 1}=${tag}`).join('&');
-    url = `/api/tag/search?${query}&page=${currentPage}`;
-  }
-  fetchData(url);
+  fetchData(getSearchUrl());
 };
 
-// 세로모드 드래그 이벤트
-let startY = 0;
+// 클릭된 식당 지도 중앙으로 이동, 찜 이벤트
+$('.allRestaurantContainer').addEventListener('click', async e => {
+  const target = e.target;
 
-const hamburger = document.querySelector('.hamburgerIcon');
-const mapElement = document.querySelector('.map');
-const restaurantListElement = document.querySelector('.restaurantList');
+  const restaurantContainer = target.closest('.restaurantContainer');
 
-window.addEventListener('resize', function () {
-  if (window.innerWidth > 768) {
-    mapElement.style.height = '93vh';
-    restaurantListElement.style.height = '93vh';
-  } else {
-    mapElement.style.height = '43vh';
-    restaurantListElement.style.height = '50vh';
+  if (restaurantContainer) {
+    const restaurantAddress = restaurantContainer.dataset.id;
+
+    geocoder.geocode({ address: restaurantAddress }, (results, status) => {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+
+        const targetMarker = markers.find(marker =>
+          marker.getPosition().equals(results[0].geometry.location),
+        );
+
+        if (targetMarker) {
+          if (currentExpandedMarker) {
+            // 이전에 확대된 마커를 원래 크기로 복원
+            const originalIcon = {
+              ...currentExpandedMarker.getIcon(),
+              scaledSize: new google.maps.Size(40, 40),
+              anchor: new google.maps.Point(20, 20),
+            };
+            currentExpandedMarker.setIcon(originalIcon);
+            currentExpandedMarker.setZIndex(1); // 원래 zIndex로 복원
+          }
+
+          // 새로운 마커 확대
+          const newIcon = {
+            ...targetMarker.getIcon(),
+            size: new google.maps.Size(50, 50), // 원래 이미지의 크기
+            origin: new google.maps.Point(0, 0), // 이미지의 시작점
+            scaledSize: new google.maps.Size(50, 50), // 화면에 표시될 이미지의 크기
+            anchor: new google.maps.Point(25, 25),
+            optimized: false,
+          };
+          targetMarker.setIcon(newIcon);
+          targetMarker.setZIndex(9999); // 높은 zIndex로 설정하여 가장 위에 올림
+
+          // 현재 확대된 마커 업데이트
+          currentExpandedMarker = targetMarker;
+        }
+      } else {
+        console.log('주소 변환 실패 ' + status);
+      }
+    });
+  }
+
+  if (target.classList.contains('heart')) {
+    const restaurant_id = target.id;
+    const currentSrc = target.getAttribute('src');
+
+    if (!userInfo) {
+      alert('로그인 유저만 가능합니다.');
+    } else if (currentSrc === '/static/img/heart.png') {
+      try {
+        const response = await axios({
+          method: 'POST',
+          url: `/api/like`,
+          data: { restaurant_id },
+        });
+
+        if (response.status === 201) {
+          alert('찜 목록에 추가되었습니다.');
+          e.target.setAttribute('src', '/static/img/heartFilled.png');
+        }
+      } catch (error) {
+        console.error('에러 정보:', error);
+        alert('찜 목록에 추가하는 것을 실패했습니다.');
+      }
+    } else if (currentSrc === '/static/img/heartFilled.png') {
+      try {
+        const response = await axios({
+          method: 'DELETE',
+          url: `/api/like`,
+          data: { restaurant_id },
+        });
+
+        if (response.status === 200) {
+          alert('찜 목록에서 삭제되었습니다.');
+          e.target.setAttribute('src', '/static/img/heart.png');
+        }
+      } catch (error) {
+        console.error('에러 정보:', error);
+        alert('찜 목록에서 삭제하는 것을 실패했습니다.');
+      }
+    }
   }
 });
 
-hamburger.addEventListener('dragstart', function (e) {
-  startY = e.clientY;
+// 모든 식당 클릭 시 정렬 아이콘 삽입, 모든 식당 데이터 렌더
+const handleAllRestaurantsChange = element => {
+  element.addEventListener('change', () => {
+    if (element === allRestaurants1) {
+      $('#searchNameMenu div:last-child').style.display = 'none';
+    } else if (element === allRestaurants2) {
+      categoryContainer.classList.add('invisible');
+      tagContainer.classList.add('invisible');
+      tagNcategoryBtn.style.display = 'none';
+    }
+
+    currentPage = 1;
+    searchInput.value = '';
+    sortContainer.style.display = 'flex';
+    fetchData();
+    drawPagination(currentPage);
+  });
+};
+
+// 정렬 방식 선택 시 모든 식당 데이터 반환
+$('.sort').addEventListener('click', e => {
+  if (e.target.classList.contains('sortingMethod')) {
+    sorting.textContent = e.target.textContent;
+    currentPage = 1;
+    fetchData();
+    drawPagination(currentPage);
+  }
+  $('.sortType').classList.toggle('active');
+  $('.sortArticle').classList.toggle('active');
 });
 
-hamburger.addEventListener('dragend', function (e) {
-  let diffY = e.clientY;
+// 검색 방식
+searchName.addEventListener('click', e => {
+  e.target.classList.add('clicked');
+  searchType.classList.remove('clicked');
+  formContainer.classList.remove('searchInvisible');
+  tagNcategory.classList.add('searchInvisible');
+  allRestaurants1.checked = true;
+  sortContainer.style.display = 'flex';
+  $('#searchNameMenu div:nth-child(2)').style.display = 'none';
+  allRestaurants1.checked = true;
+  fetchData();
+  drawPagination(1);
+});
 
-  if (diffY < 300 && startY > 100) {
-    mapElement.style.height = '0';
-    restaurantListElement.style.height = '93vh';
-  } else if (startY < 100) {
-    mapElement.style.height = '43vh';
-    restaurantListElement.style.height = '50vh';
-  } else if (diffY > 500) {
-    mapElement.style.height = '83vh';
-    restaurantListElement.style.height = '10vh';
-  } else {
-    mapElement.style.height = '43vh';
-    restaurantListElement.style.height = '50vh';
+searchType.addEventListener('click', e => {
+  e.target.classList.add('clicked');
+  searchName.classList.remove('clicked');
+  tagNcategory.classList.remove('searchInvisible');
+  formContainer.classList.add('searchInvisible');
+  categoryContainer.classList.add('invisible');
+  tagContainer.classList.add('invisible');
+  tagNcategoryBtn.style.display = 'none';
+  sortContainer.style.display = 'flex';
+  $('#searchNameMenu div:nth-child(2)').style.display = 'none';
+  allRestaurants2.checked = true;
+  fetchData();
+  drawPagination(1);
+});
+
+// 검색 방식 세부 설정
+const setSearchPlaceholderAndStyle = placeholderText => {
+  searchInput.value = '';
+  searchInput.placeholder = placeholderText;
+  $('#searchNameMenu div:last-child').style.display = 'block';
+  sortContainer.style.display = 'none';
+};
+
+const setTagAndCategoryVisibility = (tagVisible, categoryVisible) => {
+  tagContainer.classList.toggle('invisible', !tagVisible);
+  categoryContainer.classList.toggle('invisible', !categoryVisible);
+};
+
+const resetTagStates = () => {
+  tags = [];
+  $All('.tag').forEach(tag => tag.classList.remove('tagActive'));
+};
+
+const setContainerDisplay = moreBtn => {
+  moreBtn.innerText = '더보기';
+  categoryContainer.style.height = '30px';
+  tagContainer.style.height = '30px';
+  tagNcategoryBtn.style.display = 'inline-block';
+};
+
+const addRadioEventListener = (
+  element,
+  placeholder,
+  isTagVisible,
+  isCategoryVisible,
+  moreBtn,
+) => {
+  element.addEventListener('change', () => {
+    setSearchPlaceholderAndStyle(placeholder);
+    setTagAndCategoryVisibility(isTagVisible, isCategoryVisible);
+    resetTagStates();
+    setContainerDisplay(moreBtn);
+  });
+};
+
+addRadioEventListener(nameRadio, '매장명 검색', false, false, null, null);
+addRadioEventListener(menuRadio, '메뉴명 검색', false, false, null, null);
+addRadioEventListener(tagRadio, null, true, false, tagsMore);
+addRadioEventListener(categoryRadio, null, false, true, categoryMore);
+
+// 더보기 이벤트
+const toggleMore = (element, targetContainer) => {
+  element.addEventListener('click', e => {
+    const isMore = e.target.innerText === '더보기';
+    e.target.innerText = isMore ? '접기' : '더보기';
+    targetContainer.style.height = isMore ? 'initial' : '30px';
+  });
+};
+
+const toggleTagActivity = tag => {
+  tag.classList.toggle('tagActive');
+  if (tag.innerText[0] === '#') {
+    tags = tag.classList.contains('tagActive')
+      ? [...tags, tag.id]
+      : tags.filter(item => item !== tag.id);
   }
+};
+
+document.addEventListener('click', e => {
+  const tag = e.target.closest('.tag');
+  if (tag) toggleTagActivity(tag);
+});
+
+handleAllRestaurantsChange(allRestaurants1);
+handleAllRestaurantsChange(allRestaurants2);
+toggleMore(categoryMore, categoryContainer);
+toggleMore(tagsMore, tagContainer);
+
+searchNameMenu.addEventListener('submit', e => {
+  e.preventDefault();
+  currentPage = 1;
+
+  const query = searchInput.value;
+  const apiUrl = nameRadio.checked
+    ? `/api/restaurant/search?page=${currentPage}&q=${query}`
+    : `/api/menu/search?q=${query}&page=${currentPage}`;
+
+  fetchData(apiUrl);
+});
+
+tagNcategoryBtn.addEventListener('click', () => {
+  let apiUrl;
+  currentPage = 1;
+
+  if (tagRadio.checked) {
+    const tagQuery = tags.map((tag, i) => `tag${i + 1}=${tag}`).join('&');
+    apiUrl = `/api/tag/search?${tagQuery}&page=${currentPage}`;
+  } else if (categoryRadio.checked) {
+    const selectedCategory = $(
+      '.categoryContainer input[type="radio"]:checked',
+    );
+    category = selectedCategory.id;
+    apiUrl = `/api/restaurant_type/${category}?page=${currentPage}`;
+  }
+
+  fetchData(apiUrl);
 });
 
 // 식당 컴포넌트 생성
@@ -702,7 +529,7 @@ const createRestaurantArticle = (restaurant, restaurantImg) => {
   ) {
     img.src = restaurantImg[0].restaurant_image_url;
   } else {
-    img.src = '';
+    img.src = '/static/img/commingsoon.jpg';
   }
   img.alt = `${restaurant.restaurant_name} 이미지`;
 
@@ -759,7 +586,7 @@ const createRestaurantArticle = (restaurant, restaurantImg) => {
   const a = document.createElement('a');
   a.className = 'restaurantBtn';
   a.href = `/restaurant/${restaurant.restaurant_id}`;
-  a.textContent = `${restaurant.restaurant_name} 페이지`;
+  a.textContent = '상세 페이지';
 
   divBottom.appendChild(imgRating);
   divBottom.appendChild(pRating);
@@ -799,6 +626,42 @@ const restaurantType = restaurantType => {
   ];
 
   return type[restaurantType - 1];
+};
+
+// 식당 타입에 따른 지도 마커 아이콘
+const getIconUrlByType = type => {
+  switch (type) {
+    case 1:
+      return '/static/img/korean.png';
+    case 2:
+      return '/static/img/chinese.png';
+    case 3:
+      return '/static/img/street.png';
+    case 4:
+      return '/static/img/japanese.png';
+    case 5:
+      return '/static/img/western.png';
+    case 6:
+      return '/static/img/pub.png';
+    case 7:
+      return '/static/img/chicken.png';
+    case 8:
+      return '/static/img/pork.png';
+    case 9:
+      return '/static/img/cafe.png';
+    case 10:
+      return '/static/img/meat.png';
+    case 11:
+      return '/static/img/asian.png';
+    case 12:
+      return '/static/img/dessert.png';
+    case 13:
+      return '/static/img/fast.png';
+    case 14:
+      return '/static/img/convenience.png';
+    default:
+      return '/static/img/korean.png';
+  }
 };
 
 fetchData();

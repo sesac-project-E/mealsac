@@ -90,19 +90,11 @@ exports.postRegister = async (req, res) => {
     });
     if (userid) {
       res.json({ result: false, message: '아이디 중복체크를 해주세요' });
-      // return res.status(400).json({
-      //   status: 'error',
-      //   message: 'The ID that already exists.',
-      // });
     } else if (username) {
       res.json({ result: false, message: '닉네임 중복체크를 해주세요' });
-      // return res.status(400).json({
-      //   status: 'error',
-      //   message: 'This nickname already exists.',
-      // });
     } else {
       const hash = await bcryptPassword(password); // 비밀번호 암호화하여 저장
-      // console.log(password, hash);
+
       await User.create({ user_id, user_name, password: hash });
       res.json({ result: true });
     }
@@ -121,7 +113,6 @@ exports.postLogin = async (req, res) => {
     const user = await User.findOne({
       where: { user_id },
     });
-    console.log(user);
 
     // Step2. 입력된 비밀번호 암호화하여 기존 데이터와 비교
     if (user) {
@@ -149,6 +140,38 @@ exports.postLogin = async (req, res) => {
     res.status(500).json({
       status: 'error',
       message: 'An error occurred while login.',
+    });
+  }
+};
+
+exports.postLogout = (req, res) => {
+  try {
+    if (req.session.userInfo) {
+      req.session.destroy(err => {
+        if (err) {
+          console.error('세션 삭제 도중 에러가 발생했습니다.');
+          return res.status(500).json({
+            status: 'error',
+            message: '로그아웃 중 문제가 발생했습니다.',
+          });
+        }
+
+        res.json({
+          status: 'success',
+          message: '로그아웃 되었습니다.',
+        });
+      });
+    } else {
+      res.status(400).json({
+        status: 'fail',
+        message: '로그인 상태가 아닙니다.',
+      });
+    }
+  } catch (err) {
+    console.error('에러 정보: ', err);
+    res.status(500).json({
+      status: 'error',
+      message: '로그아웃 도중 문제가 발생했습니다.',
     });
   }
 };

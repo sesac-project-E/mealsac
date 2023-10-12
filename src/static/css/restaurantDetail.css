@@ -61,6 +61,7 @@ p {
 .heart {
   width: 23px;
   height: 25px;
+  cursor: pointer;
 }
 
 .rating {
@@ -202,6 +203,7 @@ section h3 {
   background-color: #e0f0d1;
   border: 2px solid #89d83f;
   border-radius: 25px;
+  cursor: pointer;
 }
 
 .review > div {
@@ -234,6 +236,14 @@ section h3 {
   width: 100%;
   display: inline-block;
   overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+  }
 }
 
 .reviewImg img {
@@ -244,6 +254,10 @@ section h3 {
 
 .reviewContent {
   font-size: 18px;
+}
+
+.thumbsIcon {
+  cursor: pointer;
 }
 
 .thumbsIcon,
@@ -259,6 +273,7 @@ section h3 {
 
 .reviewContainer .editNdelete {
   justify-content: end;
+  cursor: pointer;
 }
 
 .reviewContainer .editNdelete input {
@@ -274,14 +289,12 @@ section h3 {
   margin-top: 15px;
 
   & button {
-    padding: 0 10px;
-    background-color: #fff;
-    border: 2px solid #89d83f;
-    border-radius: 25px;
-
-    &:hover {
-      background-color: #e0f0d1;
-    }
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    color: #4dda67;
+    margin: 20px 50px 50px 50px;
+    cursor: pointer;
   }
 }
 

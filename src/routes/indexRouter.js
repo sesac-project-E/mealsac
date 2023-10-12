@@ -75,6 +75,15 @@ indexRouter.get('/restaurants', (req, res) => {
   });
 });
 
+indexRouter.get('/search/menu', async (req, res) => {
+  const query = req.query.q;
+  const restaurants = await restaurantController.getSearchDataRestaurantByName(
+    req,
+    res,
+  );
+  res.render('searchMenu', { query, restaurants });
+});
+
 indexRouter.get('/restaurant/:restaurant_id', async (req, res) => {
   const userInfo = req.session.userInfo;
   const restaurantData = await restaurantController.getRestaurant(req, res);
@@ -89,7 +98,9 @@ indexRouter.get('/restaurant/:restaurant_id', async (req, res) => {
 });
 
 indexRouter.get('/board', (req, res) => {
-  res.render('board');
+  const userInfo = req.session.userInfo ? req.session.userInfo : false;
+
+  res.render('board', { userInfo });
 });
 
 indexRouter.get('/post/write', (req, res) => {
@@ -98,7 +109,6 @@ indexRouter.get('/post/write', (req, res) => {
 
 indexRouter.get('/post/edit/:post_id', postController.getEditPost);
 
-//post_id로 개별 포스팅 조회
 indexRouter.get('/post/:post_id', postController.getPost);
 
 indexRouter.get('/random', (req, res) => {

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <%- include('./common/commonHead.ejs') %>
-    <title>mainPage</title>
+    <title>MealSac</title>
     <link rel="stylesheet" href="/static/css/index.css" />
     <script defer src="../static/js/index.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -46,14 +46,14 @@
             <p>Taste the World Near You</p>
             <p>With <span>MEALSAC</span></p>
           </div>
-          <!-- <div class="search">
+          <div class="search">
             <img src="../static/img/explore.png" alt="검색" />
             <input
               type="text"
               class="searchInput"
               placeholder="What is today's menu?"
             />
-          </div> -->
+          </div>
         </div>
       </div>
       <button id="scroll">
@@ -109,10 +109,15 @@
                 class="card"
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
+                <% if (restaurant.RestaurantImages &&
+                restaurant.RestaurantImages.length > 0) { %>
                 <img
                   src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
+                <% } else { %>
+                <img src="../static/img/commingsoon.jpg" alt="이미지 준비중" />
+                <% } %>
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
                 <div class="categoryRating">
                   <p class="category"><%= restaurant.category %></p>
@@ -135,10 +140,15 @@
                 class="card"
                 onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
               >
+                <% if (restaurant.RestaurantImages &&
+                restaurant.RestaurantImages.length > 0) { %>
                 <img
                   src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                   alt="<%= restaurant.restaurant_name %>"
                 />
+                <% } else { %>
+                <img src="../static/img/commingsoon.jpg" alt="이미지 준비중" />
+                <% } %>
                 <p class="restaurantName"><%= restaurant.restaurant_name %></p>
                 <div class="categoryRating">
                   <p class="category"><%= restaurant.category %></p>
@@ -286,10 +296,18 @@
                       class="likeCard"
                       onclick="window.location.href='/restaurant/<%= restaurant.restaurant_id %>'"
                     >
+                      <% if (restaurant.RestaurantImages &&
+                      restaurant.RestaurantImages.length > 0) { %>
                       <img
                         src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
                         alt="<%= restaurant.restaurant_name %>"
                       />
+                      <% } else { %>
+                      <img
+                        src="../static/img/commingsoon.jpg"
+                        alt="이미지 준비중"
+                      />
+                      <% } %>
                       <p class="restaurantName">
                         <%= restaurant.restaurant_name %>
                       </p>

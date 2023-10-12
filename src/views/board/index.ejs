@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <%- include('../common/commonHead.ejs') %>
     <title>MealSac | 게시판</title>
@@ -94,5 +94,8 @@
         </div>
       </div>
     </div>
+    <script>
+      const userInfo = <%- JSON.stringify(userInfo || null) %>;
+    </script>
   </body>
 </html>

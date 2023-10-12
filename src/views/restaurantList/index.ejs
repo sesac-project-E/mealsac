@@ -31,7 +31,7 @@
               <button type="submit">검색</button>
             </div>
           </div>
-          <div class="tagNstyle searchInvisible">
+          <div class="tagNcategory searchInvisible">
               <input type="radio" name="search" id="allRestaurants2">
               <label for="allRestaurants2">모든 식당</label>
               <input type="radio" name="search" id="category">
@@ -39,7 +39,7 @@
               <input type="radio" name="search" id="tag">
               <label for="tag">태그 검색</label>
             </form>
-            <div class="styleContainer">
+            <div class="categoryContainer">
               <section class="more">
                 <input type="radio" name="style" id="korean">
                 <label for="korean">한식</label>
@@ -70,7 +70,7 @@
                 <input type="radio" name="style" id="convenience">
                 <label for="convenience">편의점</label>
               </section>
-              <div class="stylesMore">더보기</div>
+              <div class="categoryMore">더보기</div>
             </div>
           <div class="tagContainer invisible">
             <section class="more tags">
@@ -86,7 +86,7 @@
             </section>
             <div class="tagsMore">더보기</div>
           </div>
-          <button class="tagNstyleBtn">검색</button>
+          <button class="tagNcategoryBtn">검색</button>
         </div>
           </section>
           <section class="result">
@@ -100,7 +100,7 @@
                     <ul class="sortType">
                       <li class="sortingMethod active">인기순</li>
                       <li class="sortingMethod">평점순</li>
-                      <li class="sortingMethod">최신 등록순</li>
+                      <li class="sortingMethod">최신등록순</li>
                     </ul>
                   </article>
                 </section>
@@ -130,6 +130,5 @@
        const userInfo = null;
       <% } %>
     </script>
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"></script> -->
   </body>
 </html>

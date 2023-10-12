@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('../common/commonHead.ejs') %>
+    <title>MealSac | 메뉴 검색</title>
+    <link rel="stylesheet" href="/static/css/searchMenu.css" />
+    <script defer src="../static/js/searchMenu.js"></script>
+  </head>
+  <body>
+    <% const restaurantType = restaurantType => { const type = [ '한식', '중식',
+    '분식', '일식', '양식', '펍', '치킨', '족발, 보쌈', '카페', '고기구이',
+    '아시안', '디저트', '패스트푸드', '편의점', ]; return type[restaurantType -
+    1]; }; %>
+
+    <!-- Header -->
+    <%- include('../common/header.ejs') %>
+    <!--  -->
+    <div id="searchContainer">
+      <div id="infoContainer">
+        <div>
+          <p>Taste the World Near You</p>
+          <p>With <span>MEALSAC</span></p>
+        </div>
+        <div class="search">
+          <img src="../static/img/explore.png" alt="검색" />
+          <input
+            type="text"
+            class="searchInput"
+            placeholder="What is today's menu?"
+            value="<%= query %>"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <% if (Array.isArray(restaurants) && restaurants.length > 0) { %> <%
+      restaurants.forEach(restaurant => { %>
+      <article
+        class="restaurantContainer container"
+        data-id="<%= restaurant.restaurant_address %>"
+      >
+        <% if (restaurant.RestaurantImages && restaurant.RestaurantImages.length
+        > 0) { %>
+        <img
+          src="<%= restaurant.RestaurantImages[0].restaurant_image_url %>"
+          alt="<%= restaurant.restaurant_name %>"
+          class="restaurantImg"
+        />
+        <% } else { %>
+        <img
+          src="../static/img/commingsoon.jpg"
+          alt="이미지 준비중"
+          class="restaurantImg"
+        />
+        <% } %>
+        <div class="restaurantInfo">
+          <div>
+            <h3 class="restaurantName"><%= restaurant.restaurant_name %></h3>
+          </div>
+          <p class="address">
+            <%= (restaurant.restaurant_address && restaurant.restaurant_address)
+            ? restaurant.restaurant_address : '식당 주소 없음' %> <%=
+            restaurant.restaurant_address %>
+          </p>
+          <p class="type">
+            <%= (restaurant.restaurant_type_id && restaurant.restaurant_type_id)
+            ? restaurantType(restaurant.restaurant_type_id) : '식당 타입 없음'
+            %>
+          </p>
+
+          <div>
+            <img src="/static/img/star.png" alt="평점 아이콘" class="rating" />
+            <p class="rate"><%= restaurant.rating %></p>
+            <img
+              src="/static/img/speechBalloon.png"
+              alt="댓글 아이콘"
+              class="comment"
+            />
+            <p class="review"><%= restaurant.reviews_count %></p>
+            <a
+              href="/restaurant/<%= restaurant.restaurant_id %>"
+              class="restaurantBtn"
+            >
+              상세 페이지
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <% }) %> <% } else { %>
+      <div class="none"><p>"<%= query %>"에 대한 검색 결과가 없습니다.</p></div>
+      <% } %>
+    </div>
+
+    <!-- Footer -->
+    <%- include('../common/footer.ejs') %>
+  </body>
+</html>

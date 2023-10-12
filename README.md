@@ -18,7 +18,7 @@
 
 <br>
 
-[<img src="./src/static/img/logo2.png" style="background-color: #fff">](https://mealsac-473f548ea790.herokuapp.com/)
+[<img src="./src/static/img//readmeImage/readmelogo.png">](https://mealsac-473f548ea790.herokuapp.com/)
 
 #### 🔍 배너 클릭해서 사이트 구경하기!
 
@@ -203,17 +203,17 @@
 
 <br/>
 
-### 🪄 **기술 명세서**
+### 🪄 **기능 명세서**
 
-<h align="center">[<img src="/static/img/">](https://www.notion.so/93e38d8e51db40c09af9555a12758671?v=80d1a5c5840a4a5584e7cc27a30a9d99)</h>
+<h align="center">[<img src="./src/static/img/readmeImage/functionSpecification.png">](https://www.notion.so/93e38d8e51db40c09af9555a12758671?v=80d1a5c5840a4a5584e7cc27a30a9d99)</h>
 
-#### 기술명세서 자세히 보고 싶다면 사진 클릭
+#### 기능명세서 자세히 보고 싶다면 사진 클릭
 
 <br/>
 
 ### 🧬 **ERD(Entity Relationship Diagram)**
 
-<h align="center"><img src="./src/static/img/mealsac_ERD.png" width="1148" height="500"></h>
+<h align="center"><img src="./src/static/img/readmeImage/mealsac_ERD.png" width="1148" height="500"></h>
 <br><br>
 
 <br/>

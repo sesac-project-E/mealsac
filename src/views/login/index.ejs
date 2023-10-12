@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <%- include('../common/commonHead.ejs') %>
     <title>MealSac | 로그인</title>
@@ -22,6 +22,7 @@
             name="inputId"
             id="inputId"
             placeholder="아이디를 입력하세요"
+            value="test1"
             required
           />
         </div>
@@ -31,6 +32,7 @@
             name="inputPw"
             id="inputPw"
             placeholder="비밀번호를 입력하세요"
+            value="a1234567"
           />
           <br />
         </div>
@@ -64,8 +66,7 @@
         />
         카카오로 로그인
       </button>
-      <div class="already">
-        <a href="/searchUser">아이디・비밀번호 찾기</a>
+      <div id="register">
         <a href="/api/user/register">회원가입</a>
       </div>
     </div>
