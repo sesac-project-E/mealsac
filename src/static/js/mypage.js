@@ -7,6 +7,25 @@ const postsPerPage = 5;
 const likesPerPage = 5;
 let likesData = [];
 
+// 회원정보 버튼
+function getCookie(name) {
+  let value = '; ' + document.cookie;
+  let parts = value.split('; ' + name + '=');
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+isLoggedIn = getCookie('loginStatus');
+console.log(isLoggedIn);
+
+if (isLoggedIn === 'loggedIn') {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'profile';
+  btn.textContent = '회원정보';
+  btn.addEventListener('click', () => (location.href = 'profile'));
+  document.querySelector('.container').appendChild(btn);
+}
+
 function paginateReviews(reviews, page, perPage) {
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;

@@ -74,20 +74,14 @@
                   class="callIcon"
                 />전화하기
               </div>
-              <div
-                class="button"
-                onclick="document.location='<%= restaurant.restaurant_naver %>'"
-              >
+              <div class="button" onclick="locationMap('naver')">
                 <img
                   src="/static/img/naver-logo.png"
                   alt="네이버 지도 길찾기"
                   class="naverIcon"
                 />길찾기
               </div>
-              <div
-                class="button"
-                onclick="document.location='<%= restaurant.restaurant_kakao %>'"
-              >
+              <div class="button" onclick="locationMap('kakao')">
                 <img
                   src="/static/img/kakao-logo.png"
                   alt="카카오 지도 길찾기"
@@ -125,7 +119,13 @@
         <section id="review">
           <div>
             <h3 class="noMargin">후기</h3>
+            <% if(typeof userInfo === 'undefined') { %>
+            <button id="showReviewForm" style="display: none">
+              후기 작성하기
+            </button>
+            <% } else { %>
             <button id="showReviewForm">후기 작성하기</button>
+            <% } %>
           </div>
           <form
             id="reviewForm"
