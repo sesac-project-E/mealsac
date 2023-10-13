@@ -75,11 +75,7 @@ callButton.addEventListener('click', () => {
     return;
   }
 
-  if (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent,
-    )
-  ) {
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     window.location.href = `tel:${phoneNumber}`;
   } else {
     navigator.clipboard
