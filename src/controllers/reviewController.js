@@ -84,8 +84,8 @@ exports.postReview = async (req, res) => {
       { transaction },
     );
 
-    const reviews_count = restaurant.dataValues.reviews_count;
-    const restaurantRating = restaurant.dataValues.rating;
+    const reviews_count = Number(restaurant.dataValues.reviews_count);
+    const restaurantRating = Number(restaurant.dataValues.rating);
 
     const newReview = await Review.create(
       {
@@ -120,7 +120,7 @@ exports.postReview = async (req, res) => {
 
     const images = await Promise.all(imagePromises);
     const updateRating =
-      (restaurantRating * reviews_count + rating) / (reviews_count + 1);
+      (restaurantRating * reviews_count + Number(rating)) / (reviews_count + 1);
     await Restaurant.update(
       {
         reviews_count: reviews_count + 1,
@@ -313,7 +313,7 @@ exports.editReview = async (req, res) => {
     const review = await Review.findOne({
       where: { review_id, user_id },
     });
-    const oldReviewRating = review.dataValues.rating;
+    const oldReviewRating = Number(review.dataValues.rating);
     if (!review) {
       return res.status(404).json({
         status: 'error',
@@ -326,13 +326,13 @@ exports.editReview = async (req, res) => {
 
     await review.save();
     const restaurant_id = review.restaurant_id;
-    const currRating = review.rating;
+    const currRating = Number(review.rating);
     const restaurant = await Restaurant.findOne({
       attributes: ['restaurant_id', 'reviews_count', 'rating'],
       where: { restaurant_id: restaurant_id },
     });
-    const reviews_count = restaurant.dataValues.reviews_count;
-    const oldRating = restaurant.dataValues.rating;
+    const reviews_count = Number(restaurant.dataValues.reviews_count);
+    const oldRating = Number(restaurant.dataValues.rating);
     const updateRating =
       (oldRating * reviews_count - oldReviewRating + currRating) /
       reviews_count;
@@ -392,7 +392,7 @@ exports.deleteReview = async (req, res) => {
     }
 
     const restaurant_id = review.restaurant_id;
-    const currRating = review.rating;
+    const currRating = Number(review.rating);
 
     await ReviewUsefulness.destroy({ where: { review_id } });
     await ReviewImage.destroy({ where: { review_id } });
@@ -401,8 +401,8 @@ exports.deleteReview = async (req, res) => {
       attributes: ['reviews_count', 'rating'],
       where: { restaurant_id: restaurant_id },
     });
-    const reviews_count = restaurant.dataValues.reviews_count;
-    const restaurantRating = restaurant.dataValues.rating;
+    const reviews_count = Number(restaurant.dataValues.reviews_count);
+    const restaurantRating = Number(restaurant.dataValues.rating);
     const updateRating =
       (restaurantRating * reviews_count - currRating) / (reviews_count - 1);
     await Restaurant.update(
