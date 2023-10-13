@@ -78,14 +78,7 @@ callButton.addEventListener('click', () => {
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     window.location.href = `tel:${phoneNumber}`;
   } else {
-    navigator.clipboard
-      .writeText(phoneNumber)
-      .then(function () {
-        alert(`전화번호 ${phoneNumber}이(가) 클립보드에 복사되었습니다.`);
-      })
-      .catch(function (err) {
-        alert('전화번호를 복사하는 데 실패했습니다.');
-      });
+    alert('전화를 걸 수 없는 기기입니다.');
   }
 });
 
