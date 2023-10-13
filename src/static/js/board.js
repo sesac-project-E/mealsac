@@ -91,10 +91,13 @@ function displayPosts(posts, page, boardId, tableBody) {
     const row = document.createElement('tr');
     row.innerHTML = `
         <th scope="row" class="idx">${startIndex + index + 1}</th>
-        <td class="title"><a href="/post/${post.post_id}">${post.title}</a></td>
+        <td class="title">${post.title}</td>
         <td class="writer">${post.User.user_name}</td> 
         <td class="date">${formattedDate}</td>
     `;
+    row.addEventListener('click', () => {
+      window.location = `/post/${post.post_id}`;
+    });
     tableBody.appendChild(row);
   });
 }
