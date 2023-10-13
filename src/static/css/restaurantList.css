@@ -215,11 +215,6 @@ a {
   position: relative;
 }
 
-.hamburgerIcon {
-  display: none;
-  cursor: grab;
-}
-
 .allRestaurantContainer,
 .restaurants {
   width: 100%;
@@ -398,12 +393,6 @@ p.review {
     align-items: center;
     flex-direction: column;
     transition: height 1s ease;
-  }
-
-  .hamburgerIcon {
-    display: block;
-    width: 15px;
-    height: 15px;
   }
 }
 
