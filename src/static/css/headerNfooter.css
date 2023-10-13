@@ -9,6 +9,7 @@
 
 .desktop-logo {
   height: 40px;
+  cursor: pointer;
 }
 .mobile-logo,
 .hamburger,
@@ -81,6 +82,7 @@
   }
   .mobile-logo {
     display: block;
+    cursor: pointer;
   }
 
   .hamburger {
@@ -147,7 +149,7 @@
 }
 
 /* footer 스타일 */
-footer {
+.footer {
   background-color: #f7f7f7;
   text-align: center;
   height: 220px;

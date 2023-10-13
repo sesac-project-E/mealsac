@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.logo a {
+  width: 100%;
+}
+
 #logo1 {
   width: 44px;
   height: 47px;

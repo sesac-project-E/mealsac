@@ -75,11 +75,7 @@ callButton.addEventListener('click', () => {
     return;
   }
 
-  if (
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent,
-    )
-  ) {
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     window.location.href = `tel:${phoneNumber}`;
   } else {
     navigator.clipboard
@@ -93,12 +89,31 @@ callButton.addEventListener('click', () => {
   }
 });
 
-// 리뷰 작성 폼 토글
-document.getElementById('showReviewForm').addEventListener('click', () => {
-  if (!userInfo) {
-    alert('로그인 후 리뷰 작성이 가능합니다.');
-    return;
+const locationMap = mapType => {
+  if (mapType === 'naver') {
+    if (
+      !restaurant.restaurant_naver ||
+      restaurant.restaurant_naver.trim() === ''
+    ) {
+      alert('네이버 길찾기가 불가능합니다.');
+    } else {
+      document.location = restaurant.restaurant_naver;
+    }
   }
+  if (mapType === 'kakao') {
+    if (
+      !restaurant.restaurant_kakao ||
+      restaurant.restaurant_kakao.trim() === ''
+    ) {
+      alert('카카오 길찾기가 불가능합니다.');
+    } else {
+      document.location = restaurant.restaurant_kakao;
+    }
+  }
+};
+
+// 리뷰 작성 폼 토글
+document.querySelector('#showReviewForm').addEventListener('click', () => {
   if (reviewForm.style.display === 'none' || reviewForm.style.display === '') {
     reviewForm.style.display = 'block';
   } else {

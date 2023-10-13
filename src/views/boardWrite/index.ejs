@@ -19,11 +19,16 @@
           <p id="msg">새싹님들의 자유로운 밥 이야기를 들려주세요!</p>
         </div>
       </div>
+
       <form method="post" class="postBox">
+        <% if(userInfo.isAdmin) { %>
         <select class="form-control" id="boardType">
           <option value="free">자유게시판</option>
           <option value="notice">공지사항</option>
         </select>
+        <% } else { %>
+        <div class="form-control" id="boardType">자유게시판</div>
+        <% }%>
         <div class="title">
           <input id="inputTitle" placeholder="제목을 작성해주세요" />
         </div>

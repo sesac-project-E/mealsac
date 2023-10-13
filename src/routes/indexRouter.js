@@ -104,7 +104,9 @@ indexRouter.get('/board', (req, res) => {
 });
 
 indexRouter.get('/post/write', (req, res) => {
-  res.render('boardWrite');
+  const userInfo = req.session.userInfo ? req.session.userInfo : false;
+
+  res.render('boardWrite', { userInfo });
 });
 
 indexRouter.get('/post/edit/:post_id', postController.getEditPost);
