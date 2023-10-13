@@ -9,6 +9,7 @@
 
 .desktop-logo {
   height: 40px;
+  cursor: pointer;
 }
 .mobile-logo,
 .hamburger,
@@ -81,6 +82,7 @@
   }
   .mobile-logo {
     display: block;
+    cursor: pointer;
   }
 
   .hamburger {
