@@ -125,7 +125,13 @@
         <section id="review">
           <div>
             <h3 class="noMargin">후기</h3>
+            <% if(typeof userInfo === 'undefined') { %>
+            <button id="showReviewForm" style="display: none">
+              후기 작성하기
+            </button>
+            <% } else { %>
             <button id="showReviewForm">후기 작성하기</button>
+            <% } %>
           </div>
           <form
             id="reviewForm"
