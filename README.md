@@ -4,7 +4,7 @@
 
 <p align="center">
 
-[<img src="./src/static/img/mainPage.png" width="1000" height="563" alt="밀싹 홈페이지">](https://mealsac-473f548ea790.herokuapp.com/)
+[<img src="./src/static/img/mainPage.png" width="1000" height="563" alt="밀싹 홈페이지">](http://ec2-54-146-187-238.compute-1.amazonaws.com:8080)
 
 </p>
 
@@ -18,7 +18,7 @@
 
 <br>
 
-[<img src="./src/static/img//readmeImage/readmelogo.png">](https://mealsac-473f548ea790.herokuapp.com/)
+[<img src="./src/static/img//readmeImage/readmelogo.png">](http://ec2-54-146-187-238.compute-1.amazonaws.com:8080/)
 
 #### 🔍 배너 클릭해서 사이트 구경하기!
 
